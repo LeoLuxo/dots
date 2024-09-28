@@ -18,7 +18,7 @@ pushd ~/dotfiles/ &>/dev/null
 # Early return if no changes were detected (thanks @singiamtel!)
 if git diff --quiet .; then
     echo "No changes detected, exiting."
-    popd
+    popd &>/dev/null
     exit 0
 fi
 
