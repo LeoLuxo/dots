@@ -1,6 +1,8 @@
-{ config, pkgs, ... }:
-
 {
+  config,
+  pkgs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "pancake";
@@ -18,6 +20,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    pkgs.alejandra
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -31,9 +34,7 @@
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
-     (pkgs.writeShellScriptBin "my-hello" ''
-       echo "Hello, ${config.home.username}!"
-     '')
+    (pkgs.writeShellScriptBin "nix-switch" (builtins.readFile ./scripts/nix_switch.sh))
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

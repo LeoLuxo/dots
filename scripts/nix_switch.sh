@@ -13,7 +13,7 @@
 set -e
 
 # cd to your config dir
-pushd ~/dotfiles/nixos/
+pushd ~/dotfiles/
 
 # Early return if no changes were detected (thanks @singiamtel!)
 if git diff --quiet '*.nix'; then
@@ -32,7 +32,7 @@ git diff -U0 '*.nix'
 echo "NixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-home-manager switch &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
+home-manager switch --flake . &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
 
 # Get current generation metadata
 current=$(home-manager generations | head -n 1 | sed -E "s/(.*?)->.*/\1/g")
