@@ -16,7 +16,7 @@ set -e
 pushd ~/dotfiles/
 
 # Early return if no changes were detected (thanks @singiamtel!)
-if git diff --quiet '*.nix'; then
+if git diff --quiet .; then
     echo "No changes detected, exiting."
     popd
     exit 0
@@ -27,17 +27,18 @@ alejandra . &>/dev/null \
   || ( alejandra . ; echo "formatting failed!" && exit 1)
 
 # Shows your changes
-git diff -U0 '*.nix'
+git diff -U0 .
 
 echo "NixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-home-manager switch --flake . &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
+home-manager switch --flake . &>nix-switch.log || (cat nix-switch.log | grep --color error && exit 1)
 
 # Get current generation metadata
 current=$(home-manager generations | head -n 1 | sed -E "s/(.*?)->.*/\1/g")
 
 # Commit all changes witih the generation metadata
+git add .
 git commit -am "$current"
 
 # Back to where you were
