@@ -20,7 +20,11 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    pkgs.vscode-fhs
+
+    # .nix formatter, used in nix_switch.sh at the moment
     pkgs.alejandra
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
