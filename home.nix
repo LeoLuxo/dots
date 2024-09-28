@@ -73,7 +73,7 @@
   #  /etc/profiles/per-user/pancake/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "code";
   };
 
   # Let Home Manager install and manage itself.
