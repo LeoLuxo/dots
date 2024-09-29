@@ -1,35 +1,15 @@
 {
-  description = "Home Manager configuration of pancake";
+  description = "A very basic flake";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   };
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    ...
-  }: let
-    pkgs = import nixpkgs {
-      system = "x86_64-linux";
-      config.allowUnfree = true;
-    };
-  in {
-    homeConfigurations."pancake" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+  outputs = { self, nixpkgs }: {
 
-      # Specify your home configuration modules here, for example,
-      # the path to your home.nix.
-      modules = [./home.nix];
+    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
 
-      # Optionally use extraSpecialArgs
-      # to pass through arguments to home.nix
-    };
+    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
+
   };
 }
