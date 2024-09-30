@@ -12,8 +12,10 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
 
+    # Include hardware stuff and kernel patches for surface pro 7
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
 
+    # Include home manager config
     home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
@@ -74,6 +76,7 @@
 
     # Touchscreen support
     modules = [pkgs.xf86_input_wacom];
+    libinput.enable = true;
     wacom.enable = true;
   };
 
