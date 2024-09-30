@@ -23,6 +23,8 @@
       home-manager.useUserPackages = true;
       home-manager.users.pancake = import ./home.nix;
     }
+
+    # Include sops
   ];
 
   # Enable the new nix cli tool and flakes
