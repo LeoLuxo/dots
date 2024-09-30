@@ -2,13 +2,24 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
-  config,
   pkgs,
+  nixpkgs,
+  home-manager,
+  nixos-hardware,
   ...
 }: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+
+    nixos-hardware.nixosModules.microsoft-surface-pro-intel
+
+    home-manager.nixosModules.home-manager
+    {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.users.pancake = import ./home.nix;
+    }
   ];
 
   # Enable the new nix cli tool and flakes
