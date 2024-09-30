@@ -1,4 +1,11 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#!nix-shell -p git alejandra
+#!nix-shell -i bash
+
+# This shebang runs nix-shell which then interpret the rest:
+# it pulls in git and alejandra as pkgs
+# and set bash as the interpreter
+# https://stackoverflow.com/a/64599687
 
 # Original script by 0atman / No boilerplate
 # https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5
@@ -19,8 +26,11 @@ if git diff --quiet .; then
 fi
 
 # Autoformat nix files
-# alejandra . &>/dev/null \
-#   || ( alejandra . ; echo "formatting failed!" && exit 1)
+alejandra . &>/dev/null ||
+	(
+		alejandra .
+		echo "formatting failed!" && exit 1
+	)
 
 # Shows changes
 git diff -U0 .

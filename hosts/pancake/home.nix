@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "pancake";
@@ -19,11 +23,11 @@
     # Vscode but repackaged to run in a FHS environment
     vscode-fhs
 
-    # nix formatter, used in rebuild.sh at the moment and in vscode
+    # nix formatter, used in vscode
     alejandra
-	 
-	 # Nix Language Server
-	 nil
+
+    # Nix Language Server
+    nil
 
     # sh formatter
     shfmt
@@ -78,7 +82,7 @@
   #
   #  /etc/profiles/per-user/pancake/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = { EDITOR = "code"; };
+  home.sessionVariables = {EDITOR = "code";};
 
   programs = {
     # Let Home Manager install and manage itself.
