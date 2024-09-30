@@ -33,7 +33,7 @@ alejandra . &>/dev/null ||
 	)
 
 # Shows changes
-git diff -U0 .
+git diff --no-pager -U0 .
 
 echo "NixOS Rebuilding..."
 
