@@ -92,14 +92,9 @@
     isNormalUser = true;
     description = "pancake";
     extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-      #  thunderbird
-      vscode-fhs
-      obsidian
-      alejandra
 
-      (pkgs.writeShellScriptBin "rebuild" (builtins.readFile ./scripts/rebuild.sh))
-    ];
+    # Manage packages using home-manager instead
+    packages = with pkgs; [];
   };
 
   # Install firefox.
