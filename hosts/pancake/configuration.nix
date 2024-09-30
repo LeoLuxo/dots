@@ -6,6 +6,7 @@
   nixpkgs,
   home-manager,
   nixos-hardware,
+  sops-nix,
   ...
 }:
 {
@@ -25,6 +26,8 @@
     }
 
     # Include sops
+    sops-nix.nixosModules.sops
+
   ];
 
   # Enable the new nix cli tool and flakes
@@ -124,7 +127,7 @@
     ];
 
     # Manage packages using home-manager instead
-    packages = with pkgs; [ ];
+    # packages = with pkgs; [ ];
   };
 
   # Install firefox.
