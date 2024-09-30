@@ -58,16 +58,23 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # It's a bit weird because we're still running gnome under wayland
+  services.xserver = {
+    enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "altgr-intl";
+    # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "altgr-intl";
+    };
+
+    # Touchscreen support
+    modules = [pkgs.xf86_input_wacom];
+    wacom.enable = true;
   };
 
   # Enable CUPS to print documents.
