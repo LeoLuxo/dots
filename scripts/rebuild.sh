@@ -18,19 +18,19 @@ sudo echo "Running as su"
 # cd to our config dir
 pushd ~/dots/ &>/dev/null
 
-# Early return if no changes were detected
-if git diff --quiet .; then
-	echo "No changes detected, exiting."
-	popd &>/dev/null
-	exit 0
-fi
-
 # Autoformat nix files
 nixfmt --quiet . ||
 	(
 		nixfmt --check .
 		echo "formatting failed!" && exit 1
 	)
+
+# Early return if no changes were detected
+if git diff --quiet .; then
+	echo "No changes detected, exiting."
+	popd &>/dev/null
+	exit 0
+fi
 
 # Shows changes
 git --no-pager diff -U0 .
