@@ -1,9 +1,9 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -p git alejandra
+#!nix-shell -p bash git nixfmt-rfc-style
 #!nix-shell -i bash
 
 # This shebang runs nix-shell which then interpret the rest:
-# it pulls in the packages git and alejandra
+# it pulls in the packages bash, git and nixfmt
 # and set bash as the interpreter
 # https://stackoverflow.com/a/64599687
 
@@ -26,11 +26,11 @@ if git diff --quiet .; then
 fi
 
 # Autoformat nix files
-# alejandra . &>/dev/null ||
-# 	(
-# 		alejandra .
-# 		echo "formatting failed!" && exit 1
-# 	)
+nixfmt --quiet . ||
+	(
+		nixfmt --check .
+		echo "formatting failed!" && exit 1
+	)
 
 # Shows changes
 git --no-pager diff -U0 .
