@@ -13,15 +13,17 @@
     };
   };
 
-  outputs = {nixpkgs, ...} @ inputs: {
-    nixosConfigurations = {
-      "pancake" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./hosts/pancake
-        ];
-        specialArgs = inputs;
+  outputs =
+    { nixpkgs, ... }@inputs:
+    {
+      nixosConfigurations = {
+        "pancake" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/pancake
+          ];
+          specialArgs = inputs;
+        };
       };
     };
-  };
 }

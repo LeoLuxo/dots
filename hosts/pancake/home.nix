@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "pancake";
@@ -18,6 +19,7 @@
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   imports = [
+
   ];
 
   # The home.packages option allows you to install Nix packages into your
@@ -85,7 +87,9 @@
   #
   #  /etc/profiles/per-user/pancake/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {EDITOR = "code";};
+  home.sessionVariables = {
+    EDITOR = "code";
+  };
 
   programs = {
     # Let Home Manager install and manage itself.
