@@ -3,22 +3,22 @@
 #!nix-shell -i bash
 
 # This shebang runs nix-shell which then interpret the rest:
-# it pulls in git and alejandra as pkgs
+# it pulls in the packages git and alejandra
 # and set bash as the interpreter
 # https://stackoverflow.com/a/64599687
 
 # Original script by 0atman / No boilerplate
 # https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5
 
-sudo echo "Running as sudo"
-
-# A rebuild script that commits on a successful build
+# Makes bash error-out if any exit code is non-zero
 set -e
+
+sudo echo "Running as su"
 
 # cd to our config dir
 pushd ~/dots/ &>/dev/null
 
-# Early return if no changes were detected (thanks @singiamtel!)
+# Early return if no changes were detected
 if git diff --quiet .; then
 	echo "No changes detected, exiting."
 	popd &>/dev/null
@@ -26,14 +26,14 @@ if git diff --quiet .; then
 fi
 
 # Autoformat nix files
-alejandra . &>/dev/null ||
-	(
-		alejandra .
-		echo "formatting failed!" && exit 1
-	)
+# alejandra . &>/dev/null ||
+# 	(
+# 		alejandra .
+# 		echo "formatting failed!" && exit 1
+# 	)
 
 # Shows changes
-git diff --no-pager -U0 .
+git --no-pager diff -U0 .
 
 echo "NixOS Rebuilding..."
 

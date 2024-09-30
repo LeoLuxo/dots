@@ -17,6 +17,9 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  imports = [
+  ];
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
@@ -24,7 +27,7 @@
     vscode-fhs
 
     # nix formatter, used in vscode
-    alejandra
+    nixfmt-rfc-style
 
     # Nix Language Server
     nil
