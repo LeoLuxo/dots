@@ -24,7 +24,8 @@
     vscode-fhs
 
     # nix formatter, used in rebuild.sh at the moment
-    alejandra
+    nixfmt
+    shfmt
 
     # Required for vscode sync to work
     xdg-utils

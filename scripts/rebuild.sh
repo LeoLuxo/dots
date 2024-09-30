@@ -13,28 +13,27 @@ pushd ~/dots/ &>/dev/null
 
 # Early return if no changes were detected (thanks @singiamtel!)
 if git diff --quiet .; then
-    echo "No changes detected, exiting."
-    popd &>/dev/null
-    exit 0
+	echo "No changes detected, exiting."
+	popd &>/dev/null
+	exit 0
 fi
 
 # Autoformat nix files
-alejandra . &>/dev/null \
-  || ( alejandra . ; echo "formatting failed!" && exit 1)
+# alejandra . &>/dev/null \
+#   || ( alejandra . ; echo "formatting failed!" && exit 1)
 
 # Shows changes
 git diff -U0 .
 
 echo "NixOS Rebuilding..."
 
-
 # For some reason nix can't see non-git added files
 git add .
 
 # Rebuild and log everything to a file
 # On error, output simplified errors
-sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log \
-  || (cat rebuild.log | grep --color error && exit 1)
+sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
+	(cat rebuild.log | grep --color error && exit 1)
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
@@ -42,7 +41,6 @@ current=$(nixos-rebuild list-generations | grep current)
 # Commit all changes witih the generation metadata
 git commit -am "$current"
 git push
-
 
 # Back to where we were
 popd &>/dev/null
