@@ -9,7 +9,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nxpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -25,13 +25,13 @@
         modules = [
           nixos-hardware.nixosModules.microsoft-surface-pro-intel
 
-          ./configuration.nix
+          ./hosts/pancake/configuration.nix
 
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.pancake = import ./home.nix;
+            home-manager.users.pancake = import ./hosts/pancake/home.nix;
           }
         ];
       };
