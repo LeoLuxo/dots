@@ -1,15 +1,24 @@
 {
-  description = "A very basic flake";
+  description = "Home Manager configuration of pancake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    # Specify the source of Home Manager and Nixpkgs.
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    nixos-hardware .      url = "github:nixos/nixos-hardware/master";
   };
 
-  outputs = { self, nixpkgs }: {
-
-    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
+  outputs = {
+    nixpkgs,
+    nixos-hardware,
+    ...
+  }: {
+    nixosConfigurations."pancake" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./configuration.nix
+        nixos-hardware.nixosModules.microsoft-surface-pro-intel
+      ];
+    };
   };
 }

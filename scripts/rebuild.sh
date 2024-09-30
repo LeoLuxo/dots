@@ -9,6 +9,8 @@
 #    4. If you uses a flake as your primary config, you can specify a path to `configuration.nix` in it and then `nixos-rebuild switch —flake` path/to/directory
 # As I hope was clear from the video, I am new to nixos, and there may be other, better, options, in which case I'd love to know them! (I'll update the gist if so)
 
+sudo echo "Running as sudo"
+
 # A rebuild script that commits on a successful build
 set -e
 
@@ -40,6 +42,7 @@ current=$(nixos-rebuild list-generations | grep current)
 # Commit all changes witih the generation metadata
 git add .
 git commit -am "$current"
+
 
 # Back to where you were
 popd &>/dev/null
