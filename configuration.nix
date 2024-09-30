@@ -106,9 +106,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    git
+    nano
     wget
+
+    # Still include git globally even if home-manager takes care of its config
+    git
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
