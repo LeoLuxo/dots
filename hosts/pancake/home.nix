@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{ config, pkgs, ... }: {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "pancake";
@@ -23,8 +19,13 @@
     # Vscode but repackaged to run in a FHS environment
     vscode-fhs
 
-    # nix formatter, used in rebuild.sh at the moment
-    nixfmt
+    # nix formatter, used in rebuild.sh at the moment and in vscode
+    alejandra
+	 
+	 # Nix Language Server
+	 nil
+
+    # sh formatter
     shfmt
 
     # Required for vscode sync to work
@@ -77,9 +78,7 @@
   #
   #  /etc/profiles/per-user/pancake/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "code";
-  };
+  home.sessionVariables = { EDITOR = "code"; };
 
   programs = {
     # Let Home Manager install and manage itself.
@@ -116,9 +115,9 @@
 
         # Enforce SSH
         url = {
-          "ssh://git@github.com/".insteadOf = https://github.com/;
-          "ssh://git@gitlab.com/".insteadOf = https://gitlab.com/;
-          "ssh://git@bitbucket.org/".insteadOf = https://bitbucket.org/;
+          "ssh://git@github.com/".insteadOf = "https://github.com/";
+          "ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
+          "ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";
         };
       };
     };
