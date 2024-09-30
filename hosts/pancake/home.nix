@@ -26,6 +26,9 @@
     # nix formatter, used in rebuild.sh at the moment
     alejandra
 
+    # Required for vscode sync to work
+    xdg-utils
+
     bitwarden-desktop
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
