@@ -7,7 +7,8 @@
   home-manager,
   nixos-hardware,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -25,7 +26,10 @@
   ];
 
   # Enable the new nix cli tool and flakes
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -75,7 +79,7 @@
     };
 
     # Touchscreen support
-    modules = [pkgs.xf86_input_wacom];
+    modules = [ pkgs.xf86_input_wacom ];
     libinput.enable = true;
     wacom.enable = true;
   };
@@ -112,10 +116,13 @@
   users.users.pancake = {
     isNormalUser = true;
     description = "pancake";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
 
     # Manage packages using home-manager instead
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   # Install firefox.
