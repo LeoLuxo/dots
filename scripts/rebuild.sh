@@ -42,8 +42,11 @@ git add .
 
 # Rebuild and log everything to a file
 # On error, output simplified errors
-sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
-	(cat rebuild.log | grep --color error && exit 1)
+(sudo nixos-rebuild switch --show-trace --flake .#$USER 2>&1 |
+	stdbuf -o 0 tee rebuild.log |
+	stdbuf -o 0 grep --color "\[") ||
+	(cat rebuild.log |
+		grep --color error && exit 1)
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
