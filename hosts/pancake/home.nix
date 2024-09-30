@@ -19,12 +19,12 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
     # Vscode but repackaged to run in a FHS environment
-    pkgs.vscode-fhs
+    vscode-fhs
 
-    # .nix formatter, used in rebuild.sh at the moment
-    pkgs.alejandra
+    # nix formatter, used in rebuild.sh at the moment
+    alejandra
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -35,7 +35,7 @@
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
     # # environment:
-    (pkgs.writeShellScriptBin "rebuild" (builtins.readFile ./scripts/rebuild.sh))
+    (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
