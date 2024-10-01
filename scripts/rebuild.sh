@@ -14,11 +14,11 @@
 set -e
 
 # Some color
-BLUE='\033[0;34m'
-GREEN='\033[0;32m'
+PURPLE='\033[1;35m'
+GREEN='\033[1;32m'
 RESET='\033[0m'
 
-sudo echo -e "${BLUE}Running as superuser${RESET}"
+sudo echo -e "${PURPLE}Running as superuser${RESET}"
 
 # cd to our config dir
 pushd ~/dots/ &>/dev/null
@@ -40,7 +40,7 @@ fi
 # Shows changes
 git --no-pager diff -U0 .
 
-echo -e "${BLUE}NixOS Rebuilding...${RESET}"
+echo -e "${PURPLE}NixOS Rebuilding...${RESET}"
 
 # For some reason nix can't see non-git added files
 git add .
@@ -58,13 +58,13 @@ sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
 
-echo -e "${BLUE}Current generation: ${RESET}${current}"
-echo -e "${BLUE}Committing...${RESET}"
+echo -e "${PURPLE}Current generation: ${RESET}${current}"
+echo -e "${PURPLE}Committing...${RESET}"
 
 # Commit all changes with the generation metadata
 git commit -am "$current" &>/dev/null
 
-echo -e "${BLUE}Pushing...${RESET}"
+echo -e "${PURPLE}Pushing...${RESET}"
 git push &>/dev/null
 
 # Back to where we were
