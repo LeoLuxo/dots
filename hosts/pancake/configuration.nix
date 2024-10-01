@@ -3,8 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   pkgs,
-  config,
-  nixpkgs,
   home-manager,
   nixos-hardware,
   ...
@@ -127,8 +125,10 @@
     # packages = with pkgs; [ ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+  programs = {
+    # Install firefox.
+    firefox.enable = true;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
