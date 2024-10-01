@@ -13,7 +13,12 @@
 # Makes bash error-out if any exit code is non-zero
 set -e
 
-sudo echo "Running as superuser"
+# Some color
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+RESET='\033[0m'
+
+sudo echo -e "${BLUE}Running as superuser${RESET}"
 
 # cd to our config dir
 pushd ~/dots/ &>/dev/null
@@ -35,7 +40,7 @@ fi
 # Shows changes
 git --no-pager diff -U0 .
 
-echo "NixOS Rebuilding..."
+echo -e "${BLUE}NixOS Rebuilding...${RESET}"
 
 # For some reason nix can't see non-git added files
 git add .
@@ -53,12 +58,18 @@ sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
 
+echo -e "${BLUE}Current generation: ${RESET}${current}"
+echo -e "${BLUE}Committing...${RESET}"
+
 # Commit all changes with the generation metadata
-git commit -am "$current"
-git push
+git commit -am "$current" &>/dev/null
+
+echo -e "${BLUE}Pushing...${RESET}"
+git push &>/dev/null
 
 # Back to where we were
 popd &>/dev/null
 
 # Notify all OK!
+echo -e "${GREEN}DONE!${RESET}"
 # notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
