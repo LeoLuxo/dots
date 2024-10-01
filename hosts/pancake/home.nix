@@ -37,12 +37,11 @@
     # sh formatter
     shfmt
 
-    # Required for vscode sync to work
-    xdg-utils
-
     bitwarden-desktop
 
-    ssh-to-age
+    sops
+
+    obsidian
 
     # gpaste
 

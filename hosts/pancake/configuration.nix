@@ -3,10 +3,10 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   pkgs,
+  config,
   nixpkgs,
   home-manager,
   nixos-hardware,
-  sops-nix,
   ...
 }:
 {
@@ -24,9 +24,6 @@
       home-manager.useUserPackages = true;
       home-manager.users.pancake = import ./home.nix;
     }
-
-    # Include sops
-    sops-nix.nixosModules.sops
 
   ];
 
