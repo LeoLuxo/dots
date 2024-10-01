@@ -56,7 +56,7 @@ sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
 	)
 
 # Get current generation metadata
-current=$(nixos-rebuild list-generations | grep current)
+current=$(nixos-rebuild list-generations | grep current | sed s/\*//g)
 
 echo -e "${PURPLE}Current generation: ${RESET}${current}"
 echo -e "${PURPLE}Committing...${RESET}"
