@@ -52,16 +52,15 @@
 
     # gpaste
 
+    # Scripts
+    (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
+    (writeShellScriptBin "screenshot" (builtins.readFile ../../scripts/screenshot.sh))
+
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -177,7 +176,7 @@
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
       binding = "<Super>s";
-      command = "gnome-screenshot --area --clipboard -f /tmp/tmp.png && cat /tmp/tmp.png | wl-copy";
+      command = "screenshot";
       name = "Instant screenshot";
     };
 
