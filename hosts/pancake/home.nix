@@ -48,6 +48,8 @@
 
     dconf
 
+    wl-clipboard
+
     # gpaste
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -175,7 +177,7 @@
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
       binding = "<Super>s";
-      command = "gnome-screenshot --area --clipboard -f /dev/null";
+      command = "gnome-screenshot --area --clipboard -f /tmp/tmp.png && cat /tmp/tmp.png | wl-copy";
       name = "Instant screenshot";
     };
 
