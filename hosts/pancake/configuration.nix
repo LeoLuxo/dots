@@ -5,6 +5,7 @@
   pkgs,
   home-manager,
   nixos-hardware,
+  agenix,
   ...
 }:
 {
@@ -23,6 +24,8 @@
       home-manager.users.pancake = import ./home.nix;
     }
 
+    # Include agenix
+    agenix.nixosModules.default
   ];
 
   # SD Card
@@ -80,9 +83,11 @@
 
     # Touchscreen support
     modules = [ pkgs.xf86_input_wacom ];
-    libinput.enable = true;
     wacom.enable = true;
   };
+
+  # Also for touchscreen support
+  services.libinput.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -130,9 +135,6 @@
     firefox.enable = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -141,6 +143,9 @@
 
     # Still include git globally even if home-manager takes care of its config
     git
+
+    # Install agenix CLI
+    agenix.packages.${system}.default
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
