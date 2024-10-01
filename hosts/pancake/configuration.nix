@@ -3,6 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   pkgs,
+  config,
   home-manager,
   nixos-hardware,
   agenix,
@@ -28,6 +29,7 @@
     agenix.nixosModules.default
 
     ../../modules/syncthing.nix
+    ../../modules/secrets.nix
   ];
 
   # SD Card
@@ -113,17 +115,22 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.pancake = {
-    isNormalUser = true;
-    description = "pancake";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
+  # Define user accounts.
+  users = {
+    mutableUsers = false;
 
-    # Manage packages using home-manager instead
-    # packages = with pkgs; [ ];
+    users.pancake = {
+      isNormalUser = true;
+      description = "pancake";
+      hashedPasswordFile = config.age.secrets.pancake-user-password.path;
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+
+      # Manage packages using home-manager instead
+      # packages = with pkgs; [ ];
+    };
   };
 
   programs = {

@@ -42,7 +42,7 @@
 
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
       binding = "<Super>s";
-      command = "screenshot";
+      command = "snip";
       name = "Instant screenshot";
     };
 

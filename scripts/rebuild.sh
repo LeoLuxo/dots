@@ -22,7 +22,7 @@ RESET='\033[0m'
 sudo echo -e "${PURPLE}Running as superuser${RESET}"
 
 # cd to our config dir
-pushd ~/dots/ &>/dev/null
+pushd /etc/nixos/dots &>/dev/null
 
 # Autoformat nix files
 nixfmt --quiet . ||
@@ -46,14 +46,11 @@ echo -e "${PURPLE}NixOS Rebuilding...${RESET}"
 # For some reason nix can't see non-git added files
 git add .
 
-# Rebuild and log everything to a file
-# On error, output simplified errors
-sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
+# Rebuild, and if errors occur make sure to exit
+sudo nixos-rebuild switch --flake .#$USER ||
 	(
-		cat rebuild.log | grep --color error && (
-			git restore --staged .
-			exit 1
-		)
+		git restore --staged .
+		exit 1
 	)
 
 # Get current generation metadata
