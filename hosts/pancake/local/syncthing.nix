@@ -6,9 +6,8 @@
 
   services.syncthing = {
     # The path where synchronised directories will exist.
-    dataDir = "/stuff";
-
     # The path where the settings and keys will exist.
+    dataDir = "/var/lib/syncthing";
     configDir = "/var/lib/syncthing";
 
     # Together, the key and cert define the device id
