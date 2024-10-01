@@ -43,12 +43,17 @@ git add .
 # Rebuild and log everything to a file
 # On error, output simplified errors
 sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
-	(cat rebuild.log | grep --color error && exit 1)
+	(
+		cat rebuild.log | grep --color error && (
+			git restore --staged .
+			exit 1
+		)
+	)
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
 
-# Commit all changes witih the generation metadata
+# Commit all changes with the generation metadata
 git commit -am "$current"
 git push
 
