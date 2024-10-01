@@ -20,6 +20,7 @@
   imports = [
     ../../modules/git.nix
     ../../modules/vscode.nix
+    ../../modules/dconf.nix
   ];
 
   # The home.packages option allows you to install Nix packages into your
@@ -27,20 +28,18 @@
   home.packages = with pkgs; [
     bitwarden-desktop
 
-    sops
-
     obsidian
 
-    gnome-screenshot
-
     dconf
-
-    wl-clipboard
 
     # gpaste
 
     # Scripts
     (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
+
+    # Not putting these deps in the script because I don't want to wait to screenshot if they're missing
+    gnome-screenshot
+    wl-clipboard
     (writeShellScriptBin "screenshot" (builtins.readFile ../../scripts/screenshot.sh))
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -90,50 +89,4 @@
     home-manager.enable = true;
   };
 
-  dconf.settings = {
-    "org/gnome/desktop/peripherals/touchpad" = {
-      natural-scroll = true;
-      two-finger-scrolling-enabled = true;
-    };
-
-    "org/gnome/desktop/interface" = {
-      enable-hot-corners = false;
-    };
-
-    "org/gnome/mutter" = {
-      edge-tiling = true;
-      dynamic-workspaces = true;
-    };
-
-    "org/gnome/shell/keybindings" = {
-      toggle-quick-settings = [ ];
-    };
-
-    "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings = [
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
-      ];
-    };
-
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
-      binding = "<Super>t";
-      command = "kgx";
-      name = "GNOME Console";
-    };
-
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
-      binding = "<Super>s";
-      command = "screenshot";
-      name = "Instant screenshot";
-    };
-
-    "org/gnome/shell/window-switcher" = {
-      current-workspace-only = true;
-    };
-
-    "org/gnome/desktop/sound" = {
-      event-sounds = false;
-    };
-  };
 }

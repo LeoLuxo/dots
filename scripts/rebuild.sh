@@ -18,6 +18,7 @@ PURPLE='\033[1;35m'
 GREEN='\033[1;32m'
 RESET='\033[0m'
 
+# Force sudo early and cache it so I don't have to enter password later in the script
 sudo echo -e "${PURPLE}Running as superuser${RESET}"
 
 # cd to our config dir
