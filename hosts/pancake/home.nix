@@ -156,6 +156,10 @@
       dynamic-workspaces = true;
     };
 
+    "org/gnome/shell/keybindings" = {
+      toggle-quick-settings = [ ];
+    };
+
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings = [
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
