@@ -15,6 +15,14 @@
       dynamic-workspaces = true;
     };
 
+    "org/gnome/desktop/wm/keybindings" = {
+      switch-applications = [ ];
+      switch-applications-backward = [ ];
+
+      switch-windows = [ "<Alt>Tab" ];
+      switch-windows-backward = [ "<Shift><Alt>Tab" ];
+    };
+
     "org/gnome/shell/keybindings" = {
       toggle-quick-settings = [ ];
     };
