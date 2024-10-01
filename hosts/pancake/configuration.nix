@@ -27,11 +27,11 @@
 
   ];
 
-  # Enable the new nix cli tool and flakes
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  # SD Card
+  fileSystems."/stuff" = {
+    device = "/dev/disk/by-label/stuff";
+    fsType = "btrfs";
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
