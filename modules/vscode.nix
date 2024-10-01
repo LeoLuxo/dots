@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # Vscode but repackaged to run in a FHS environment
+    # Vscode but repackaged to run in a FHS environment to make plugin compatibility better
     vscode-fhs
 
     # nix formatter
