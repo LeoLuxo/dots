@@ -26,6 +26,8 @@
 
     # Include agenix
     agenix.nixosModules.default
+
+    ../../modules/syncthing.nix
   ];
 
   # SD Card
@@ -91,12 +93,6 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  services.syncthing = {
-    enable = true;
-    user = "pancake";
-    dataDir = "/run/media/pancake/stuff/";
-  };
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
