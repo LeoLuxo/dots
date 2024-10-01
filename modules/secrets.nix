@@ -19,5 +19,4 @@ in
       syncthing-neon-key.file = secretsPath + "/syncthing/neon/key.pem.age";
     };
   };
-
 }

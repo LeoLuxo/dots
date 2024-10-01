@@ -28,7 +28,7 @@
     # Include agenix
     agenix.nixosModules.default
 
-    ../../modules/syncthing.nix
+    ./local/syncthing.nix
     ../../modules/secrets.nix
   ];
 
@@ -90,7 +90,7 @@
     wacom.enable = true;
   };
 
-  # Also for touchscreen support
+  # Also for touchscreen support (or maybe touchpad? unsure)
   services.libinput.enable = true;
 
   # Enable CUPS to print documents.
@@ -111,9 +111,6 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define user accounts.
   users = {
