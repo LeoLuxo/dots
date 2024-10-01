@@ -48,7 +48,7 @@ git add .
 
 # Rebuild and log everything to a file
 # On error, output simplified errors
-sudo nixos-rebuild switch --show-trace --flake .#$USER &>rebuild.log ||
+sudo nixos-rebuild switch --show-trace --flake .#$USER 2>rebuild.log ||
 	(
 		cat rebuild.log | grep --color error && (
 			git restore --staged .
