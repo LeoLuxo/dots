@@ -23,7 +23,7 @@
     };
   };
 
-  outputs = (
+  outputs =
     { ... }@inputs:
     let
       mkConfig = (
@@ -44,6 +44,5 @@
         # Laptop (Surface Pro 7)
         "pancake" = mkConfig "x86_64-linux" ./hosts/pancake;
       };
-    }
-  );
+    };
 }
