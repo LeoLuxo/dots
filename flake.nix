@@ -17,6 +17,12 @@
   outputs =
     { nixpkgs, ... }@inputs:
     {
+      # Enable the new nix cli tool and flakes
+      nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+
       nixosConfigurations = {
         "pancake" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
