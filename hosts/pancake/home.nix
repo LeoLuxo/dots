@@ -19,23 +19,12 @@
 
   imports = [
     ../../modules/git.nix
+    ../../modules/vscode.nix
   ];
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    # Vscode but repackaged to run in a FHS environment
-    vscode-fhs
-
-    # nix formatter, used in vscode
-    nixfmt-rfc-style
-
-    # Nix Language Server
-    nil
-
-    # sh formatter
-    shfmt
-
     bitwarden-desktop
 
     sops

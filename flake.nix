@@ -21,7 +21,6 @@
         "pancake" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./hosts/common.nix
             ./hosts/pancake
           ];
           specialArgs = inputs;
