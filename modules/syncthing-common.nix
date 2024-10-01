@@ -22,7 +22,7 @@
     };
   };
 
-  # Open ports in the firewall
+  # Open ports in the firewall?
   # networking.firewall.allowedTCPPorts = [
   #   8384
   #   22000
