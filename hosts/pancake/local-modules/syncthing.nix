@@ -34,6 +34,7 @@ in
         "neon" = {
           id = builtins.readFile secrets.syncthing-neon-id.path;
         };
+
         "celestia" = {
           id = builtins.readFile secrets.syncthing-celestia-id.path;
         };
