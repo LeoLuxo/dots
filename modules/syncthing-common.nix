@@ -1,5 +1,10 @@
 { ... }:
 {
+  # Make sure syncthing's user is in the group syncthing, might not be needed
+  users.users."syncthing".extraGroups = [
+    "syncthing"
+  ];
+
   services.syncthing = {
     enable = true;
 
