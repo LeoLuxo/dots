@@ -48,7 +48,7 @@ in
           path = "/stuff/obsidian";
           devices = [
             "neon"
-            "celestia"
+            # "celestia"
           ];
         };
 
