@@ -23,11 +23,11 @@
     # Include agenix
     agenix.nixosModules.default
 
-    # Include local modules
-    ./local-modules/syncthing.nix
-
     # Include global modules
     ../../modules/host/secrets.nix
+
+    # Include local modules
+    # ./local-modules/syncthing.nix
   ];
 
   # Bootloader.
