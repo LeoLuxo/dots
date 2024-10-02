@@ -11,7 +11,7 @@
     overrideFolders = true;
 
     # Whether to auto-launch Syncthing as a system service.
-    systemService = true;
+    # systemService = true;
 
     options = {
       # Anonymous data usage
