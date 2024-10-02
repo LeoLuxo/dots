@@ -13,7 +13,7 @@
     # Whether to auto-launch Syncthing as a system service.
     # systemService = true;
 
-    options = {
+    settings.options = {
       # Anonymous data usage
       urAccepted = 1;
 
