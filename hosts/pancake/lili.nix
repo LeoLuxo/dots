@@ -1,5 +1,7 @@
 {
   pkgs,
+  # getModule,
+  # getScript,
   ...
 }:
 {
@@ -14,8 +16,8 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "pancake";
-  home.homeDirectory = "/home/pancake";
+  home.username = "lili";
+  home.homeDirectory = "/home/lili";
 
   imports = [
     ../../modules/git.nix
@@ -35,11 +37,13 @@
     # gpaste
 
     # Scripts
+    # (writeShellScriptBin "rebuild" (builtins.readFile (getScript "rebuild.sh")))
     (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
 
     # Not putting these deps in the script because I don't want to wait to screenshot if they're missing
     gnome-screenshot
     wl-clipboard
+    # (writeShellScriptBin "snip" (builtins.readFile (getScript "snip.sh")))
     (writeShellScriptBin "snip" (builtins.readFile ../../scripts/snip.sh))
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -64,22 +68,7 @@
     # '';
   };
 
-  # Home Manager can also manage your environment variables through
-  # 'home.sessionVariables'. These will be explicitly sourced when using a
-  # shell provided by Home Manager. If you don't want to manage your shell
-  # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/pancake/etc/profile.d/hm-session-vars.sh
-  #
+  # Environment variables
   home.sessionVariables = {
     EDITOR = "code";
   };

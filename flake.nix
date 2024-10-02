@@ -26,6 +26,8 @@
   outputs =
     { ... }@inputs:
     let
+      # getModule = path: (./modules + "/${path}");
+      # getScript = path: (./scripts + "/${path}");
       mkConfig = (
         system: module:
         inputs.nixpkgs.lib.nixosSystem {
@@ -35,6 +37,8 @@
           ];
           specialArgs = inputs // {
             inherit system;
+            # inherit getScript;
+            # inherit getModule;
           };
         }
       );
