@@ -26,9 +26,16 @@
   outputs =
     { nixpkgs, ... }@inputs:
     let
+      # Evaluate the root path right here, right now. This forces it to be the current path of the flake (in the nix store ofc) instead of being evaluated down the line in a module
       rootPath = "${./.}";
+
+      # Some helper functions to avoid using relative paths
       getModule = path: rootPath + "/modules/${path}";
-      # getScript = path: (./scripts + "/${path}");
+      getHostModule = path: rootPath + "/modules/host/${path}";
+      getUserModule = path: rootPath + "/modules/user/${path}";
+      getScript = path: rootPath + "/scripts/${path}";
+
+      # Function to create a nixos config
       mkConfig = (
         system: module:
         nixpkgs.lib.nixosSystem {
@@ -37,17 +44,24 @@
             module
           ];
           specialArgs = inputs // {
-            inherit system;
-            # inherit getScript;
-            inherit getModule;
+            inherit
+              system
+              getModule
+              getHostModule
+              getUserModule
+              getScript
+              ;
           };
         }
       );
     in
     {
+      # Define nixos configs
       nixosConfigurations = {
+
         # Laptop (Surface Pro 7)
         "pancake" = mkConfig "x86_64-linux" ./hosts/pancake;
+
       };
     };
 }
