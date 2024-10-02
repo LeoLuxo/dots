@@ -24,14 +24,14 @@
   };
 
   outputs =
-    { ... }@inputs:
+    { nixpkgs, ... }@inputs:
     let
-      here = ./.;
-      getModule = path: (here + /modules + "/${path}");
+      rootPath = "${./.}";
+      getModule = path: rootPath + "/modules/${path}";
       # getScript = path: (./scripts + "/${path}");
       mkConfig = (
         system: module:
-        inputs.nixpkgs.lib.nixosSystem {
+        nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             module
