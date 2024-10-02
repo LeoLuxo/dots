@@ -5,6 +5,8 @@
   ];
 
   services.syncthing = {
+    # user = "pancake";
+
     # The path where synchronised directories will exist.
     # The path where the settings and keys will exist.
     dataDir = "/var/lib/syncthing";
