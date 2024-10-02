@@ -26,7 +26,8 @@
   outputs =
     { ... }@inputs:
     let
-      # getModule = path: (./modules + "/${path}");
+      here = ./.;
+      getModule = path: (here + /modules + "/${path}");
       # getScript = path: (./scripts + "/${path}");
       mkConfig = (
         system: module:
@@ -38,7 +39,7 @@
           specialArgs = inputs // {
             inherit system;
             # inherit getScript;
-            # inherit getModule;
+            inherit getModule;
           };
         }
       );
