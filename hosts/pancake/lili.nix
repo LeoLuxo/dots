@@ -20,9 +20,9 @@
   home.homeDirectory = "/home/lili";
 
   imports = [
-    ../../modules/git.nix
-    ../../modules/vscode.nix
-    ../../modules/dconf.nix
+    ../../modules/user/git.nix
+    ../../modules/user/vscode.nix
+    ../../modules/user/dconf.nix
   ];
 
   # The home.packages option allows you to install Nix packages into your
