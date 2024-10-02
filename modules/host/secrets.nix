@@ -1,5 +1,4 @@
-{ ... }:
-
+{ lib, ... }:
 with builtins;
 with lib;
 let
@@ -16,8 +15,7 @@ in
         mapAttrs' (
           n: _:
           nameValuePair (removeSuffix ".age" n) {
-            file = "${secretsDir}/${n}";
-            owner = payas;
+            file = "${secretsPath}/${n}";
           }
         ) (import secretsFile)
       else

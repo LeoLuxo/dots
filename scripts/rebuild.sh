@@ -32,11 +32,11 @@ nixfmt --quiet . ||
 	)
 
 # Early return if no changes were detected
-if git diff --quiet .; then
-	echo "No changes detected, exiting."
-	popd &>/dev/null
-	exit 0
-fi
+# if git diff --quiet .; then
+# 	echo "No changes detected, exiting."
+# 	popd &>/dev/null
+# 	exit 0
+# fi
 
 # Shows changes
 git --no-pager diff -U0 .

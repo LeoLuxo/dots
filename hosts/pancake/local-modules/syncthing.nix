@@ -4,6 +4,8 @@
 }:
 let
   inherit (config.age) secrets;
+  # syncthingFolder = "/home/lili/.config/syncthing";
+  syncthingFolder = "/var/lib/syncthing";
 in
 {
   imports = [
@@ -11,16 +13,16 @@ in
   ];
 
   services.syncthing = {
-    # user = "pancake";
+    # user = "lili";
 
     # The path where synchronised directories will exist.
     # The path where the settings and keys will exist.
-    dataDir = "/var/lib/syncthing";
-    configDir = "/var/lib/syncthing";
+    dataDir = syncthingFolder;
+    configDir = syncthingFolder;
 
     # Together, the key and cert define the device id
-    key = secrets.syncthing-pancake-key.path;
-    cert = secrets.syncthing-pancake-cert.path;
+    key = secrets."syncthing/pancake/key.pem".path;
+    cert = secrets."syncthing/pancake/cert.pem".path;
 
     settings = {
       gui = {
@@ -29,14 +31,14 @@ in
         password = "qwe";
       };
 
-      # Don't care that device ids are public in the nix store
+      # Replaced at activation using a script below
       devices = {
         "neon" = {
-          id = builtins.readFile secrets.syncthing-neon-id.path;
+          id = "===PLACEHOLDER_ID_NEON===";
         };
 
         "celestia" = {
-          id = builtins.readFile secrets.syncthing-celestia-id.path;
+          id = "===PLACEHOLDER_ID_CELESTIA===";
         };
       };
 
@@ -85,9 +87,37 @@ in
     };
   };
 
-  system.activationScripts."syncthing-stignore".text = ''
+  systemd.services.syncthing.postStart = ''
+    # Manually setup ignore patterns
     printf "**/workspace*.json\n" > /stuff/obsidian/.stignore
     printf "**/target/\n" > /stuff/uni_courses/.stignore
+
+    # Replace device ids at activation time in the config file, otherwise they might not be decrypted yet
+    sudo sed -i -e s/===PLACEHOLDER_ID_NEON===/$(cat ${
+      secrets."syncthing/neon/id".path
+    })/g ${syncthingFolder}/config.xml
+
+    sudo sed -i -e s/===PLACEHOLDER_ID_CELESTIA===/$(cat ${
+      secrets."syncthing/celestia/id".path
+    })/g ${syncthingFolder}/config.xml
   '';
+
+  # system.activationScripts = {
+  #   "syncthing-stignore".text = ''
+  #     printf "**/workspace*.json\n" > /stuff/obsidian/.stignore
+  #     printf "**/target/\n" > /stuff/uni_courses/.stignore
+  #   '';
+
+  #   # Replace device ids at activation time in the config file, otherwise they might not be decrypted yet
+  #   "syncthing-device-ids".text = ''
+  #     nix-shell -p sudo coreutils --run sudo sed -i -e s/===PLACEHOLDER_ID_NEON===/$(cat ${
+  #       secrets."syncthing/neon/id".path
+  #     })/g ${syncthingFolder}/config.xml
+
+  #     nix-shell -p sudo coreutils --run sudo sed -i -e s/===PLACEHOLDER_ID_CELESTIA===/$(cat ${
+  #       secrets."syncthing/celestia/id".path
+  #     })/g ${syncthingFolder}/config.xml
+  #   '';
+  # };
 
 }
