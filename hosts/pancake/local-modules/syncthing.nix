@@ -31,11 +31,9 @@ in
         password = "qwe";
       };
 
-      # Replaced at activation using a script below
       devices = {
-        "neon".id = builtins.readFile secrets."syncthing/neon/id".path;
-
-        "celestia".id = builtins.readFile secrets."syncthing/celestia/id".path;
+        "neon".id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
+        "celestia".id = "FEEK44G-XI3OFWE-TTTSDUC-WCTTXRX-JYGVGKG-AJDLL5I-FWEEQR4-H6YQ7QX";
       };
 
       folders = {
@@ -43,7 +41,7 @@ in
           id = "zzaui-egygo";
           path = "/stuff/obsidian";
           devices = [
-            # "neon"
+            "neon"
             "celestia"
           ];
         };
