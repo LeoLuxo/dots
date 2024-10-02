@@ -27,7 +27,7 @@
     ../../modules/host/secrets.nix
 
     # Include local modules
-    # ./local-modules/syncthing.nix
+    ./local-modules/syncthing.nix
   ];
 
   # Bootloader.
