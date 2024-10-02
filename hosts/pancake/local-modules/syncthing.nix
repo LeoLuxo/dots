@@ -1,11 +1,10 @@
 {
   config,
-  getHostModule,
   ...
 }:
 {
   imports = [
-    (getHostModule "syncthing-common.nix")
+    ../../../modules/host/syncthing-common.nix
   ];
 
   services.syncthing = {

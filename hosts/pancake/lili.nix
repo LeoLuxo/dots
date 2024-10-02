@@ -1,7 +1,5 @@
 {
   pkgs,
-  getUserModule,
-  getScript,
   ...
 }:
 {
@@ -23,10 +21,6 @@
     ../../modules/user/git.nix
     ../../modules/user/vscode.nix
     ../../modules/user/dconf.nix
-
-    # (getUserModule "git.nix")
-    # (getUserModule "vscode.nix")
-    # (getUserModule "dconf.nix")
   ];
 
   # The home.packages option allows you to install Nix packages into your
@@ -41,13 +35,11 @@
     # gpaste
 
     # Scripts
-    # (writeShellScriptBin "rebuild" (builtins.readFile (getScript "rebuild.sh")))
     (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
 
     # Not putting these deps in the script because I don't want to wait to screenshot if they're missing
     gnome-screenshot
     wl-clipboard
-    # (writeShellScriptBin "snip" (builtins.readFile (getScript "snip.sh")))
     (writeShellScriptBin "snip" (builtins.readFile ../../scripts/snip.sh))
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
