@@ -1,7 +1,7 @@
 {
   pkgs,
-  # getModule,
-  # getScript,
+  getUserModule,
+  getScript,
   ...
 }:
 {
@@ -23,6 +23,10 @@
     ../../modules/user/git.nix
     ../../modules/user/vscode.nix
     ../../modules/user/dconf.nix
+
+    # (getUserModule "git.nix")
+    # (getUserModule "vscode.nix")
+    # (getUserModule "dconf.nix")
   ];
 
   # The home.packages option allows you to install Nix packages into your
