@@ -33,13 +33,9 @@ in
 
       # Replaced at activation using a script below
       devices = {
-        "neon" = {
-          id = builtins.readFile secrets."syncthing/neon/id".path;
-        };
+        "neon".id = builtins.readFile secrets."syncthing/neon/id".path;
 
-        "celestia" = {
-          id = builtins.readFile secrets."syncthing/celestia/id".path;
-        };
+        "celestia".id = builtins.readFile secrets."syncthing/celestia/id".path;
       };
 
       folders = {
@@ -47,8 +43,8 @@ in
           id = "zzaui-egygo";
           path = "/stuff/obsidian";
           devices = [
-            "neon"
-            # "celestia"
+            # "neon"
+            "celestia"
           ];
         };
 
