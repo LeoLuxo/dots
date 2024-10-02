@@ -45,7 +45,11 @@
           ];
         };
       };
-
     };
   };
+
+  system.activationScripts."syncthing-stignore".text = ''
+    printf "**/workspace*.json\n" > /stuff/obsidian/.stignore
+  '';
+
 }
