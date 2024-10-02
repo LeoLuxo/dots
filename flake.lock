@@ -101,20 +101,7 @@
         "agenix": "agenix",
         "home-manager": "home-manager_2",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
-        "secretsPath": "secretsPath"
-      }
-    },
-    "secretsPath": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-bFbTMpBXmJ6FtvoEin7Tn+OLeT9qMlkQiAfJY7tUzoA=",
-        "type": "file",
-        "url": "file:///etc/nixos/secrets"
-      },
-      "original": {
-        "type": "file",
-        "url": "file:///etc/nixos/secrets"
+        "nixpkgs": "nixpkgs"
       }
     },
     "systems": {

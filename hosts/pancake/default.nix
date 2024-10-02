@@ -47,7 +47,7 @@
     users."lili" = {
       description = "lili";
       isNormalUser = true;
-      hashedPasswordFile = config.age.secrets.pancake-user-password.path;
+      hashedPasswordFile = config.age.secrets."userpwds/pancake".path;
       extraGroups = [
         "networkmanager"
         "wheel"
