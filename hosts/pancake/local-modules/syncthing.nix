@@ -1,4 +1,8 @@
-{ config, ... }:
+{
+  config,
+  # getModule,
+  ...
+}:
 {
   imports = [
     ../../../modules/syncthing-common.nix
