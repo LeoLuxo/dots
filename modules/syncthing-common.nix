@@ -1,5 +1,6 @@
-{ ... }:
+{ pkgs, ... }:
 {
+  # By default if syncthing.user is not set, a user named syncthing will be created whose home directory is dataDir.
   # Make sure syncthing's user is in the group syncthing, might not be needed
   users.users."syncthing".extraGroups = [
     "syncthing"
@@ -7,9 +8,6 @@
 
   services.syncthing = {
     enable = true;
-
-    # By default, a user named syncthing will be created whose home directory is dataDir.
-    # user = "syncthing";
 
     # Overrides any devices/folders added or deleted through the WebUI
     overrideDevices = true;
@@ -27,7 +25,12 @@
     };
   };
 
-  # Open ports in the firewall?
+  # Tray app
+  environment.systemPackages = with pkgs; [
+    syncthingtray-minimal
+  ];
+
+  # Open ports in the firewall? Apparently not needed
   # networking.firewall.allowedTCPPorts = [
   #   8384
   #   22000
