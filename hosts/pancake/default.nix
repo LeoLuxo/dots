@@ -5,7 +5,7 @@
   home-manager,
   nixos-hardware,
   agenix,
-  # getModule,
+  getModule,
   ...
 }:
 {
@@ -29,7 +29,7 @@
     ./local-modules/syncthing.nix
 
     # Include global modules
-    ../../modules/host/secrets.nix
+    (getModule "host/secrets.nix")
   ];
 
   # Bootloader.
