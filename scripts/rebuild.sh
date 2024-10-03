@@ -39,7 +39,8 @@ nixfmt --quiet . ||
 # fi
 
 # Shows changes
-git --no-pager diff -U0 .
+echo -e "${PURPLE}Files changed:${RESET}"
+git --no-pager diff --name-only .
 
 echo -e "${PURPLE}NixOS Rebuilding...${RESET}"
 
