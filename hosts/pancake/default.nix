@@ -21,10 +21,10 @@
     home-manager.nixosModules.home-manager
 
     # Include agenix
-    agenix.nixosModules.default
+    # agenix.nixosModules.default
 
     # Include global modules
-    ../../modules/host/secrets.nix
+    # ../../modules/host/secrets.nix
 
     # Include local modules
     ./local-modules/syncthing.nix
