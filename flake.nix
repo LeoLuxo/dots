@@ -29,23 +29,11 @@
       # Evaluate the root path right here, right now. This forces it to be the current path of the flake (in the nix store ofc) instead of being evaluated down the line in a module
       # rootPath = "${./.}";
 
-      # Some helper paths to avoid using relative paths
-      modulesPath = ./modules;
-      hostModulesPath = ./modules/host;
-      userModulesPath = ./modules/user;
-      scriptsPath = ./scripts;
-
-      #
-      getInlineSecret =
-        name:
-        builtins.exec [
-          "nix"
-          "run"
-          "github:ryantm/agenix"
-          "--"
-          "--decrypt"
-          "/etc/nixos/secrets/${name}.age"
-        ];
+      # Some helper functions to avoid using relative paths
+      modules = ./modules;
+      hostModules = ./modules/host;
+      userModules = ./modules/user;
+      scripts = ./scripts;
 
       # Function to create a nixos config
       mkConfig = (
@@ -54,37 +42,21 @@
           inherit system;
           modules = [
             module
-            inputs.agenix.nixosModules.default
-            ./modules/host/secrets.nix
           ];
           specialArgs = inputs // {
             inherit
               system
-              modulesPath
-              hostModulesPath
-              userModulesPath
-              scriptsPath
-              getInlineSecret
+              modules
+              hostModules
+              userModules
+              scripts
               ;
           };
         }
       );
     in
     {
-      # Dummy config to force agenix to decrypt secrets.
-      # Intended to be run with
-      # nixos-rebuild test
-      # before doing the proper nixos-rebuild switch with the real config
-      # nixosConfigurations."_decryptSecrets" = nixpkgs.lib.nixosSystem {
-      #   system = builtins.currentSystem;
-      #   modules = [
-      #     inputs.agenix.nixosModules.default
-      #     ./modules/host/secrets.nix
-      #   ];
-      #   specialArgs = inputs;
-      # };
-
-      # Define nixos host configs
+      # Define nixos configs
       nixosConfigurations = {
 
         # Laptop (Surface Pro 7)
