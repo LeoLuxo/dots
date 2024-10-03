@@ -6,7 +6,7 @@
 with builtins;
 with lib;
 let
-  secrets = config.age.secrets;
+  inherit (config.age) secrets;
   # syncthingFolder = "/home/lili/.config/syncthing";
   syncthingFolder = "/var/lib/syncthing";
 in
