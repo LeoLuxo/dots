@@ -1,12 +1,10 @@
 {
-  lib,
   config,
+  getSecretInline,
   ...
 }:
-with builtins;
-with lib;
 let
-  secrets = config.age.secrets;
+  inherit (config.age) secrets;
   # syncthingFolder = "/home/lili/.config/syncthing";
   syncthingFolder = "/var/lib/syncthing";
 in
@@ -36,8 +34,8 @@ in
 
       # Don't care that the device ids end up in cleartext on the nix store
       devices = {
-        "neon".id = strings.trim (traceVal (readFile secrets."syncthing/neon/id".path));
-        "celestia".id = strings.trim (traceVal (readFile secrets."syncthing/celestia/id".path));
+        "neon".id = (getSecretInline "syncthing/neon/id");
+        "celestia".id = (getSecretInline "syncthing/celestia/id");
       };
 
       # Folders
