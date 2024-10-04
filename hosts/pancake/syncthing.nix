@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-    ../../modules/host/syncthing-common.nix
+    ../../modules/host/syncthing.nix
   ];
 
   services.syncthing = {

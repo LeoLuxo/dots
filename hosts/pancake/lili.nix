@@ -18,6 +18,8 @@
   home.homeDirectory = "/home/lili";
 
   imports = [
+    ../../modules/user/discord
+
     ../../modules/user/git.nix
     ../../modules/user/vscode.nix
     ../../modules/user/dconf.nix
