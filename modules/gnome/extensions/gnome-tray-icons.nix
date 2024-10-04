@@ -31,7 +31,7 @@ with lib;
 
           custom-icons = [
             (mkTuple [
-              "vesktop"
+              "Vesktop"
               (traceValSeq "${globalModules.discord}/discord-icon.png")
               ""
             ])
