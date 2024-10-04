@@ -13,6 +13,8 @@
 
     # Include global modules
     gnome
+    gnome-tray-icons
+
     discord
     vscode
     git

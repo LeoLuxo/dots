@@ -7,7 +7,6 @@
 }:
 
 with lib;
-with lib.hm.gvariants;
 
 {
   environment.systemPackages = with pkgs; [
@@ -16,23 +15,28 @@ with lib.hm.gvariants;
     gnomeExtensions.appindicator
   ];
 
-  home-manager.users.${user} = {
-    dconf.settings = {
-      "org/gnome/shell" = {
-        enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" ];
-      };
+  home-manager.users.${user} =
+    { lib, ... }:
+    with lib.hm.gvariant;
 
-      "org/gnome/shell/extensions/appindicator" = {
-        custom-icons = [
-          (mkTuple [
-            "Vesktop"
-            (traceValSeq "${globalModules.discord}/discord-icon.png")
-            ""
-          ])
-        ];
-        icon-size = 0;
-        tray-pos = "left";
+    {
+      dconf.settings = {
+        "org/gnome/shell" = {
+          enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" ];
+        };
+
+        "org/gnome/shell/extensions/appindicator" = {
+          icon-size = 0;
+          tray-pos = "left";
+
+          custom-icons = [
+            (mkTuple [
+              "Vesktop"
+              (traceValSeq "${globalModules.discord}/discord-icon.png")
+              ""
+            ])
+          ];
+        };
       };
     };
-  };
 }
