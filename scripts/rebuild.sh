@@ -65,9 +65,7 @@ git commit -am "$current" 1>/dev/null
 
 echo -e "${BLUE}Pushing...${RESET}"
 # Git push is stoopid and writes everything to stderr
-git push &>git.log ||
-	cat git.log
-rm git.log
+git push &>/dev/null
 
 # Back to where we were
 popd 1>/dev/null

@@ -25,7 +25,7 @@
     agenix.nixosModules.default
 
     # Include global modules
-    "${paths.hostModules}/secrets.nix"
+    # "${paths.hostModules}/secrets.nix"
 
     # Include local modules
     ./syncthing.nix
