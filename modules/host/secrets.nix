@@ -3,7 +3,7 @@ with builtins;
 with lib;
 let
   # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
-  secretsPath = /etc/nixos/secrets;
+  secretsPath = "/etc/nixos/secrets";
   secretsFile = "${secretsPath}/secrets.nix";
   extractedSecrets =
     if pathExists secretsFile then
@@ -26,7 +26,7 @@ in
     # // (
     #   extractedSecrets."wifi/celeste-mountain.nmconnection"
     #   // {
-    #     path = /etc/NetworkManager/system-connections/celeste-mountain.nmconnection;
+    #     path = "/etc/NetworkManager/system-connections/celeste-mountain.nmconnection";
     #     mode = "600";
     #     owner = "root";
     #     group = "root";
@@ -35,7 +35,7 @@ in
     # // (
     #   extractedSecrets."wifi/eduroam.nmconnection"
     #   // {
-    #     path = /etc/NetworkManager/system-connections/eduroam.nmconnection;
+    #     path = "/etc/NetworkManager/system-connections/eduroam.nmconnection";
     #     mode = "600";
     #     owner = "root";
     #     group = "root";
@@ -44,7 +44,7 @@ in
     # // (
     #   extractedSecrets."wifi/eduroam-ca.pem"
     #   // {
-    #     path = /etc/NetworkManager/system-connections/eduroam-ca.pem;
+    #     path = "/etc/NetworkManager/system-connections/eduroam-ca.pem";
     #     mode = "600";
     #     owner = "root";
     #     group = "root";
