@@ -10,7 +10,7 @@
 {
   imports = [
     # Include things common between hosts
-    ../common.nix
+    "${paths.hosts}/common.nix"
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -25,7 +25,6 @@
     agenix.nixosModules.default
 
     # Include global modules
-    # "${paths.hostModules}/secrets.nix"
 
     # Include local modules
     ./syncthing.nix
