@@ -9,12 +9,6 @@
     desktopManager.gnome.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    # Adds AppIndicator, KStatusNotifierItem and legacy Tray icons support to the Shell
-    # (Because gnome by default doesn't support tray icons)
-    gnomeExtensions.appindicator
-  ];
-
   home-manager.users.${user} = {
     dconf.settings = {
       "org/gnome/desktop/peripherals/touchpad" = {
