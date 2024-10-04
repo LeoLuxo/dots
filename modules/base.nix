@@ -10,7 +10,7 @@
 }:
 {
   imports = [
-    # Include home manager
+    # Include home manager module
     home-manager.nixosModules.home-manager
   ];
 
