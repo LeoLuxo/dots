@@ -40,8 +40,8 @@
           "802-1x" = {
             ca-cert = config.age.secrets."wifi/eduroam-ca.pem".path;
             eap = "peap;";
-            identity = "au752692@uni.au.dk";
-            password = "$EDUROAM_PSK";
+            identity = "$EDUROAM_IDENTITY";
+            password = "$EDUROAM_PASSWORD";
             phase1-peapver = "1";
             phase2-auth = "mschapv2";
           };
