@@ -25,6 +25,7 @@
     agenix.nixosModules.default
 
     # Include global modules
+    ../../modules/host/gnome.nix
 
     # Include local modules
     ./syncthing.nix
@@ -91,13 +92,9 @@
   };
 
   # Enable the X11 windowing system.
-  # It's a bit weird because we're still running gnome under wayland
+  # It's a bit weird because we're running gnome under wayland?
   services.xserver = {
     enable = true;
-
-    # Enable the GNOME Desktop Environment.
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
 
     # Configure keymap in X11
     xkb = {
