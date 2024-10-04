@@ -48,7 +48,7 @@ echo -e "${PURPLE}NixOS Rebuilding...${RESET}"
 git add .
 
 # Rebuild, and if errors occur make sure to exit
-sudo nixos-rebuild switch --impure --flake .#$HOSTNAME ||
+sudo nixos-rebuild switch --impure --flake .#$HOSTNAME "$@" ||
 	(
 		git restore --staged .
 		exit 1
