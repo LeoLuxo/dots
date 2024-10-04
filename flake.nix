@@ -27,63 +27,8 @@
     { nixpkgs, ... }@inputs:
 
     with nixpkgs.lib;
+    with import ./libs.nix inputs;
 
-    let
-      findModules =
-        dir:
-        builtins.concatLists (
-          builtins.attrValues (
-            builtins.mapAttrs (
-              name: type:
-              if type == "regular" then
-                [
-                  {
-                    name = builtins.elemAt (builtins.match "(.*)\\.nix" name) 0;
-                    value = dir + "/${name}";
-                  }
-                ]
-              else if (builtins.readDir (dir + "/${name}")) ? "default.nix" then
-                [
-                  {
-                    inherit name;
-                    value = dir + "/${name}";
-                  }
-                ]
-              else
-                findModules (dir + "/${name}")
-            ) (builtins.readDir dir)
-          )
-        );
-
-      globalModules = traceValSeq (builtins.listToAttrs (traceValSeq (findModules ./modules)));
-
-      extraInputs = inputs // {
-        inherit
-          user
-          system
-          globalModules
-          mkHost
-          ;
-      };
-
-      # Function to create a nixos host config
-      mkHost = (
-        {
-          user,
-          system,
-          hostModule,
-        }:
-        nixosSystem {
-          inherit system;
-          modules = [
-            hostModule
-            ./secrets.nix
-          ];
-          specialArgs = extraInputs;
-        }
-      );
-
-    in
     {
       # Define nixos configs
       nixosConfigurations = import ./hosts.nix extraInputs;
