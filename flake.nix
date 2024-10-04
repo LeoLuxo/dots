@@ -55,37 +55,37 @@
           )
         );
 
+      nixModules = traceValSeq (builtins.listToAttrs (traceValSeq (findModules ./modules)));
+
+      extraInputs = inputs // {
+        inherit
+          user
+          system
+          nixModules
+          mkHost
+          ;
+      };
+
       # Function to create a nixos host config
       mkHost = (
-        system: module:
+        {
+          user,
+          system,
+          hostModule,
+        }:
         nixosSystem {
           inherit system;
           modules = [
-            module
+            hostModule
             ./secrets.nix
           ];
-          specialArgs = inputs // {
-            inherit system;
-            asd = (traceValSeq (findModules ./modules));
-            # Some helper paths to avoid using relative paths
-            paths = {
-              modules = ./modules;
-              hostModules = ./modules/host;
-              userModules = ./modules/user;
-              scripts = ./scripts;
-              hosts = ./hosts;
-            };
-          };
+          specialArgs = extraInputs;
         }
       );
+
     in
     {
       # Define nixos configs
-      nixosConfigurations = {
-
-        # Laptop (Surface Pro 7)
-        "pancake" = mkHost "x86_64-linux" ./hosts/pancake;
-
-      };
+      nixosConfigurations = import ./hosts.nix extraInputs;
     };
 }

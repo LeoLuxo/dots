@@ -4,13 +4,14 @@
   home-manager,
   nixos-hardware,
   agenix,
-  paths,
+  asd,
   ...
 }:
+with asd;
 {
   imports = [
     # Include things common between hosts
-    "${paths.hosts}/common.nix"
+    ../common.nix
 
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
