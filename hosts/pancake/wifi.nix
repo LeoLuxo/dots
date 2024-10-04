@@ -6,7 +6,7 @@
 
     ensureProfiles = {
       environmentFiles = [
-        config.age.secrets."networkmanager-env".path
+        config.age.secrets."wifi/networkmanager-env".path
       ];
 
       profiles = {
@@ -38,7 +38,7 @@
 
         eduroam = {
           "802-1x" = {
-            ca-cert = "./eduroam-ca.pem";
+            ca-cert = config.age.secrets."wifi/eduroam-ca.pem".path;
             eap = "peap;";
             identity = "au752692@uni.au.dk";
             password = "$EDUROAM_PSK";
