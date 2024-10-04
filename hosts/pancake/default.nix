@@ -27,7 +27,8 @@
     ../../modules/host/secrets.nix
 
     # Include local modules
-    ./local-modules/syncthing.nix
+    ./syncthing.nix
+    ./wifi.nix
   ];
 
   # Bootloader.
@@ -67,9 +68,6 @@
 
   # Networking
   networking = {
-    # Enable networking
-    networkmanager.enable = true;
-
     # Define your hostname.
     hostName = "pancake";
   };
