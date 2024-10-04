@@ -22,7 +22,7 @@ in
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # Override certain properties of certain secrets
-    secrets = extractedSecrets
+    secrets = traceVal extractedSecrets
     # // (
     #   extractedSecrets."wifi/celeste-mountain.nmconnection"
     #   // {
