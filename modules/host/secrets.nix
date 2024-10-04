@@ -22,35 +22,35 @@ in
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # Override certain properties of certain secrets
-    secrets =
-      extractedSecrets
-      // (
-        extractedSecrets."wifi/celeste-mountain.nmconnection"
-        // {
-          file = /etc/NetworkManager/system-connections/celeste-mountain.nmconnection;
-          mode = "600";
-          owner = "root";
-          group = "root";
-        }
-      )
-      // (
-        extractedSecrets."wifi/eduroam.nmconnection"
-        // {
-          file = /etc/NetworkManager/system-connections/eduroam.nmconnection;
-          mode = "600";
-          owner = "root";
-          group = "root";
-        }
-      )
-      // (
-        extractedSecrets."wifi/eduroam-ca.pem"
-        // {
-          file = /etc/NetworkManager/system-connections/eduroam-ca.pem;
-          mode = "600";
-          owner = "root";
-          group = "root";
-        }
-      );
+    secrets = extractedSecrets
+    # // (
+    #   extractedSecrets."wifi/celeste-mountain.nmconnection"
+    #   // {
+    #     file = /etc/NetworkManager/system-connections/celeste-mountain.nmconnection;
+    #     mode = "600";
+    #     owner = "root";
+    #     group = "root";
+    #   }
+    # )
+    # // (
+    #   extractedSecrets."wifi/eduroam.nmconnection"
+    #   // {
+    #     file = /etc/NetworkManager/system-connections/eduroam.nmconnection;
+    #     mode = "600";
+    #     owner = "root";
+    #     group = "root";
+    #   }
+    # )
+    # // (
+    #   extractedSecrets."wifi/eduroam-ca.pem"
+    #   // {
+    #     file = /etc/NetworkManager/system-connections/eduroam-ca.pem;
+    #     mode = "600";
+    #     owner = "root";
+    #     group = "root";
+    #   }
+    # )
+    ;
 
   };
 }
