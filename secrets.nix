@@ -6,6 +6,7 @@ let
   secretsPath = builtins.fetchGit {
     url = "ssh://git@github.com/LeoLuxo/nix-secrets.git";
     ref = "main";
+    rev = "311ce14c2d63c5c6c2df32f6de0f7b39136a520c";
   };
   secretsFile = "${secretsPath}/secrets.nix";
   extractedSecrets =
@@ -25,10 +26,10 @@ in
     identityPaths = [ "/root/.ssh/id_ed25519" ];
 
     # Add automatically extracted secrets to agenix config
+    # And edit some fields where needed by recursive-merging the sets
     secrets = traceValSeq (
-      extractedSecrets
-      // {
-        "wifi/eduroam-ca.pem" = extractedSecrets."wifi/eduroam-ca.pem" // {
+      attrsets.recursiveUpdate extractedSecrets {
+        "wifi/eduroam-ca.pem" = {
           owner = "root";
           group = "root";
           mode = "600";
