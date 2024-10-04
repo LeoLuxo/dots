@@ -4,12 +4,11 @@
   home-manager,
   nixos-hardware,
   agenix,
-  asd,
+  globalModules,
   ...
 }:
-with asd;
 {
-  imports = [
+  imports = with globalModules; [
     # Include things common between hosts
     ../common.nix
 
@@ -26,7 +25,7 @@ with asd;
     agenix.nixosModules.default
 
     # Include global modules
-    ../../modules/host/gnome.nix
+    gnome
 
     # Include local modules
     ./syncthing.nix

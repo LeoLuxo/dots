@@ -20,13 +20,14 @@ let
 in
 {
   age = {
-    # For some reason I need to explicitly override it
+    # Use the root key
     identityPaths = [ "/root/.ssh/id_ed25519" ];
 
     # Add automatically extracted secrets to agenix config
-    # And edit some fields where needed by recursive-merging the sets
+    # And edit some fields where needed by recursive-updating the sets
     secrets = attrsets.recursiveUpdate extractedSecrets {
       "wifi/eduroam-ca.pem" = {
+        # Required by NetworkManager
         owner = "root";
         group = "root";
         mode = "600";
