@@ -25,14 +25,40 @@
 
   outputs =
     { nixpkgs, ... }@inputs:
-    let
-      # Evaluate the root path right here, right now. This forces it to be the current path of the flake (in the nix store ofc) instead of being evaluated down the line in a module
-      # rootPath = "${./.}";
 
-      # Function to create a nixos config
-      mkConfig = (
+    with nixpkgs.lib;
+
+    let
+      findModules =
+        dir:
+        builtins.concatLists (
+          builtins.attrValues (
+            builtins.mapAttrs (
+              name: type:
+              if type == "regular" then
+                [
+                  {
+                    name = builtins.elemAt (builtins.match "(.*)\\.nix" name) 0;
+                    value = dir + "/${name}";
+                  }
+                ]
+              else if (builtins.readDir (dir + "/${name}")) ? "default.nix" then
+                [
+                  {
+                    inherit name;
+                    value = dir + "/${name}";
+                  }
+                ]
+              else
+                findModules (dir + "/${name}")
+            ) (builtins.readDir dir)
+          )
+        );
+
+      # Function to create a nixos host config
+      mkHost = (
         system: module:
-        nixpkgs.lib.nixosSystem {
+        nixosSystem {
           inherit system;
           modules = [
             module
@@ -40,7 +66,7 @@
           ];
           specialArgs = inputs // {
             inherit system;
-
+            asd = (traceValSeq (findModules ./modules));
             # Some helper paths to avoid using relative paths
             paths = {
               modules = ./modules;
@@ -58,7 +84,7 @@
       nixosConfigurations = {
 
         # Laptop (Surface Pro 7)
-        "pancake" = mkConfig "x86_64-linux" ./hosts/pancake;
+        "pancake" = mkHost "x86_64-linux" ./hosts/pancake;
 
       };
     };
