@@ -36,6 +36,7 @@
           inherit system;
           modules = [
             module
+            ./secrets.nix
           ];
           specialArgs = inputs // {
             inherit system;
