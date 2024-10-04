@@ -1,36 +1,62 @@
 {
   pkgs,
-  config,
-  home-manager,
   nixos-hardware,
   agenix,
   globalModules,
+  user,
   ...
 }:
 {
   imports = with globalModules; [
-    # Include things common between hosts
-    ../common.nix
-
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-
-    # Include hardware stuff and kernel patches for surface pro 7
-    nixos-hardware.nixosModules.microsoft-surface-pro-intel
-
-    # Include home manager
-    home-manager.nixosModules.home-manager
-
-    # Include agenix
-    agenix.nixosModules.default
+    # Include base module
+    base
 
     # Include global modules
     gnome
+    discord
+    vscode
+    git
 
     # Include local modules
     ./syncthing.nix
     ./wifi.nix
+
+    # Include hardware config
+    ./hardware-configuration.nix
+
+    # Include hardware stuff and kernel patches for surface pro 7
+    nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
+
+  # Home-Manager config
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      bitwarden-desktop
+
+      obsidian
+
+      dconf
+
+      # gpaste
+
+      # Scripts
+      (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
+
+      # Not putting these deps in the script because I don't want to wait to screenshot if they're missing
+      gnome-screenshot
+      wl-clipboard
+      (writeShellScriptBin "snip" (builtins.readFile ../../scripts/snip.sh))
+
+      # # It is sometimes useful to fine-tune packages, for example, by applying
+      # # overrides. You can do that directly here, just don't forget the
+      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+      # # fonts?
+      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    ];
+
+    # Environment variables
+    home.sessionVariables = { };
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -40,37 +66,6 @@
   fileSystems."/stuff" = {
     device = "/dev/disk/by-label/stuff";
     fsType = "btrfs";
-  };
-
-  # Define user accounts.
-  users = {
-    mutableUsers = false;
-
-    users."lili" = {
-      description = "lili";
-      isNormalUser = true;
-      hashedPasswordFile = config.age.secrets."userpwds/pancake".path;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-    };
-  };
-
-  # User homes
-  home-manager = {
-    useGlobalPkgs = true;
-    useUserPackages = true;
-
-    users = {
-      "lili" = import ./lili.nix;
-    };
-  };
-
-  # Networking
-  networking = {
-    # Define your hostname.
-    hostName = "pancake";
   };
 
   # Set your time zone.

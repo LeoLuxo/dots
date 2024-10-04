@@ -1,4 +1,5 @@
 { config, ... }:
+
 {
   networking.networkmanager = {
     # Enable networking with NetworkManager

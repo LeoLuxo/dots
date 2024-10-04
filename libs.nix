@@ -33,12 +33,11 @@ rec {
 
     );
 
-  globalModules = traceValSeq (builtins.listToAttrs (findModules ./modules));
-
   # Function to create a nixos host config
   mkHost =
     {
       user,
+      hostName,
       system,
       hostModule,
     }:
@@ -48,12 +47,17 @@ rec {
         hostModule
         ./secrets.nix
       ];
-      specialArgs = extraInputs // {
-        inherit user system;
+      specialArgs = inputs // {
+        inherit
+          user
+          hostName
+          system
+          globalModules
+          mkHost
+          ;
       };
     };
 
-  extraInputs = inputs // {
-    inherit globalModules mkHost;
-  };
+  globalModules = builtins.listToAttrs (findModules ./modules);
+
 }

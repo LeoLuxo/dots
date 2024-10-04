@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, agenix, ... }:
 with builtins;
 with lib;
 let
@@ -19,6 +19,11 @@ let
       { };
 in
 {
+  imports = [
+    # Include agenix module
+    agenix.nixosModules.default
+  ];
+
   age = {
     # Use the root key
     identityPaths = [ "/root/.ssh/id_ed25519" ];
@@ -34,4 +39,5 @@ in
       };
     };
   };
+
 }
