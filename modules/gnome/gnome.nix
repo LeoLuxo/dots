@@ -1,4 +1,4 @@
-{ pkgs, user, ... }:
+{ user, ... }:
 
 {
   services.xserver = {
