@@ -28,6 +28,7 @@ in
         "wifi/eduroam-ca.pem" = extractedSecrets."wifi/eduroam-ca.pem" // {
           owner = "root";
           group = "root";
+          mode = "600";
         };
       }
 
