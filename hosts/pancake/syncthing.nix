@@ -1,15 +1,15 @@
 {
   config,
+  globalModules,
   ...
 }:
+
 let
-  secrets = config.age.secrets;
-  # syncthingFolder = "/home/lili/.config/syncthing";
   syncthingFolder = "/var/lib/syncthing";
 in
 {
-  imports = [
-    ../../modules/host/syncthing.nix
+  imports = with globalModules; [
+    syncthing
   ];
 
   services.syncthing = {
@@ -21,8 +21,8 @@ in
     configDir = syncthingFolder;
 
     # Together, the key and cert define the device id
-    key = secrets."syncthing/pancake/key.pem".path;
-    cert = secrets."syncthing/pancake/cert.pem".path;
+    key = config.age.secrets."syncthing/pancake/key.pem".path;
+    cert = config.age.secrets."syncthing/pancake/cert.pem".path;
 
     settings = {
       gui = {

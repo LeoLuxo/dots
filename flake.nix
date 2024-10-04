@@ -31,6 +31,6 @@
 
     {
       # Define nixos configs
-      nixosConfigurations = import ./hosts.nix extraInputs;
+      nixosConfigurations = import ./hosts.nix { inherit mkHost; };
     };
 }
