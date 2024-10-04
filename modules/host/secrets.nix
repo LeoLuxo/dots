@@ -22,7 +22,7 @@ in
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # Add automatically extracted secrets to agenix config
-    secrets = extractedSecrets;
+    secrets = traceVal extractedSecrets;
 
   };
 }

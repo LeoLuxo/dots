@@ -4,6 +4,7 @@
   home-manager,
   nixos-hardware,
   agenix,
+  paths,
   ...
 }:
 {
@@ -24,7 +25,7 @@
     agenix.nixosModules.default
 
     # Include global modules
-    ../../modules/host/secrets.nix
+    "${paths.hostModules}/secrets.nix"
 
     # Include local modules
     ./syncthing.nix
