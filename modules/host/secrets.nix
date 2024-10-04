@@ -22,11 +22,11 @@ in
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # Override certain properties of certain secrets
-    secrets = traceVal extractedSecrets
+    secrets = traceValSeq extractedSecrets
     # // (
     #   extractedSecrets."wifi/celeste-mountain.nmconnection"
     #   // {
-    #     file = /etc/NetworkManager/system-connections/celeste-mountain.nmconnection;
+    #     path = /etc/NetworkManager/system-connections/celeste-mountain.nmconnection;
     #     mode = "600";
     #     owner = "root";
     #     group = "root";
@@ -35,7 +35,7 @@ in
     # // (
     #   extractedSecrets."wifi/eduroam.nmconnection"
     #   // {
-    #     file = /etc/NetworkManager/system-connections/eduroam.nmconnection;
+    #     path = /etc/NetworkManager/system-connections/eduroam.nmconnection;
     #     mode = "600";
     #     owner = "root";
     #     group = "root";
@@ -44,7 +44,7 @@ in
     # // (
     #   extractedSecrets."wifi/eduroam-ca.pem"
     #   // {
-    #     file = /etc/NetworkManager/system-connections/eduroam-ca.pem;
+    #     path = /etc/NetworkManager/system-connections/eduroam-ca.pem;
     #     mode = "600";
     #     owner = "root";
     #     group = "root";
