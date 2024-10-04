@@ -25,7 +25,7 @@
     agenix.nixosModules.default
 
     # Include global modules
-    ../../modules/user/gnome
+    ../../modules/host/gnome.nix
 
     # Include local modules
     ./syncthing.nix

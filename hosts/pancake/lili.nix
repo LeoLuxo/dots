@@ -19,11 +19,10 @@
 
   imports = [
     ../../modules/user/discord
-    ../../modules/user/gnome
 
-    # TODO: Make those into folders
     ../../modules/user/git.nix
     ../../modules/user/vscode.nix
+    ../../modules/user/dconf.nix
   ];
 
   # The home.packages option allows you to install Nix packages into your
@@ -32,6 +31,8 @@
     bitwarden-desktop
 
     obsidian
+
+    dconf
 
     # gpaste
 
