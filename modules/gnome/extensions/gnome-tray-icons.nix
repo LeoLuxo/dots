@@ -6,6 +6,9 @@
   ...
 }:
 
+with lib;
+with lib.hm.gvariants;
+
 {
   environment.systemPackages = with pkgs; [
     # Adds AppIndicator, KStatusNotifierItem and legacy Tray icons support to the Shell
@@ -14,7 +17,7 @@
   ];
 
   home-manager.users.${user} = {
-    dconf.settings = with lib.hm.gvariants; {
+    dconf.settings = {
       "org/gnome/shell" = {
         enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" ];
       };
@@ -23,7 +26,7 @@
         custom-icons = [
           (mkTuple [
             "Vesktop"
-            "${globalModules.discord}/discord-icon.png"
+            (traceValSeq "${globalModules.discord}/discord-icon.png")
             ""
           ])
         ];
