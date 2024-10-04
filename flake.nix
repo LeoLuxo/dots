@@ -55,13 +55,13 @@
           )
         );
 
-      nixModules = traceValSeq (builtins.listToAttrs (traceValSeq (findModules ./modules)));
+      globalModules = traceValSeq (builtins.listToAttrs (traceValSeq (findModules ./modules)));
 
       extraInputs = inputs // {
         inherit
           user
           system
-          nixModules
+          globalModules
           mkHost
           ;
       };
