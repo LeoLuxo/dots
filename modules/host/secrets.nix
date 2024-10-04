@@ -22,7 +22,16 @@ in
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # Add automatically extracted secrets to agenix config
-    secrets = traceVal extractedSecrets;
+    secrets = traceValSeq (
+      extractedSecrets
+      // {
+        "wifi/eduroam-ca.pem" = extractedSecrets."wifi/eduroam-ca.pem" // {
+          owner = "root";
+          group = "root";
+        };
+      }
+
+    );
 
   };
 }
