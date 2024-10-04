@@ -4,9 +4,7 @@ with lib;
 let
   # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
   secretsPath = builtins.fetchGit {
-    url = "ssh://git@github.com/LeoLuxo/nix-secrets.git";
-    ref = "main";
-    rev = "311ce14c2d63c5c6c2df32f6de0f7b39136a520c";
+    url = "ssh://git@github.com/LeoLuxo/nix-secrets";
   };
   secretsFile = "${secretsPath}/secrets.nix";
   extractedSecrets =
@@ -27,16 +25,12 @@ in
 
     # Add automatically extracted secrets to agenix config
     # And edit some fields where needed by recursive-merging the sets
-    secrets = traceValSeq (
-      attrsets.recursiveUpdate extractedSecrets {
-        "wifi/eduroam-ca.pem" = {
-          owner = "root";
-          group = "root";
-          mode = "600";
-        };
-      }
-
-    );
-
+    secrets = attrsets.recursiveUpdate extractedSecrets {
+      "wifi/eduroam-ca.pem" = {
+        owner = "root";
+        group = "root";
+        mode = "600";
+      };
+    };
   };
 }
