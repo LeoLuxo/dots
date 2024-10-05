@@ -2,12 +2,12 @@
   pkgs,
   nixos-hardware,
   agenix,
-  globalModules,
+  moduleSet,
   user,
   ...
 }:
 {
-  imports = with globalModules; [
+  imports = with moduleSet; [
     # Include base module
     base
 

@@ -1,6 +1,7 @@
 inputs:
 
 with inputs.nixpkgs.lib;
+with builtins;
 
 rec {
   # Recursively find modules in a given directory and map them to a logical name:
@@ -8,18 +9,18 @@ rec {
   # dir/.../module/default.nix
   findModules =
     dir:
-    builtins.concatLists (
-      builtins.attrValues (
-        builtins.mapAttrs (
+    concatLists (
+      attrValues (
+        mapAttrs (
           name: type:
           if type == "regular" then
             [
               {
-                name = builtins.elemAt (builtins.match "(.*)\\.nix" name) 0;
+                name = elemAt (match "(.*)\\.nix" name) 0;
                 value = dir + "/${name}";
               }
             ]
-          else if (builtins.readDir (dir + "/${name}")) ? "default.nix" then
+          else if (readDir (dir + "/${name}")) ? "default.nix" then
             [
               {
                 inherit name;
@@ -28,9 +29,33 @@ rec {
             ]
           else
             findModules (dir + "/${name}")
-        ) (builtins.readDir dir)
+        ) (readDir dir)
       )
+    );
 
+  # Recursively find assets in a given directory and map them to a logical name:
+  # dir/.../asset.ext1
+  # dir/.../asset.ext2
+  findAssets =
+    dir: extensions:
+    let
+      ext_regex = "(?:${strings.concatStrings (strings.intersperse "|" extensions)})";
+    in
+    concatLists (
+      attrValues (
+        mapAttrs (
+          name: type:
+          if type == "regular" then
+            [
+              {
+                name = elemAt (match "(.*)\\.${ext_regex}" name) 0;
+                value = dir + "/${name}";
+              }
+            ]
+          else
+            findAssets (dir + "/${name}") extensions
+        ) (readDir dir)
+      )
     );
 
   # Function to create a nixos host config
@@ -48,16 +73,42 @@ rec {
         ./secrets.nix
       ];
       specialArgs = inputs // {
+        # Constants
         inherit
           user
           hostName
           system
-          globalModules
-          mkHost
+          ;
+        # Helper libs
+        inherit
+          moduleSet
+          iconSet
+          scriptSet
           ;
       };
     };
 
-  globalModules = builtins.listToAttrs (findModules ./modules);
+  moduleSet = listToAttrs (findModules ./modules);
+
+  iconSet = listToAttrs (
+    findAssets ./assets [
+      "png"
+      "jpg"
+      "jpeg"
+      "svg"
+      "ico"
+      "icns"
+    ]
+  );
+
+  scriptSet = mapAttrs (name: value: writeShellScriptBin name (builtins.readFile value)) (
+    listToAttrs (
+      findAssets ./scripts [
+        "sh"
+        "nu"
+        "py"
+      ]
+    )
+  );
 
 }
