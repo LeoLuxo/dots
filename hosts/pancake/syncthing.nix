@@ -1,6 +1,6 @@
 {
   config,
-  globalModules,
+  moduleSet,
   ...
 }:
 
@@ -8,7 +8,7 @@ let
   syncthingFolder = "/var/lib/syncthing";
 in
 {
-  imports = with globalModules; [
+  imports = with moduleSet; [
     syncthing
   ];
 
