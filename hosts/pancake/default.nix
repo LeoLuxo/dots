@@ -19,6 +19,8 @@
     vscode
     git
 
+    snip
+
     # Include local modules
     ./syncthing.nix
     ./wifi.nix
@@ -40,14 +42,6 @@
       dconf
 
       # gpaste
-
-      # Scripts
-      (writeShellScriptBin "rebuild" (builtins.readFile ../../scripts/rebuild.sh))
-
-      # Not putting these deps in the script because I don't want to wait to screenshot if they're missing
-      gnome-screenshot
-      wl-clipboard
-      (writeShellScriptBin "snip" (builtins.readFile ../../scripts/snip.sh))
 
       # # It is sometimes useful to fine-tune packages, for example, by applying
       # # overrides. You can do that directly here, just don't forget the

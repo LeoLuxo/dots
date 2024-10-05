@@ -1,6 +1,6 @@
-inputs:
+{ nixpkgs, ... }@inputs:
 
-with inputs.nixpkgs.lib;
+with nixpkgs.lib;
 with builtins;
 
 rec {
@@ -39,7 +39,7 @@ rec {
   findAssets =
     dir: extensions:
     let
-      ext_regex = "(?:${strings.concatStrings (strings.intersperse "|" extensions)})";
+      ext_regex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
     in
     concatLists (
       attrValues (
@@ -74,17 +74,10 @@ rec {
       ];
       specialArgs = inputs // {
         # Constants
-        inherit
-          user
-          hostName
-          system
-          ;
+        inherit user hostName system;
         # Helper libs
-        inherit
-          moduleSet
-          iconSet
-          scriptSet
-          ;
+        inherit moduleSet iconSet;
+        scriptSet = scriptSet system;
       };
     };
 
@@ -101,14 +94,19 @@ rec {
     ]
   );
 
-  scriptSet = mapAttrs (name: value: writeShellScriptBin name (builtins.readFile value)) (
-    listToAttrs (
-      findAssets ./scripts [
-        "sh"
-        "nu"
-        "py"
-      ]
-    )
-  );
+  scriptSet =
+    system:
+    let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    mapAttrs (name: value: pkgs.writeShellScriptBin name (builtins.readFile value)) (
+      listToAttrs (
+        findAssets ./scripts [
+          "sh"
+          "nu"
+          "py"
+        ]
+      )
+    );
 
 }
