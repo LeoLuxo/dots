@@ -6,6 +6,7 @@
   system,
   user,
   hostName,
+  scriptSet,
   ...
 }:
 {
@@ -68,6 +69,9 @@
 
     # Still include git globally even if home-manager takes care of its config
     git
+
+    # Rebuild script
+    scriptSet.rebuild
   ];
 
   # Networking
