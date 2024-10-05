@@ -2,7 +2,6 @@
   pkgs,
   user,
   lib,
-  globalModules,
   ...
 }:
 
@@ -17,7 +16,7 @@ with lib;
 
   home-manager.users.${user} =
     { lib, ... }:
-    with lib.hm.gvariant;
+    # with lib.hm.gvariant;
 
     {
       dconf.settings = {
@@ -29,13 +28,13 @@ with lib;
           icon-size = 0;
           tray-pos = "left";
 
-          custom-icons = [
-            (mkTuple [
-              "Vesktop"
-              (traceValSeq "${globalModules.discord}/discord-icon.png")
-              ""
-            ])
-          ];
+          # custom-icons = [
+          #   (mkTuple [
+          #     "Vesktop"
+          #     (traceValSeq "${moduleSet.discord}/discord-icon.png")
+          #     ""
+          #   ])
+          # ];
         };
       };
     };
