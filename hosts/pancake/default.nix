@@ -39,7 +39,7 @@
 
       obsidian
 
-      dconf
+      steam
 
       # gpaste
 
