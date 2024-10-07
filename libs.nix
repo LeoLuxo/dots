@@ -4,6 +4,41 @@ with nixpkgs.lib;
 with builtins;
 
 rec {
+  assetsDir = ./assets;
+  modulesDir = ./modules;
+  scriptsDir = ./scripts;
+
+  moduleSet = listToAttrs (findModules modulesDir);
+
+  imageSet = traceValSeq (
+    listToAttrs (
+      findAssets assetsDir [
+        "png"
+        "jpg"
+        "jpeg"
+        "gif"
+        "svg"
+        "ico"
+        "icns"
+      ]
+    )
+  );
+
+  scriptSet =
+    system:
+    let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    mapAttrs (name: value: pkgs.writeShellScriptBin name (builtins.readFile value)) (
+      listToAttrs (
+        findAssets scriptsDir [
+          "sh"
+          "nu"
+          "py"
+        ]
+      )
+    );
+
   # Recursively find modules in a given directory and map them to a logical name:
   # dir/.../module.nix
   # dir/.../module/default.nix
@@ -76,40 +111,9 @@ rec {
         # Constants
         inherit user hostName system;
         # Helper libs
-        inherit moduleSet iconSet;
+        inherit moduleSet imageSet;
         scriptSet = scriptSet system;
       };
     };
-
-  moduleSet = listToAttrs (findModules ./modules);
-
-  iconSet = traceValSeq (
-    listToAttrs (
-      findAssets ./assets [
-        "png"
-        "jpg"
-        "jpeg"
-        "gif"
-        "svg"
-        "ico"
-        "icns"
-      ]
-    )
-  );
-
-  scriptSet =
-    system:
-    let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
-    mapAttrs (name: value: pkgs.writeShellScriptBin name (builtins.readFile value)) (
-      listToAttrs (
-        findAssets ./scripts [
-          "sh"
-          "nu"
-          "py"
-        ]
-      )
-    );
 
 }
