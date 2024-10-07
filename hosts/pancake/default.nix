@@ -16,6 +16,7 @@
     boot
 
     gnome
+    copyq
 
     discord
     vscode

@@ -10,18 +10,17 @@ rec {
 
   moduleSet = listToAttrs (findModules modulesDir);
 
-  imageSet = traceValSeq (
-    listToAttrs (
-      findAssets assetsDir [
-        "png"
-        "jpg"
-        "jpeg"
-        "gif"
-        "svg"
-        "ico"
-        "icns"
-      ]
-    )
+  imageSet = listToAttrs (
+    findAssets assetsDir [
+      "png"
+      "jpg"
+      "jpeg"
+      "gif"
+      "svg"
+      "ico"
+      "icns"
+    ]
+
   );
 
   scriptSet =
