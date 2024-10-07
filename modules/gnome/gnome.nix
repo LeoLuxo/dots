@@ -67,6 +67,7 @@
       "org/gnome/mutter" = {
         edge-tiling = true;
         dynamic-workspaces = true;
+        workspaces-only-on-primary = true;
       };
 
       "org/gnome/shell/window-switcher" = {
