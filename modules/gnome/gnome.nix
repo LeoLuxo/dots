@@ -4,10 +4,8 @@
   imports = [
     ./extensions/tray-icons.nix
     ./extensions/wallhub.nix
+    ./extensions/clipboard.nix
   ];
-
-  # Enable the gpaste clipboard manager
-  programs.gpaste.enable = true;
 
   # Enable and configure the X11 windowing system.
   # It's a bit weird because we're running gnome under wayland?
@@ -21,6 +19,11 @@
 
   home-manager.users.${user} = {
     dconf.settings = {
+      # Default extensions
+      "org/gnome/shell" = {
+        enabled-extensions = [ "drive-menu@gnome-shell-extensions.gcampax.github.com" ];
+      };
+
       # Custom shortcuts
       "org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
@@ -67,6 +70,9 @@
       "org/gnome/shell/keybindings" = {
         # Defaults to Super+S
         toggle-quick-settings = [ ];
+
+        # Defaults to Super+V
+        toggle-message-tray = [ ];
       };
 
       # Desktop settings
