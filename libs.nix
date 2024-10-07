@@ -88,6 +88,7 @@ rec {
       "png"
       "jpg"
       "jpeg"
+      "gif"
       "svg"
       "ico"
       "icns"
