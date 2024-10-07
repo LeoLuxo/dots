@@ -55,13 +55,15 @@ sudo nixos-rebuild switch --impure --flake .#$HOSTNAME "$@" ||
 	)
 
 # Get current generation metadata
-current=$(nixos-rebuild list-generations | grep current | sed s/\*//g)
+current_gen=$(nixos-rebuild list-generations | grep current | sed s/\*//g)
+changes=$(git --no-pager diff --name-only .)
+msg="${current_gen}\n${changes}"
 
-echo -e "${BLUE}Current generation: ${RESET}${current}"
+echo -e "${BLUE}Current generation: ${RESET}\n${msg}"
 echo -e "${BLUE}Committing...${RESET}"
 
 # Commit all changes with the generation metadata
-git commit -am "$current" 1>/dev/null
+git commit -am "$msg" 1>/dev/null
 
 echo -e "${BLUE}Pushing...${RESET}"
 # Git push is stoopid and writes everything to stderr
