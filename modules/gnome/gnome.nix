@@ -5,6 +5,9 @@
     ./extensions/tray-icons.nix
     ./extensions/wallhub.nix
     ./extensions/clipboard.nix
+    ./extensions/translator.nix
+    ./extensions/emojis.nix
+    ./extensions/blur-my-shell.nix
   ];
 
   # Enable and configure the X11 windowing system.
