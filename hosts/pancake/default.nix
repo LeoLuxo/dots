@@ -17,6 +17,7 @@
 
     gnome
     gnome-tray-icons
+    gnome-clipboard
 
     discord
     vscode
