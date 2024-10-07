@@ -41,7 +41,7 @@
           }
         );
 
-        # Add a prebuild action to overwrite the tray icons
+        # Add a prebuild action to overwrite the tray icons and the dancing anime gif
         preBuild =
           oldAttrs.preBuild
           + ''
@@ -49,6 +49,8 @@
 
             cp -f "${iconSet.discord-logo-white}" static/icon.png
             cp -f "${iconSet.discord-icon}" static/icon.ico
+
+            cp -f "${iconSet.bongo-cat}" static/shiggy.gif
           '';
 
         # Add a preinstall action to overwrite the app icons
