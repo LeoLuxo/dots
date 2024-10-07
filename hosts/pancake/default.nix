@@ -12,14 +12,15 @@
     base
 
     # Include global modules
+    snip
+
     gnome
     gnome-tray-icons
 
     discord
     vscode
     git
-
-    snip
+    steam
 
     # Include local modules
     ./syncthing.nix
@@ -38,8 +39,6 @@
       bitwarden-desktop
 
       obsidian
-
-      steam
 
       # gpaste
 
