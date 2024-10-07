@@ -11,32 +11,7 @@
 
   home-manager.users.${user} = {
     dconf.settings = {
-      "org/gnome/desktop/peripherals/touchpad" = {
-        natural-scroll = true;
-        two-finger-scrolling-enabled = true;
-      };
-
-      "org/gnome/desktop/interface" = {
-        enable-hot-corners = false;
-      };
-
-      "org/gnome/mutter" = {
-        edge-tiling = true;
-        dynamic-workspaces = true;
-      };
-
-      "org/gnome/desktop/wm/keybindings" = {
-        switch-applications = [ ];
-        switch-applications-backward = [ ];
-
-        switch-windows = [ "<Alt>Tab" ];
-        switch-windows-backward = [ "<Shift><Alt>Tab" ];
-      };
-
-      "org/gnome/shell/keybindings" = {
-        toggle-quick-settings = [ ];
-      };
-
+      # Custom shortcuts
       "org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
@@ -56,10 +31,52 @@
         name = "Instant screenshot";
       };
 
+      # System shortcuts
+      "org/gnome/desktop/wm/keybindings" = {
+        # The default is Alt-tab to switch "apps" instead of individual "windows"
+        switch-applications = [ ];
+        switch-applications-backward = [ ];
+        switch-windows = [ "<Alt>Tab" ];
+        switch-windows-backward = [ "<Shift><Alt>Tab" ];
+
+        # These default to Ctrl-Alt-Arrow which prevents vscode from using it 
+        switch-to-workspace-up = [ ];
+        switch-to-workspace-down = [ ];
+
+        # Moving around workspaces
+        switch-to-workspace-right = [ "<Ctrl><Super>Right" ];
+        switch-to-workspace-left = [ "<Ctrl><Super>Left" ];
+
+        move-to-workspace-right = [ "<Super><Shift>Right" ];
+        move-to-workspace-left = [ "<Super><Shift>Left" ];
+      };
+
+      "org/gnome/shell/keybindings" = {
+        # Defaults to Super+S
+        toggle-quick-settings = [ ];
+      };
+
+      # Desktop settings
+      "org/gnome/desktop/interface" = {
+        enable-hot-corners = false;
+      };
+
+      "org/gnome/mutter" = {
+        edge-tiling = true;
+        dynamic-workspaces = true;
+      };
+
       "org/gnome/shell/window-switcher" = {
         current-workspace-only = true;
       };
 
+      # Touchpad
+      "org/gnome/desktop/peripherals/touchpad" = {
+        natural-scroll = true;
+        two-finger-scrolling-enabled = true;
+      };
+
+      # System sounds
       "org/gnome/desktop/sound" = {
         event-sounds = false;
       };
