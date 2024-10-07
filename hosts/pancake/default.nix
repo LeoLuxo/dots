@@ -16,8 +16,6 @@
     boot
 
     gnome
-    gnome-tray-icons
-    gnome-clipboard
 
     discord
     vscode
@@ -41,8 +39,6 @@
       bitwarden-desktop
 
       obsidian
-
-      # gpaste
 
       # # It is sometimes useful to fine-tune packages, for example, by applying
       # # overrides. You can do that directly here, just don't forget the
@@ -83,8 +79,7 @@
     LC_TIME = "da_DK.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  # It's a bit weird because we're running gnome under wayland?
+  # Enable and configure the X11 windowing system.
   services.xserver = {
     enable = true;
 
