@@ -56,11 +56,10 @@ sudo nixos-rebuild switch --impure --flake .#$HOSTNAME "$@" ||
 
 # Get current generation metadata
 current_gen=$(nixos-rebuild list-generations | grep current | sed s/\*//g)
-
 echo -e "${BLUE}Current generation: ${RESET}\n${current_gen}"
-echo -e "${BLUE}Committing...${RESET}"
 
 # Commit all changes with the generation metadata
+echo -e "${BLUE}Committing...${RESET}"
 git commit -am "$current_gen" -m "$changes" 1>/dev/null
 
 echo -e "${BLUE}Pushing...${RESET}"
