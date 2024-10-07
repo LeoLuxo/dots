@@ -13,6 +13,7 @@
 
     # Include global modules
     snip
+    boot
 
     gnome
     gnome-tray-icons
