@@ -16,7 +16,6 @@
     boot
 
     gnome
-    copyq
 
     discord
     vscode
@@ -42,6 +41,8 @@
       bitwarden-desktop
 
       obsidian
+
+      clipse
 
       # # It is sometimes useful to fine-tune packages, for example, by applying
       # # overrides. You can do that directly here, just don't forget the
