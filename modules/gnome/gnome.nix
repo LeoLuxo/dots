@@ -1,6 +1,16 @@
 { user, ... }:
 
 {
+  imports = [
+    ./extensions/tray-icons.nix
+    ./extensions/wallhub.nix
+  ];
+
+  # Enable the gpaste clipboard manager
+  programs.gpaste.enable = true;
+
+  # Enable and configure the X11 windowing system.
+  # It's a bit weird because we're running gnome under wayland?
   services.xserver = {
     enable = true;
 
