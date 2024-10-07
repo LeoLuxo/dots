@@ -39,16 +39,19 @@
         switch-windows = [ "<Alt>Tab" ];
         switch-windows-backward = [ "<Shift><Alt>Tab" ];
 
-        # These default to Ctrl-Alt-Arrow which prevents vscode from using it 
-        switch-to-workspace-up = [ ];
-        switch-to-workspace-down = [ ];
-
         # Moving around workspaces
         switch-to-workspace-right = [ "<Ctrl><Super>Right" ];
         switch-to-workspace-left = [ "<Ctrl><Super>Left" ];
+        switch-to-workspace-up = [ ]; # These default to Ctrl-Alt-Arrow which prevents vscode from using it
+        switch-to-workspace-down = [ ];
 
-        move-to-workspace-right = [ "<Super><Shift>Right" ];
-        move-to-workspace-left = [ "<Super><Shift>Left" ];
+        move-to-workspace-right = [ "<Ctrl><Super><Shift>Right" ];
+        move-to-workspace-left = [ "<Ctrl><Super><Shift>Left" ];
+
+        close = [
+          "<Alt>F4"
+          "<Super>q"
+        ];
       };
 
       "org/gnome/shell/keybindings" = {
