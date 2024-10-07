@@ -39,8 +39,8 @@ nixfmt --quiet . ||
 # fi
 
 # Shows changes
-echo -e "${BLUE}Files changed:${RESET}"
-git --no-pager diff --name-only .
+changes=$(git --no-pager diff --name-only .)
+echo -e "${BLUE}Files changed:${RESET}\n${changes}"
 
 echo -e "${BLUE}NixOS Rebuilding...${RESET}"
 
@@ -56,14 +56,12 @@ sudo nixos-rebuild switch --impure --flake .#$HOSTNAME "$@" ||
 
 # Get current generation metadata
 current_gen=$(nixos-rebuild list-generations | grep current | sed s/\*//g)
-changes=$(git --no-pager diff --name-only .)
-msg="${current_gen}\n${changes}"
 
 echo -e "${BLUE}Current generation: ${RESET}\n${msg}"
 echo -e "${BLUE}Committing...${RESET}"
 
 # Commit all changes with the generation metadata
-git commit -am "$msg" 1>/dev/null
+git commit -am "$current_gen" -m "$changes" 1>/dev/null
 
 echo -e "${BLUE}Pushing...${RESET}"
 # Git push is stoopid and writes everything to stderr
