@@ -3,13 +3,13 @@
   boot = {
     plymouth = {
       enable = true;
-      # theme = "deux_ex";
-      # themePackages = with pkgs; [
-      #   # By default we would install all themes
-      #   (adi1090x-plymouth-themes.override {
-      #     selected_themes = [ "deus-ex" ];
-      #   })
-      # ];
+      theme = "deus_ex";
+      themePackages = with pkgs; [
+        # By default we would install all themes
+        (adi1090x-plymouth-themes.override {
+          selected_themes = [ "deus_ex" ];
+        })
+      ];
     };
 
     # Enable "Silent Boot"
