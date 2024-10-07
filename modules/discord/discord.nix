@@ -41,20 +41,21 @@
           }
         );
 
-        # Add a prebuild action to overwrite the tray icon
+        # Add a prebuild action to overwrite the tray icons
         preBuild =
           oldAttrs.preBuild
           + ''
-            pushd build
-            cp ${iconSet.discord-white} Icon.png
-            popd
+            cp -f "${iconSet.discord-logo-white}" build/Icon.png
+
+            cp -f "${iconSet.discord-logo-white}" static/icon.png
+            cp -f "${iconSet.discord-icon}" static/icon.ico
           '';
 
         # Add a preinstall action to overwrite the app icons
         preInstall = ''
           pushd build
           rm icon_*x32.png
-          cp ${iconSet.discord-white} icon_512x512x32.png
+          cp "${iconSet.discord-logo-white}" icon_512x512x32.png
           popd
         '';
       });
