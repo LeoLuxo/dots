@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  iconSet,
+  imageSet,
   ...
 }:
 
@@ -45,18 +45,18 @@
         preBuild =
           oldAttrs.preBuild
           + ''
-            cp -f "${iconSet.discord-white}" build/Icon.png
+            cp -f "${imageSet.discord-white}" build/Icon.png
 
-            cp -f "${iconSet.discord-white}" static/icon.png
-            cp -f "${iconSet.discord}" static/icon.ico
+            cp -f "${imageSet.discord-white}" static/icon.png
+            cp -f "${imageSet.discord-icon}" static/icon.ico
 
-            cp -f "${iconSet.bongo-cat}" static/shiggy.gif
+            cp -f "${imageSet.bongo-cat}" static/shiggy.gif
           '';
 
         # Add a preinstall action to overwrite the app icons and the dancing anime gif
         preInstall = ''
           rm build/icon_*x32.png
-          cp "${iconSet.discord-white}" build/icon_512x512x32.png
+          cp "${imageSet.discord-white}" build/icon_512x512x32.png
         '';
       });
     })
