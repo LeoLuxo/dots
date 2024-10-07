@@ -41,24 +41,22 @@
           }
         );
 
-        # Add a prebuild action to overwrite the tray icons and the dancing anime gif
+        # Add a prebuild action to overwrite the tray and app icons and the dancing anime gif
         preBuild =
           oldAttrs.preBuild
           + ''
-            cp -f "${iconSet.discord-logo-white}" build/Icon.png
+            cp -f "${iconSet.discord-white}" build/Icon.png
 
-            cp -f "${iconSet.discord-logo-white}" static/icon.png
-            cp -f "${iconSet.discord-icon}" static/icon.ico
+            cp -f "${iconSet.discord-white}" static/icon.png
+            cp -f "${iconSet.discord}" static/icon.ico
 
             cp -f "${iconSet.bongo-cat}" static/shiggy.gif
           '';
 
-        # Add a preinstall action to overwrite the app icons
+        # Add a preinstall action to overwrite the app icons and the dancing anime gif
         preInstall = ''
-          pushd build
-          rm icon_*x32.png
-          cp "${iconSet.discord-logo-white}" icon_512x512x32.png
-          popd
+          rm build/icon_*x32.png
+          cp "${iconSet.discord-white}" build/icon_512x512x32.png
         '';
       });
     })
