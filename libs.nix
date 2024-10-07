@@ -83,16 +83,18 @@ rec {
 
   moduleSet = listToAttrs (findModules ./modules);
 
-  iconSet = listToAttrs (
-    findAssets ./assets [
-      "png"
-      "jpg"
-      "jpeg"
-      "gif"
-      "svg"
-      "ico"
-      "icns"
-    ]
+  iconSet = traceValSeq (
+    listToAttrs (
+      findAssets ./assets [
+        "png"
+        "jpg"
+        "jpeg"
+        "gif"
+        "svg"
+        "ico"
+        "icns"
+      ]
+    )
   );
 
   scriptSet =
