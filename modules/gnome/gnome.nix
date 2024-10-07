@@ -90,6 +90,11 @@
         current-workspace-only = true;
       };
 
+      "org/gnome/shell" = {
+        # Clear the default app drawer
+        favorite-apps = [ ];
+      };
+
       # Touchpad
       "org/gnome/desktop/peripherals/touchpad" = {
         natural-scroll = true;
@@ -100,6 +105,7 @@
       "org/gnome/desktop/sound" = {
         event-sounds = false;
       };
+
     };
   };
 }
