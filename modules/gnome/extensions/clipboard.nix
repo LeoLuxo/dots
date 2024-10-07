@@ -10,7 +10,7 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     # Manage wallpapers with ease
-    gnomeExtensions.wallhub
+    gnomeExtensions.clipboard-indicator
   ];
 
   home-manager.users.${user} =
