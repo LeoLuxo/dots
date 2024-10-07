@@ -22,6 +22,13 @@ with lib;
         "org/gnome/shell" = {
           enabled-extensions = [ "wallhub@sakithb.github.io" ];
         };
+
+        "org/gnome/shell/extensions/clipboard-indicator" = {
+          toggle-menu = [ "<Super>v" ];
+          next-entry = [ "<Super>down" ];
+          previous-entry = [ "<Super>up" ];
+        };
+
       };
     };
 }
