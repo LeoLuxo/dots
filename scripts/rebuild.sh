@@ -48,6 +48,7 @@ echo -e "${BLUE}NixOS Rebuilding...${RESET}"
 git add .
 
 # Rebuild, and if errors occur make sure to exit
+# tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
 sudo nixos-rebuild switch --impure --flake .#$HOSTNAME --option tarball-ttl 0 "$@" ||
 	(
 		git restore --staged .
