@@ -22,6 +22,57 @@ with lib;
         "org/gnome/shell" = {
           enabled-extensions = [ "blur-my-shell@aunetx" ];
         };
+
+        "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
+          blur = true;
+          brightness = 0.6;
+          sigma = 30;
+        };
+
+        "org/gnome/shell/extensions/blur-my-shell/dash-to-dock" = {
+          blur = false;
+          brightness = 0.6;
+          pipeline = "pipeline_default_rounded";
+          sigma = 30;
+          static-blur = true;
+          style-dash-to-dock = 0;
+        };
+
+        "org/gnome/shell/extensions/blur-my-shell/hidetopbar" = {
+          compatibility = false;
+        };
+
+        "org/gnome/shell/extensions/blur-my-shell/lockscreen" = {
+          pipeline = "pipeline_default";
+        };
+
+        "org/gnome/shell/extensions/blur-my-shell/overview" = {
+          blur = true;
+          pipeline = "pipeline_default";
+          style-components = 3;
+        };
+
+        "org/gnome/shell/extensions/blur-my-shell/panel" = {
+          blur = true;
+          brightness = 0.6;
+          force-light-text = false;
+          override-background-dynamically = false;
+          pipeline = "pipeline_default";
+          sigma = 30;
+          static-blur = true;
+          style-panel = 0;
+          unblur-in-overview = true;
+        };
+
+        "org/gnome/shell/extensions/blur-my-shell/screenshot" = {
+          blur = true;
+          pipeline = "pipeline_default";
+        };
+
+        "org/gnome/shell/extensions/blur-my-shell/window-list" = {
+          brightness = 1.0;
+          sigma = 30;
+        };
       };
     };
 }
