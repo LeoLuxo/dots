@@ -33,10 +33,10 @@ in
     secrets = attrsets.recursiveUpdate extractedSecrets {
       "wifi/eduroam-ca.pem" = {
         # Required by NetworkManager
-        path = "/etc/NetworkManager/system-connections/eduroam-ca.pem";
-        owner = "root";
-        group = "root";
-        mode = "600";
+        # path = "/etc/NetworkManager/system-connections/eduroam-ca.pem";
+        # owner = "root";
+        # group = "root";
+        # mode = "600";
       };
     };
   };
