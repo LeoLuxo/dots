@@ -33,8 +33,6 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  programs.gpaste.enable = true;
-
   # Home-Manager config
   home-manager.users.${user} = {
     home.packages = with pkgs; [

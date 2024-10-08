@@ -20,7 +20,7 @@ with lib;
     {
       dconf.settings = {
         "org/gnome/shell" = {
-          # enabled-extensions = [ "wallhub@sakithb.github.io" ];
+          enabled-extensions = [ "blur-my-shell@aunetx" ];
         };
       };
     };
