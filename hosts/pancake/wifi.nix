@@ -77,13 +77,14 @@
     serviceConfig = {
       User = "root";
       Group = "root";
-      script = ''
-        cp "${
-          config.age.secrets."wifi/eduroam-ca.pem".path
-        }" /etc/NetworkManager/system-connections/eduroam-ca.pem
-        chown root:root /etc/NetworkManager/system-connections/eduroam-ca.pem
-        chmod 600 /etc/NetworkManager/system-connections/eduroam-ca.pem
-      '';
+      Type = "oneshot";
     };
+    script = ''
+      cp "${
+        config.age.secrets."wifi/eduroam-ca.pem".path
+      }" /etc/NetworkManager/system-connections/eduroam-ca.pem
+      chown root:root /etc/NetworkManager/system-connections/eduroam-ca.pem
+      chmod 600 /etc/NetworkManager/system-connections/eduroam-ca.pem
+    '';
   };
 }
