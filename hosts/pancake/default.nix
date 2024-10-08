@@ -12,12 +12,12 @@
     base
 
     # Include global modules
-    boot
     snip
     translator
 
     gnome
 
+    # boot
     catppuccin
 
     discord
