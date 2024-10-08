@@ -10,7 +10,7 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     # Translate extension for Gnome-Shell - based on translate-shell, inspired by Tudmotu's clipboard-indicator and gufoe's text-translator.
-    gnomeExtensions.translate-indicator
+    gnomeExtensions.translate-clipboard
   ];
 
   home-manager.users.${user} =
@@ -23,7 +23,7 @@ with lib;
           # enabled-extensions = [ "clipboard-indicator@tudmotu.com" ];
         };
 
-        "org/gnome/shell/extensions/translate-indicator" =
+        "org/gnome/shell/extensions/translate-clipboard" =
           {
           };
 
