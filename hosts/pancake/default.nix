@@ -17,7 +17,7 @@
 
     gnome
 
-    # boot
+    boot
     catppuccin
 
     discord
