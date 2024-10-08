@@ -17,6 +17,7 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   # Enable the new nix cli tool and flakes
   nix.settings.experimental-features = [
