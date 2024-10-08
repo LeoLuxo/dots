@@ -30,8 +30,6 @@
       "org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/translate/"
         ];
       };
 
@@ -39,18 +37,6 @@
         binding = "<Super>t";
         command = "kgx";
         name = "GNOME Console";
-      };
-
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
-        binding = "<Super>s";
-        command = "snip";
-        name = "Instant screenshot";
-      };
-
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/translate" = {
-        binding = "<Super>d";
-        command = "dialect --selection";
-        name = "Instant translate";
       };
 
       # System shortcuts

@@ -1,7 +1,13 @@
-{ user, ... }:
+{ pkgs, user, ... }:
 
 {
   home-manager.users.${user} = {
+
+    home.packages = with pkgs; [
+      # Gnome circles commit editor
+      commit
+    ];
+
     programs.git = {
       enable = true;
 
@@ -18,10 +24,12 @@
         core = {
           # Don't hide the .git directory on windows
           hideDotFiles = false;
-          # Set the text editor
-          editor = "code";
+
           # Disable the CRLF warning (but still auto convert)
           safecrlf = false;
+
+          # Set the commit editor to vscode
+          editor = "re.sonny.Commit";
         };
 
         # Automatically setup remote when pushing on a repo that was cloned (iirc?)
