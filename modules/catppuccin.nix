@@ -14,7 +14,7 @@
     enable = true;
 
     # Choose flavor
-    flavor = "mocha";
+    flavor = "frappe";
     accent = "blue";
   };
 
@@ -28,7 +28,7 @@
       enable = true;
       catppuccin = {
         enable = true;
-        flavor = "mocha";
+        flavor = "frappe";
         accent = "blue";
         size = "standard";
         tweaks = [ "normal" ];
