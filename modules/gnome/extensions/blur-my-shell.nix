@@ -51,7 +51,7 @@ with lib;
         "org/gnome/shell/extensions/blur-my-shell/overview" = {
           blur = true;
           pipeline = "pipeline_default";
-          style-components = 3;
+          style-components = 1;
         };
 
         "org/gnome/shell/extensions/blur-my-shell/panel" = {
@@ -62,7 +62,7 @@ with lib;
           pipeline = "pipeline_default";
           sigma = 30;
           static-blur = true;
-          style-panel = 0;
+          style-panel = 3;
           unblur-in-overview = true;
         };
 
