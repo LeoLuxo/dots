@@ -9,6 +9,8 @@ with lib;
 
 {
   environment.systemPackages = with pkgs; [
+    dconf
+
     # Manage wallpapers with ease
     gnomeExtensions.wallhub
   ];
