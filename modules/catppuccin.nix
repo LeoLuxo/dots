@@ -1,6 +1,6 @@
 {
-  catppuccin,
   user,
+  catppuccin,
   ...
 }:
 
@@ -9,12 +9,32 @@
     catppuccin.nixosModules.catppuccin
   ];
 
-  # Choose flavor
-  catppuccin.flavor = "mocha";
-  catppuccin.accent = "blue";
+  catppuccin = {
+    # Enable the theme for all compatible apps
+    enable = true;
 
-  # Enable the theme for all compatible apps
-  catppuccin.enable = true;
+    # Choose flavor
+    flavor = "mocha";
+    accent = "blue";
+  };
 
-  boot.plymouth.catppuccin.enable = true;
+  home-manager.users.${user} = {
+    imports = [
+      catppuccin.homeManagerModules.catppuccin
+    ];
+
+    # Enable catppuccin for gtk
+    gtk = {
+      enable = true;
+      catppuccin = {
+        enable = true;
+        flavor = "mocha";
+        accent = "blue";
+        size = "standard";
+        tweaks = [ "normal" ];
+      };
+    };
+  };
+
+  boot.plymouth.catppuccin.enable = false;
 }
