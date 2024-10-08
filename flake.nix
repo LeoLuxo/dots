@@ -21,6 +21,9 @@
       # optionally choose not to download darwin deps (saves some resources on Linux)
       inputs.darwin.follows = "";
     };
+
+    # Catppuccin themes
+    catppuccin.url = "github:catppuccin/nix";
   };
 
   outputs =

@@ -18,6 +18,8 @@
 
     gnome
 
+    catppuccin
+
     discord
     vscode
     git

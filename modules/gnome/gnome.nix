@@ -1,8 +1,7 @@
-{ user, ... }:
+{ pkgs, user, ... }:
 
 {
   imports = [
-    ./extensions/tray-icons.nix
     ./extensions/wallhub.nix
     ./extensions/clipboard.nix
     ./extensions/emojis.nix
@@ -20,10 +19,22 @@
   };
 
   home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      dconf
+      gnomeExtensions.removable-drive-menu
+
+      # Adds AppIndicator, KStatusNotifierItem and legacy Tray icons support to the Shell
+      # (Because gnome by default doesn't support tray icons)
+      gnomeExtensions.appindicator
+    ];
+
     dconf.settings = {
-      # Default extensions
+      # Base extensions
       "org/gnome/shell" = {
-        enabled-extensions = [ "drive-menu@gnome-shell-extensions.gcampax.github.com" ];
+        enabled-extensions = [
+          "drive-menu@gnome-shell-extensions.gcampax.github.com"
+          "appindicatorsupport@rgcjonas.gmail.com"
+        ];
       };
 
       # Custom shortcuts
@@ -99,6 +110,12 @@
       # System sounds
       "org/gnome/desktop/sound" = {
         event-sounds = false;
+      };
+
+      # Base extension settings
+      "org/gnome/shell/extensions/appindicator" = {
+        icon-size = 0;
+        tray-pos = "left";
       };
 
     };
