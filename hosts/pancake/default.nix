@@ -21,6 +21,7 @@
     vscode
     git
     steam
+    kdeconnect
 
     # Include local modules
     ./syncthing.nix
