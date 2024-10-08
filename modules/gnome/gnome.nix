@@ -5,7 +5,6 @@
     ./extensions/tray-icons.nix
     ./extensions/wallhub.nix
     ./extensions/clipboard.nix
-    ./extensions/translator.nix
     ./extensions/emojis.nix
     ./extensions/blur-my-shell.nix
   ];
@@ -32,6 +31,7 @@
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/translate/"
         ];
       };
 
@@ -45,6 +45,12 @@
         binding = "<Super>s";
         command = "snip";
         name = "Instant screenshot";
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/translate" = {
+        binding = "<Super>d";
+        command = "dialect --selection";
+        name = "Instant translate";
       };
 
       # System shortcuts

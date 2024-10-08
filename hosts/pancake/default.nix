@@ -12,10 +12,11 @@
     base
 
     # Include global modules
-    snip
     boot
+    snip
 
     gnome
+    gnome-circles
 
     discord
     vscode

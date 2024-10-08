@@ -70,21 +70,4 @@
       };
     };
   };
-
-  # systemd.services.eduroam-ca = {
-  #   wantedBy = [ "NetworkManager-ensure-profiles.service" ];
-  #   enable = true;
-  #   serviceConfig = {
-  #     User = "root";
-  #     Group = "root";
-  #     Type = "oneshot";
-  #   };
-  #   script = ''
-  #     cp "${
-  #       config.age.secrets."wifi/eduroam-ca.pem".path
-  #     }" /etc/NetworkManager/system-connections/eduroam-ca.pem
-  #     chown root:root /etc/NetworkManager/system-connections/eduroam-ca.pem
-  #     chmod 600 /etc/NetworkManager/system-connections/eduroam-ca.pem
-  #   '';
-  # };
 }
