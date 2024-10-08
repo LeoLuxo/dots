@@ -27,14 +27,6 @@ with lib;
         "org/gnome/shell/extensions/appindicator" = {
           icon-size = 0;
           tray-pos = "left";
-
-          # custom-icons = [
-          #   (mkTuple [
-          #     "Vesktop"
-          #     (traceValSeq "${moduleSet.discord}/discord-icon.png")
-          #     ""
-          #   ])
-          # ];
         };
       };
     };
