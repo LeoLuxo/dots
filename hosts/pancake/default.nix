@@ -21,6 +21,7 @@
     gnome-clipboard
     gnome-emojis
     gnome-wallhub
+    gnome-gsconnect
 
     snip
     translator
@@ -29,7 +30,7 @@
     vscode
     git
     steam
-    kdeconnect
+    # kdeconnect
 
     # Include local modules
     ./syncthing.nix
@@ -44,6 +45,8 @@
 
   # Home-Manager config
   home-manager.users.${user} = {
+
+    # Extra packages that don't necessarily need an entire dedicated module
     home.packages = with pkgs; [
       bitwarden-desktop
 
