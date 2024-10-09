@@ -5,7 +5,7 @@
 }:
 
 let
-  syncthingFolder = "/var/lib/syncthing";
+  syncthingFolder = "/home/lili/.config/syncthing";
 in
 {
   imports = with moduleSet; [
@@ -13,7 +13,8 @@ in
   ];
 
   services.syncthing = {
-    # user = "lili";
+    user = "lili";
+    group = "users";
 
     # The path where synchronised directories will exist.
     # The path where the settings and keys will exist.
