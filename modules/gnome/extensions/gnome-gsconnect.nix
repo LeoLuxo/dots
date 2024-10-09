@@ -15,6 +15,11 @@ with lib;
     gnomeExtensions.gsconnect
   ];
 
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
+
   home-manager.users.${user} =
     { lib, ... }:
     # with lib.hm.gvariant;
