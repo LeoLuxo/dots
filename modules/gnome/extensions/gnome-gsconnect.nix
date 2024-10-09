@@ -22,7 +22,7 @@ with lib;
     {
       dconf.settings = {
         "org/gnome/shell" = {
-          # enabled-extensions = [ "clipboard-indicator@tudmotu.com" ];
+          enabled-extensions = [ "gsconnect@andyholmes.github.io" ];
         };
       };
     };
