@@ -9,12 +9,12 @@
 {
   imports = with moduleSet; [
     # Include base module
-    base
+    common-base
 
     # Include global modules
-    boot
+    boot-customization
+    theme-catppuccin
     fonts
-    catppuccin
 
     gnome
     gnome-blur-my-shell
@@ -52,11 +52,9 @@
       textpieces
       hieroglyphic
 
-      teams
+      # Original electron teams package was abandoned
+      teams-for-linux
     ];
-
-    # Environment variables
-    home.sessionVariables = { };
   };
 
   # Bootloader.
