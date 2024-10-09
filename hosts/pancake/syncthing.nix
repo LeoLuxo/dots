@@ -34,6 +34,7 @@ in
 
       # Don't care that the device ids end up in cleartext on the nix store
       devices = {
+        "strobery".id = "BH4QRX3-AXCRBBK-32KWW2A-33XYEMB-CKDONYH-4KLE4QA-NXE5LIX-QB4Q5AN";
         "neon".id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
         "celestia".id = "FEEK44G-XI3OFWE-TTTSDUC-WCTTXRX-JYGVGKG-AJDLL5I-FWEEQR4-H6YQ7QX";
       };
@@ -44,6 +45,7 @@ in
           id = "zzaui-egygo";
           path = "/stuff/obsidian";
           devices = [
+            "strobery"
             "neon"
             "celestia"
           ];
@@ -53,6 +55,7 @@ in
           id = "ythpr-clgdt";
           path = "/stuff/important_docs";
           devices = [
+            "strobery"
             "neon"
           ];
         };
@@ -61,6 +64,7 @@ in
           id = "oguzw-svsqp";
           path = "/stuff/share";
           devices = [
+            "strobery"
             "neon"
           ];
         };
@@ -69,6 +73,7 @@ in
           id = "ddre2-cukd9";
           path = "/stuff/uni_courses";
           devices = [
+            "strobery"
             "neon"
           ];
         };
@@ -77,6 +82,7 @@ in
           id = "p2ror-eujtw";
           path = "/stuff/vault";
           devices = [
+            "strobery"
             "neon"
           ];
         };
