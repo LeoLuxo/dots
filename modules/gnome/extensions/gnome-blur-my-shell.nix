@@ -10,8 +10,6 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     dconf
-
-    # Adds a blur look to different parts of the GNOME Shell, including the top panel, dash and overview.
     gnomeExtensions.blur-my-shell
   ];
 

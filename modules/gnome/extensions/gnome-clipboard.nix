@@ -10,8 +10,6 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     dconf
-
-    # Gnome Clipboard History is a clipboard manager GNOME extension that saves items you've copied into an easily accessible, searchable history panel.
     gnomeExtensions.clipboard-indicator
   ];
 

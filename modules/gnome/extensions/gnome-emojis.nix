@@ -10,8 +10,6 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     dconf
-
-    # Emoji copy is a versatile extension designed to simplify emoji selection and clipboard management.
     gnomeExtensions.emoji-copy
   ];
 
