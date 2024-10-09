@@ -23,6 +23,8 @@
     gnome-wallhub
     gnome-gsconnect
     gnome-just-perfection
+    gnome-rounded-corners
+    gnome-weather
 
     snip
     translator
