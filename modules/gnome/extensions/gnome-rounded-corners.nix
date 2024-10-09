@@ -20,12 +20,8 @@ with lib;
     {
       dconf.settings = {
         "org/gnome/shell" = {
-          # enabled-extensions = [ "clipboard-indicator@tudmotu.com" ];
+          enabled-extensions = [ "rounded-window-corners@fxgn" ];
         };
-
-        "org/gnome/shell/extensions/clipboard-indicator" =
-          {
-          };
 
       };
     };

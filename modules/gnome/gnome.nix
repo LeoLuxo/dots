@@ -140,7 +140,11 @@
         };
 
         "org/gnome/shell/extensions/system-monitor" = {
+          show-cpu = false;
+          show-memory = false;
           show-swap = false;
+          show-upload = false;
+          show-download = false;
         };
       };
     };
