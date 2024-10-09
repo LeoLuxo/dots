@@ -22,6 +22,7 @@
     gnome-emojis
     gnome-wallhub
     gnome-gsconnect
+    gnome-just-perfection
 
     snip
     translator
