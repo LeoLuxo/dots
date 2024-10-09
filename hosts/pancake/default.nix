@@ -14,8 +14,13 @@
     # Include global modules
     boot
     fonts
-    gnome
     catppuccin
+
+    gnome
+    gnome-blur-my-shell
+    gnome-clipboard
+    gnome-emojis
+    gnome-wallhub
 
     snip
     translator
