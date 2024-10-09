@@ -10,8 +10,6 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     dconf
-
-    # Tweak Tool to Customize GNOME Shell, Change the Behavior and Disable UI Elements.
     gnomeExtensions.just-perfection
   ];
 

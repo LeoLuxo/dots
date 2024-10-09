@@ -10,7 +10,7 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     dconf
-    gnomeExtensions.wallhub
+    gnomeExtensions.openweather-refined
   ];
 
   home-manager.users.${user} =
@@ -20,8 +20,13 @@ with lib;
     {
       dconf.settings = {
         "org/gnome/shell" = {
-          enabled-extensions = [ "wallhub@sakithb.github.io" ];
+          # enabled-extensions = [ "clipboard-indicator@tudmotu.com" ];
         };
+
+        "org/gnome/shell/extensions/clipboard-indicator" =
+          {
+          };
+
       };
     };
 }
