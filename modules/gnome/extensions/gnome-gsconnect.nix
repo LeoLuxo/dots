@@ -10,13 +10,11 @@ with lib;
 {
   environment.systemPackages = with pkgs; [
     dconf
-
-    # KDE Connect implementation for Gnome Shell.
-    gnomeExtensions.gsconnect
   ];
 
   programs.kdeconnect = {
     enable = true;
+    # KDE Connect implementation for Gnome Shell.
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
