@@ -1,7 +1,6 @@
 { user, ... }:
 
 {
-  # TODO
   home-manager.users.${user} = {
     services.kdeconnect = {
       enable = true;
