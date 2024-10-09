@@ -62,7 +62,7 @@ with lib;
           pipeline = "pipeline_default";
           sigma = 30;
           static-blur = true;
-          style-panel = 3;
+          style-panel = 0;
           unblur-in-overview = true;
         };
 
