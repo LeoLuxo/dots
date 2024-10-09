@@ -70,8 +70,14 @@
           switch-to-workspace-up = [ ]; # These default to Ctrl-Alt-Arrow which prevents vscode from using it
           switch-to-workspace-down = [ ];
 
-          move-to-workspace-right = [ "<Ctrl><Super><Shift>Right" ];
-          move-to-workspace-left = [ "<Ctrl><Super><Shift>Left" ];
+          move-to-workspace-right = [
+            "<Ctrl><Super>Tab"
+            "<Ctrl><Super><Shift>Right"
+          ];
+          move-to-workspace-left = [
+            "<Ctrl><Super><Shift>Tab"
+            "<Ctrl><Super><Shift>Left"
+          ];
 
           close = [
             "<Alt>F4"
