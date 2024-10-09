@@ -1,6 +1,5 @@
-{ lib, ... }:
+{ ... }:
 
-with lib;
 {
   boot = {
     plymouth = {
