@@ -59,8 +59,14 @@
           switch-windows-backward = [ "<Shift><Alt>Tab" ];
 
           # Moving around workspaces
-          switch-to-workspace-right = [ "<Ctrl><Super>Right" ];
-          switch-to-workspace-left = [ "<Ctrl><Super>Left" ];
+          switch-to-workspace-right = [
+            "<Super>Tab"
+            "<Ctrl><Super>Right"
+          ];
+          switch-to-workspace-left = [
+            "<Super><Shift>Tab"
+            "<Ctrl><Super>Left"
+          ];
           switch-to-workspace-up = [ ]; # These default to Ctrl-Alt-Arrow which prevents vscode from using it
           switch-to-workspace-down = [ ];
 
