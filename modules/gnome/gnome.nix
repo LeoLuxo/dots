@@ -1,12 +1,6 @@
 { pkgs, user, ... }:
 
 {
-  imports = [
-    ./extensions/wallhub.nix
-    ./extensions/clipboard.nix
-    ./extensions/emojis.nix
-    ./extensions/blur-my-shell.nix
-  ];
 
   # Enable and configure the X11 windowing system.
   # It's a bit weird because we're running gnome under wayland?
