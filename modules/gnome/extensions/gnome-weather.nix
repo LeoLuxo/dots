@@ -33,17 +33,14 @@ with lib;
               (mkUint32 1)
               ""
             ])
-            (mkTuple [
-              0
-              "Aarhus, Aarhus Kommune, Region Midtjylland, 8000, Danmark"
-              0
-              "56.1496278,10.2134046"
-            ])
           ];
           my-loc-prov = "ipinfoio";
           position-in-panel = "center";
-          show-comment-in-panel = true;
-          show-sunsetrise-in-panel = true;
+          position-index = 1;
+          show-comment-in-panel = false;
+          show-sunsetrise-in-panel = false;
+          show-text-in-panel = true;
+
         };
       };
     };
