@@ -20,10 +20,6 @@
       home.packages = with pkgs; [
         dconf
         gnomeExtensions.removable-drive-menu
-        gnomeExtensions.system-monitor
-
-        # Adds AppIndicator, KStatusNotifierItem and legacy Tray icons support to the Shell
-        # (Because gnome by default doesn't support tray icons)
         gnomeExtensions.appindicator
       ];
 
@@ -32,7 +28,6 @@
         "org/gnome/shell" = {
           enabled-extensions = [
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
-            "system-monitor@gnome-shell-extensions.gcampax.github.com"
             "appindicatorsupport@rgcjonas.gmail.com"
           ];
         };
@@ -137,14 +132,6 @@
         "org/gnome/shell/extensions/appindicator" = {
           icon-size = 0;
           tray-pos = "left";
-        };
-
-        "org/gnome/shell/extensions/system-monitor" = {
-          show-cpu = false;
-          show-memory = false;
-          show-swap = false;
-          show-upload = false;
-          show-download = false;
         };
       };
     };
