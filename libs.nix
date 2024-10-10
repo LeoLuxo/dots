@@ -4,10 +4,14 @@ with nixpkgs.lib;
 with builtins;
 
 rec {
-  moduleSet = traceValSeq (findModules ./modules);
+  assetsDir = ./assets;
+  modulesDir = ./modules;
+  scriptsDir = ./scripts;
 
-  imageSet = traceValSeq (
-    findAssets ./assets [
+  moduleSet = listToAttrs (findModules modulesDir);
+
+  imageSet = listToAttrs (
+    findAssets assetsDir [
       "png"
       "jpg"
       "jpeg"
@@ -16,6 +20,7 @@ rec {
       "ico"
       "icns"
     ]
+
   );
 
   scriptSet =
@@ -24,8 +29,8 @@ rec {
       pkgs = nixpkgs.legacyPackages.${system};
     in
     mapAttrs (name: value: pkgs.writeShellScriptBin name (builtins.readFile value)) (
-      traceValSeq (
-        findAssets ./scripts [
+      listToAttrs (
+        findAssets scriptsDir [
           "sh"
           "nu"
           "py"
@@ -33,48 +38,59 @@ rec {
       )
     );
 
-  # Recursively find modules/files in a given directory and map them to a logical name:
-  # dir/a/b/module.ext = {a = {b = {module = path}}}
-  # dir/a/b/module/default.ext = {a = {b = {module = path}}}
-  findFiles =
-    dir: extensions: allowDefault:
+  # Recursively find modules in a given directory and map them to a logical name:
+  # dir/.../module.nix
+  # dir/.../module/default.nix
+  findModules =
+    dir:
+    concatLists (
+      attrValues (
+        mapAttrs (
+          name: type:
+          if type == "regular" then
+            [
+              {
+                name = elemAt (match "(.*)\\.nix" name) 0;
+                value = dir + "/${name}";
+              }
+            ]
+          else if (readDir (dir + "/${name}")) ? "default.nix" then
+            [
+              {
+                inherit name;
+                value = dir + "/${name}";
+              }
+            ]
+          else
+            findModules (dir + "/${name}")
+        ) (readDir dir)
+      )
+    );
+
+  # Recursively find assets in a given directory and map them to a logical name:
+  # dir/.../asset.ext1
+  # dir/.../asset.ext2
+  findAssets =
+    dir: extensions:
     let
-      extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
+      ext_regex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
     in
-    # concatLists (
-    mapAttrs (
-      name: type:
-      let
-        extMatch = (match "(.*)\\.${extRegex}" name);
-      in
-      if (type == "regular") && (extMatch != null) then
-        # File matches "file.ext" pattern, include it
-        [
-          {
-            name = elemAt extMatch 0;
-            value = dir + "/${name}";
-          }
-        ]
-      else if type == "directory" then
-        if allowDefault && (readDir (dir + "/${name}")) ? "default.${extRegex}" then
-          # Folder contains a "default.ext" file, include it (and don't search subfolders)
-          [
-            {
-              inherit name;
-              value = dir + "/${name}";
-            }
-          ]
-        else
-          # Recursively search subfolders
-          [
-            {
-              inherit name;
-              value = findFiles (dir + "/${name}") extensions allowDefault;
-            }
-          ]
-      else
-        [ ]
-    ) (readDir dir);
+    concatLists (
+      attrValues (
+        mapAttrs (
+          name: type:
+          if type == "regular" then
+            [
+              {
+                name = elemAt (match "(.*)\\.${ext_regex}" name) 0;
+                value = dir + "/${name}";
+              }
+            ]
+          else
+            findAssets (dir + "/${name}") extensions
+        ) (readDir dir)
+      )
+    );
 
   # Function to create a nixos host config
   mkHost =
