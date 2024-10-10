@@ -11,6 +11,8 @@
       ];
 
       profiles = {
+
+        # Home network
         "Celeste Mountain" = {
           connection = {
             id = "Celeste Mountain";
@@ -37,6 +39,34 @@
           };
         };
 
+        # Isabella's home network
+        HUAWEI-AN1XC8_5G = {
+          connection = {
+            id = "HUAWEI-AN1XC8_5G";
+            interface-name = "wlp0s20f3";
+            type = "wifi";
+            uuid = "7b1d293c-0466-414a-b57d-b8598d021ce4";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "HUAWEI-AN1XC8_5G";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$ISABELLA_PSK";
+          };
+        };
+
+        # Uni network
         eduroam = {
           "802-1x" = {
             ca-cert = config.age.secrets."wifi/eduroam-ca.pem".path;
