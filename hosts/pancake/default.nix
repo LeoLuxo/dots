@@ -20,15 +20,17 @@
     gnome-blur-my-shell
     gnome-clipboard
     gnome-emojis
-    gnome-wallhub
     gnome-gsconnect
     gnome-just-perfection
     gnome-rounded-corners
     gnome-weather
+    # gnome-wallhub
+    # gnome-system-monitor
 
     snip
     translator
 
+    obsidian
     discord
     vscode
     git
@@ -52,8 +54,6 @@
     # Extra packages that don't necessarily need an entire dedicated module
     home.packages = with pkgs; [
       bitwarden-desktop
-
-      obsidian
 
       textpieces
       hieroglyphic
