@@ -1,40 +1,19 @@
 {
-  user,
-  catppuccin,
+  pkgs,
+  stylix,
+  directories,
   ...
 }:
 
 {
   imports = [
-    catppuccin.nixosModules.catppuccin
+    stylix.nixosModules.stylix
   ];
 
-  catppuccin = {
-    # Enable the theme for all compatible apps
-    enable = true;
+  stylix.enable = true;
 
-    # Choose flavor
-    flavor = "frappe";
-    accent = "blue";
-  };
+  stylix.image = directories.images."wallpaper-nixos";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-frappe.yaml";
+  stylix.polarity = "dark";
 
-  home-manager.users.${user} = {
-    imports = [
-      catppuccin.homeManagerModules.catppuccin
-    ];
-
-    # Enable catppuccin for gtk
-    gtk = {
-      enable = true;
-      catppuccin = {
-        enable = true;
-        flavor = "frappe";
-        accent = "blue";
-        size = "standard";
-        tweaks = [ "normal" ];
-      };
-    };
-  };
-
-  boot.plymouth.catppuccin.enable = false;
 }
