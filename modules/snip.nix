@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  scriptSet,
+  scriptBin,
   ...
 }:
 {
@@ -14,7 +14,7 @@
       wl-clipboard
 
       # The script
-      scriptSet.snip
+      scriptBin.snip
     ];
 
     dconf.settings = {

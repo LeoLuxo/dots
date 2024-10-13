@@ -2,12 +2,12 @@
   pkgs,
   nixos-hardware,
   agenix,
-  moduleSet,
+  directories,
   user,
   ...
 }:
 {
-  imports = with moduleSet; [
+  imports = with directories.modules; [
     # Include base module
     common-base
 

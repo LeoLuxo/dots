@@ -1,6 +1,6 @@
 {
   config,
-  moduleSet,
+  directories,
   ...
 }:
 
@@ -8,7 +8,7 @@ let
   syncthingFolder = "/home/lili/.config/syncthing";
 in
 {
-  imports = with moduleSet; [
+  imports = with directories.modules; [
     syncthing
   ];
 
