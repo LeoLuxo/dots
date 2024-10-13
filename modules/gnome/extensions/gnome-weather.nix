@@ -13,6 +13,9 @@ with lib;
     gnomeExtensions.openweather-refined
   ];
 
+  # Enable the automatic location provider on the system
+  location.provider = "geoclue2";
+
   home-manager.users.${user} =
     { lib, ... }:
     with lib.hm.gvariant;
@@ -39,7 +42,7 @@ with lib;
               ""
             ])
           ];
-          my-loc-prov = "ipinfoio";
+          my-loc-prov = "geoclue";
           position-in-panel = "center";
           position-index = 1;
           show-comment-in-panel = false;
