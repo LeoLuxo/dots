@@ -77,11 +77,9 @@
   time.timeZone = "Europe/Copenhagen";
 
   # Select internationalisation properties.
-  # Use english (Denmark) as default locale (which btw is a bit of a weird locale)
-  i18n.defaultLocale = "en_IE.UTF-8";
-
-  # Use english (Ireland) for everything else; see:
+  # Use english (Ireland); see: 
   # https://unix.stackexchange.com/questions/62316/why-is-there-no-euro-english-locale
+  i18n.defaultLocale = "en_IE.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_IE.UTF-8";
     LC_IDENTIFICATION = "en_IE.UTF-8";

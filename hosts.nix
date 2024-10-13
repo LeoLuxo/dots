@@ -7,7 +7,7 @@
     user = "lili";
     hostName = "pancake";
     system = "x86_64-linux";
-    hostModule = ./hosts/pancake;
+    module = ./hosts/pancake;
   };
 
 }
