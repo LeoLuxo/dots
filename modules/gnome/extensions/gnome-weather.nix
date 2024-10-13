@@ -48,7 +48,6 @@ with lib;
           show-comment-in-panel = false;
           show-sunsetrise-in-panel = false;
           show-text-in-panel = true;
-
         };
       };
     };
