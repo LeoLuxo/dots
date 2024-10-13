@@ -77,17 +77,21 @@
   time.timeZone = "Europe/Copenhagen";
 
   # Select internationalisation properties.
+  # Use english (Denmark) as default locale (which btw is a bit of a weird locale)
   i18n.defaultLocale = "en_DK.UTF-8";
+
+  # Use english (Ireland) for everything else; see:
+  # https://unix.stackexchange.com/questions/62316/why-is-there-no-euro-english-locale
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_DK.UTF-8";
-    LC_IDENTIFICATION = "en_DK.UTF-8";
-    LC_MEASUREMENT = "en_DK.UTF-8";
-    LC_MONETARY = "en_DK.UTF-8";
-    LC_NAME = "en_DK.UTF-8";
-    LC_NUMERIC = "en_DK.UTF-8";
-    LC_PAPER = "en_DK.UTF-8";
-    LC_TELEPHONE = "en_DK.UTF-8";
-    LC_TIME = "en_DK.UTF-8";
+    LC_ADDRESS = "en_IE.UTF-8";
+    LC_IDENTIFICATION = "en_IE.UTF-8";
+    LC_MEASUREMENT = "en_IE.UTF-8";
+    LC_MONETARY = "en_IE.UTF-8";
+    LC_NAME = "en_IE.UTF-8";
+    LC_NUMERIC = "en_IE.UTF-8";
+    LC_PAPER = "en_IE.UTF-8";
+    LC_TELEPHONE = "en_IE.UTF-8";
+    LC_TIME = "en_IE.UTF-8";
   };
 
   # Enable and configure the X11 windowing system.
