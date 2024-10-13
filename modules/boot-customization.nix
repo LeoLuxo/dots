@@ -2,17 +2,17 @@
 
 {
   boot = {
-    plymouth = {
-      enable = true;
-      theme = "breeze";
-      # By default if theme=breeze, themePackages will include a nixos-themed version of breeze
-      # themePackages = with pkgs; [
-      #   # By default we would install all themes
-      #   (adi1090x-plymouth-themes.override {
-      #     selected_themes = [ "deus_ex" ];
-      #   })
-      # ];
-    };
+    # plymouth = {
+    #   enable = true;
+    #   theme = "breeze";
+    #   # By default if theme=breeze, themePackages will include a nixos-themed version of breeze
+    #   # themePackages = with pkgs; [
+    #   #   # By default we would install all themes
+    #   #   (adi1090x-plymouth-themes.override {
+    #   #     selected_themes = [ "deus_ex" ];
+    #   #   })
+    #   # ];
+    # };
 
     # Enable "Silent Boot"
     consoleLogLevel = 0;
