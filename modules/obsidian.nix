@@ -1,13 +1,15 @@
 {
   pkgs,
   user,
-  moduleSet,
+  directories,
   ...
 }:
 
 {
   # Require fonts
-  imports = with moduleSet; [ fonts ];
+  imports = with directories.modules; [
+    fonts
+  ];
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [

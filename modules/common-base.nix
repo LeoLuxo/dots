@@ -6,7 +6,7 @@
   system,
   user,
   hostName,
-  scriptSet,
+  scriptBin,
   ...
 }:
 {
@@ -71,7 +71,7 @@
     git
 
     # Rebuild script
-    scriptSet.rebuild
+    scriptBin.rebuild
   ];
 
   # Networking
