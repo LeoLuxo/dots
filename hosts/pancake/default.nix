@@ -73,22 +73,21 @@
     fsType = "btrfs";
   };
 
-  # Set your time zone.
+  # Set your manual time zone.
   time.timeZone = "Europe/Copenhagen";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_DK.UTF-8";
-
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "da_DK.UTF-8";
-    LC_IDENTIFICATION = "da_DK.UTF-8";
-    LC_MEASUREMENT = "da_DK.UTF-8";
-    LC_MONETARY = "da_DK.UTF-8";
-    LC_NAME = "da_DK.UTF-8";
-    LC_NUMERIC = "da_DK.UTF-8";
-    LC_PAPER = "da_DK.UTF-8";
-    LC_TELEPHONE = "da_DK.UTF-8";
-    LC_TIME = "da_DK.UTF-8";
+    LC_ADDRESS = "en_DK.UTF-8";
+    LC_IDENTIFICATION = "en_DK.UTF-8";
+    LC_MEASUREMENT = "en_DK.UTF-8";
+    LC_MONETARY = "en_DK.UTF-8";
+    LC_NAME = "en_DK.UTF-8";
+    LC_NUMERIC = "en_DK.UTF-8";
+    LC_PAPER = "en_DK.UTF-8";
+    LC_TELEPHONE = "en_DK.UTF-8";
+    LC_TIME = "en_DK.UTF-8";
   };
 
   # Enable and configure the X11 windowing system.
@@ -128,13 +127,13 @@
     #media-session.enable = true;
   };
 
+  # System programs
   programs = {
     # Install firefox.
     firefox.enable = true;
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # System packages
   environment.systemPackages = with pkgs; [
     nano
     wget
@@ -145,25 +144,6 @@
     # Install agenix CLI
     agenix.packages.${system}.default
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
