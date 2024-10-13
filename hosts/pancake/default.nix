@@ -12,8 +12,9 @@
     common-base
 
     # Include global modules
-    boot-customization
-    theme-catppuccin
+    # boot-customization
+    # theme-catppuccin
+    theme-sky
     fonts
 
     gnome
