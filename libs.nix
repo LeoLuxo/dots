@@ -95,17 +95,17 @@ rec {
       user,
       hostName,
       system,
-      hostModule,
+      module,
     }:
     nixosSystem {
       inherit system;
       modules = [
-        hostModule
+        module
         ./secrets.nix
       ];
       specialArgs = inputs // {
         # Constants
-        inherit user hostName system;
+        inherit user system hostName;
         # Helper libs
         inherit directories;
         scriptBin = scriptBin system;

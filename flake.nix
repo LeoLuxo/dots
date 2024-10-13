@@ -22,6 +22,12 @@
       inputs.darwin.follows = "";
     };
 
+    # Tool for customizing/theming nixos
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Catppuccin themes
     catppuccin.url = "github:catppuccin/nix";
   };
