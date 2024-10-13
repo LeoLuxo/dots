@@ -14,6 +14,7 @@ with lib;
   ];
 
   # Enable the automatic location provider on the system
+  services.geoclue2.enable = true;
   location.provider = "geoclue2";
 
   home-manager.users.${user} =
