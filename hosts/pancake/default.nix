@@ -8,24 +8,19 @@
 }:
 {
   imports = with directories.modules; [
-    # Include base module
-    common-base
-
     # Include global modules
+    themes.catppuccin
     boot-customization
-    theme-catppuccin
     fonts
 
-    gnome
-    gnome-blur-my-shell
-    gnome-clipboard
-    gnome-emojis
-    gnome-gsconnect
-    gnome-just-perfection
-    gnome-rounded-corners
-    gnome-weather
-    # gnome-wallhub
-    # gnome-system-monitor
+    gnome.gnome
+    gnome.extensions.blur-my-shell
+    gnome.extensions.clipboard
+    gnome.extensions.emojis
+    gnome.extensions.gsconnect
+    gnome.extensions.just-perfection
+    gnome.extensions.rounded-corners
+    gnome.extensions.weather
 
     snip
     translator
@@ -35,7 +30,6 @@
     vscode
     git
     steam
-    # kdeconnect
 
     # Include local modules
     ./syncthing.nix

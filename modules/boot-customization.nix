@@ -7,7 +7,7 @@
       theme = "breeze";
       # By default if theme=breeze, themePackages will include a nixos-themed version of breeze
       # themePackages = with pkgs; [
-      #   # By default we would install all themes
+      #   # By default this would install all themes
       #   (adi1090x-plymouth-themes.override {
       #     selected_themes = [ "deus_ex" ];
       #   })
