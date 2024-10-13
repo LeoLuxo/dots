@@ -23,6 +23,11 @@ with lib;
           enabled-extensions = [ "openweather-extension@penguin-teal.github.io" ];
         };
 
+        # Enable automatic location services (in privacy tab)
+        "org/gnome/system/location" = {
+          enabled = true;
+        };
+
         "org/gnome/shell/extensions/openweatherrefined" = {
           actual-city = 1;
           has-run = true;

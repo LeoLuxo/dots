@@ -40,7 +40,7 @@ with lib;
           max-displayed-search-results = 0;
           notification-banner-position = 1;
           osd = true;
-          osd-position = 2;
+          osd-position = 5;
           panel = true;
           panel-in-overview = true;
           panel-notification-icon = true;
