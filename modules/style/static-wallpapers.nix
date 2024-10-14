@@ -1,10 +1,14 @@
 {
+  pkgs,
   user,
   directories,
   ...
 }:
 
 {
+  # Disable default gnome wallpapers
+  environment.gnome.excludePackages = [ pkgs.gnome-backgrounds ];
+
   home-manager.users.${user} = {
     xdg = {
       enable = true;
