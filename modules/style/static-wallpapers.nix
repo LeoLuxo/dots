@@ -17,7 +17,7 @@
       # ~/.local/share/backgrounds
       dataFile."backgrounds" = {
         source = directories.images.wallpapers._dir;
-        recursive = true;
+        # recursive = true;
       };
     };
   };
