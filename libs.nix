@@ -34,9 +34,9 @@ rec {
     in
     mapAttrs (name: value: pkgs.writeShellScriptBin name (builtins.readFile value)) directories.scripts;
 
-  # Recursively find modules in a given directory and map them to a logical name:
-  # dir/.../module.ext
-  # dir/.../module/default.ext
+  # Recursively find modules in a given directory and map them to a logical set:
+  # dir/a/b/file.ext         => .a.b.file
+  # dir/a/b/file/default.ext => .a.b.file
   findFiles =
     dir: extensions: allowDefault:
     let
@@ -48,48 +48,55 @@ rec {
 
       findFilesRecursive =
         dir:
-        attrsets.filterAttrs (n: v: v != null) (
-          attrsets.mapAttrs' (
-            fileName: type:
-            let
-              extMatch = (match "(.*)\\.${extRegex}" fileName);
-              filePath = dir + "/${fileName}";
-            in
-            # If regular file, then add it to the file list only if the extension regex matches
-            if type == "regular" then
-              if extMatch == null then
-                ignore fileName
-              else
-                {
-                  name = elemAt extMatch 0;
-                  value = filePath;
-                }
-            # If directory, ...
-            else if type == "directory" then
+        attrsets.filterAttrs
+          # filter out ignored files/dirs
+          (n: v: v != null)
+          (
+            attrsets.mapAttrs' (
+              fileName: type:
               let
-                # ... then search for a default.ext file
-                files = readDir filePath;
-                defaultFiles = map (ext: "default.${ext}") extensions;
-                hasDefault = any (defaultFile: files ? ${defaultFile}) defaultFiles;
+                extMatch = (match "(.*)\\.${extRegex}" fileName);
+                filePath = dir + "/${fileName}";
               in
-              # if it exists, add the directory to our file list
-              if allowDefault && hasDefault then
-                {
-                  name = fileName;
-                  value = filePath;
-                }
+              # If regular file, then add it to the file list only if the extension regex matches
+              if type == "regular" then
+                if extMatch == null then
+                  ignore fileName
+                else
+                  {
+                    # Filename without the extension
+                    name = elemAt extMatch 0;
+                    value = filePath;
+                  }
+              # If directory, ...
+              else if type == "directory" then
+                let
+                  # ... then search for a default.ext file
+                  files = readDir filePath;
+                  defaultFiles = map (ext: "default.${ext}") extensions;
+                  hasDefault = any (defaultFile: files ? ${defaultFile}) defaultFiles;
+                in
+                # if the default file exists, add the directory to our file list
+                if allowDefault && hasDefault then
+                  {
+                    name = fileName;
+                    value = filePath;
+                  }
+                else
+                  # otherwise search recursively in the directory,
+                  # and map the results to a nested set with the name of the folder as top key.
+                  # Also add the base directory path under the _dir key
+                  {
+                    name = fileName;
+                    value = findFilesRecursive filePath // {
+                      _dir = filePath;
+                    };
+                  }
               else
-                # otherwise search recursively in the directory
-                # and map the results to a nested set with the name of the folder as top key
-                {
-                  name = fileName;
-                  value = findFilesRecursive filePath;
-                }
-            else
-              # any other file types we ignore (i.e. symlink and unknown)
-              ignore fileName
-          ) (readDir dir)
-        );
+                # any other file types we ignore (i.e. symlink and unknown)
+                ignore fileName
+            ) (readDir dir)
+          );
     in
     findFilesRecursive dir;
 

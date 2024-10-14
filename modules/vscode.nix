@@ -8,7 +8,7 @@
 {
   # Require fonts for vscode
   imports = with directories.modules; [
-    fonts
+    style.fonts
   ];
 
   home-manager.users.${user} = {
