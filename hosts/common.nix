@@ -29,6 +29,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
+    # On activation move existing files by appending the given file extension rather than exiting with an error.
+    # Applies to home.file and also xdg.*File
+    backupFileExtension = "bak";
+
     users.${user} = {
       # Do not change
       home.stateVersion = "24.05";
