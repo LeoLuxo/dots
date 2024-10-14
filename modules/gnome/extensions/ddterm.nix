@@ -20,12 +20,22 @@ with lib;
     {
       dconf.settings = {
         "org/gnome/shell" = {
-          # enabled-extensions = [ "clipboard-indicator@tudmotu.com" ];
+          enabled-extensions = [ "ddterm@amezin.github.com" ];
         };
 
-        "org/gnome/shell/extensions/clipboard-indicator" =
-          {
-          };
+        "com/github/amezin/ddterm" = {
+          audible-bell = false;
+          cursor-shape = "ibeam";
+          custom-font = "Mononoki Nerd Font 10";
+          ddterm-toggle-hotkey = [ "<Super>space" ];
+          backspace-binding = "auto";
+          delete-binding = "auto";
+          hide-when-focus-lost = true;
+          hide-window-on-esc = true;
+          pointer-autohide = true;
+          shortcuts-enabled = false;
+          use-system-font = false;
+        };
 
       };
     };
