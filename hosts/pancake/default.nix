@@ -9,18 +9,19 @@
 {
   imports = with directories.modules; [
     # Include global modules
-    themes.catppuccin
-    boot-customization
-    fonts
+    style.bootscreen
+    style.fonts
+    style.static-wallpapers
+    style.themes.catppuccin
 
     gnome.gnome
     gnome.extensions.blur-my-shell
     gnome.extensions.clipboard
-    gnome.extensions.emojis
     gnome.extensions.gsconnect
     gnome.extensions.just-perfection
     gnome.extensions.rounded-corners
-    gnome.extensions.weather
+    # gnome.extensions.emojis
+    # gnome.extensions.weather
 
     snip
     translator
