@@ -20,6 +20,7 @@
     gnome.extensions.gsconnect
     gnome.extensions.just-perfection
     gnome.extensions.rounded-corners
+    gnome.extensions.ddterm
     # gnome.extensions.emojis
     # gnome.extensions.weather
 
