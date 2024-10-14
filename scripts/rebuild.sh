@@ -56,7 +56,7 @@ sudo nixos-rebuild switch --impure --flake .#$HOSTNAME --option tarball-ttl 0 "$
 	)
 
 # Get current generation metadata
-current_gen=$(nixos-rebuild list-generations | grep current | sed s/\*//g)
+current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
 echo -e "${BLUE}Current generation: ${RESET}\n${current_gen}"
 
 # Commit all changes with the generation metadata
