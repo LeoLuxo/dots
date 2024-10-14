@@ -23,8 +23,8 @@
     # gnome.extensions.emojis
     # gnome.extensions.weather
 
-    terminals.guake
-    # terminals.ddterm
+    # terminals.guake
+    terminals.ddterm
 
     snip
     translator
