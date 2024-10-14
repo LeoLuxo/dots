@@ -25,16 +25,17 @@ with lib;
 
         "com/github/amezin/ddterm" = {
           audible-bell = false;
-          cursor-shape = "ibeam";
-          custom-font = "Mononoki Nerd Font 10";
-          ddterm-toggle-hotkey = [ "<Super>space" ];
           backspace-binding = "auto";
+          cursor-shape = "ibeam";
+          custom-font = "Mononoki Nerd Font 14";
+          ddterm-toggle-hotkey = [ "<Super>backslash" ];
           delete-binding = "auto";
           hide-when-focus-lost = true;
           hide-window-on-esc = true;
           pointer-autohide = true;
           shortcuts-enabled = false;
           use-system-font = false;
+          window-position = "left";
         };
 
       };

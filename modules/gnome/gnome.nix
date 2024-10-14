@@ -50,6 +50,8 @@
           # The default is Alt-tab to switch "apps" instead of individual "windows"
           switch-applications = [ ];
           switch-applications-backward = [ ];
+          switch-group = [ ];
+          switch-group-backward = [ ];
           switch-windows = [ "<Alt>Tab" ];
           switch-windows-backward = [ "<Shift><Alt>Tab" ];
 
