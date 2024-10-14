@@ -2,6 +2,8 @@
 
 {
 
+  imports = [ ./triple-buffering.nix ];
+
   # Enable and configure the X11 windowing system.
   # It's a bit weird because we're running gnome under wayland?
   services.xserver = {

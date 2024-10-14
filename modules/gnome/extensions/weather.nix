@@ -8,20 +8,21 @@
 with lib;
 
 {
-  environment.systemPackages = with pkgs; [
-    dconf
-    gnomeExtensions.openweather-refined
-  ];
+  programs.dconf.enable = true;
 
   # Enable the automatic location provider on the system
+  # (doesn't seem to be working tho :/)
   services.geoclue2.enable = true;
   location.provider = "geoclue2";
 
   home-manager.users.${user} =
     { lib, ... }:
     with lib.hm.gvariant;
-
     {
+      home.packages = with pkgs; [
+        gnomeExtensions.openweather-refined
+      ];
+
       dconf.settings = {
         "org/gnome/shell" = {
           enabled-extensions = [ "openweather-extension@penguin-teal.github.io" ];

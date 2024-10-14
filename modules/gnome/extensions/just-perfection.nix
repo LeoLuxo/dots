@@ -8,8 +8,8 @@
 with lib;
 
 {
+  programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
-    dconf
     gnomeExtensions.just-perfection
   ];
 

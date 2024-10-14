@@ -8,16 +8,16 @@
 with lib;
 
 {
-  environment.systemPackages = with pkgs; [
-    dconf
-    gnomeExtensions.system-monitor
-  ];
+  programs.dconf.enable = true;
 
   home-manager.users.${user} =
     { lib, ... }:
     # with lib.hm.gvariant;
-
     {
+      home.packages = with pkgs; [
+        gnomeExtensions.system-monitor
+      ];
+
       dconf.settings = {
         "org/gnome/shell" = {
           enabled-extensions = [ "system-monitor@gnome-shell-extensions.gcampax.github.com" ];

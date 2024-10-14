@@ -1,16 +1,11 @@
 {
   pkgs,
   user,
-  lib,
   ...
 }:
 
-with lib;
-
 {
-  environment.systemPackages = with pkgs; [
-    dconf
-  ];
+  programs.dconf.enable = true;
 
   programs.kdeconnect = {
     enable = true;
@@ -18,26 +13,9 @@ with lib;
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  # networking.firewall = {
-  #   enable = true;
-  #   allowedTCPPortRanges = [
-  #     {
-  #       from = 1714;
-  #       to = 1764;
-  #     }
-  #   ];
-  #   allowedUDPPortRanges = [
-  #     {
-  #       from = 1714;
-  #       to = 1764;
-  #     }
-  #   ];
-  # };
-
   home-manager.users.${user} =
     { lib, ... }:
     # with lib.hm.gvariant;
-
     {
       dconf.settings = {
         "org/gnome/shell" = {
