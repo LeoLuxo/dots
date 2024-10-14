@@ -8,16 +8,16 @@
 with lib;
 
 {
-  environment.systemPackages = with pkgs; [
-    dconf
-    gnomeExtensions.ddterm
-  ];
+  programs.dconf.enable = true;
 
   home-manager.users.${user} =
     { lib, ... }:
     # with lib.hm.gvariant;
-
     {
+      home.packages = with pkgs; [
+        gnomeExtensions.ddterm
+      ];
+
       dconf.settings = {
         "org/gnome/shell" = {
           enabled-extensions = [ "ddterm@amezin.github.com" ];
