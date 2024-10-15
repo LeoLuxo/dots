@@ -1,16 +1,16 @@
 { pkgs, user, ... }:
 
 {
+  programs.dconf.enable = true;
+
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      dconf
-
       # Gnome circles translator app
       dialect
     ];
 
     dconf.settings = {
-      # Custom shortcuts
+      # Custom shortcut
       "org/gnome/settings-daemon/plugins/media-keys" = {
         custom-keybindings = [
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/translate/"
