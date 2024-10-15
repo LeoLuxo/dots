@@ -132,6 +132,11 @@
           night-light-temperature = mkUint32 2700;
         };
 
+        # Appearance
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+        };
+
         # Base extension settings
         "org/gnome/shell/extensions/appindicator" = {
           icon-size = 0;
