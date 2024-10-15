@@ -63,7 +63,7 @@ with lib;
           use-theme-colors = false;
           window-maximize = false;
           window-position = "top";
-          window-size = 0.5124269005847953;
+          window-size = 0.75;
         };
 
       };
