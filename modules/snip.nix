@@ -5,10 +5,10 @@
   ...
 }:
 {
+  programs.dconf.enable = true;
+
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      dconf
-
       # Not putting these deps in the script because I don't want to wait to screenshot if they're missing
       gnome-screenshot
       wl-clipboard
