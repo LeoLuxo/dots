@@ -26,8 +26,10 @@
     # terminals.guake
     terminals.ddterm
 
+    # translation.deepl
+    translation.gnome-dialect
+
     snip
-    translator
 
     obsidian
     discord
