@@ -13,6 +13,7 @@ rec {
       "jpeg"
       "gif"
       "svg"
+      "heic"
     ] false;
 
     icons = findFiles ./assets/icons [

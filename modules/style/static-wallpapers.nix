@@ -16,7 +16,7 @@
       # Symlink all static wallpapers into the gnome wallpaper directory
       # ~/.local/share/backgrounds
       dataFile."backgrounds" = {
-        source = directories.images.wallpapers._dir;
+        source = directories.images.static-wallpapers._dir;
         # recursive = true;
       };
     };
