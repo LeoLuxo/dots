@@ -13,7 +13,7 @@
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/discord-mute" = {
         binding = "<Super>m";
-        command = "echo VCD_TOGGLE_SELF_MUTE >> $XDG_RUNTIME_DIR/vesktop-ipc";
+        command = "echo $XDG_RUNTIME_DIR; echo VCD_TOGGLE_SELF_MUTE >> $XDG_RUNTIME_DIR/vesktop-ipc";
         name = "Discord mute";
       };
 
