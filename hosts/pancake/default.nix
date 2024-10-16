@@ -31,6 +31,7 @@
 
     nx
     snip
+    dconf-diff
 
     obsidian
     discord
