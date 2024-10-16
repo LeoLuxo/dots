@@ -17,6 +17,23 @@
     (final: prev: {
       vesktop = prev.vesktop.overrideAttrs (oldAttrs: {
 
+        # Override the source to a PR to have global keybinds
+        # TODO: Remove when pull request gets merged
+        # version = "1.5.3-keybinds";
+        # src = prev.fetchFromGitHub {
+        #   owner = "PolisanTheEasyNick";
+        #   repo = "Vesktop";
+        #   rev = "3a84dbc0d28a8152284d82004b1315e7fe03778a";
+        #   hash = "sha256-i+i0oOLST72cMWwtSHJnVDaWojMA3g7TXGvBBewGBcE=";
+        # };
+
+        # patches = oldAttrs.patches ++ [
+        #   (prev.fetchpatch {
+        #     url = "https://patch-diff.githubusercontent.com/raw/Vencord/Vesktop/pull/609.patch";
+        #     hash = "sha256-UaAYbBmMN3/kYVUwNV0/tH7aNZk32JnaUwjsAaZqXwk=";
+        #   })
+        # ];
+
         # Overwrite the desktop item so the app name is "Discord"
         desktopItems = (
           prev.makeDesktopItem {
