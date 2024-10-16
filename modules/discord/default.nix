@@ -1,4 +1,6 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  imports = [ ./vesktop.nix ];
+  imports = [
+    ./vesktop
+  ];
 }
