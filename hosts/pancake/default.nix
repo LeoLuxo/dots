@@ -29,6 +29,7 @@
     # translation.deepl
     translation.gnome-dialect
 
+    nx
     snip
 
     obsidian

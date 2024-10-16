@@ -6,7 +6,6 @@
   system,
   user,
   hostName,
-  scriptBin,
   ...
 }:
 {
@@ -73,9 +72,6 @@
 
     # Still include git globally even if home-manager takes care of its config
     git
-
-    # Rebuild script
-    scriptBin.rebuild
   ];
 
   # Networking
