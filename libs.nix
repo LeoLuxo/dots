@@ -100,72 +100,42 @@ rec {
     in
     findFilesRecursive dir;
 
-  # let
-  #   findFilesInner =
-  #     dir:
-  #     concatLists (
-  #       attrValues (
-  #         mapAttrs (
-  #           fileName: type:
-  #           let
-  #             extMatch = (match "(.*)\\.${extRegex}" fileName);
-  #           in
-  #           # If regular file, then add it to the file list only if the extension regex matches
-  #           if type == "regular" then
-  #             if extMatch == null then
-  #               [ ]
-  #             else
-  #               [
-  #                 {
-  #                   name = elemAt extMatch 0;
-  #                   value = dir + "/${fileName}";
-  #                 }
-  #               ]
-  #           # If directory, ...
-  #           else if type == "directory" then
-  #             let
-  #               # ... then search for a default.ext file
-  #               files = readDir (dir + "/${fileName}");
-  #               defaultFiles = map (ext: "default.${ext}") extensions;
-  #               hasDefault = any (defaultFile: files ? ${defaultFile}) defaultFiles;
-  #             in
-  #             # if it exists, add the directory to our file list
-  #             if allowDefault && hasDefault then
-  #               [
-  #                 {
-  #                   name = fileName;
-  #                   value = dir + "/${fileName}";
-  #                 }
-  #               ]
-  #             else
-  #               # otherwise search recursively in the directory
-  #               # and map the results to a nested set with the name of the folder as top key
-  #               [
-  #                 {
-  #                 name = fileName;
-  #                 value = 
-  #                 }
-  #               ]
-  #               map (
-  #                 { name, value }:
-  #                 {
-  #                   name = fileName;
-  #                   value = {
-  #                     ${name} = value;
-  #                   };
-  #                 }
-  #               ) (traceValSeq (findFilesInner (dir + "/${fileName}")))
-  #           else
-  #             # any other file types we ignore (i.e. symlink and unknown)
-  #             [ ]
-  #         ) (readDir dir)
-  #       )
-  #     );
-  # in
-  # listToAttrs (findFilesInner dir);
+  # Utility to easily create a new keybind
+  mkGnomeKeybind =
+    {
+      id,
+      name,
+      binding,
+      command,
+    }:
+    let
+      script = "keybind-${id}";
+    in
+    # Module to be imported
+    { pkgs, user, ... }:
+    {
+      programs.dconf.enable = true;
+      home-manager.users.${user} = {
+        # Create an extra script for the keybind, this avoids vertain issues
+        home.packages = [
+          (pkgs.writeShellScriptBin script command)
+        ];
 
-  # Shortcut to easily import whole directories structures
-  importDirectory = path: mapAttrs (name: value: import value) (findFiles path [ "nix" ] false);
+        # Add the keybind to dconf
+        dconf.settings = {
+          "org/gnome/settings-daemon/plugins/media-keys" = {
+            custom-keybindings = [
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
+            ];
+          };
+
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
+            inherit binding name;
+            command = script;
+          };
+        };
+      };
+    };
 
   # Function to create a nixos host config
   mkHost =
@@ -182,7 +152,7 @@ rec {
         # Constants
         inherit user system hostName;
         # Helper libs
-        inherit directories findFiles importDirectory;
+        inherit directories findFiles mkGnomeKeybind;
         scriptBin = scriptBin system;
       };
     };
