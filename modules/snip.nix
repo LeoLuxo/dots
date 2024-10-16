@@ -2,10 +2,17 @@
   pkgs,
   user,
   scriptBin,
+  mkGnomeKeybind,
   ...
 }:
 {
-  programs.dconf.enable = true;
+  imports = [
+    (mkGnomeKeybind {
+      name = "Instant screenshot";
+      binding = "<Super>s";
+      command = "snip";
+    })
+  ];
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
@@ -16,20 +23,5 @@
       # The script
       scriptBin.snip
     ];
-
-    dconf.settings = {
-      # Custom shortcuts
-      "org/gnome/settings-daemon/plugins/media-keys" = {
-        custom-keybindings = [
-          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot/"
-        ];
-      };
-
-      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/screenshot" = {
-        binding = "<Super>s";
-        command = "snip";
-        name = "Instant screenshot";
-      };
-    };
   };
 }

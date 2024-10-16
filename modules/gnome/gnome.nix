@@ -1,8 +1,19 @@
-{ pkgs, user, ... }:
-
 {
+  pkgs,
+  user,
+  mkGnomeKeybind,
+  ...
+}:
+{
+  imports = [
+    ./triple-buffering.nix
 
-  imports = [ ./triple-buffering.nix ];
+    (mkGnomeKeybind {
+      name = "GNOME Console";
+      binding = "<Super>t";
+      command = "kgx";
+    })
+  ];
 
   # Enable and configure the X11 windowing system.
   # It's a bit weird because we're running gnome under wayland?
@@ -33,19 +44,6 @@
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
             "appindicatorsupport@rgcjonas.gmail.com"
           ];
-        };
-
-        # Custom shortcuts
-        "org/gnome/settings-daemon/plugins/media-keys" = {
-          custom-keybindings = [
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/"
-          ];
-        };
-
-        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal" = {
-          binding = "<Super>t";
-          command = "kgx";
-          name = "GNOME Console";
         };
 
         # System shortcuts
