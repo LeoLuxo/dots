@@ -14,13 +14,14 @@
     desktopManager.gnome.enable = true;
   };
 
+  programs.dconf.enable = true;
+
   home-manager.users.${user} =
     { lib, ... }:
     with lib.hm.gvariant;
 
     {
       home.packages = with pkgs; [
-        dconf
         gnomeExtensions.removable-drive-menu
         gnomeExtensions.appindicator
       ];
