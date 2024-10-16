@@ -1,21 +1,17 @@
 { pkgs, user, ... }:
 {
   home-manager.users.${user} = {
-    home.packages = with pkgs; [ wallutils ];
+    home.packages = with pkgs; [
+      wallutils
+      wallutils-install
+    ];
   };
 
   nixpkgs.overlays = [
     (final: prev: {
-      wallutils = prev.wallutils.overrideAttrs (
-        finalAttrs: oldAttrs: {
-          installPhase =
-            (oldAttrs.installPhase or "")
-            + ''
-              cp scripts/heic-install $out
-            '';
-        }
+      wallutils-install = pkgs.writeShellScriptBin "heic-install" (
+        builtins.readFile "${prev.wallutils.src}/scripts/heic-install"
       );
     })
   ];
-
 }
