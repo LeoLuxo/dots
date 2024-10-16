@@ -12,10 +12,13 @@
   ];
 
   home-manager.users.${user} = {
-    home.packages = with pkgs; [
+    programs.vscode = {
+      enable = true;
       # Vscode but repackaged to run in a FHS environment to make plugin compatibility better
-      vscode-fhs
+      package = pkgs.vscode.fhs;
+    };
 
+    home.packages = with pkgs; [
       # nix formatter
       nixfmt-rfc-style
 
