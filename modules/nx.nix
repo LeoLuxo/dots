@@ -1,4 +1,5 @@
 {
+  lib,
   user,
   scriptBin,
   ...
@@ -10,16 +11,7 @@
       NX_REPO = "/etc/nixos/dots";
     };
 
-    home.packages = [
-      # Rebuild script
-      scriptBin.nx.nx-rebuild
-
-      # Clean up old NixOS generations and garbage-collect the nix store
-      scriptBin.nx.nx-cleanup
-
-      # Open the config repo in vscode or cd to the config repo
-      scriptBin.nx.nx-code
-      scriptBin.nx.nx-cd
-    ];
+    # Add all scripts from the nx directory
+    home.packages = lib.attrsets.attrValues scriptBin.nx;
   };
 }

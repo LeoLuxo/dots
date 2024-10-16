@@ -32,9 +32,12 @@ rec {
     let
       pkgs = nixpkgs.legacyPackages.${system};
     in
+    # Create scripts for every script file
+    # (nix is maximally lazy so this only happens if  and when a script is added to the packages)
+    # (Ignoring all _dir attributes)
     mapAttrsRecursive (
       path: value: pkgs.writeShellScriptBin (lists.last path) (builtins.readFile value)
-    ) directories.scripts;
+    ) (attrsets.filterAttrsRecursive (n: v: n != "_dir") directories.scripts);
 
   # Recursively find modules in a given directory and map them to a logical set:
   # dir/a/b/file.ext         => .a.b.file
