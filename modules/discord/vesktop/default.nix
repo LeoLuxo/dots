@@ -19,10 +19,10 @@
       vesktop = prev.vesktop.overrideAttrs (
         finalAttrs: oldAttrs: {
           src = prev.fetchFromGitHub {
-            owner = "Vencord";
+            owner = "PolisanTheEasyNick";
             repo = "Vesktop";
-            rev = "8993b0d5207d9e0c6fc8a75bcad5e5c9f2cdafaf";
-            hash = "sha256-R8MT8Z5oHJTAXE2SAcq+yAeVkUEhisLOUaUyMAwFy4w=";
+            rev = "3a84dbc0d28a8152284d82004b1315e7fe03778a";
+            hash = "sha256-i+i0oOLST72cMWwtSHJnVDaWojMA3g7TXGvBBewGBcE=";
           };
 
           pnpmDeps = prev.pnpm_9.fetchDeps {
@@ -35,7 +35,7 @@
             hash = "sha256-Y55CeMKXZALes7X8uwsnFI6QVExHU8AbvU/gxCvTLHs=";
           };
 
-          # patches = oldAttrs.patches ++ [
+          # patches = [
           #   (prev.fetchpatch {
           #     url = "https://patch-diff.githubusercontent.com/raw/Vencord/Vesktop/pull/609.patch";
           #     hash = "sha256-UaAYbBmMN3/kYVUwNV0/tH7aNZk32JnaUwjsAaZqXwk=";
