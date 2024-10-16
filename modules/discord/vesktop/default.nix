@@ -2,7 +2,7 @@
 {
   imports = [
     ./icons.nix
-    ./keybinds.nix
+    ./keybinds-fix.nix
   ];
 
   home-manager.users.${user} = {
