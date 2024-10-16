@@ -103,39 +103,41 @@ rec {
   # Utility to easily create a new keybind
   mkGnomeKeybind =
     {
-      id,
       name,
       binding,
       command,
     }:
-    let
-      script = "keybind-${id}";
-    in
-    # Module to be imported
-    { pkgs, user, ... }:
-    {
-      programs.dconf.enable = true;
-      home-manager.users.${user} = {
-        # Create an extra script for the keybind, this avoids vertain issues
-        home.packages = [
-          (pkgs.writeShellScriptBin script command)
-        ];
+    (
+      let
+        id = strings.toLower (strings.sanitizeDerivationName name);
+        scriptName = "keybind-${id}";
+      in
+      # Module to be imported
+      { pkgs, user, ... }:
+      {
+        programs.dconf.enable = true;
+        home-manager.users.${user} = {
+          # Create an extra script for the keybind, this avoids a bunch of weird issues
+          home.packages = [
+            (pkgs.writeShellScriptBin scriptName command)
+          ];
 
-        # Add the keybind to dconf
-        dconf.settings = {
-          "org/gnome/settings-daemon/plugins/media-keys" = {
-            custom-keybindings = [
-              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
-            ];
-          };
+          # Add the keybind to dconf
+          dconf.settings = {
+            "org/gnome/settings-daemon/plugins/media-keys" = {
+              custom-keybindings = [
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
+              ];
+            };
 
-          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
-            inherit binding name;
-            command = script;
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
+              inherit binding name;
+              command = scriptName;
+            };
           };
         };
-      };
-    };
+      }
+    );
 
   # Function to create a nixos host config
   mkHost =

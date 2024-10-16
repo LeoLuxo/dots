@@ -2,14 +2,12 @@
 {
   imports = [
     (mkGnomeKeybind {
-      id = "discord-mute";
       name = "Discord mute";
       binding = "<Super>m";
       command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
     })
 
     (mkGnomeKeybind {
-      id = "discord-deafen";
       name = "Discord deafen";
       binding = "<Super><Shift>m";
       command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
