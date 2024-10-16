@@ -14,11 +14,13 @@
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/discord-mute" = {
         binding = "<Super>m";
         command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+        name = "Discord mute";
       };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/discord-deafen" = {
         binding = "<Super><Shift>m";
         command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+        name = "Discord deafen";
       };
     };
   };
