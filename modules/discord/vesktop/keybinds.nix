@@ -1,8 +1,30 @@
-{ ... }:
+{ user, ... }:
 {
+  programs.dconf.enable = true;
+
+  home-manager.users.${user} = {
+    dconf.settings = {
+      "org/gnome/settings-daemon/plugins/media-keys" = {
+        custom-keybindings = [
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/discord-mute/"
+          "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/discord-deafen/"
+        ];
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/discord-mute" = {
+        binding = "<Super>m";
+        command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+      };
+
+      "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/discord-deafen" = {
+        binding = "<Super><Shift>m";
+        command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+      };
+    };
+  };
+
   # Overlay to patch global keybinds
   # TODO: Remove when the PR is merged
-
   nixpkgs.overlays = [
     (final: prev: {
       vesktop = prev.vesktop.overrideAttrs (

@@ -1,7 +1,7 @@
 { directories, ... }:
 {
-  # Overlay to override visual aspects of the app
 
+  # Overlay to override app icons
   nixpkgs.overlays = [
     (final: prev: {
       vesktop = prev.vesktop.overrideAttrs (
