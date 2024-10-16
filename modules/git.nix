@@ -20,7 +20,7 @@
         # Disable safe directory checks
         safe.directory = "*";
 
-        # Some options transferred from my windows times, no idea if they're relevant here :shrug:
+        # Some options transferred from my old windows config, no idea if they're relevant here :shrug:
         core = {
           # Don't hide the .git directory on windows
           hideDotFiles = false;
@@ -28,7 +28,7 @@
           # Disable the CRLF warning (but still auto convert)
           safecrlf = false;
 
-          # Set the commit editor to vscode
+          # Set the commit editor to gnome commit
           editor = "re.sonny.Commit";
         };
 

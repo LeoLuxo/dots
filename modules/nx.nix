@@ -12,13 +12,14 @@
 
     home.packages = [
       # Rebuild script
-      scriptBin.nx-rebuild
-
-      # Open the config repo in vscode
-      scriptBin.nx-code
+      scriptBin.nx.nx-rebuild
 
       # Clean up old NixOS generations and garbage-collect the nix store
-      scriptBin.nx-cleanup
+      scriptBin.nx.nx-cleanup
+
+      # Open the config repo in vscode or cd to the config repo
+      scriptBin.nx.nx-code
+      scriptBin.nx.nx-cd
     ];
   };
 }
