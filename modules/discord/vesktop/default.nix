@@ -1,8 +1,8 @@
 { pkgs, user, ... }:
 {
   imports = [
-    ./icons-overlay.nix
-    ./keybinds-overlay.nix
+    ./icons.nix
+    ./keybinds.nix
   ];
 
   home-manager.users.${user} = {
