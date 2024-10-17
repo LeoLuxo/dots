@@ -56,7 +56,7 @@ in
 
     timed = {
       enable = true;
-      theme = wallpapers."Outset Island";
+      theme = wallpapers."Forest";
     };
   };
 }
