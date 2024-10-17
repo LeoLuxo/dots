@@ -20,12 +20,18 @@ let
       name = "nx-timed-wallpapers";
       src = directories.images.timed-wallpapers._dir;
 
-      nativeBuildInputs = [ wallutils ];
+      nativeBuildInputs = [
+        wallutils
+        imagemagick
+      ];
 
       buildPhase = ''
         for filename in *.heic; do
           name="''${filename%.*}"
+          
           mkdir -p "$out/$name"
+          magick "$filename" "$out/$name/%02d.jpg"
+          
         done
       '';
     }
