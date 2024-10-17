@@ -6,7 +6,7 @@
   ...
 }:
 
-# Convert the .heic wallpapers to wallutils' swf
+# Convert the .heic wallpapers to wallutils' stw
 # using a derivation
 let
   wallpapers = pkgs.callPackage (
@@ -28,10 +28,14 @@ let
       buildPhase = ''
         for filename in *.heic; do
           name="''${filename%.*}"
-          
           mkdir -p "$out/$name"
+          
+          # Extract the individual images from the .heic as .jpg
           magick "$filename" "$out/$name/%02d.jpg"
           
+          # Convert the .heic timing info to .stw and fix the hardcoded path in the .stw
+          heic2stw "$filename" > "$out/$name/$name.stw"
+          sed -i "s#/usr/share/backgrounds/#$out/#g" "$out/$name/$name.stw"
         done
       '';
     }
