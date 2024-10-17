@@ -64,7 +64,7 @@ dconf dump / >$DCONF_DIFF
 
 # Commit all changes with the generation metadata
 echo -e "${BLUE}Committing...${RESET}"
-git commit -am "$current_gen" -m "$changes" 1>/dev/null
+git commit -m "$current_gen" -m "$changes" 1>/dev/null
 
 echo -e "${BLUE}Pushing...${RESET}"
 # Git push is stoopid and writes everything to stderr
