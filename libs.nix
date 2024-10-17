@@ -8,27 +8,41 @@ let
 in
 rec {
   directories = {
-    modules = findFiles ./modules [ "nix" ] true;
+    modules = findFiles {
+      dir = ./modules;
+      extensions = [ "nix" ];
+      allowDefault = true;
+    };
 
-    images = findFiles ./assets [
-      "png"
-      "jpg"
-      "jpeg"
-      "gif"
-      "svg"
-      "heic"
-    ] false;
+    images = findFiles {
+      dir = ./assets;
+      extensions = [
+        "png"
+        "jpg"
+        "jpeg"
+        "gif"
+        "svg"
+        "heic"
+      ];
+    };
 
-    icons = findFiles ./assets/icons [
-      "ico"
-      "icns"
-    ] false;
+    icons = findFiles {
+      dir = ./assets/icons;
+      extensions = [
+        "ico"
+        "icns"
+      ];
+    };
 
-    scripts = findFiles ./scripts [
-      "sh"
-      "nu"
-      "py"
-    ] true;
+    scripts = findFiles {
+      dir = ./scripts;
+      extensions = [
+        "sh"
+        "nu"
+        "py"
+      ];
+      allowDefault = true;
+    };
   };
 
   writeScriptWithDeps =
@@ -74,7 +88,11 @@ rec {
   # dir/a/b/file.ext         => .a.b.file
   # dir/a/b/file/default.ext => .a.b.file
   findFiles =
-    dir: extensions: allowDefault:
+    {
+      dir,
+      extensions,
+      allowDefault ? false,
+    }:
     let
       extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
       ignore = name: {

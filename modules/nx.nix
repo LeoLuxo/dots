@@ -10,7 +10,7 @@
     NX_REPO = "/etc/nixos/dots";
 
     # Set the location of the file used for dconf-diff
-    DCONF_DIFF = "~/.dconf_activation";
+    DCONF_DIFF = "/home/${user}/.dconf_activation";
   };
 
   home-manager.users.${user} = {

@@ -9,7 +9,7 @@
 # Convert the .heic wallpapers to wallutils' stw
 # using a derivation
 let
-  wallpapers = pkgs.callPackage (
+  wallpaperBuild = pkgs.callPackage (
     {
       lib,
       stdenv,
@@ -40,6 +40,10 @@ let
       '';
     }
   ) { };
+
+  wallpapers = lib.mapAttrs (n: v: "${wallpaperBuild}/${n}/${n}.stw") (
+    lib.filterAttrs (n: v: v == "directory") (builtins.readDir wallpaperBuild)
+  );
 in
 {
   imports = [
@@ -56,8 +60,8 @@ in
 
       timed = {
         enable = true;
-        theme = "${wallpapers}/Firewatch";
-        mode = "scale";
+        theme = (lib.traceValSeq wallpapers)."Anya Sleeping";
+        mode = "center";
       };
     };
   };
