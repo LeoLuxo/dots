@@ -1,6 +1,4 @@
-{ mkHost }:
-
-{
+mkHost: {
 
   # Laptop (Surface Pro 7)
   "pancake" = mkHost {
