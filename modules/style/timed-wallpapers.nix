@@ -49,12 +49,16 @@ in
   home-manager.users.${user} = {
     home.packages = with pkgs; [
       wallutils
-      (builtins.trace "${wallpapers}" wallpapers)
     ];
-  };
 
-  services.wallutils = {
-    enable = true;
-  };
+    services.wallutils = {
+      enable = true;
 
+      timed = {
+        enable = true;
+        theme = "${wallpapers}/Firewatch";
+        mode = "scale";
+      };
+    };
+  };
 }
