@@ -113,6 +113,7 @@ in
       };
       serviceConfig = {
         Type = "simple";
+        Environment = "PATH=/run/current-system/sw/bin/";
         ExecStart = "${cfg.package}/bin/settimed --mode ${cfg.timed.mode} \"${cfg.timed.theme}\"";
       };
       wantedBy = [ "graphical-session.target" ];
@@ -126,6 +127,7 @@ in
       };
       serviceConfig = {
         Type = "oneshot";
+        Environment = "PATH=/run/current-system/sw/bin/";
         ExecStart = concatStringsSep " " [
           "${cfg.package}/bin/setwallpaper"
           "--mode ${cfg.static.mode}"
