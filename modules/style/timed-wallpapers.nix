@@ -1,4 +1,9 @@
-{ pkgs, user, ... }:
+{
+  pkgs,
+  user,
+  writeScriptBinWithDeps,
+  ...
+}:
 {
   home-manager.users.${user} = {
     home.packages = with pkgs; [
@@ -9,9 +14,14 @@
 
   nixpkgs.overlays = [
     (final: prev: {
-      wallutils-install = pkgs.writeShellScriptBin "heic-install" (
-        builtins.readFile "${prev.wallutils.src}/scripts/heic-install"
-      );
+      wallutils-install = writeScriptBinWithDeps {
+        name = "heic-install";
+        text = builtins.readFile "${prev.wallutils.src}/scripts/heic-install";
+        deps = with pkgs; [
+          wallutils
+          imagemagick
+        ];
+      };
     })
   ];
 }
