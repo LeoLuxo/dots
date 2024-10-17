@@ -115,7 +115,7 @@ in
         Type = "simple";
         # Environment = "PATH=/run/current-system/sw/bin/";
         ExecStart = ''
-          PATH=/run/current-system/sw/bin/
+          PATH=$PATH:/run/current-system/sw/bin
           ${cfg.package}/bin/settimed --mode ${cfg.timed.mode} "${cfg.timed.theme}"
         '';
       };
