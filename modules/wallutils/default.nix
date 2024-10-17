@@ -1,7 +1,12 @@
-{ ... }:
+{ user, ... }:
 {
   imports = [
-    ./hm-module.nix
     ./fix-dark-mode.nix
   ];
+
+  home-manager.users.${user} = {
+    imports = [
+      ./hm-module.nix
+    ];
+  };
 }
