@@ -16,8 +16,10 @@ let
       "center"
       "tile"
       "scale"
+      "zoom"
+      "fill"
     ]) types.str;
-    default = "stretch";
+    default = "zoom";
     description = "Wallpaper mode";
   };
 in
@@ -103,29 +105,27 @@ in
       }
     ];
 
-    systemd.user.services.wallutils-timed = mkIf cfg.timed.enable {
-      Unit = {
+    systemd.services.wallutils-timed = mkIf cfg.timed.enable {
+      unitConfig = {
         Description = "Wallutils timed wallpaper service";
         PartOf = [ "graphical-session.target" ];
         After = [ "graphical-session.target" ];
       };
-      Service = {
+      serviceConfig = {
         Type = "simple";
-        Environment = "PATH=${config.home.profileDirectory}/bin";
         ExecStart = "${cfg.package}/bin/settimed --mode ${cfg.timed.mode} \"${cfg.timed.theme}\"";
       };
-      Install.WantedBy = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
     };
 
-    systemd.user.services.wallutils-static = mkIf cfg.static.enable {
-      Unit = {
+    systemd.services.wallutils-static = mkIf cfg.static.enable {
+      unitConfig = {
         Description = "Wallutils static wallpaper service";
         PartOf = [ "graphical-session.target" ];
         After = [ "graphical-session.target" ];
       };
-      Service = {
+      serviceConfig = {
         Type = "oneshot";
-        Environment = "PATH=${config.home.profileDirectory}/bin";
         ExecStart = concatStringsSep " " [
           "${cfg.package}/bin/setwallpaper"
           "--mode ${cfg.static.mode}"
@@ -135,7 +135,7 @@ in
           "${cfg.static.image}"
         ];
       };
-      Install.WantedBy = [ "graphical-session.target" ];
+      wantedBy = [ "graphical-session.target" ];
     };
   };
 }
