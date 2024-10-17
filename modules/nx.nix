@@ -15,7 +15,7 @@
 
   home-manager.users.${user} = {
     # Add all scripts from the nx directory
-    home.packages = lib.traceVal (builtins.map (nx: nx { }) (lib.attrsets.attrValues scriptBin.nx));
+    home.packages = builtins.map (nx: nx { }) (lib.attrsets.attrValues scriptBin.nx);
   };
 
 }

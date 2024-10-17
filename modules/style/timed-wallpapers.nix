@@ -5,8 +5,8 @@
   ...
 }:
 {
-  import = with directories.modules; [
-    wallutils
+  imports = [
+    directories.modules.wallutils
   ];
 
 }
