@@ -35,11 +35,32 @@
   outputs =
     { nixpkgs, ... }@inputs:
 
-    with nixpkgs.lib;
-    with import ./libs.nix inputs;
+    let
+      # Function to create a nixos host config
+      mkHost =
+        {
+          user,
+          hostName,
+          system,
+          modules,
+        }:
+        let
+          constants = {
+            inherit user system hostName;
+          };
+          libs = import ./libs.nix (inputs // constants);
+        in
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [ ./secrets.nix ] ++ modules;
 
+          # Additional args passed to the module
+          specialArgs = inputs // libs // constants;
+        };
+
+    in
     {
       # Define nixos configs
-      nixosConfigurations = import ./hosts.nix { inherit mkHost; };
+      nixosConfigurations = import ./hosts.nix mkHost;
     };
 }

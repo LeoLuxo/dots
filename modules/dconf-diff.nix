@@ -11,7 +11,7 @@
   };
 
   system.userActivationScripts."dconf-diff".text = ''
-    dconf dump > ~/.dconf_activation
+    dconf dump / > ~/.dconf_activation
   '';
 
 }
