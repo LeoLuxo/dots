@@ -9,8 +9,14 @@
     directories.modules.wallutils
   ];
 
-  services.wallutils = {
-    enable = true;
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      wallutils
+    ];
   };
+
+  # services.wallutils = {
+  #   enable = true;
+  # };
 
 }
