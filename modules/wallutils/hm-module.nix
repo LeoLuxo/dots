@@ -22,6 +22,7 @@ let
   };
 in
 {
+
   options.services.wallutils = {
     enable = mkEnableOption "Wallutils automatic wallpaper tool";
 
