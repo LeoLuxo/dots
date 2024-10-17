@@ -105,7 +105,7 @@ in
       }
     ];
 
-    systemd.services.wallutils-timed = mkIf cfg.timed.enable {
+    systemd.user.services.wallutils-timed = mkIf cfg.timed.enable {
       unitConfig = {
         Description = "Wallutils timed wallpaper service";
         PartOf = [ "graphical-session.target" ];
@@ -113,13 +113,16 @@ in
       };
       serviceConfig = {
         Type = "simple";
-        Environment = "PATH=/run/current-system/sw/bin/";
-        ExecStart = "${cfg.package}/bin/settimed --mode ${cfg.timed.mode} \"${cfg.timed.theme}\"";
+        # Environment = "PATH=/run/current-system/sw/bin/";
+        ExecStart = ''
+          PATH=/run/current-system/sw/bin/
+          ${cfg.package}/bin/settimed --mode ${cfg.timed.mode} "${cfg.timed.theme}"
+        '';
       };
       wantedBy = [ "graphical-session.target" ];
     };
 
-    systemd.services.wallutils-static = mkIf cfg.static.enable {
+    systemd.user.services.wallutils-static = mkIf cfg.static.enable {
       unitConfig = {
         Description = "Wallutils static wallpaper service";
         PartOf = [ "graphical-session.target" ];
