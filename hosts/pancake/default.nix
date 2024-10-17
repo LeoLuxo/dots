@@ -12,7 +12,7 @@
     style.bootscreen
     style.fonts
     style.static-wallpapers
-    style.timed-wallpapers
+    # style.timed-wallpapers
     style.themes.catppuccin
 
     gnome.gnome

@@ -1,7 +1,7 @@
 {
   pkgs,
   user,
-  writeShellScriptBinWithDeps,
+  writeScriptWithDeps,
   ...
 }:
 {
@@ -14,13 +14,14 @@
 
   nixpkgs.overlays = [
     (final: prev: {
-      wallutils-install = writeShellScriptBinWithDeps {
+      wallutils-install = writeScriptWithDeps {
         name = "heic-install";
         text = builtins.readFile "${prev.wallutils.src}/scripts/heic-install";
         deps = with pkgs; [
           wallutils
           imagemagick
         ];
+        shell = true;
       };
     })
   ];

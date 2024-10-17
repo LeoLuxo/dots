@@ -12,6 +12,6 @@
     };
 
     # Add all scripts from the nx directory
-    home.packages = lib.attrsets.attrValues scriptBin.nx;
+    home.packages = lib.traceVal (builtins.map (nx: nx { }) (lib.attrsets.attrValues scriptBin.nx));
   };
 }
