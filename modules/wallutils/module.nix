@@ -114,11 +114,10 @@ in
       # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
       path = [
         pkgs.gnome-session
-        pkgs.glib # installs gsettings
+        pkgs.glib # gsettings
       ];
       serviceConfig = {
         Type = "simple";
-        # Environment = "PATH=/run/current-system/sw/bin/";
         ExecStart = ''
           ${cfg.package}/bin/settimed --mode ${cfg.timed.mode} "${cfg.timed.theme}"
         '';
