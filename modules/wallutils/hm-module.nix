@@ -112,7 +112,7 @@ in
       Service = {
         Type = "simple";
         Environment = "PATH=${config.home.profileDirectory}/bin";
-        ExecStart = "${cfg.package}/bin/settimed --mode ${cfg.timed.mode} ${cfg.timed.theme}";
+        ExecStart = "${cfg.package}/bin/settimed --mode ${cfg.timed.mode} \"${cfg.timed.theme}\"";
       };
       Install.WantedBy = [ "graphical-session.target" ];
     };
