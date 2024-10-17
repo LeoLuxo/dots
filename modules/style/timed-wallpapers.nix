@@ -9,4 +9,8 @@
     directories.modules.wallutils
   ];
 
+  services.wallutils = {
+    enable = true;
+  };
+
 }
