@@ -111,12 +111,17 @@ in
         PartOf = [ "graphical-session.target" ];
         After = [ "graphical-session.target" ];
       };
+      # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
+      path = [
+        pkgs.gnome-session
+        pkgs.glib # installs gsettings
+      ];
       serviceConfig = {
         Type = "simple";
-        # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
         # Environment = "PATH=/run/current-system/sw/bin/";
         ExecStart = ''
-          PATH=$PATH:/run/current-system/sw/bin/
+          echo $XDG_SESSION_DESKTOP
+          echo $GDMSESSION
           ${cfg.package}/bin/settimed --mode ${cfg.timed.mode} "${cfg.timed.theme}"
         '';
       };
