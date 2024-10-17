@@ -156,7 +156,7 @@ rec {
         export PATH="$i/bin:$PATH"
       done
 
-      exec ${builder "${name}-no-deps" text} $@
+      exec ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
     '';
 
   writeScriptBinWithDeps = mkScriptWithDeps pkgs.writeScriptBin;
