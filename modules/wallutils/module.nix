@@ -120,8 +120,6 @@ in
         Type = "simple";
         # Environment = "PATH=/run/current-system/sw/bin/";
         ExecStart = ''
-          echo $XDG_SESSION_DESKTOP
-          echo $GDMSESSION
           ${cfg.package}/bin/settimed --mode ${cfg.timed.mode} "${cfg.timed.theme}"
         '';
       };
