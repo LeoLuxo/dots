@@ -41,6 +41,7 @@ let
     }
   ) { };
 
+  # Cleanup the wallpapers into an attribute set
   wallpapers = lib.mapAttrs (n: v: "${wallpaperBuild}/${n}/${n}.stw") (
     lib.filterAttrs (n: v: v == "directory") (builtins.readDir wallpaperBuild)
   );
@@ -54,15 +55,14 @@ in
     home.packages = with pkgs; [
       wallutils
     ];
+  };
 
-    services.wallutils = {
+  services.wallutils = {
+    enable = true;
+
+    timed = {
       enable = true;
-
-      timed = {
-        enable = true;
-        theme = (lib.traceValSeq wallpapers)."Outset Island";
-        mode = "center";
-      };
+      theme = wallpapers."Outset Island";
     };
   };
 }
