@@ -1,6 +1,6 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -p bash vscode
+#!nix-shell -p bash
 #!nix-shell -i bash
 
-# Open the config repo in vscode
-code $NX_REPO
+# Open the config repo in vscode/text editor
+$EDITOR $NX_REPO

@@ -59,6 +59,9 @@ sudo nixos-rebuild switch --impure --flake .#$HOSTNAME --option tarball-ttl 0 "$
 current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
 echo -e "${BLUE}Current generation: ${RESET}\n${current_gen}"
 
+# Save current dconf settings (for nx-dconf-diff)
+dconf dump / >$DCONF_DIFF
+
 # Commit all changes with the generation metadata
 echo -e "${BLUE}Committing...${RESET}"
 git commit -am "$current_gen" -m "$changes" 1>/dev/null

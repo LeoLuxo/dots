@@ -49,24 +49,25 @@ rec {
       exec ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
     '';
 
+  # Create scripts for every script file
   scriptBin =
-    # Create scripts for every script file
-    # (nix is maximally lazy so this only happens if  and when a script is added to the packages)
-    # (Ignoring all _dir attributes)
+    # (nix is maximally lazy so this is only run if  and when a script is added to the packages)
     mapAttrsRecursive (
       path: value:
       let
         filename = lists.last path;
       in
       {
-        name ? filename,
+        rename ? filename,
         deps ? [ ],
         shell ? false,
       }:
       writeScriptWithDeps {
-        inherit name deps shell;
+        name = rename;
         text = (builtins.readFile value);
+        inherit deps shell;
       }
+      # (Ignores all _dir attributes)
     ) (attrsets.filterAttrsRecursive (n: v: n != "_dir") directories.scripts);
 
   # Recursively find modules in a given directory and map them to a logical set:
