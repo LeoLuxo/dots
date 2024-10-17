@@ -31,12 +31,42 @@ rec {
     ] true;
   };
 
+  writeScriptWithDeps =
+    {
+      name,
+      text,
+      deps ? [ ],
+      shell ? false,
+    }:
+    let
+      builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
+    in
+    pkgs.writeShellScriptBin name ''
+      for i in ${concatStringsSep " " deps}; do
+        export PATH="$i/bin:$PATH"
+      done
+
+      exec ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
+    '';
+
   scriptBin =
     # Create scripts for every script file
     # (nix is maximally lazy so this only happens if  and when a script is added to the packages)
     # (Ignoring all _dir attributes)
     mapAttrsRecursive (
-      path: value: pkgs.writeShellScriptBin (lists.last path) (builtins.readFile value)
+      path: value:
+      let
+        filename = lists.last path;
+      in
+      {
+        name ? filename,
+        deps ? [ ],
+        shell ? false,
+      }:
+      writeScriptWithDeps {
+        inherit name deps shell;
+        text = (builtins.readFile value);
+      }
     ) (attrsets.filterAttrsRecursive (n: v: n != "_dir") directories.scripts);
 
   # Recursively find modules in a given directory and map them to a logical set:
@@ -143,23 +173,5 @@ rec {
         };
       }
     );
-
-  mkScriptWithDeps =
-    builder:
-    {
-      name,
-      text,
-      deps ? [ ],
-    }:
-    pkgs.writeShellScriptBin name ''
-      for i in ${concatStringsSep " " deps}; do
-        export PATH="$i/bin:$PATH"
-      done
-
-      exec ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
-    '';
-
-  writeScriptBinWithDeps = mkScriptWithDeps pkgs.writeScriptBin;
-  writeShellScriptBinWithDeps = mkScriptWithDeps pkgs.writeShellScriptBin;
 
 }
