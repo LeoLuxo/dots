@@ -1,8 +1,11 @@
-{ nixpkgs, ... }@inputs:
+{ nixpkgs, system, ... }:
 
 with nixpkgs.lib;
 with builtins;
+let
+  pkgs = nixpkgs.legacyPackages.${system};
 
+in
 rec {
   directories = {
     modules = findFiles ./modules [ "nix" ] true;
@@ -29,10 +32,6 @@ rec {
   };
 
   scriptBin =
-    system:
-    let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
     # Create scripts for every script file
     # (nix is maximally lazy so this only happens if  and when a script is added to the packages)
     # (Ignoring all _dir attributes)
@@ -145,24 +144,22 @@ rec {
       }
     );
 
-  # Function to create a nixos host config
-  mkHost =
+  mkScriptWithDeps =
+    builder:
     {
-      user,
-      hostName,
-      system,
-      modules,
+      name,
+      text,
+      deps ? [ ],
     }:
-    nixosSystem {
-      inherit system;
-      modules = [ ./secrets.nix ] ++ modules;
-      specialArgs = inputs // {
-        # Constants
-        inherit user system hostName;
-        # Helper libs
-        inherit directories findFiles mkGnomeKeybind;
-        scriptBin = scriptBin system;
-      };
-    };
+    pkgs.writeShellScriptBin name ''
+      for i in ${concatStringsSep " " deps}; do
+        export PATH="$i/bin:$PATH"
+      done
+
+      exec ${builder "${name}-no-deps" text} $@
+    '';
+
+  writeScriptBinWithDeps = mkScriptWithDeps pkgs.writeScriptBin;
+  writeShellScriptBinWithDeps = mkScriptWithDeps pkgs.writeShellScriptBin;
 
 }
