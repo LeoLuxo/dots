@@ -113,9 +113,10 @@ in
       };
       serviceConfig = {
         Type = "simple";
+        # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
         # Environment = "PATH=/run/current-system/sw/bin/";
         ExecStart = ''
-          PATH=$PATH:/run/current-system/sw/bin
+          PATH=$PATH:/run/current-system/sw/bin/
           ${cfg.package}/bin/settimed --mode ${cfg.timed.mode} "${cfg.timed.theme}"
         '';
       };
