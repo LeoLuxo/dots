@@ -60,7 +60,7 @@ in
 
       timed = {
         enable = true;
-        theme = (lib.traceValSeq wallpapers)."Anya Sleeping";
+        theme = (lib.traceValSeq wallpapers)."Outset Island";
         mode = "center";
       };
     };
