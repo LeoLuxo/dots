@@ -11,6 +11,10 @@
     style.fonts
   ];
 
+  environment.variables = {
+    EDITOR = "code";
+  };
+
   home-manager.users.${user} = {
     programs.vscode = {
       enable = true;
@@ -28,9 +32,5 @@
       # sh formatter
       shfmt
     ];
-
-    home.sessionVariables = {
-      EDITOR = "code";
-    };
   };
 }
