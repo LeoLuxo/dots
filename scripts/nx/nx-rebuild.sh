@@ -1,6 +1,4 @@
-#!/usr/bin/env nix-shell
-#!nix-shell -p bash git nixfmt-rfc-style
-#!nix-shell -i bash
+#!/usr/bin/env bash
 
 # This shebang runs nix-shell which then interpret the rest:
 # it pulls in the packages bash, git and nixfmt
