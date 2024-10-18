@@ -52,7 +52,7 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  wallpaper.image = null;
+  wallpaper.image = directories.images.wallpapers.sky;
 
   # Home-Manager config
   home-manager.users.${user} = {
