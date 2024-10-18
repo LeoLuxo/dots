@@ -39,6 +39,11 @@ in
         options = {
           enable = mkEnableOption "Systemd service for the timed wallpaper";
 
+          refreshOnUnlock = mkOption {
+            type = types.bool;
+            default = true;
+          };
+
           theme = mkOption {
             type = types.path;
             example = "mojave-timed";
@@ -112,14 +117,33 @@ in
         After = [ "graphical-session.target" ];
       };
       # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
-      path = [
-        pkgs.gnome-session
-        pkgs.glib # gsettings
-      ];
+      path = [ "/run/current-system/sw" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = ''
           ${cfg.package}/bin/settimed --mode ${cfg.timed.mode} "${cfg.timed.theme}"
+        '';
+      };
+      wantedBy = [ "graphical-session.target" ];
+    };
+
+    # Sends a refresh signal to the wallutils service when an unlock is detected
+    systemd.user.services.wallutils-refresh = mkIf cfg.timed.refreshOnUnlock {
+      unitConfig = {
+        Description = "Wallutils refresher";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      path = [ "/run/current-system/sw" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = ''
+          gdbus monitor -y -d org.freedesktop.login1 |
+            grep --line-buffered -o 'Session.Unlock ()' |
+            while read -r; do
+              echo "Unlock detected"
+              pkill settimed -USR1
+            done
         '';
       };
       wantedBy = [ "graphical-session.target" ];
