@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  sanitizePath,
   ...
 }:
 
@@ -13,7 +12,7 @@ let
   heicConverter =
     file:
     pkgs.callPackage (import ./heic-converter.nix) {
-      file = sanitizePath file;
+      inherit file;
     };
 
 in
