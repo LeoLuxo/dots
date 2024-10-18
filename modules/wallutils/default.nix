@@ -1,7 +1,7 @@
 { pkgs, user, ... }:
 {
   imports = [
-    ./module.nix
+    ./service.nix
     ./fix-dark-mode.nix
   ];
 
