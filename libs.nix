@@ -7,7 +7,7 @@ let
 
 in
 rec {
-  directories = {
+  directories = rec {
     modules = findFiles {
       dir = ./modules;
       extensions = [ "nix" ];
@@ -25,6 +25,8 @@ rec {
         "heic"
       ];
     };
+
+    wallpapers = images.wallpapers;
 
     icons = findFiles {
       dir = ./assets/icons;
