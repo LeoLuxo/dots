@@ -53,7 +53,7 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  wallpaper.image = (lib.traceValSeq directories.wallpapers)."Tree and shore";
+  wallpaper.image = directories.wallpapers."Tree and shore";
 
   # Home-Manager config
   home-manager.users.${user} = {
