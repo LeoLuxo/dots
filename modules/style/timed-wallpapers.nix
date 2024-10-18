@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  user,
   directories,
   ...
 }:
@@ -47,6 +46,9 @@ let
   );
 in
 {
+  # Disable default gnome wallpapers
+  environment.gnome.excludePackages = [ pkgs.gnome-backgrounds ];
+
   imports = [
     directories.modules.wallutils
   ];

@@ -11,8 +11,9 @@
     # Include global modules
     style.bootscreen
     style.fonts
-    style.static-wallpapers
-    style.timed-wallpapers
+    # style.static-wallpapers
+    # style.timed-wallpapers
+    style.wallpapers
     style.themes.catppuccin
 
     gnome.gnome
