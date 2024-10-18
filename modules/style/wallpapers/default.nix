@@ -26,6 +26,8 @@ in
       default = cfg.enable && (strings.hasSuffix ".heic" cfg.image);
     };
 
+    is-static = !cfg.is-timed;
+
     packages = types.submodule.options {
       wallutils = mkOption {
         type = types.package;
@@ -36,6 +38,6 @@ in
   };
 
   config = mkIf (traceValSeq cfg).enable {
-    #   wallpaper.is-static = !cfg.is-timed;
+    # wallpaper.is-static = !cfg.is-timed;
   };
 }
