@@ -116,6 +116,10 @@ in
             ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
           '';
         };
+        restartTriggers = [
+          cfg.mode
+          wallpaper
+        ];
         wantedBy = [ "graphical-session.target" ];
       };
 
