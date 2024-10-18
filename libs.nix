@@ -60,8 +60,7 @@ rec {
         export PATH="$i/bin:$PATH"
       done
 
-      # Run using cached-nix-shell to make the nix-shell shebang faster
-      ${pkgs.cached-nix-shell}/bin/cached-nix-shell ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
+      exec ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
     '';
 
   # Create scripts for every script file

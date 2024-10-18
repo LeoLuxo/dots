@@ -1,5 +1,5 @@
 {
-  lib,
+  pkgs,
   user,
   scriptBin,
   ...
@@ -15,7 +15,26 @@
 
   home-manager.users.${user} = {
     # Add all scripts from the nx directory
-    home.packages = builtins.map (nx: nx { }) (lib.attrsets.attrValues scriptBin.nx);
+    home.packages = with pkgs; [
+      (scriptBin.nx.nx-cleanup { })
+
+      (scriptBin.nx.nx-code { })
+
+      (scriptBin.nx.nx-dconf-diff {
+        deps = [
+          dconf
+          difftastic
+        ];
+      })
+
+      (scriptBin.nx.nx-rebuild {
+        deps = [
+          dconf
+          git
+          nixfmt-rfc-style
+        ];
+      })
+    ];
   };
 
 }
