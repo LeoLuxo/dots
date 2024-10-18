@@ -23,7 +23,7 @@ in
 
     is-timed = mkOption {
       type = types.bool;
-      default = strings.hasSuffix ".heic" cfg.image;
+      default = cfg.enable && (strings.hasSuffix ".heic" cfg.image);
     };
 
     packages = types.submodule.options {
