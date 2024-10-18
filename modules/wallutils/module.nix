@@ -137,14 +137,16 @@ in
       path = [ "/run/current-system/sw" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart = ''
-          gdbus monitor -y -d org.freedesktop.login1 |
-            grep --line-buffered -o 'Session.Unlock ()' |
-            while read -r; do
-              echo "Unlock detected"
-              pkill settimed -USR1
-            done
-        '';
+        ExecStart = (
+          pkgs.writeShellScript "wallutils-refresh" ''
+            gdbus monitor -y -d org.freedesktop.login1 |
+              grep --line-buffered -o 'Session.Unlock ()' |
+              while read -r; do
+                echo "Unlock detected"
+                pkill settimed -USR1
+              done
+          ''
+        );
       };
       wantedBy = [ "graphical-session.target" ];
     };
