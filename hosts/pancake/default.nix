@@ -52,6 +52,8 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
+  wallpaper.image = null;
+
   # Home-Manager config
   home-manager.users.${user} = {
 

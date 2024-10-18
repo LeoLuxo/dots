@@ -26,15 +26,17 @@ in
       default = cfg.enable && (strings.hasSuffix ".heic" cfg.image);
     };
 
-    is-static = !cfg.is-timed;
-
-    packages = types.submodule.options {
-      wallutils = mkOption {
-        type = types.package;
-        default = pkgs.wallutils;
-        defaultText = "pkgs.wallutils";
-      };
-    };
+    # packages = mkOption {
+    #   type = types.submodule {
+    #     options = {
+    #       wallutils = mkOption {
+    #         type = types.package;
+    #         default = pkgs.wallutils;
+    #         defaultText = "pkgs.wallutils";
+    #       };
+    #     };
+    #   };
+    # };
   };
 
   config = mkIf (traceValSeq cfg).enable {
