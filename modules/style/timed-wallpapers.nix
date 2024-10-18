@@ -8,37 +8,38 @@
 # Convert the .heic wallpapers to wallutils' stw
 # using a derivation
 let
-  wallpaperBuild = pkgs.callPackage (
-    {
-      lib,
-      stdenv,
-      wallutils,
-      imagemagick,
-    }:
-    stdenv.mkDerivation {
-      name = "nx-timed-wallpapers";
-      src = directories.images.timed-wallpapers._dir;
+  wallpaperBuild =
+    file:
+    pkgs.callPackage (
+      {
+        lib,
+        stdenv,
+        wallutils,
+        imagemagick,
+      }:
+      stdenv.mkDerivation {
+        name = "nx-timed-wallpapers";
+        src = file;
 
-      nativeBuildInputs = [
-        wallutils
-        imagemagick
-      ];
+        nativeBuildInputs = [
+          wallutils
+          imagemagick
+        ];
 
-      buildPhase = ''
-        for filename in *.heic; do
+        buildPhase = ''
+          filename="${file}"
           name="''${filename%.*}"
           mkdir -p "$out/$name"
-          
+
           # Extract the individual images from the .heic as .jpg
-          magick "$filename" "$out/$name/%02d.jpg"
-          
+          magick "$filename" "$out/%02d.jpg"
+
           # Convert the .heic timing info to .stw and fix the hardcoded path in the .stw
-          heic2stw "$filename" > "$out/$name/$name.stw"
-          sed -i "s#/usr/share/backgrounds/#$out/#g" "$out/$name/$name.stw"
-        done
-      '';
-    }
-  ) { };
+          heic2stw "$filename" > "$out/$name.stw"
+          sed -i "s#/usr/share/backgrounds/#$out/#g" "$out/$name.stw"
+        '';
+      }
+    ) { };
 
   # Cleanup the wallpapers into an attribute set
   wallpapers = lib.mapAttrs (n: v: "${wallpaperBuild}/${n}/${n}.stw") (

@@ -52,7 +52,7 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  wallpaper.image = "fuck";
+  wallpaper.image = directories.wallpapers."Riverside";
 
   # Home-Manager config
   home-manager.users.${user} = {
