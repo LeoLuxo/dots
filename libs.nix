@@ -14,6 +14,16 @@ rec {
       allowDefault = true;
     };
 
+    scripts = findFiles {
+      dir = ./scripts;
+      extensions = [
+        "sh"
+        "nu"
+        "py"
+      ];
+      allowDefault = true;
+    };
+
     images = findFiles {
       dir = ./assets;
       extensions = [
@@ -24,6 +34,7 @@ rec {
         "svg"
         "heic"
       ];
+      doSanitize = true;
     };
 
     wallpapers = images.wallpapers;
@@ -34,16 +45,7 @@ rec {
         "ico"
         "icns"
       ];
-    };
-
-    scripts = findFiles {
-      dir = ./scripts;
-      extensions = [
-        "sh"
-        "nu"
-        "py"
-      ];
-      allowDefault = true;
+      doSanitize = true;
     };
   });
 
@@ -102,7 +104,7 @@ rec {
       dir,
       extensions,
       allowDefault ? false,
-      doSanitize ? true,
+      doSanitize ? false,
     }:
     let
       extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
