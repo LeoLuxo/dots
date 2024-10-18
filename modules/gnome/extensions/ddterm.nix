@@ -25,7 +25,7 @@ with lib;
 
         "com/github/amezin/ddterm" = {
           background-color = "rgb(46,52,54)";
-          background-opacity = 0.9;
+          background-opacity = 0.8;
           backspace-binding = "auto";
           bold-is-bright = false;
           cursor-blink-mode = "on";
