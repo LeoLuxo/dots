@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  sanitizePath,
   ...
 }:
 
@@ -9,7 +10,11 @@ with lib;
 
 let
   cfg = config.wallpaper;
-  heicConverter = file: pkgs.callPackage (import ./heic-converter.nix) { inherit file; };
+  heicConverter =
+    file:
+    pkgs.callPackage (import ./heic-converter.nix) {
+      file = sanitizePath file;
+    };
 
 in
 {
