@@ -35,7 +35,7 @@ in
     };
   };
 
-  # config = mkIf cfg.enable {
-  #   wallpaper.is-static = !cfg.is-timed;
-  # };
+  config = mkIf (traceValSeq cfg).enable {
+    #   wallpaper.is-static = !cfg.is-timed;
+  };
 }
