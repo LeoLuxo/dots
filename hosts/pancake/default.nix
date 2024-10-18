@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   nixos-hardware,
   agenix,
@@ -52,7 +53,7 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  wallpaper.image = directories.wallpapers."Riverside";
+  wallpaper.image = (lib.traceValSeq directories.wallpapers)."Tree and shore";
 
   # Home-Manager config
   home-manager.users.${user} = {

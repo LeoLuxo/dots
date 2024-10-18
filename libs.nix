@@ -7,7 +7,7 @@ let
 
 in
 rec {
-  directories = rec {
+  directories = traceValSeq (rec {
     modules = findFiles {
       dir = ./modules;
       extensions = [ "nix" ];
@@ -45,7 +45,7 @@ rec {
       ];
       allowDefault = true;
     };
-  };
+  });
 
   writeScriptWithDeps =
     {
@@ -86,6 +86,14 @@ rec {
       # (Ignores all _dir attributes)
     ) (attrsets.filterAttrsRecursive (n: v: n != "_dir") directories.scripts);
 
+  # Sanitize a path so that it doesn't cause problems in the nix store
+  sanitizePath =
+    path:
+    builtins.path {
+      inherit path;
+      name = strings.sanitizeDerivationName (baseNameOf path);
+    };
+
   # Recursively find modules in a given directory and map them to a logical set:
   # dir/a/b/file.ext         => .a.b.file
   # dir/a/b/file/default.ext => .a.b.file
@@ -94,6 +102,7 @@ rec {
       dir,
       extensions,
       allowDefault ? false,
+      doSanitize ? true,
     }:
     let
       extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
@@ -101,6 +110,7 @@ rec {
         name = "";
         value = null;
       };
+      sanitize = x: if doSanitize then sanitizePath x else x;
 
       findFilesRecursive =
         dir:
@@ -111,8 +121,8 @@ rec {
             attrsets.mapAttrs' (
               fileName: type:
               let
-                extMatch = (match "(.*)\\.${extRegex}" fileName);
-                filePath = dir + "/${fileName}";
+                extMatch = match "(.*)\\.${extRegex}" fileName;
+                filePath = sanitize (dir + "/${fileName}");
               in
               # If regular file, then add it to the file list only if the extension regex matches
               if type == "regular" then
@@ -154,7 +164,7 @@ rec {
             ) (readDir dir)
           );
     in
-    findFilesRecursive dir;
+    findFilesRecursive (sanitize dir);
 
   # Utility to easily create a new keybind
   mkGnomeKeybind =
