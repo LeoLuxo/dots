@@ -38,8 +38,8 @@ let
           magick "$src" "$out/%02d.jpg"
 
           # Convert the .heic timing info to .stw and fix the hardcoded path in the .stw
-          heic2stw "$src" > "$out/$wallpaper.stw"
-          sed -i "s#/usr/share/backgrounds/#$out/#g" "$out/$wallpaper.stw"
+          heic2stw "$src" > "$out/wallpaper.stw"
+          sed -i "s#/usr/share/backgrounds/#$out/#g" "$out/wallpaper.stw"
         '';
       })
     ) { };
