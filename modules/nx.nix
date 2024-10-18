@@ -14,8 +14,9 @@
   };
 
   home-manager.users.${user} = {
-    # Add all scripts from the nx directory
+    # Add scripts from the nx directory
     home.packages = with pkgs; [
+
       (scriptBin.nx.nx-cleanup { })
 
       (scriptBin.nx.nx-code { })
