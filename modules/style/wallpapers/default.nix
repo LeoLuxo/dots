@@ -9,40 +9,7 @@ with lib;
 
 let
   cfg = config.wallpaper;
-
-  heicConverter =
-    file:
-    pkgs.callPackage (
-      {
-        lib,
-        stdenv,
-        wallutils,
-        imagemagick,
-      }:
-      stdenv.mkDerivation (finalAttrs: {
-        name = "heic-converted-wallpaper";
-        src = file;
-
-        nativeBuildInputs = [
-          wallutils
-          imagemagick
-        ];
-
-        # By default since src is a file, nix will try to unpack it
-        dontUnpack = true;
-
-        buildPhase = ''
-          mkdir -p "$out"
-
-          # Extract the individual images from the .heic as .jpg
-          magick "$src" "$out/%02d.jpg"
-
-          # Convert the .heic timing info to .stw and fix the hardcoded path in the .stw
-          heic2stw "$src" > "$out/wallpaper.stw"
-          sed -i "s&^format:.*&format: $out/%s.jpg&" "$out/wallpaper.stw"
-        '';
-      })
-    ) { };
+  heicConverter = file: pkgs.callPackage (import ./heic-converter.nix) { inherit file; };
 
 in
 {
@@ -96,6 +63,11 @@ in
 
   config = mkIf (traceValSeq cfg).enable (
     let
+      # fixedImage = builtins.path {
+      #   path = cfg.image;
+      #   name = "wallpaper-input";
+      # };
+
       wallpaper = traceValSeq (
         if cfg.isTimed then "${(heicConverter cfg.image)}/wallpaper.stw" else cfg.image
       );
