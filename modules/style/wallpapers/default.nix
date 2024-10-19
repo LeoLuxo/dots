@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  sanitizePath,
   ...
 }:
 
@@ -67,13 +68,10 @@ in
 
   config = mkIf (traceValSeq cfg).enable (
     let
-      # fixedImage = builtins.path {
-      #   path = cfg.image;
-      #   name = "wallpaper-input";
-      # };
+      fixedImage = sanitizePath cfg.image;
 
       wallpaper = traceValSeq (
-        if cfg.isTimed then "${(heicConverter cfg.image)}/wallpaper.stw" else cfg.image
+        if cfg.isTimed then "${(heicConverter fixedImage)}/wallpaper.stw" else fixedImage
       );
     in
     {
