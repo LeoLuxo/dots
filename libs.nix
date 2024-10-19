@@ -34,7 +34,7 @@ rec {
         "svg"
         "heic"
       ];
-      doSanitize = true;
+      # doSanitize = true;
     };
 
     wallpapers = images.wallpapers;
@@ -45,7 +45,7 @@ rec {
         "ico"
         "icns"
       ];
-      doSanitize = true;
+      # doSanitize = true;
     };
   });
 
@@ -166,7 +166,7 @@ rec {
             ) (readDir dir)
           );
     in
-    findFilesRecursive (sanitize dir);
+    findFilesRecursive (sanitizePath dir);
 
   # Utility to easily create a new keybind
   mkGnomeKeybind =
