@@ -7,7 +7,7 @@ let
 
 in
 rec {
-  directories = traceValSeq (rec {
+  directories = rec {
     modules = findFiles {
       dir = ./modules;
       extensions = [ "nix" ];
@@ -34,7 +34,6 @@ rec {
         "svg"
         "heic"
       ];
-      # doSanitize = true;
     };
 
     wallpapers = images.wallpapers;
@@ -45,9 +44,8 @@ rec {
         "ico"
         "icns"
       ];
-      # doSanitize = true;
     };
-  });
+  };
 
   writeScriptWithDeps =
     {
@@ -104,7 +102,6 @@ rec {
       dir,
       extensions,
       allowDefault ? false,
-      doSanitize ? false,
     }:
     let
       extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
@@ -112,7 +109,6 @@ rec {
         name = "";
         value = null;
       };
-      sanitize = x: if doSanitize then sanitizePath x else x;
 
       findFilesRecursive =
         dir:
@@ -124,7 +120,7 @@ rec {
               fileName: type:
               let
                 extMatch = match "(.*)\\.${extRegex}" fileName;
-                filePath = sanitize (dir + "/${fileName}");
+                filePath = dir + "/${fileName}";
               in
               # If regular file, then add it to the file list only if the extension regex matches
               if type == "regular" then

@@ -40,12 +40,12 @@ in
 
     enable = mkOption {
       type = types.bool;
-      default = builtins.isPath cfg.image;
+      default = false;
     };
 
     isTimed = mkOption {
       type = types.bool;
-      default = cfg.enable && (strings.hasSuffix ".heic" cfg.image);
+      default = strings.hasSuffix ".heic" cfg.image;
     };
 
     refreshOnUnlock = mkOption {
@@ -66,13 +66,11 @@ in
     # };
   };
 
-  config = mkIf (traceValSeq cfg).enable (
+  config = mkIf cfg.enable (
     let
       fixedImage = sanitizePath cfg.image;
 
-      wallpaper = traceValSeq (
-        if cfg.isTimed then "${(heicConverter fixedImage)}/wallpaper.stw" else fixedImage
-      );
+      wallpaper = if cfg.isTimed then "${(heicConverter fixedImage)}/wallpaper.stw" else fixedImage;
     in
     {
       # Run wallutils settimed as a systemd service
@@ -90,6 +88,7 @@ in
             ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
           '';
         };
+        restartIfChanged = true;
         restartTriggers = [
           cfg.mode
           wallpaper
