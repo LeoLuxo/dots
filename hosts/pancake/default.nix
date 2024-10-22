@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   nixos-hardware,
   agenix,
@@ -53,7 +52,11 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  wallpaper.image = directories.wallpapers."Tree and shore";
+  wallpaper = {
+    enable = true;
+    image = directories.wallpapers."AM PM Office";
+
+  };
 
   # Home-Manager config
   home-manager.users.${user} = {
