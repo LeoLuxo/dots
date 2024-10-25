@@ -54,7 +54,7 @@
 
   wallpaper = {
     enable = true;
-    image = directories.wallpapers."AM PM Office";
+    image = directories.wallpapers."Tree and shore";
 
   };
 
