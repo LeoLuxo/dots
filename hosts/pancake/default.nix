@@ -55,7 +55,6 @@
   wallpaper = {
     enable = true;
     image = directories.wallpapers."Tree and shore";
-
   };
 
   # Home-Manager config
