@@ -13,7 +13,7 @@
     DCONF_DIFF = "/home/${user}/.dconf_activation";
 
     # Set the location of the todo doc
-    NX_TODO = "/stuff/obsidian/Notes/NixOS Todo";
+    NX_TODO = "/stuff/obsidian/Notes/NixOS Todo.md";
   };
 
   home-manager.users.${user} = {
