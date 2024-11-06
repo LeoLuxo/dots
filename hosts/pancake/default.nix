@@ -39,8 +39,6 @@
     steam
     neofetch
 
-    direnv
-
     # Include local modules
     ./syncthing.nix
     ./wifi.nix
