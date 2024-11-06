@@ -6,9 +6,11 @@
 }:
 
 {
-  # Require fonts for vscode
   imports = with directories.modules; [
+    # Require fonts for vscode
     style.fonts
+
+    direnv
   ];
 
   environment.variables = {
