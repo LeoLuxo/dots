@@ -11,8 +11,6 @@
     # Include global modules
     style.bootscreen
     style.fonts
-    # style.static-wallpapers
-    # style.timed-wallpapers
     style.wallpapers
     style.themes.catppuccin
 
@@ -41,6 +39,8 @@
     steam
     neofetch
 
+    direnv
+
     # Include local modules
     ./syncthing.nix
     ./wifi.nix
@@ -52,6 +52,7 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
+  # Set wallpaper  
   wallpaper = {
     enable = true;
     image = directories.wallpapers."Tree and shore";
