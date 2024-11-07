@@ -50,8 +50,6 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  virtualisation.docker.enable = true;
-
   # Set wallpaper  
   wallpaper = {
     enable = true;
