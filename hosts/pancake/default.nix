@@ -38,6 +38,7 @@
     git
     steam
     neofetch
+    docker
 
     # Include local modules
     ./syncthing.nix
