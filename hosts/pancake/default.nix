@@ -39,6 +39,7 @@
     steam
     neofetch
     docker
+    dev.iris
 
     # Include local modules
     ./syncthing.nix
