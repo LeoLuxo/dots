@@ -3,6 +3,8 @@
   imports = [ ];
   home-manager.users.${user} = {
     home.packages = with pkgs; [
+      ocamlPackages.findlib
+
       coq
       coqPackages.vscoq-language-server
     ];
