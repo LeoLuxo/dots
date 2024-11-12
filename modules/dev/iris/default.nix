@@ -2,7 +2,6 @@
   pkgs,
   user,
   directories,
-  lib,
   ...
 }:
 {
