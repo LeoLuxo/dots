@@ -10,12 +10,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   dontUnpack = true;
 
-  # installPhase = ''
-  #   mkdir -p $out
-
-  #   install -Dm0644 "${directories.images.syncthing}" $out/share/icons/hicolor/2048x2048/apps/syncthing.png
-  # '';
-
   nativeBuildInputs = [ copyDesktopItems ];
 
   desktopItems = (
