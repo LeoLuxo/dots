@@ -9,16 +9,26 @@
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      iris-coq
+      coqPackages.iris
     ];
   };
 
-  nixpkgs.overlays = [
-    (final: prev: {
+  nixpkgs.overlays =
 
-      # Add Iris derivation
-      iris-coq = pkgs.coqPackages.callPackage ./iris-coq.nix { };
-
-    })
-  ];
+    [
+      (
+        final: prev:
+        let
+          inherit (prev.coqPackages) overrideScope' callPackage;
+        in
+        {
+          coqPackages = overrideScope' (
+            self: super: {
+              # Add iris coq package
+              iris = callPackage ./iris-coq.nix { };
+            }
+          );
+        }
+      )
+    ];
 }
