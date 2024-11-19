@@ -30,11 +30,11 @@
     };
   };
 
-  # home-manager.users.${user} = {
-  #   home.packages = with pkgs; [
-  #     syncthing-desktop-icon
-  #   ];
-  # };
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      syncthing-desktop-icon
+    ];
+  };
 
   nixpkgs.overlays = [
     (
@@ -44,17 +44,15 @@
       in
       {
         syncthing-desktop-icon = stdenv.mkDerivation (finalAttrs: {
-          name = "syncthing-desktop-icon";
+          pname = "syncthing-desktop-icon";
           version = "0.0.0";
 
-          installPhase = lib.optionalString stdenv.hostPlatform.isLinux ''
-                      cp "${directories.images.syncthing}" build/icon_2048x2048x32.png
+          dontUnpack = true;
 
+          installPhase = lib.optionalString stdenv.hostPlatform.isLinux ''
             mkdir -p $out
-                      for file in build/icon_*x32.png; do
-                        file_suffix=''${file//build\/icon_}
-                        install -Dm0644 $file $out/share/icons/hicolor/''${file_suffix//x32.png}/apps/syncthing.png
-                      done
+
+            install -Dm0644 "${directories.images.syncthing}" $out/share/icons/hicolor/2048x2048/apps/syncthing.png
           '';
 
           desktopItems = lib.optional stdenv.hostPlatform.isLinux (makeDesktopItem {
