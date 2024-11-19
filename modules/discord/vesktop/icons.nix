@@ -8,26 +8,28 @@
         finalAttrs: oldAttrs: {
           # Overwrite the desktop item so the app name is "Discord"
           desktopItems = (
-            prev.makeDesktopItem {
-              name = "vesktop";
-              desktopName = "Discord";
-              exec = "vesktop %U";
-              icon = "vesktop";
-              startupWMClass = "Discord";
-              genericName = "Internet Messenger";
-              keywords = [
-                "discord"
-                "vencord"
-                "vesktop"
-                "electron"
-                "chat"
-              ];
-              categories = [
-                "Network"
-                "InstantMessaging"
-                "Chat"
-              ];
-            }
+            prev.lib.optional prev.stdenv.hostPlatform.isLinux (
+              prev.makeDesktopItem {
+                name = "vesktop";
+                desktopName = "Discord";
+                exec = "vesktop %U";
+                icon = "vesktop";
+                startupWMClass = "Discord";
+                genericName = "Internet Messenger";
+                keywords = [
+                  "discord"
+                  "vencord"
+                  "vesktop"
+                  "electron"
+                  "chat"
+                ];
+                categories = [
+                  "Network"
+                  "InstantMessaging"
+                  "Chat"
+                ];
+              }
+            )
           );
 
           # Add a prebuild action to overwrite the tray and app icons and the dancing anime gif
@@ -39,10 +41,11 @@
               cp -f "${directories.images.discord-logo-white}" static/icon.png
               cp -f "${directories.icons.discord}" static/icon.ico
 
+              # Dancing anime gif
               cp -f "${directories.images.bongo-cat}" static/shiggy.gif
             '';
 
-          # Add a preinstall action to overwrite the app icons and the dancing anime gif
+          # Add a preinstall action to overwrite the desktop icon
           preInstall =
             (oldAttrs.preInstall or "")
             + ''
