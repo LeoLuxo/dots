@@ -36,40 +36,44 @@
   #   ];
   # };
 
-  # nixpkgs.overlays = [
-  #   (
-  #     final: prev:
-  #     let
-  #       inherit (prev) stdenv lib makeDesktopItem;
-  #     in
-  #     {
-  #       syncthing-desktop-icon = stdenv.mkDerivation (finalAttrs: {
-  #         installPhase = lib.optionalString stdenv.hostPlatform.isLinux ''
-  #           cp "${directories.images.syncthing}" build/icon_2048x2048x32.png
+  nixpkgs.overlays = [
+    (
+      final: prev:
+      let
+        inherit (prev) stdenv lib makeDesktopItem;
+      in
+      {
+        syncthing-desktop-icon = stdenv.mkDerivation (finalAttrs: {
+          name = "syncthing-desktop-icon";
+          version = "0.0.0";
 
-  #           for file in build/icon_*x32.png; do
-  #             file_suffix=''${file//build\/icon_}
-  #             install -Dm0644 $file $out/share/icons/hicolor/''${file_suffix//x32.png}/apps/syncthing.png
-  #           done
-  #         '';
+          installPhase = lib.optionalString stdenv.hostPlatform.isLinux ''
+                      cp "${directories.images.syncthing}" build/icon_2048x2048x32.png
 
-  #         desktopItems = lib.optional stdenv.hostPlatform.isLinux (makeDesktopItem {
-  #           name = "syncthing";
-  #           desktopName = "Syncthing";
-  #           exec = "firefox \"http://127.0.0.1:8384/\"";
-  #           icon = "syncthing";
-  #           keywords = [
-  #             "syncthing"
-  #           ];
-  #           categories = [
-  #             "Network"
-  #             "FileTransfer"
-  #             "P2P"
-  #           ];
-  #         });
-  #       });
-  #     }
-  #   )
-  # ];
+            mkdir -p $out
+                      for file in build/icon_*x32.png; do
+                        file_suffix=''${file//build\/icon_}
+                        install -Dm0644 $file $out/share/icons/hicolor/''${file_suffix//x32.png}/apps/syncthing.png
+                      done
+          '';
+
+          desktopItems = lib.optional stdenv.hostPlatform.isLinux (makeDesktopItem {
+            name = "syncthing";
+            desktopName = "Syncthing";
+            exec = "firefox \"http://127.0.0.1:8384/\"";
+            icon = "syncthing";
+            keywords = [
+              "syncthing"
+            ];
+            categories = [
+              "Network"
+              "FileTransfer"
+              "P2P"
+            ];
+          });
+        });
+      }
+    )
+  ];
 
 }
