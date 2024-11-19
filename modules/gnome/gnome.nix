@@ -134,6 +134,7 @@
         # Appearance
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
+          gtk-enable-primary-paste = false;
         };
 
         # Base extension settings
