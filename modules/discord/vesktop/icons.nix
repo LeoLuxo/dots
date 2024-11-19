@@ -8,28 +8,26 @@
         finalAttrs: oldAttrs: {
           # Overwrite the desktop item so the app name is "Discord"
           desktopItems = (
-            prev.lib.optional prev.stdenv.hostPlatform.isLinux (
-              prev.makeDesktopItem {
-                name = "vesktop";
-                desktopName = "Discord";
-                exec = "vesktop %U";
-                icon = "vesktop";
-                startupWMClass = "Discord";
-                genericName = "Internet Messenger";
-                keywords = [
-                  "discord"
-                  "vencord"
-                  "vesktop"
-                  "electron"
-                  "chat"
-                ];
-                categories = [
-                  "Network"
-                  "InstantMessaging"
-                  "Chat"
-                ];
-              }
-            )
+            prev.makeDesktopItem {
+              name = "vesktop";
+              desktopName = "Discord";
+              exec = "vesktop %U";
+              icon = "vesktop";
+              startupWMClass = "Discord";
+              genericName = "Internet Messenger";
+              keywords = [
+                "discord"
+                "vencord"
+                "vesktop"
+                "electron"
+                "chat"
+              ];
+              categories = [
+                "Network"
+                "InstantMessaging"
+                "Chat"
+              ];
+            }
           );
 
           # Add a prebuild action to overwrite the tray and app icons and the dancing anime gif
