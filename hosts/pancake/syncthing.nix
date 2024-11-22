@@ -92,7 +92,7 @@ in
 
   # Manually setup ignore patterns
   systemd.services.syncthing-init.postStart = ''
-    printf "**/workspace*.json\n" > /stuff/obsidian/.stignore
+    printf "**/workspace*.json\n.obsidian/vault-stats.json\n" > /stuff/obsidian/.stignore
     printf "**/target/\n" > /stuff/uni_courses/.stignore
   '';
 }
