@@ -33,6 +33,9 @@
 
       # sh formatter
       shfmt
+
+      #
+      vscode-extensions.rust-lang.rust-analyzer
     ];
   };
 }
