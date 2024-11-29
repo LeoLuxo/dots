@@ -208,11 +208,16 @@ rec {
       }
     );
 
-  mkSyncedJSON = mkSyncedFile {
-    toNix = builtins.fromJSON;
-    fromNix = builtins.toJSON;
-    fallback = "{}";
-  };
+  mkSyncedJSON =
+    let
+      # Custom pretty json instead of builtins.toJSON
+      toPrettyJSON = attrs: readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
+    in
+    mkSyncedFile {
+      toNix = builtins.fromJSON;
+      fromNix = toPrettyJSON;
+      fallback = "{}";
+    };
 
   mkSyncedFile =
     {
