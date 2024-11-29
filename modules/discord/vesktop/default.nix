@@ -1,9 +1,18 @@
-{ pkgs, user, ... }:
+{
+  pkgs,
+  user,
+  mkSyncedJSON,
+  ...
+}:
 {
   imports = [
     ./icons.nix
     ./keybinds-fix.nix
-    ./settings.nix
+
+    (mkSyncedJSON {
+      srcPath = ./settings1.json;
+      xdgPath = "vesktop/settings.json";
+    })
   ];
 
   home-manager.users.${user} = {
