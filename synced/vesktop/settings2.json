@@ -4,7 +4,7 @@
   "cloud": {
     "authenticated": false,
     "settingsSync": false,
-    "settingsSyncVersion": 1730282253502,
+    "settingsSyncVersion": 1732891843213,
     "url": "https://api.vencord.dev/"
   },
   "disableMinSize": false,
@@ -28,7 +28,7 @@
       "enabled": false
     },
     "AlwaysTrust": {
-      "enabled": false
+      "enabled": true
     },
     "AnonymiseFileNames": {
       "enabled": false
@@ -129,6 +129,9 @@
     "DontRoundMyTimestamps": {
       "enabled": false
     },
+    "DynamicImageModalAPI": {
+      "enabled": false
+    },
     "EmoteCloner": {
       "enabled": false
     },
@@ -151,6 +154,9 @@
       "enabled": false
     },
     "FixCodeblockGap": {
+      "enabled": false
+    },
+    "FixImagesQuality": {
       "enabled": false
     },
     "FixSpotifyEmbeds": {
@@ -457,6 +463,9 @@
     },
     "SuperReactionTweaks": {
       "enabled": false
+    },
+    "SupportHelper": {
+      "enabled": true
     },
     "TextReplace": {
       "enabled": false
