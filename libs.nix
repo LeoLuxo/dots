@@ -223,31 +223,31 @@ rec {
     # Module to be imported
     { pkgs, user, ... }:
     {
-      # home-manager.users.${user} =
-      #   { lib, config, ... }:
-      #   {
-      #     home.activation."mkSyncedFile ${builtins.toString xdgPath}" =
-      #       let
-      #         srcPath = builtins.toString srcPath;
-      #         xdgPath = "${config.xdg.configHome}/${builtins.toString xdgPath}";
+      home-manager.users.${user} =
+        { lib, config, ... }:
+        {
+          #     home.activation."mkSyncedFile ${builtins.toString xdgPath}" =
+          #       let
+          #         srcPath = builtins.toString srcPath;
+          #         xdgPath = "${config.xdg.configHome}/${builtins.toString xdgPath}";
 
-      #         src = toNix (readOrDefault srcPath);
-      #         xdg = toNix (readOrDefault xdgPath);
-      #         merged = fromNix (src // xdg);
-      #       in
+          #         src = toNix (readOrDefault srcPath);
+          #         xdg = toNix (readOrDefault xdgPath);
+          #         merged = fromNix (src // xdg);
+          #       in
 
-      #       lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      #         # Save new merged content to dots
-      #         cat >"${srcPath}" <<EOL
-      #         ${merged}
-      #         EOL
+          #       lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          #         # Save new merged content to dots
+          #         cat >"${srcPath}" <<EOL
+          #         ${merged}
+          #         EOL
 
-      #         # Backup old file
-      #         cp "${xdgPath}" "${xdgPath}.bak" --force
-      #         # Copy merged content to new file
-      #         cp "${srcPath}" "${xdgPath}" --force
-      #       '';
-      #   };
+          #         # Backup old file
+          #         cp "${xdgPath}" "${xdgPath}.bak" --force
+          #         # Copy merged content to new file
+          #         cp "${srcPath}" "${xdgPath}" --force
+          #       '';
+        };
 
       # system.userActivationScripts."mkSyncedFile ${builtins.toString xdgPath}" = {
       #   text = ''
