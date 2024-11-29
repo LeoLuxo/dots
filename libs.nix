@@ -229,8 +229,8 @@ rec {
           home.activation."sync file ${builtins.toString xdgPath}" =
 
             let
-              srcPath = builtins.toString srcPath;
-              xdgPath = "${config.xdg.configHome}/${builtins.toString xdgPath}";
+              srcPath = debug.traceValSeq (builtins.toString srcPath);
+              xdgPath = debug.traceValSeq "${config.xdg.configHome}/${builtins.toString xdgPath}";
 
             in
             #         src = toNix (readOrDefault srcPath);
