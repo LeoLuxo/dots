@@ -43,10 +43,16 @@
           hostName,
           system,
           modules,
+          nixRepoPath ? "/etc/nixos/dots",
         }:
         let
           constants = {
-            inherit user system hostName;
+            inherit
+              user
+              system
+              hostName
+              nixRepoPath
+              ;
           };
           libs = import ./libs.nix (inputs // constants);
         in

@@ -2,12 +2,13 @@
   pkgs,
   user,
   scriptBin,
+  nixRepoPath,
   ...
 }:
 {
   environment.variables = {
     # Set the location of the config repo
-    NX_REPO = "/etc/nixos/dots";
+    NX_REPO = nixRepoPath;
 
     # Set the location of the file used for dconf-diff
     DCONF_DIFF = "/home/${user}/.dconf_activation";
