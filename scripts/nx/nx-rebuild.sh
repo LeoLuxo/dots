@@ -62,8 +62,14 @@ echo -e "${BLUE}Current generation: ${RESET}\n${current_gen}"
 # Save current dconf settings (for nx-dconf-diff)
 dconf dump / >$DCONF_DIFF
 
-# RE-add any auto-generated files (for example from /synced/)
-git add .
+# RE-add any auto-generated files
+git add ./synced
+
+# Shows NEW changes
+changes=$(
+	git --no-pager diff --staged --name-status .
+)
+echo -e "${BLUE}New files changed:${RESET}\n${changes}"
 
 # Commit all changes with the generation metadata
 echo -e "${BLUE}Committing...${RESET}"
