@@ -239,8 +239,8 @@ rec {
           home.activation."sync file ${builtins.toString xdgPath}" =
 
             let
-              srcPathStr = debug.traceValSeq "${nixRepoPath}/synced/${srcPath}";
-              xdgPathStr = debug.traceValSeq "${config.xdg.configHome}/${builtins.toString xdgPath}";
+              srcPathStr = "${nixRepoPath}/synced/${srcPath}";
+              xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
               src = toNix (readOrDefault srcPathStr);
               xdg = toNix (readOrDefault xdgPathStr);
               merged = fromNix (src // xdg);
