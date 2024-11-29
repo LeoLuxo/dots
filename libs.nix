@@ -1,4 +1,9 @@
-{ nixpkgs, system, ... }:
+{
+  nixpkgs,
+  system,
+  nixRepoPath,
+  ...
+}:
 
 with nixpkgs.lib;
 with builtins;
@@ -229,26 +234,29 @@ rec {
           home.activation."sync file ${builtins.toString xdgPath}" =
 
             let
-              srcPath = debug.traceValSeq (builtins.toString srcPath);
-              xdgPath = debug.traceValSeq "${config.xdg.configHome}/${builtins.toString xdgPath}";
+              srcPathStr = debug.traceValSeq "${nixRepoPath}/synced/${srcPath}";
+              xdgPathStr = debug.traceValSeq "${config.xdg.configHome}/${builtins.toString xdgPath}";
+              src = toNix (readOrDefault srcPathStr);
+              xdg = toNix (readOrDefault xdgPathStr);
+              merged = fromNix (src // xdg);
 
             in
-            #         src = toNix (readOrDefault srcPath);
-            #         xdg = toNix (readOrDefault xdgPath);
-            #         merged = fromNix (src // xdg);
 
-            '''';
-          # lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          #   # Save new merged content to dots
-          #   # cat >"${srcPath}" <<EOL
-          #   # ${merged}
-          #   # EOL
+            # '''';
+            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              # Save new merged content to dots
+              cat >"${srcPathStr}" <<EOL
+              ${merged}
+              EOL
 
-          #   # Backup old file
-          #   cp "${xdgPath}" "${xdgPath}.bak" --force
-          #   # Copy merged content to new file
-          #   cp "${srcPath}" "${xdgPath}" --force
-          # '';
+              # Backup old file
+              if [ -f "${xdgPathStr}" ]; then
+                cp "${xdgPathStr}" "${xdgPathStr}.bak" --force
+              fi
+
+              # Copy merged content to new file
+              cp "${srcPathStr}" "${xdgPathStr}" --force
+            '';
         };
 
       # system.userActivationScripts."mkSyncedFile ${builtins.toString xdgPath}" = {
