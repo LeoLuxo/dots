@@ -36,14 +36,16 @@ nixfmt --quiet . ||
 # 	exit 0
 # fi
 
+# For some reason nix can't see non-git added files
+git add .
+
 # Shows changes
-changes=$(git --no-pager diff --name-only .)
+changes=$(
+	git --no-pager diff --staged --name-status .
+)
 echo -e "${BLUE}Files changed:${RESET}\n${changes}"
 
 echo -e "${BLUE}NixOS Rebuilding...${RESET}"
-
-# For some reason nix can't see non-git added files
-git add .
 
 # Rebuild, and if errors occur make sure to exit
 # tarball-ttl 0 forces the tarball cache to be stale and re-downloaded

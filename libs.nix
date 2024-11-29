@@ -203,4 +203,6 @@ rec {
       }
     );
 
+  # mkSyncedSetting
+
 }
