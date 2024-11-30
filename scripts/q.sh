@@ -23,21 +23,21 @@ checkpath() {
 	echo checkpath arg: $1
 
 	if [[ -L $1 ]]; then
-		TARGET="$(readlink -f $1)"
+		TARGET=$(readlink -f $1)
 		echo -e "${PURPLE}Symlink points to ->\n${BLUE}${TARGET}${RESET}"
 
 		if [[ -d $TARGET ]]; then
-			dir $TARGET
+			dir "$TARGET"
 		elif [[ -f $TARGET ]]; then
-			file $1
+			file "$1"
 		else
 			echo "Target of the symlink does not exist or is invalid"
 			exit 1
 		fi
 	elif [[ -d $1 ]]; then
-		dir $1
+		dir "$1"
 	elif [[ -f $1 ]]; then
-		file $1
+		file "$1"
 	else
 		echo "Path '$1' does not exist or is invalid"
 		exit 1
