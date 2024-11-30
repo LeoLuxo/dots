@@ -14,6 +14,7 @@
       (scriptBin.cheat { })
       (scriptBin.fuck { })
       (scriptBin.extract { })
+      (scriptBin.q { })
     ];
   };
 }
