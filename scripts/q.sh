@@ -10,17 +10,17 @@ echo $1
 file() {
 	echo file arg: $1
 	echo -e "${PURPLE}File contents:${RESET}"
-	highlight -O ansi --force $1
+	highlight -O ansi --force "$1"
 }
 
 dir() {
 	echo dir arg: $1
 	echo -e "${PURPLE}Directory listing:${RESET}"
-	ls -Fhsla --color=always $1
+	ls -Fhsla --color=always "$1"
 }
 
-checkfile() {
-	echo checkfile arg: $1
+checkpath() {
+	echo checkpath arg: $1
 
 	if [[ -L $1 ]]; then
 		TARGET="$(readlink -f $1)"
@@ -45,7 +45,7 @@ checkfile() {
 }
 
 if [[ $# -eq 0 ]]; then
-	checkfile .
+	checkpath .
 else
-	checkfile "$*"
+	checkpath "$*"
 fi
