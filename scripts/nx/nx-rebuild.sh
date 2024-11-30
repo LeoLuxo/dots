@@ -12,12 +12,12 @@
 set -e
 
 # Some color
-BLUE='\033[1;34m'
+CYAN='\033[1;36m'
 GREEN='\033[1;32m'
 RESET='\033[0m'
 
 # Force sudo early and cache it so I don't have to enter password later in the script
-sudo echo -e "${BLUE}Running as superuser${RESET}"
+sudo echo -e "${CYAN}Running as superuser${RESET}"
 
 # cd to our config dir
 pushd $NX_REPO 1>/dev/null
@@ -43,9 +43,9 @@ git add .
 changes=$(
 	git --no-pager diff --staged --name-status .
 )
-echo -e "${BLUE}Files changed:${RESET}\n${changes}"
+echo -e "${CYAN}Files changed:${RESET}\n${changes}"
 
-echo -e "${BLUE}NixOS Rebuilding...${RESET}"
+echo -e "${CYAN}NixOS Rebuilding...${RESET}"
 
 # Rebuild, and if errors occur make sure to exit
 # tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
@@ -57,7 +57,7 @@ sudo nixos-rebuild switch --impure --flake .#$HOSTNAME --option tarball-ttl 0 "$
 
 # Get current generation metadata
 current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
-echo -e "${BLUE}Current generation: ${RESET}\n${current_gen}"
+echo -e "${CYAN}Current generation: ${RESET}\n${current_gen}"
 
 # Save current dconf settings (for nx-dconf-diff)
 dconf dump / >$DCONF_DIFF
@@ -69,13 +69,13 @@ git add ./synced
 changes=$(
 	git --no-pager diff --staged --name-status .
 )
-echo -e "${BLUE}New files changed:${RESET}\n${changes}"
+echo -e "${CYAN}New files changed:${RESET}\n${changes}"
 
 # Commit all changes with the generation metadata
-echo -e "${BLUE}Committing...${RESET}"
+echo -e "${CYAN}Committing...${RESET}"
 git commit -m "$current_gen" -m "$changes" 1>/dev/null
 
-echo -e "${BLUE}Pushing...${RESET}"
+echo -e "${CYAN}Pushing...${RESET}"
 # Git push is stoopid and writes everything to stderr
 git push &>/dev/null
 
