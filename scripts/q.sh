@@ -8,7 +8,7 @@ RESET='\033[0m'
 
 file() {
 	echo -e "${CYAN}File ${PURPLE}$1${RESET}"
-	mime=$(file "$1" --mime)
+	mime="$(file "$1" --mime)"
 	echo $mime
 
 	if mime | grep -q "charset=binary"; then
@@ -29,12 +29,12 @@ dir() {
 
 checkpath() {
 	if [[ -L $1 ]]; then
-		TARGET=$(readlink -f $1)
-		echo -e "${PURPLE}-> ${BLUE}${TARGET}${RESET}"
+		target="$(readlink -f $1)"
+		echo -e "${PURPLE}-> ${BLUE}${target}${RESET}"
 
-		if [[ -d $TARGET ]]; then
-			dir "$TARGET"
-		elif [[ -f $TARGET ]]; then
+		if [[ -d $target ]]; then
+			dir "$target"
+		elif [[ -f $target ]]; then
 			file "$1"
 		else
 			echo "${RED}Target of the symlink does not exist or is invalid${RESET}"
