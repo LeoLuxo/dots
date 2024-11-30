@@ -9,6 +9,7 @@ RESET='\033[0m'
 file() {
 	echo -e "${CYAN}File ${PURPLE}$1${RESET}"
 	mime=$(file "$1" --mime)
+	echo $mime
 
 	if mime | grep -q "charset=binary"; then
 		if mime | grep -q "image"; then
