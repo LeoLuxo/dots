@@ -225,7 +225,7 @@ rec {
       fromNix,
       fallback ? "",
     }:
-    { srcPath, xdgPath }:
+    { syncPath, xdgPath }:
 
     let
       readOrDefault = file: if sources.pathIsRegularFile file then builtins.readFile file else fallback;
@@ -239,9 +239,9 @@ rec {
           home.activation."sync file ${builtins.toString xdgPath}" =
 
             let
-              srcPathStr = "${nixRepoPath}/synced/${srcPath}";
+              syncPathStr = "${nixRepoPath}/synced/${syncPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
-              src = toNix (readOrDefault srcPathStr);
+              src = toNix (readOrDefault syncPathStr);
               xdg = toNix (readOrDefault xdgPathStr);
               merged = fromNix (src // xdg);
 
@@ -250,7 +250,7 @@ rec {
             # '''';
             lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               # Save new merged content to dots
-              cat >"${srcPathStr}" <<EOL
+              cat >"${syncPathStr}" <<EOL
               ${merged}
               EOL
 
@@ -260,21 +260,21 @@ rec {
               fi
 
               # Copy merged content to new file
-              cp "${srcPathStr}" "${xdgPathStr}" --force
+              cp "${syncPathStr}" "${xdgPathStr}" --force
             '';
         };
 
       # system.userActivationScripts."mkSyncedFile ${builtins.toString xdgPath}" = {
       #   text = ''
       #     # Save new merged content to dots
-      #     cat >"${builtins.toString srcPath}" <<EOL
+      #     cat >"${builtins.toString syncPath}" <<EOL
       #     ${merged}
       #     EOL
 
       #     # Backup old file
       #     cp "${builtins.toString xdgPath}" "${builtins.toString xdgPath}.bak" --force
       #     # Copy merged content to new file
-      #     cp "${builtins.toString srcPath}" "${builtins.toString xdgPath}" --force
+      #     cp "${builtins.toString syncPath}" "${builtins.toString xdgPath}" --force
       #   '';
       #   deps = [ ];
       # };
