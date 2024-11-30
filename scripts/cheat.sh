@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-cd $NX_REPO
+curl cheat.sh/$1
