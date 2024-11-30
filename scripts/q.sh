@@ -7,24 +7,39 @@ RESET='\033[0m'
 echo $@
 echo $1
 
+file() {
+	echo file arg: $1
+	echo -e "${PURPLE}File contents:${RESET}"
+	highlight -O ansi --force $1
+}
+
+dir() {
+	echo dir arg: $1
+	echo -e "${PURPLE}Directory listing:${RESET}"
+	ls -Fhsla --color=always $1
+}
+
 checkfile() {
-	echo checkfile args: $1
+	echo checkfile arg: $1
 
 	if [[ -L $1 ]]; then
-		TARGET=$(readlink -f $1)
+		TARGET="$(readlink -f $1)"
 		echo -e "${PURPLE}Symlink points to ->\n${BLUE}${TARGET}${RESET}"
 
-		checkfile $TARGET
+		if [[ -d $TARGET ]]; then
+			dir $TARGET
+		elif [[ -f $TARGET ]]; then
+			file $1
+		else
+			echo "Target of the symlink does not exist or is invalid"
+			exit 1
+		fi
 	elif [[ -d $1 ]]; then
-		echo -e "${PURPLE}Directory listing:${RESET}"
-
-		ls -Fhsla --color=always $1
+		dir $1
 	elif [[ -f $1 ]]; then
-		echo -e "${PURPLE}File contents:${RESET}"
-
-		highlight -O ansi --force $1
+		file $1
 	else
-		echo "$1 is not valid"
+		echo "Path '$1' does not exist or is invalid"
 		exit 1
 	fi
 }
