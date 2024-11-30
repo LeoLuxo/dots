@@ -1,0 +1,1 @@
+cd $NX_REPO

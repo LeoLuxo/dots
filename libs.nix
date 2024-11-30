@@ -228,7 +228,8 @@ rec {
     { syncPath, xdgPath }:
 
     let
-      readOrDefault = file: if sources.pathIsRegularFile file then builtins.readFile file else fallback;
+      readOrDefault =
+        file: if filesystem.pathIsRegularFile file then builtins.readFile file else fallback;
     in
     # Module to be imported
     { pkgs, user, ... }:
