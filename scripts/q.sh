@@ -13,11 +13,11 @@ checkfile() {
 	elif [[ -d $1 ]]; then
 		echo -e "${PURPLE}Directory listing:${RESET}"
 
-		ls -Fhsla --color=always "$1"
+		ls -Fhsla --color=always $1
 	elif [[ -f $1 ]]; then
 		echo -e "${PURPLE}File contents:${RESET}"
 
-		highlight -O ansi --force "$1"
+		highlight -O ansi --force $1
 	else
 		echo "$1 is not valid"
 		exit 1
@@ -27,5 +27,5 @@ checkfile() {
 if [[ $# -eq 0 ]]; then
 	checkfile .
 else
-	checkfile $1
+	checkfile "$@"
 fi
