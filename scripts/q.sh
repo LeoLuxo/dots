@@ -47,5 +47,5 @@ checkfile() {
 if [[ $# -eq 0 ]]; then
 	checkfile .
 else
-	checkfile "$@"
+	checkfile "$*"
 fi
