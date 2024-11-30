@@ -5,3 +5,5 @@ sudo nix-collect-garbage -d --delete-older-than 2d
 
 # Hard link nix store
 sudo nix-store --optimise
+
+du -h -s /nix/store
