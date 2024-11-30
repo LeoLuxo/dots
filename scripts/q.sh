@@ -4,7 +4,12 @@ BLUE='\033[1;34m'
 PURPLE='\033[1;35m'
 RESET='\033[0m'
 
+echo $@
+echo $1
+
 checkfile() {
+	echo checkfile args: $1
+
 	if [[ -L $1 ]]; then
 		TARGET=$(readlink -f $1)
 		echo -e "${PURPLE}Symlink points to ->\n${BLUE}${TARGET}${RESET}"
