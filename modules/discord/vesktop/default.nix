@@ -10,12 +10,12 @@
     ./keybinds-fix.nix
 
     (mkSyncedJSON {
-      srcPath = "vesktop/settings1.json";
+      syncPath = "vesktop/settings1.json";
       xdgPath = "vesktop/settings.json";
     })
 
     (mkSyncedJSON {
-      srcPath = "vesktop/settings2.json";
+      syncPath = "vesktop/settings2.json";
       xdgPath = "vesktop/settings/settings.json";
     })
   ];
