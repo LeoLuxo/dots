@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
-RED='\033[1;31m'
-CYAN='\033[1;36m'
-BLUE='\033[1;34m'
-PURPLE='\033[1;35m'
+ERROR='\033[1;31m'
+INFO='\033[1;36m'
+DIR='\033[1;34m'
+FILE='\033[1;35m'
+SYMLINK='\033[1;33m'
 RESET='\033[0m'
 
 checkfile() {
-	echo -e "${CYAN}File ${PURPLE}$1${RESET}"
+	echo -e "${INFO}File ${FILE}$1${RESET}"
 	mime="$(file "$1" --mime)"
 
 	if echo $mime | grep -q "charset=binary"; then
@@ -22,21 +23,21 @@ checkfile() {
 }
 
 checkdir() {
-	echo -e "${CYAN}Directory ${BLUE}$1${RESET}"
+	echo -e "${INFO}Directory ${DIR}$1${RESET}"
 	ls -Fhsla --color=always "$1"
 }
 
 checkpath() {
 	if [[ -L $1 ]]; then
 		target="$(readlink -f $1)"
-		echo -e "${PURPLE}-> ${BLUE}${target}${RESET}"
+		echo -e "${SYMLINK}$1${RESET} -> ${SYMLINK}${target}${RESET}"
 
 		if [[ -d $target ]]; then
 			checkdir "$target"
 		elif [[ -f $target ]]; then
 			checkfile "$1"
 		else
-			echo "${RED}Target of the symlink does not exist or is invalid${RESET}"
+			echo "${ERROR}Target of the symlink does not exist or is invalid${RESET}"
 			exit 1
 		fi
 	elif [[ -d $1 ]]; then
@@ -44,7 +45,7 @@ checkpath() {
 	elif [[ -f $1 ]]; then
 		checkfile "$1"
 	else
-		echo "${RED}Path '$1' does not exist or is invalid${RESET}"
+		echo "${ERROR}Path '$1' does not exist or is invalid${RESET}"
 		exit 1
 	fi
 }
