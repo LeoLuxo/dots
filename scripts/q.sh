@@ -1,17 +1,28 @@
 #!/usr/bin/env bash
 
 RED='\033[1;31m'
+CYAN='\033[1;36m'
 BLUE='\033[1;34m'
 PURPLE='\033[1;35m'
 RESET='\033[0m'
 
 file() {
-	echo -e "${PURPLE}File contents:${RESET}"
-	highlight -O ansi --force "$1"
+	echo -e "${CYAN}File ${PURPLE}$1${RESET}"
+	mime=$(file "$1" --mime)
+
+	if mime | grep -q "charset=binary"; then
+		if mime | grep -q "image"; then
+			viu --height 20 "$1"
+		else
+			file "$1"
+		fi
+	else
+		highlight -O ansi --force "$1"
+	fi
 }
 
 dir() {
-	echo -e "${PURPLE}Directory listing:${RESET}"
+	echo -e "${CYAN}Directory ${BLUE}$1${RESET}"
 	ls -Fhsla --color=always "$1"
 }
 
@@ -25,7 +36,7 @@ checkpath() {
 		elif [[ -f $TARGET ]]; then
 			file "$1"
 		else
-			echo "Target of the symlink does not exist or is invalid"
+			echo "${RED}Target of the symlink does not exist or is invalid${RESET}"
 			exit 1
 		fi
 	elif [[ -d $1 ]]; then
@@ -33,7 +44,7 @@ checkpath() {
 	elif [[ -f $1 ]]; then
 		file "$1"
 	else
-		echo "Path '$1' does not exist or is invalid"
+		echo "${RED}Path '$1' does not exist or is invalid${RESET}"
 		exit 1
 	fi
 }
