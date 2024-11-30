@@ -6,23 +6,22 @@ BLUE='\033[1;34m'
 PURPLE='\033[1;35m'
 RESET='\033[0m'
 
-file() {
+checkfile() {
 	echo -e "${CYAN}File ${PURPLE}$1${RESET}"
-	# mime="$(file "$1" --mime)"
-	# echo $mime
+	mime="$(file "$1" --mime)"
 
-	# if mime | grep -q "charset=binary"; then
-	# 	if mime | grep -q "image"; then
-	# 		viu --height 20 "$1"
-	# 	else
-	# 		file "$1"
-	# 	fi
-	# else
-	highlight -O ansi --force "$1"
-	# fi
+	if echo $mime | grep -q "charset=binary"; then
+		file "$1"
+
+		if echo $mime | grep -q "image"; then
+			viu --height 20 "$1"
+		fi
+	else
+		highlight -O ansi --force "$1"
+	fi
 }
 
-dir() {
+checkdir() {
 	echo -e "${CYAN}Directory ${BLUE}$1${RESET}"
 	ls -Fhsla --color=always "$1"
 }
@@ -33,17 +32,17 @@ checkpath() {
 		echo -e "${PURPLE}-> ${BLUE}${target}${RESET}"
 
 		if [[ -d $target ]]; then
-			dir "$target"
+			checkdir "$target"
 		elif [[ -f $target ]]; then
-			file "$1"
+			checkfile "$1"
 		else
 			echo "${RED}Target of the symlink does not exist or is invalid${RESET}"
 			exit 1
 		fi
 	elif [[ -d $1 ]]; then
-		dir "$1"
+		checkdir "$1"
 	elif [[ -f $1 ]]; then
-		file "$1"
+		checkfile "$1"
 	else
 		echo "${RED}Path '$1' does not exist or is invalid${RESET}"
 		exit 1
