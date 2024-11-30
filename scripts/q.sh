@@ -5,23 +5,27 @@ PURPLE='\033[1;35m'
 RESET='\033[0m'
 
 checkfile() {
-	if [[ -L $1 ]]; then
-		TARGET=$(readlink -f $1)
+	if [[ -L $@ ]]; then
+		TARGET=$(readlink -f $@)
 		echo -e "${PURPLE}Symlink points to ->\n${BLUE}${TARGET}${RESET}"
 
 		checkfile $TARGET
-	elif [[ -d $1 ]]; then
+	elif [[ -d $@ ]]; then
 		echo -e "${PURPLE}Directory listing:${RESET}"
 
-		ls -Fhsla
-	elif [[ -f $1 ]]; then
+		ls -Fhsla --color=always
+	elif [[ -f $@ ]]; then
 		echo -e "${PURPLE}File contents:${RESET}"
 
-		highlight -O ansi --force
+		highlight -O ansi --force $@
 	else
-		echo "$1 is not valid"
+		echo "$@ is not valid"
 		exit 1
 	fi
 }
 
-checkfile $1
+if [[ $# -eq 0 ]]; then
+	checkfile .
+else
+	checkfile $@
+fi
