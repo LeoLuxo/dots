@@ -31,6 +31,7 @@
 
     nx
     snip
+    terminal-utils
 
     firefox
     obsidian
