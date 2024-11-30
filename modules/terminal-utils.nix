@@ -1,13 +1,19 @@
 {
+  pkgs,
   user,
   scriptBin,
   ...
 }:
 {
-  imports = [ ];
   home-manager.users.${user} = {
-    home.packages = [
+    home.packages = with pkgs; [
+      # To highlight source code
+      highlight
+
       (scriptBin.size { })
+      (scriptBin.cheat { })
+      (scriptBin.fuck { })
+      (scriptBin.extract { })
     ];
   };
 }
