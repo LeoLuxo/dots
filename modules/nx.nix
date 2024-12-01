@@ -21,8 +21,6 @@
     # Add scripts from the nx directory
     home.packages = with pkgs; [
 
-      (scriptBin.nx.nx-cd { })
-
       (scriptBin.nx.nx-cleanup { })
 
       (scriptBin.nx.nx-code { })
@@ -42,6 +40,11 @@
         ];
       })
     ];
+
+    # Add aliases
+    home.shellAliases = {
+      nx-cd = "cd $NX_REPO";
+    };
   };
 
 }
