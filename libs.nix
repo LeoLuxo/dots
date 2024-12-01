@@ -72,7 +72,7 @@ rec {
 
   # Create scripts for every script file
   scriptBin =
-    # (nix is maximally lazy so this is only run if  and when a script is added to the packages)
+    # (nix is maximally lazy so this is only run if and when a script is added to the packages)
     mapAttrsRecursive (
       path: value:
       let
@@ -248,7 +248,6 @@ rec {
 
             in
 
-            # '''';
             lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               # Save new merged content to dots
               cat >"${syncPathStr}" <<EOL
@@ -264,21 +263,6 @@ rec {
               cp "${syncPathStr}" "${xdgPathStr}" --force
             '';
         };
-
-      # system.userActivationScripts."mkSyncedFile ${builtins.toString xdgPath}" = {
-      #   text = ''
-      #     # Save new merged content to dots
-      #     cat >"${builtins.toString syncPath}" <<EOL
-      #     ${merged}
-      #     EOL
-
-      #     # Backup old file
-      #     cp "${builtins.toString xdgPath}" "${builtins.toString xdgPath}.bak" --force
-      #     # Copy merged content to new file
-      #     cp "${builtins.toString syncPath}" "${builtins.toString xdgPath}" --force
-      #   '';
-      #   deps = [ ];
-      # };
     };
 
 }
