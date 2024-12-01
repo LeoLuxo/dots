@@ -3,7 +3,12 @@
 {
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      # Install nerdfonts, but only with a limited amount of fonts
+      # FUTURE:
+      # Install certain nerd fonts
+      # nerd-fonts.fantasque-sans-mono
+      # nerd-fonts.mononoki
+      # nerd-fonts.fira-code
+
       (nerdfonts.override {
         fonts = [
           "FantasqueSansMono"
