@@ -44,6 +44,7 @@
     # Add aliases
     home.shellAliases = {
       nx-cd = "cd $NX_REPO";
+      nxcd = "nx-cd";
     };
   };
 
