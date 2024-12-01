@@ -32,6 +32,7 @@
     nx
     snip
     terminal-utils
+    wl-clipboard
 
     firefox
     obsidian
