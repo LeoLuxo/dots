@@ -4,8 +4,8 @@ with lib;
 let
   # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
   secretsPath = builtins.fetchGit {
-    url = "ssh://git@github.com/LeoLuxo/nix-secrets";
-    # url = "/home/lili/nix-secrets/";
+    # url = "ssh://git@github.com/LeoLuxo/nix-secrets";
+    url = "/home/lili/nix-secrets/";
   };
   secretsFile = "${secretsPath}/secrets.nix";
   extractedSecrets =
@@ -26,8 +26,8 @@ in
   ];
 
   age = {
-    # Use the root key
-    identityPaths = [ "/root/.ssh/id_ed25519" ];
+    # Use the host key
+    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
     # Add automatically extracted secrets to agenix config
     # And edit some fields where needed by recursive-updating the sets

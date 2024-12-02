@@ -35,7 +35,7 @@ checkpath() {
 		if [[ -d $target ]]; then
 			checkdir "$target"
 		elif [[ -f $target ]]; then
-			checkfile "$1"
+			checkfile "$target"
 		else
 			echo "${ERROR}Target of the symlink does not exist or is invalid${RESET}"
 			exit 1
