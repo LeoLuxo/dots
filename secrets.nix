@@ -1,11 +1,17 @@
-{ lib, agenix, ... }:
+{
+  user,
+  config,
+  lib,
+  agenix,
+  ...
+}:
 with builtins;
 with lib;
 let
   # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
   secretsPath = builtins.fetchGit {
-    # url = "ssh://git@github.com/LeoLuxo/nix-secrets";
-    url = "/home/lili/nix-secrets/";
+    url = "ssh://git@github.com/LeoLuxo/nix-secrets";
+    # url = "/home/lili/nix-secrets/";
   };
   secretsFile = "${secretsPath}/secrets.nix";
   extractedSecrets =
@@ -20,14 +26,18 @@ let
       { };
 in
 {
+
   imports = [
     # Include agenix module
     agenix.nixosModules.default
   ];
 
   age = {
-    # Use the host key
-    identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    # Use the host key OR user key
+    identityPaths = [
+      "/etc/ssh/ssh_host_ed25519_key"
+      "${config.users.users.${user}.home}/.ssh/id_ed25519"
+    ];
 
     # Add automatically extracted secrets to agenix config
     # And edit some fields where needed by recursive-updating the sets
