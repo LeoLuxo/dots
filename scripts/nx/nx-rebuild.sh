@@ -50,14 +50,15 @@ echo -e "${CYAN}NixOS Rebuilding...${RESET}"
 # Rebuild, and if errors occur make sure to exit
 # tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
 # warn dirty disables the goddamn git dirty tree message
-sudo nixos-rebuild switch \
-	--impure --flake .#$HOSTNAME \
+sudo nh os switch --nom . -- \
+	--impure \
 	--option tarball-ttl 0 \
 	--option warn-dirty false \
-	"$@" || (
-	git restore --staged .
-	exit 1
-)
+	"$@" ||
+	(
+		git restore --staged .
+		exit 1
+	)
 
 # Get current generation metadata
 current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
