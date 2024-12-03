@@ -16,6 +16,8 @@
   # Comma can run non-installed packages by prepending the command with a ','
   programs.nix-index-database.comma.enable = true;
 
+  programs.nix-index.enable = false;
+
   environment.variables = {
     # Set the location of the config repo
     NX_REPO = nixRepoPath;
