@@ -33,6 +33,9 @@
     # Add scripts from the nx directory
     home.packages = with pkgs; [
 
+      # Because of the way '!!' works in bash, it's easier to make ,, a script rather than an alias
+      (scriptBin.nx.",," { })
+
       (scriptBin.nx.nx-cleanup { })
 
       (scriptBin.nx.nx-code { })
@@ -58,7 +61,6 @@
     home.shellAliases = {
       nx-cd = "cd $NX_REPO";
       nxcd = "nx-cd";
-      ",," = ", !!";
     };
   };
 
