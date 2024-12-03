@@ -62,6 +62,7 @@
       nxcd = "nx-cd";
 
       nx-edit = "nx-code";
+      nx-search = "nh search --limit 4";
 
       ",," = ", $(history -p !!)";
     };
