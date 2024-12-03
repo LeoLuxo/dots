@@ -1,6 +1,5 @@
 {
   userHome,
-  config,
   lib,
   agenix,
   ...
@@ -11,7 +10,7 @@ let
   # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
   secretsPath = builtins.fetchGit {
     url = "ssh://git@github.com/LeoLuxo/nix-secrets";
-    # url = "/home/lili/nix-secrets/";
+    # url = "${userHome}/nix-secrets";
   };
   secretsFile = "${secretsPath}/secrets.nix";
   extractedSecrets =
