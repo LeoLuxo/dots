@@ -5,6 +5,7 @@
   agenix,
   system,
   user,
+  userHome,
   hostName,
   ...
 }:
@@ -38,7 +39,7 @@
 
       # Home Manager needs a bit of information about you and the paths it should manage.
       home.username = user;
-      home.homeDirectory = "/home/${user}";
+      home.homeDirectory = userHome;
 
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;
@@ -58,6 +59,7 @@
     mutableUsers = false;
 
     users.${user} = {
+      home = userHome;
       description = user;
       isNormalUser = true;
       hashedPasswordFile = config.age.secrets."userpwds/${hostName}".path;
