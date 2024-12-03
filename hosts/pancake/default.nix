@@ -29,7 +29,7 @@
     # translation.deepl
     translation.gnome-dialect
 
-    nx
+    nix-utils
     snip
     terminal-utils
     wl-clipboard
