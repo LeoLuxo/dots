@@ -1,5 +1,5 @@
 {
-  user,
+  userHome,
   config,
   lib,
   agenix,
@@ -36,7 +36,7 @@ in
     # Use the host key OR user key
     identityPaths = [
       "/etc/ssh/ssh_host_ed25519_key"
-      "${config.users.users.${user}.home}/.ssh/id_ed25519"
+      "${userHome}/.ssh/id_ed25519"
     ];
 
     # Add automatically extracted secrets to agenix config

@@ -30,6 +30,12 @@
 
     # Catppuccin themes
     catppuccin.url = "github:catppuccin/nix";
+
+    # Pre-built database for nix-index, which is an index of which files are provided by which packages
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -40,6 +46,7 @@
       mkHost =
         {
           user,
+          userHome ? "/home/${user}",
           hostName,
           system,
           modules,
@@ -49,8 +56,9 @@
           constants = {
             inherit
               user
-              system
+              userHome
               hostName
+              system
               nixRepoPath
               ;
           };
