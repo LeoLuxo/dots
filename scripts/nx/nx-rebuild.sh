@@ -50,8 +50,8 @@ echo -e "${CYAN}NixOS Rebuilding...${RESET}"
 # Rebuild, and if errors occur make sure to exit
 # tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
 # warn dirty disables the goddamn git dirty tree message
-nh os switch . --no-nom -- \
-	--impure \
+nh os switch . \
+	-- --impure \
 	--option tarball-ttl 0 \
 	--option warn-dirty false \
 	"$@" ||
