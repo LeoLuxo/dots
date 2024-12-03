@@ -8,13 +8,14 @@
   home-manager.users.${user} = {
     home.packages = with pkgs; [
 
+      # To query the filetype of files
       file
 
       (scriptBin.size { })
-      (scriptBin.fuck { })
       (scriptBin.cheat { deps = [ curl ]; })
 
       (scriptBin.extract {
+        # All the archive extractors used in the script
         deps = [
           gnutar
           rar
@@ -37,5 +38,12 @@
         ];
       })
     ];
+
+    # Add aliases
+    home.shellAliases = {
+      please = "sudo !!";
+      pls = "please";
+    };
   };
+
 }
