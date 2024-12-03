@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# https://www.reddit.com/r/linux/comments/1g8cyrd/comment/lt0nwsp/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+
 if [ -f $1 ]; then
 	case $1 in
 	*.tar.bz2) tar xvjf $1 ;;
