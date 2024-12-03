@@ -11,8 +11,6 @@
       # To query the filetype of files
       file
 
-      # Because of the way '!!' works in bash, it's easier to make please a script rather than an alias
-      (scriptBin.please { })
       (scriptBin.size { })
       (scriptBin.cheat { deps = [ curl ]; })
 
@@ -43,6 +41,7 @@
 
     # Add aliases
     home.shellAliases = {
+      please = "sudo $(history -p !!)";
       pls = "please";
     };
   };
