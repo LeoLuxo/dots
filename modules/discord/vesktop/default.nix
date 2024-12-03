@@ -5,6 +5,13 @@
   ...
 }:
 {
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      # Discord fork that fixes streaming issues on linux
+      vesktop
+    ];
+  };
+
   imports = [
     ./icons.nix
     ./keybinds-fix.nix
@@ -19,11 +26,4 @@
       xdgPath = "vesktop/settings/settings.json";
     })
   ];
-
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      # Discord fork that fixes streaming issues on linux
-      vesktop
-    ];
-  };
 }
