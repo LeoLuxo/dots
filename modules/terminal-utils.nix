@@ -35,6 +35,9 @@
 
           # To visualize images directly in the terminal
           viu
+
+          # To visualize folders nicely
+          tree
         ];
       })
     ];
@@ -43,6 +46,7 @@
     home.shellAliases = {
       please = "sudo $(history -p !!)";
       pls = "please";
+      l = "ls -Fhsla";
     };
   };
 

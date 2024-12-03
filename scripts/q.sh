@@ -24,7 +24,7 @@ checkfile() {
 
 checkdir() {
 	echo -e "${INFO}Directory ${DIR}$1${RESET}"
-	ls -Fhsla --color=always "$1"
+	tree -a -L 1 --dirsfirst -h -v "$1"
 }
 
 checkpath() {
