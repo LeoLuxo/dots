@@ -32,9 +32,9 @@
   home-manager.users.${user} = {
     # Add scripts from the nx directory
     home.packages = with pkgs; [
-      (scriptBin.nx.nx-cleanup { })
-
       (scriptBin.nx.nx-code { })
+
+      (scriptBin.nx.nx-cleanup { deps = [ nh ]; })
 
       (scriptBin.nx.nx-dconf-diff {
         deps = [
@@ -57,6 +57,9 @@
     home.shellAliases = {
       nx-cd = "cd $NX_REPO";
       nxcd = "nx-cd";
+
+      nx-edit = "nx-code";
+
       ",," = ", $(history -p !!)";
     };
   };

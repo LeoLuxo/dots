@@ -40,7 +40,6 @@
     vscode
     git
     steam
-    neofetch
 
     # Include local modules
     ./syncthing.nix
