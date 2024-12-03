@@ -30,7 +30,7 @@
   };
 
   home-manager.users.${user} = {
-    # Add scripts from the nx directory
+    # Add scripts from the nx directory and other packages
     home.packages = with pkgs; [
       # Nix helper utility
       nh
