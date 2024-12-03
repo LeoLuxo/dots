@@ -21,6 +21,9 @@
     # Add scripts from the nx directory
     home.packages = with pkgs; [
 
+      # Comma can run non-installed packages by prepending the command with a ','
+      comma
+
       (scriptBin.nx.nx-cleanup { })
 
       (scriptBin.nx.nx-code { })
