@@ -55,8 +55,8 @@ nh os switch . --no-nom -- \
 	--option tarball-ttl 0 \
 	--option warn-dirty false \
 	"$@" |
-	grep -v "agenix" --color=never --line-buffered |
-	grep -v "decrypting" --color=never --line-buffered ||
+	grep -v "agenix" --line-buffered |
+	grep -v "decrypting" --line-buffered ||
 	(
 		git restore --staged .
 		exit 1
