@@ -37,6 +37,7 @@
           dconf
           git
           nixfmt-rfc-style
+          nh
         ];
       })
     ];
