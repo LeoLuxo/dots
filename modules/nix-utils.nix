@@ -32,6 +32,9 @@
   home-manager.users.${user} = {
     # Add scripts from the nx directory
     home.packages = with pkgs; [
+      # Nix helper utility
+      nh
+
       (scriptBin.nx.nx-code { })
 
       (scriptBin.nx.nx-cleanup { deps = [ nh ]; })

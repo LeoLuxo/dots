@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
 ERROR='\033[0;31m'
-INFO='\033[0;97m'
+INFO='\033[1;97m'
 DIR='\033[1;94m'
 FILE='\033[1;95m'
 SYMLINK='\033[0;33m'
 RESET='\033[0m'
 
 checkfile() {
-	echo -e "${FILE}File ${INFO}$(realpath $1)${RESET}"
+	echo -e "${FILE}File ${INFO}$(realpath "$1")${RESET}"
 	mime="$(file "$1" --mime)"
 
 	if echo $mime | grep -q "charset=binary"; then
@@ -23,7 +23,7 @@ checkfile() {
 }
 
 checkdir() {
-	echo -e "${DIR}Directory ${INFO}$(realpath $1)${RESET}"
+	echo -e "${DIR}Directory ${INFO}$(realpath "$1")${RESET}"
 	tree -a -L 1 --dirsfirst -h -v "$1"
 }
 
