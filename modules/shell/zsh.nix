@@ -9,8 +9,9 @@ in
 {
   imports = [ ./bash.nix ];
 
-  users.defaultUserShell = zsh;
   environment.shells = [ zsh ];
+
+  users.users.${user}.shell = zsh;
 
   programs.zsh = {
     enable = true;
