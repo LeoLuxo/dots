@@ -44,9 +44,6 @@
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;
 
-      # Let home manager manage bash; needed to set sessionVariables
-      programs.bash.enable = true;
-
       home.packages = [
         # Install agenix CLI
         agenix.packages.${system}.default
