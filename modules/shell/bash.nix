@@ -8,7 +8,7 @@ let
   inherit (pkgs) bash;
 in
 {
-  users.defaultUserShell = lib.mkDefault bash;
+  # users.defaultUserShell = lib.mkDefault bash;
   environment.shells = [ bash ];
 
   home-manager.users.${user} = {
