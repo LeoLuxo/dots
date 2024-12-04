@@ -15,7 +15,7 @@
   # Install comma via nix-index so that it's wrapped correctly
   # Comma can run non-installed packages by prepending the command with a ','
   programs.nix-index-database.comma.enable = true;
-
+  # But disable nix-index hook into command-not-found because I don't like it's delay
   programs.nix-index.enable = false;
 
   environment.variables = {
