@@ -7,21 +7,23 @@ let
   inherit (pkgs) zsh;
 in
 {
-  imports = [ ./bash.nix ];
-
   environment.shells = [ zsh ];
 
+  programs.zsh.enable = true;
   users.users.${user}.shell = zsh;
 
-  programs.zsh = {
-    enable = true;
-
-    enableCompletion = true;
-    autosuggestions.enable = true;
-    syntaxHighlighting.enable = true;
-  };
-
   home-manager.users.${user} = {
-    programs.zsh.enable = true;
+    programs.zsh = {
+      enable = true;
+
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      syntaxHighlighting.enable = true;
+
+      history = {
+        size = 10000;
+        ignoreAllDups = true;
+      };
+    };
   };
 }
