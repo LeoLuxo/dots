@@ -14,11 +14,11 @@
             Value = false;
             Status = "locked";
           };
-          lock-true = {
-            Value = true;
-            Status = "locked";
-          };
         in
+        # lock-true = {
+        #   Value = true;
+        #   Status = "locked";
+        # };
         {
           Preferences = {
             "middlemouse.paste" = lock-false;
