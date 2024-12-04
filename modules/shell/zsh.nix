@@ -13,6 +13,7 @@ in
 
   users.users.${user}.shell = zsh;
 
+  # home-manager.users.${user} = {
   programs.zsh = {
     enable = true;
 
@@ -20,4 +21,5 @@ in
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
   };
+  # };
 }
