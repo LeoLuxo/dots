@@ -23,13 +23,12 @@
     # gnome.extensions.emojis
     # gnome.extensions.weather
 
-    # terminals.guake
-    terminals.ddterm
+    # terminal.guake
+    terminal.ddterm
+    ohmyposh
 
     # translation.deepl
     translation.gnome-dialect
-
-    browsers.firefox
 
     nix-utils
     snip
@@ -37,6 +36,7 @@
     wl-clipboard
 
     obsidian
+    firefox
     discord
     vscode
     git
