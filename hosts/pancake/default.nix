@@ -29,12 +29,13 @@
     # translation.deepl
     translation.gnome-dialect
 
+    browsers.firefox
+
     nix-utils
     snip
     terminal-utils
     wl-clipboard
 
-    firefox
     obsidian
     discord
     vscode
