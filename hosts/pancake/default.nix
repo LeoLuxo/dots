@@ -23,9 +23,9 @@
     # gnome.extensions.emojis
     # gnome.extensions.weather
 
-    # terminal.guake
     terminal.ddterm
-    ohmyposh
+    shell.zsh
+    shell.prompt.ohmyposh
 
     # translation.deepl
     translation.gnome-dialect
