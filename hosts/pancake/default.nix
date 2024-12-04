@@ -24,8 +24,8 @@
     # gnome.extensions.weather
 
     terminal.ddterm
-    shell.zsh
-    shell.prompt.ohmyposh
+    shell.bash
+    shell.prompt.starship
 
     # translation.deepl
     translation.gnome-dialect
