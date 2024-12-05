@@ -24,7 +24,7 @@ checkfile() {
 
 checkdir() {
 	echo -e "${DIR}Directory ${INFO}$(realpath "$1")${RESET}"
-	tree -a -L 1 --dirsfirst -h -v "$1"
+	tree -a -L 1 --dirsfirst -h -v "$1" -C
 }
 
 checkpath() {
