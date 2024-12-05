@@ -24,9 +24,9 @@
     # gnome.extensions.weather
 
     terminal.ddterm
-    # shell.prompt.starship
-    # shell.bash
-    # shell.fish
+    shell.prompt.starship
+    shell.bash
+    shell.fish
     # shell.nushell
 
     # translation.deepl
@@ -62,7 +62,7 @@
   };
 
   # Set default shell
-  # shell.defaultShell = "fish";
+  shell.default = "fish";
 
   # Home-Manager config
   home-manager.users.${user} = {

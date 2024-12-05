@@ -8,14 +8,14 @@ let
   inherit (pkgs) fish;
 in
 {
-  # imports = [ ./default.nix ];
+  imports = [ ./module.nix ];
 
-  # shell.defaultShell = lib.mkDefault "fish";
+  shell.default = lib.mkDefault "fish";
 
-  # programs.fish.enable = true;
-  # environment.shells = [ fish ];
+  programs.fish.enable = true;
+  environment.shells = [ fish ];
 
-  # home-manager.users.${user} = {
-  #   programs.fish.enable = true;
-  # };
+  home-manager.users.${user} = {
+    programs.fish.enable = true;
+  };
 }
