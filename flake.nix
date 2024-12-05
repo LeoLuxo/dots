@@ -65,8 +65,7 @@
           libs = import ./libs.nix (inputs // constants);
         in
         nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [ ./secrets.nix ] ++ modules;
+          inherit system modules;
 
           # Additional args passed to the module
           specialArgs = inputs // libs // constants;
