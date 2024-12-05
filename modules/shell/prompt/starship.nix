@@ -7,7 +7,7 @@
     programs.starship = {
       enable = true;
 
-      enableTransience = true;
+      # enableTransience = true;
     };
   };
 }
