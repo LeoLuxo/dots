@@ -12,9 +12,7 @@
 
     # Include global modules
 
-    # autologin
-
-    # style.bootscreen
+    style.bootscreen
     style.fonts
     style.wallpapers
     style.themes.catppuccin
