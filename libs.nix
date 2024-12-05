@@ -19,6 +19,12 @@ rec {
       allowDefault = true;
     };
 
+    hosts = findFiles {
+      dir = ./hosts;
+      extensions = [ "nix" ];
+      allowDefault = true;
+    };
+
     scripts = findFiles {
       dir = ./scripts;
       extensions = [
