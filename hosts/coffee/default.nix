@@ -11,6 +11,7 @@
     ./system.nix
 
     # Include global modules
+
     autologin
 
     # style.bootscreen
@@ -64,9 +65,6 @@
 
       textpieces
       hieroglyphic
-
-      # Original electron teams package was abandoned
-      teams-for-linux
     ];
   };
 }
