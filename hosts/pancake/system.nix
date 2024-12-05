@@ -8,16 +8,15 @@
     # Include hardware stuff and kernel patches for surface pro 7
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
-
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   # SD Card
   fileSystems."/stuff" = {
     device = "/dev/disk/by-label/stuff";
     fsType = "btrfs";
   };
+
+  # Bootloader
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
