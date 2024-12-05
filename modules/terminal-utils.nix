@@ -25,7 +25,7 @@
         ];
       })
 
-      (scriptBin.q {
+      (scriptBin.semicolon {
         deps = [
           # To highlight source code
           highlight
@@ -47,6 +47,7 @@
       please = "sudo $(history -p !!)";
       pls = "please";
       l = "ls -Fhsla";
+      ";" = "semicolon";
     };
   };
 
