@@ -12,7 +12,7 @@
 
     # Include global modules
 
-    autologin
+    # autologin
 
     # style.bootscreen
     style.fonts
