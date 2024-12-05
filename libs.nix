@@ -266,6 +266,7 @@ rec {
               fi
 
               # Copy merged content to new file
+              mkdir --parents "${xdgPathStr}"
               cp "${syncPathStr}" "${xdgPathStr}" --force
             '';
         };
