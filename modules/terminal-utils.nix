@@ -25,7 +25,7 @@
         ];
       })
 
-      (scriptBin.semicolon {
+      (scriptBin.q {
         deps = [
           # To highlight source code
           highlight
@@ -44,10 +44,9 @@
 
     # Add aliases
     home.shellAliases = {
-      please = "sudo $(history -p !!)";
+      please = "eval sudo \$(last-command)";
       pls = "please";
       l = "ls -Fhsla";
-      ";" = "semicolon";
     };
   };
 
