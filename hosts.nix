@@ -6,8 +6,9 @@ mkHost: {
     hostName = "coffee";
     system = "x86_64-linux";
     modules = [
-      #./hosts/common.nix
       ./hosts/coffee
+      ./hosts/common.nix
+      ./hosts/secrets.nix
     ];
   };
 
@@ -17,8 +18,9 @@ mkHost: {
     hostName = "pancake";
     system = "x86_64-linux";
     modules = [
-      ./hosts/common.nix
       ./hosts/pancake
+      ./hosts/common.nix
+      ./hosts/secrets.nix
     ];
   };
 

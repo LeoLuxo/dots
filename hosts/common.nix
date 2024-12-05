@@ -2,8 +2,6 @@
   config,
   pkgs,
   home-manager,
-  agenix,
-  system,
   user,
   userHome,
   hostName,
