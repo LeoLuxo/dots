@@ -1,29 +1,32 @@
 {
   user,
   pkgs,
+  lib,
   ...
 }:
 let
   inherit (pkgs) zsh;
 in
 {
-  environment.shells = [ zsh ];
+  # imports = [ ./default.nix ];
 
-  programs.zsh.enable = true;
-  users.users.${user}.shell = zsh;
+  # shell.defaultShell = lib.mkDefault "zsh";
 
-  home-manager.users.${user} = {
-    programs.zsh = {
-      enable = true;
+  # programs.zsh.enable = true;
+  # environment.shells = [ zsh ];
 
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
+  # home-manager.users.${user} = {
+  #   programs.zsh = {
+  #     enable = true;
 
-      history = {
-        size = 10000;
-        ignoreAllDups = true;
-      };
-    };
-  };
+  #     enableCompletion = true;
+  #     autosuggestion.enable = true;
+  #     syntaxHighlighting.enable = true;
+
+  #     history = {
+  #       size = 10000;
+  #       ignoreAllDups = true;
+  #     };
+  #   };
+  # };
 }

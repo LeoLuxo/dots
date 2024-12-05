@@ -24,8 +24,10 @@
     # gnome.extensions.weather
 
     terminal.ddterm
-    shell.bash
-    shell.prompt.starship
+    # shell.prompt.starship
+    # shell.bash
+    # shell.fish
+    # shell.nushell
 
     # translation.deepl
     translation.gnome-dialect
@@ -59,6 +61,9 @@
     image = directories.wallpapers."Tree and shore";
   };
 
+  # Set default shell
+  # shell.defaultShell = "fish";
+
   # Home-Manager config
   home-manager.users.${user} = {
 
@@ -74,7 +79,7 @@
     ];
   };
 
-  # Bootloader.
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
