@@ -16,6 +16,12 @@ in
   environment.shells = [ fish ];
 
   home-manager.users.${user} = {
-    programs.fish.enable = true;
+    programs.fish = {
+      enable = true;
+
+      shellAliases = {
+        last-command = "history --search -n 1";
+      };
+    };
   };
 }
