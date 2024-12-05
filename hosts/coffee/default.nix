@@ -10,13 +10,13 @@
 
     gnome.gnome
 
-    vscode
-
     nix-utils
     snip
     terminal-utils
     wl-clipboard
 
+    firefox
     git
+    vscode
   ];
 }
