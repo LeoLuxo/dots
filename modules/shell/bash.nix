@@ -8,11 +8,15 @@ let
   inherit (pkgs) bash;
 in
 {
-  programs.zsh.enable = true;
-  environment.shells = [ bash ];
+  # imports = [ ./default.nix ];
 
-  home-manager.users.${user} = {
-    # Let home manager manage bash; needed to set sessionVariables
-    programs.bash.enable = true;
-  };
+  # shell.defaultShell = lib.mkDefault "bash";
+
+  # programs.bash.enable = true;
+  # environment.shells = [ bash ];
+
+  # home-manager.users.${user} = {
+  #   # Let home manager manage bash; needed to set sessionVariables
+  #   programs.bash.enable = true;
+  # };
 }
