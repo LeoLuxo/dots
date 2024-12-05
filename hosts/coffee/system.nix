@@ -1,7 +1,20 @@
 { ... }:
 {
 
+  # 1TB SSD
+  fileSystems."/stuff" = {
+    device = "/dev/disk/by-label/stuff";
+    fsType = "ext4";
+  };
+
+  # 4TB HDD
+  fileSystems."/data" = {
+    device = "/dev/disk/by-label/data";
+    fsType = "ntfs";
+  };
+
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  # (even with autologin disabled I need this otherwise nixos-rebuild crashes the computer??)
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
