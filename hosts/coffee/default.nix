@@ -48,7 +48,7 @@
   # Set wallpaper  
   wallpaper = {
     enable = true;
-    image = directories.wallpapers."Tree and shore";
+    image = directories.wallpapers."Riverside";
   };
 
   # Set default shell
