@@ -9,6 +9,7 @@
     # Include local modules
     ./hardware.nix
     ./system.nix
+    ./syncthing.nix
 
     # Include global modules
 
