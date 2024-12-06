@@ -74,6 +74,7 @@
     playerctl
     pulsemixer
     qpwgraph
+    alsa-scarlett-gui
   ];
 
 }
