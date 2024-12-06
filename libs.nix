@@ -272,4 +272,14 @@ rec {
         };
     };
 
+  mkEnableFalse = mkOption {
+    type = types.bool;
+    default = false;
+  };
+
+  mkEnableTrue = mkOption {
+    type = types.bool;
+    default = true;
+  };
+
 }
