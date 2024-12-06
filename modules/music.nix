@@ -8,4 +8,9 @@
 
   musnix.enable = true;
   users.users.${user}.extraGroups = [ "audio" ];
+
+  services.pipewire.wireplumber = {
+    enable = true;
+  };
+
 }
