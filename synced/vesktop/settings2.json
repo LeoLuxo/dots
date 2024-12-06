@@ -4,7 +4,7 @@
   "cloud": {
     "authenticated": false,
     "settingsSync": false,
-    "settingsSyncVersion": 1733475946249,
+    "settingsSyncVersion": 1733477645652,
     "url": "https://api.vencord.dev/"
   },
   "disableMinSize": false,
@@ -568,7 +568,8 @@
     }
   },
   "themeLinks": [
-    "https://catppuccin.github.io/discord/dist/catppuccin-frappe-blue.theme.css"
+    "https://catppuccin.github.io/discord/dist/catppuccin-frappe-blue.theme.css",
+    "https://raw.githubusercontent.com/MiniDiscordThemes/Frostcord/refs/heads/main/frostcord.theme.css"
   ],
   "transparent": false,
   "useQuickCss": true,
