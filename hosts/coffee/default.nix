@@ -44,6 +44,7 @@
     vscode
     git
     steam
+    qmk
   ];
 
   # Home-Manager config
