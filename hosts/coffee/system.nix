@@ -13,6 +13,9 @@
     fsType = "ntfs";
   };
 
+  # Power button action
+  gnome.power-button-action = "power off";
+
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   # (even with autologin disabled I need this otherwise nixos-rebuild crashes gnome??)
   systemd.services."getty@tty1".enable = false;
