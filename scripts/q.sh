@@ -37,7 +37,7 @@ checkpath() {
 		elif [[ -f $target ]]; then
 			checkfile "$target"
 		else
-			echo "${ERROR}Target of the symlink does not exist or is invalid${RESET}"
+			echo -e "${ERROR}Target of the symlink does not exist or is invalid${RESET}"
 			exit 1
 		fi
 	elif [[ -d $1 ]]; then
@@ -45,7 +45,7 @@ checkpath() {
 	elif [[ -f $1 ]]; then
 		checkfile "$1"
 	else
-		echo "${ERROR}Path '$1' does not exist or is invalid${RESET}"
+		echo -e "${ERROR}Path '$1' does not exist or is invalid${RESET}"
 		exit 1
 	fi
 }
