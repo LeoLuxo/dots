@@ -1,7 +1,7 @@
 { directories, config, ... }:
 {
   imports = with directories.modules; [
-    musnix
+    music
   ];
 
   # 1TB SSD
