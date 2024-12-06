@@ -72,7 +72,6 @@
   shell.default = "fish";
 
   gnome.blur-my-shell = {
-
     # Enable blur for all applications
     app-blur.enable = true;
 
