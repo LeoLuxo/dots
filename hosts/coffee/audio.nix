@@ -7,7 +7,11 @@
 {
   imports = [ musnix.nixosModules.musnix ];
 
-  musnix.enable = true;
+  musnix = {
+    enable = true;
+    # kernel.realtime = true;
+  };
+
   users.users.${user}.extraGroups = [ "audio" ];
 
   home-manager.users.${user} = {
@@ -34,6 +38,14 @@
     # lowLatency = {
     #   enable = true;
     # };
+    extraConfig.pipewire."92-low-latency" = {
+      "context.properties" = {
+        "default.clock.rate" = 48000;
+        "default.clock.quantum" = 32;
+        "default.clock.min-quantum" = 32;
+        "default.clock.max-quantum" = 32;
+      };
+    };
     # extraConfig.pipewire = {
     #   pipewire-pulse = {
     #     "92-low-latency" = {
