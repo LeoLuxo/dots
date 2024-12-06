@@ -45,6 +45,11 @@
               enabled-extensions = [ "blur-my-shell@aunetx" ];
             };
 
+            "org/gnome/shell/extensions/blur-my-shell" = {
+              hacks-level = 1;
+              settings-version = 2;
+            };
+
             "org/gnome/shell/extensions/blur-my-shell/appfolder" = {
               blur = true;
               brightness = 0.6;
@@ -100,6 +105,8 @@
               blur = cfg.app-blur.enable;
               dynamic-opacity = true;
               enable-all = true;
+              brightness = 0.8;
+              opacity = 200;
             };
           };
         };
