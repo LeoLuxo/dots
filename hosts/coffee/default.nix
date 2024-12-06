@@ -69,6 +69,12 @@
   # Set default shell
   shell.default = "fish";
 
-  # Enable blur for all applications
-  gnome.blur-my-shell.app-blur.enable = true;
+  gnome.blur-my-shell = {
+
+    # Enable blur for all applications
+    app-blur.enable = true;
+
+    # Set hacks to 1
+    hacks-level = "no artifact";
+  };
 }
