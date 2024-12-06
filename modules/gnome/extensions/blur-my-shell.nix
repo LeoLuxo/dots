@@ -117,8 +117,8 @@
               blur = cfg.app-blur.enable;
               dynamic-opacity = true;
               enable-all = true;
-              brightness = 0.8;
-              opacity = 200;
+              brightness = 0.4;
+              opacity = 210;
             };
           };
         };
