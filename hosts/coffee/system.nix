@@ -1,5 +1,8 @@
-{ config, ... }:
+{ directories, config, ... }:
 {
+  imports = with directories.modules; [
+    musnix
+  ];
 
   # 1TB SSD
   fileSystems."/stuff" = {

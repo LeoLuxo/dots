@@ -36,6 +36,11 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Real-time audio in NixOS 
+    musnix = {
+      url = "github:musnix/musnix";
+    };
   };
 
   outputs =
