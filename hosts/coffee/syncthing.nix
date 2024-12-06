@@ -24,8 +24,8 @@ in
     configDir = syncthingFolder;
 
     # Together, the key and cert define the device id
-    key = config.age.secrets."syncthing/pancake/key.pem".path;
-    cert = config.age.secrets."syncthing/pancake/cert.pem".path;
+    key = config.age.secrets."syncthing/coffee/key.pem".path;
+    cert = config.age.secrets."syncthing/coffee/cert.pem".path;
 
     settings = {
       gui = {
@@ -37,7 +37,7 @@ in
       # Don't care that the device ids end up in cleartext on the nix store
       devices = {
         "strobery".id = "BH4QRX3-AXCRBBK-32KWW2A-33XYEMB-CKDONYH-4KLE4QA-NXE5LIX-QB4Q5AN";
-        "coffee".id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
+        "pancake".id = "DS5FS25-BYJYFF2-TKBNJ4S-6RHZTEK-F4QS4EM-BNOPAPU-ULRHUA7-ORVTNA7";
         "celestia".id = "FEEK44G-XI3OFWE-TTTSDUC-WCTTXRX-JYGVGKG-AJDLL5I-FWEEQR4-H6YQ7QX";
       };
 
@@ -48,7 +48,7 @@ in
           path = "/stuff/obsidian";
           devices = [
             "strobery"
-            "coffee"
+            "pancake"
             "celestia"
           ];
         };
@@ -58,7 +58,7 @@ in
           path = "/stuff/important_docs";
           devices = [
             "strobery"
-            "coffee"
+            "pancake"
           ];
         };
 
@@ -67,7 +67,7 @@ in
           path = "/stuff/share";
           devices = [
             "strobery"
-            "coffee"
+            "pancake"
           ];
         };
 
@@ -76,7 +76,7 @@ in
           path = "/stuff/uni_courses";
           devices = [
             "strobery"
-            "coffee"
+            "pancake"
           ];
         };
 
@@ -85,7 +85,7 @@ in
           path = "/stuff/vault";
           devices = [
             "strobery"
-            "coffee"
+            "pancake"
           ];
         };
       };
