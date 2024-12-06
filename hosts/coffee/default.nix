@@ -10,6 +10,7 @@
     ./hardware.nix
     ./system.nix
     ./syncthing.nix
+    ./audio.nix
 
     # Include global modules
 
