@@ -54,6 +54,8 @@
 
       textpieces
       hieroglyphic
+
+      teams-for-linux
     ];
   };
 
