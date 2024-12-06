@@ -45,15 +45,6 @@
     steam
   ];
 
-  # Set wallpaper  
-  wallpaper = {
-    enable = true;
-    image = directories.wallpapers."Riverside";
-  };
-
-  # Set default shell
-  shell.default = "fish";
-
   # Home-Manager config
   home-manager.users.${user} = {
 
@@ -65,4 +56,16 @@
       hieroglyphic
     ];
   };
+
+  # Set wallpaper  
+  wallpaper = {
+    enable = true;
+    image = directories.wallpapers."Riverside";
+  };
+
+  # Set default shell
+  shell.default = "fish";
+
+  # Enable blur for all applications
+  gnome.blur-my-shell.app-blur.enable = true;
 }
