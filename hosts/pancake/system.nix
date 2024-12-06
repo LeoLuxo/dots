@@ -8,6 +8,10 @@
     # Include hardware stuff and kernel patches for surface pro 7
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
+
+  # Power button action
+  gnome.power-button-action = "suspend";
+
   # SD Card
   fileSystems."/stuff" = {
     device = "/dev/disk/by-label/stuff";
