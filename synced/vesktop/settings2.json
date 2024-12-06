@@ -4,7 +4,7 @@
   "cloud": {
     "authenticated": false,
     "settingsSync": false,
-    "settingsSyncVersion": 1732891843213,
+    "settingsSyncVersion": 1733475946249,
     "url": "https://api.vencord.dev/"
   },
   "disableMinSize": false,
@@ -28,7 +28,9 @@
       "enabled": false
     },
     "AlwaysTrust": {
-      "enabled": true
+      "domain": true,
+      "enabled": true,
+      "file": true
     },
     "AnonymiseFileNames": {
       "enabled": false
@@ -79,7 +81,7 @@
       "enabled": false
     },
     "ClearURLs": {
-      "enabled": false
+      "enabled": true
     },
     "ClientTheme": {
       "enabled": false
@@ -232,7 +234,7 @@
       "enabled": false
     },
     "MessageEventsAPI": {
-      "enabled": false
+      "enabled": true
     },
     "MessageLatency": {
       "enabled": false
