@@ -59,6 +59,8 @@
       hieroglyphic
 
       teams-for-linux
+
+      guitarix
     ];
   };
 
