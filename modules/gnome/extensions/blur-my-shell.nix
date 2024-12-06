@@ -18,6 +18,15 @@
         };
       };
     };
+
+    hacks-level = mkOption {
+      type = types.enum [
+        "high performance"
+        "default"
+        "no artifact"
+      ];
+      default = "default";
+    };
   };
 
   config =
@@ -42,7 +51,14 @@
             };
 
             "org/gnome/shell/extensions/blur-my-shell" = {
-              hacks-level = 1;
+              hacks-level =
+                {
+                  "high performance" = 3;
+                  "default" = 2;
+                  "no artifact" = 1;
+                }
+                .${cfg.hacks-level};
+
               settings-version = 2;
             };
 
