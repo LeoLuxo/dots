@@ -53,9 +53,9 @@
             "org/gnome/shell/extensions/blur-my-shell" = {
               hacks-level =
                 {
-                  "high performance" = 3;
-                  "default" = 2;
-                  "no artifact" = 1;
+                  "high performance" = 0;
+                  "default" = 1;
+                  "no artifact" = 2;
                 }
                 .${cfg.hacks-level};
 
