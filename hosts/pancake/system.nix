@@ -9,8 +9,10 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  # Power button action
-  gnome.power-button-action = "suspend";
+  gnome = {
+    power-button-action = "suspend";
+    confirm-shutdown = true;
+  };
 
   # SD Card
   fileSystems."/stuff" = {

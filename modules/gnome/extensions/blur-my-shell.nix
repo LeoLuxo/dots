@@ -3,18 +3,18 @@
   pkgs,
   user,
   lib,
-  mkEnableFalse,
-  mkEnableTrue,
+  mkBoolFalse,
+  mkBoolTrue,
   ...
 }:
 
 {
   options.gnome.blur-my-shell = with lib; {
-    enable = mkEnableTrue;
+    enable = mkBoolTrue;
     app-blur = mkOption {
       type = types.submodule {
         options = {
-          enable = mkEnableFalse;
+          enable = mkBoolFalse;
         };
       };
     };
