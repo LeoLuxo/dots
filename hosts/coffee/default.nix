@@ -13,7 +13,6 @@
     ./audio.nix
 
     # Include global modules
-
     style.bootscreen
     style.fonts
     style.wallpapers
