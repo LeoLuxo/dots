@@ -272,12 +272,12 @@ rec {
         };
     };
 
-  mkEnableFalse = mkOption {
+  mkBoolFalse = mkOption {
     type = types.bool;
     default = false;
   };
 
-  mkEnableTrue = mkOption {
+  mkBoolTrue = mkOption {
     type = types.bool;
     default = true;
   };

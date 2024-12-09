@@ -4,7 +4,7 @@
   user,
   mkGnomeKeybind,
   lib,
-  mkEnableTrue,
+  mkBoolTrue,
   ...
 }:
 {
@@ -19,7 +19,7 @@
   ];
 
   options.gnome = with lib; {
-    enable = mkEnableTrue;
+    enable = mkBoolTrue;
 
     power-button-action = mkOption {
       type = types.enum [
@@ -30,6 +30,8 @@
       ];
       default = "power off";
     };
+
+    confirm-shutdown = mkBoolTrue;
   };
 
   config =
@@ -80,6 +82,10 @@
                   "nothing" = "nothing";
                 }
                 .${cfg.power-button-action};
+            };
+
+            "org/gnome/gnome-session" = {
+              logout-prompt = cfg.confirm-shutdown;
             };
 
             # System shortcuts
