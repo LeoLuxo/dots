@@ -39,6 +39,7 @@
     snip
     terminal-utils
     wl-clipboard
+    boot-windows
 
     obsidian
     firefox
