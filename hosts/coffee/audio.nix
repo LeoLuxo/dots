@@ -105,7 +105,8 @@
     playerctl
     pulsemixer
     # qpwgraph
-    helvum
+    # helvum
+    pavucontrol
     alsa-scarlett-gui
   ];
 
