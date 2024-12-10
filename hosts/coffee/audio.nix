@@ -46,28 +46,28 @@
     #     "default.clock.max-quantum" = 48;
     #   };
     # };
-    # extraConfig.pipewire = {
-    #   pipewire-pulse = {
-    #     "92-low-latency" = {
-    #       context.modules = [
-    #         {
-    #           name = "libpipewire-module-protocol-pulse";
-    #           args = {
-    #             pulse.min.req = "32/48000";
-    #             pulse.default.req = "32/48000";
-    #             pulse.max.req = "32/48000";
-    #             pulse.min.quantum = "32/48000";
-    #             pulse.max.quantum = "32/48000";
-    #           };
-    #         }
-    #       ];
-    #       stream.properties = {
-    #         node.latency = "32/48000";
-    #         resample.quality = 1;
-    #       };
-    #     };
-    #   };
-    # };
+    extraConfig.pipewire = {
+      pipewire-pulse = {
+        "92-low-latency" = {
+          context.modules = [
+            {
+              name = "libpipewire-module-protocol-pulse";
+              args = {
+                pulse.min.req = "32/48000";
+                pulse.default.req = "32/48000";
+                pulse.max.req = "32/48000";
+                pulse.min.quantum = "32/48000";
+                pulse.max.quantum = "32/48000";
+              };
+            }
+          ];
+          stream.properties = {
+            node.latency = "32/48000";
+            resample.quality = 1;
+          };
+        };
+      };
+    };
     wireplumber = {
       enable = true;
       extraConfig = {
@@ -83,23 +83,23 @@
   };
 
   # Disable auto-adjusting of microphone volume from certain apps
-  services.pipewire.wireplumber.configPackages = [
-    (pkgs.writeTextDir "share/wireplumber/main.lua.d/99-stop-microphone-auto-adjust.lua" ''
-      table.insert(default_access.rules, {
-        matches = {
-          {
-            { "application.process.binary", "=", "electron" },
-            { "application.process.binary", "=", "webcord" },
-            { "application.process.binary", "=", "vesktop" },
-            { "application.process.binary", "=", "firefox" },
-            { "application.process.binary", "=", "Chromium" },
-            { "application.process.binary", "=", "Chromium input" }
-          }
-        },
-        default_permissions = "rx",
-      })
-    '')
-  ];
+  # services.pipewire.wireplumber.configPackages = [
+  #   (pkgs.writeTextDir "share/wireplumber/main.lua.d/99-stop-microphone-auto-adjust.lua" ''
+  #     table.insert(default_access.rules, {
+  #       matches = {
+  #         {
+  #           { "application.process.binary", "=", "electron" },
+  #           { "application.process.binary", "=", "webcord" },
+  #           { "application.process.binary", "=", "vesktop" },
+  #           { "application.process.binary", "=", "firefox" },
+  #           { "application.process.binary", "=", "Chromium" },
+  #           { "application.process.binary", "=", "Chromium input" }
+  #         }
+  #       },
+  #       default_permissions = "rx",
+  #     })
+  #   '')
+  # ];
 
   environment.systemPackages = with pkgs; [
     playerctl
