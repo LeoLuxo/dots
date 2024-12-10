@@ -101,7 +101,7 @@
             { "application.process.binary", "=", "vesktop" },
             { "application.process.binary", "=", "firefox" },
             { "application.process.binary", "=", "Chromium" },
-            { "application.process.binary", "=", "chromium" }
+            { "application.process.binary", "=", "Chromium input" }
           }
         },
         default_permissions = "rx",
