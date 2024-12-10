@@ -3,7 +3,8 @@
   user,
   userHome,
   scriptBin,
-  nixRepoPath,
+  dotsRepoPath,
+  secretsRepoPath,
   nix-index-database,
   ...
 }:
@@ -19,8 +20,9 @@
   programs.nix-index.enable = false;
 
   environment.variables = {
-    # Set the location of the config repo
-    NX_REPO = nixRepoPath;
+    # Set the location of the dots and secrets repos
+    NX_DOTS = dotsRepoPath;
+    NX_SECRETS = secretsRepoPath;
 
     # Set the location of the file used for dconf-diff
     DCONF_DIFF = "${userHome}/.dconf_activation";
@@ -59,7 +61,7 @@
 
     # Add aliases
     home.shellAliases = {
-      nx-cd = "cd $NX_REPO";
+      nx-cd = "cd $NX_DOTS";
       nxcd = "nx-cd";
 
       nx-edit = "nx-code";
