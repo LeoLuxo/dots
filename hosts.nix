@@ -1,27 +1,31 @@
 mkHost: {
 
   # Desktop
-  "coffee" = mkHost {
-    user = "lili";
-    hostName = "coffee";
-    system = "x86_64-linux";
-    modules = [
-      ./hosts/coffee
-      ./hosts/common.nix
-      ./hosts/secrets.nix
-    ];
-  };
+  "coffee" =
+    mkHost
+      [
+        ./hosts/coffee
+        ./hosts/common.nix
+        ./hosts/secrets.nix
+      ]
+      {
+        user = "lili";
+        hostName = "coffee";
+        system = "x86_64-linux";
+      };
 
   # Laptop (Surface Pro 7)
-  "pancake" = mkHost {
-    user = "lili";
-    hostName = "pancake";
-    system = "x86_64-linux";
-    modules = [
-      ./hosts/pancake
-      ./hosts/common.nix
-      ./hosts/secrets.nix
-    ];
-  };
+  "pancake" =
+    mkHost
+      [
+        ./hosts/pancake
+        ./hosts/common.nix
+        ./hosts/secrets.nix
+      ]
+      {
+        user = "lili";
+        hostName = "pancake";
+        system = "x86_64-linux";
+      };
 
 }

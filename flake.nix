@@ -49,32 +49,26 @@
     let
       # Function to create a nixos host config
       mkHost =
+        modules:
         {
           user,
-          userHome ? "/home/${user}",
           hostName,
           system,
-          modules,
-          nixPath ? "/etc/nixos",
-          dotsRepoPath ? (nixPath + "/dots"),
-          secretsRepoPath ? (nixPath + "/secrets"),
-        }:
+          ...
+        }@hostConstants:
         let
-          constants = {
-            inherit
-              user
-              userHome
-              hostName
-              system
-              nixPath
-              dotsRepoPath
-              secretsRepoPath
-              ;
+          defaultConstants = rec {
+            userHome = "/home/${user}";
+            nixosPath = "/etc/nixos";
+            dotsRepoPath = (nixosPath + "/dots");
+            secretsRepoPath = (nixosPath + "/secrets");
           };
+          constants = defaultConstants // hostConstants;
           libs = import ./libs.nix (inputs // constants);
         in
         nixpkgs.lib.nixosSystem {
-          inherit system modules;
+          inherit (hostConstants) system;
+          inherit modules;
 
           # Additional args passed to the module
           specialArgs = inputs // libs // constants;
