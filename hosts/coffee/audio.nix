@@ -46,28 +46,6 @@
         "default.clock.max-quantum" = 64;
       };
     };
-    # extraConfig.pipewire = {
-    #   pipewire-pulse = {
-    #     "92-low-latency" = {
-    #       context.modules = [
-    #         {
-    #           name = "libpipewire-module-protocol-pulse";
-    #           args = {
-    #             pulse.min.req = "32/48000";
-    #             pulse.default.req = "32/48000";
-    #             pulse.max.req = "32/48000";
-    #             pulse.min.quantum = "32/48000";
-    #             pulse.max.quantum = "32/48000";
-    #           };
-    #         }
-    #       ];
-    #       stream.properties = {
-    #         node.latency = "32/48000";
-    #         resample.quality = 1;
-    #       };
-    #     };
-    #   };
-    # };
     wireplumber = {
       enable = true;
       extraConfig = {
@@ -106,7 +84,7 @@
     pulsemixer
     qpwgraph
     easyeffects
-    # helvum
+    helvum
     pavucontrol
     alsa-scarlett-gui
   ];
