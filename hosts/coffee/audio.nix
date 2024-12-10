@@ -104,7 +104,8 @@
   environment.systemPackages = with pkgs; [
     playerctl
     pulsemixer
-    # qpwgraph
+    qpwgraph
+    easyeffects
     # helvum
     pavucontrol
     alsa-scarlett-gui
