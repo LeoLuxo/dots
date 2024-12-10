@@ -4,7 +4,7 @@
   "cloud": {
     "authenticated": false,
     "settingsSync": false,
-    "settingsSyncVersion": 1732891843213,
+    "settingsSyncVersion": 1733820851271,
     "url": "https://api.vencord.dev/"
   },
   "disableMinSize": false,
@@ -28,7 +28,9 @@
       "enabled": false
     },
     "AlwaysTrust": {
-      "enabled": true
+      "domain": true,
+      "enabled": true,
+      "file": true
     },
     "AnonymiseFileNames": {
       "enabled": false
@@ -79,7 +81,7 @@
       "enabled": false
     },
     "ClearURLs": {
-      "enabled": false
+      "enabled": true
     },
     "ClientTheme": {
       "enabled": false
@@ -145,7 +147,8 @@
       "enabled": false
     },
     "FakeProfileThemes": {
-      "enabled": false
+      "enabled": false,
+      "nitroFirst": true
     },
     "FavoriteEmojiFirst": {
       "enabled": false
@@ -199,7 +202,8 @@
       "enabled": false
     },
     "ImplicitRelationships": {
-      "enabled": false
+      "enabled": false,
+      "sortByAffinity": true
     },
     "InvisibleChat": {
       "enabled": false
@@ -211,7 +215,12 @@
       "enabled": false
     },
     "LoadingQuotes": {
-      "enabled": false
+      "additionalQuotes": "",
+      "additionalQuotesDelimiter": "|",
+      "enableDiscordPresetQuotes": false,
+      "enablePluginPresetQuotes": true,
+      "enabled": false,
+      "replaceEvents": true
     },
     "MemberCount": {
       "enabled": false
@@ -232,7 +241,7 @@
       "enabled": false
     },
     "MessageEventsAPI": {
-      "enabled": false
+      "enabled": true
     },
     "MessageLatency": {
       "enabled": false
@@ -262,13 +271,18 @@
       "enabled": false
     },
     "Moyai": {
-      "enabled": false
+      "enabled": false,
+      "ignoreBlocked": true,
+      "ignoreBots": true,
+      "quality": "Normal",
+      "triggerWhenUnfocused": true,
+      "volume": 0.5
     },
     "MutualGroupDMs": {
       "enabled": false
     },
     "NSFWGateBypass": {
-      "enabled": false
+      "enabled": true
     },
     "NewGuildSettings": {
       "enabled": false
@@ -280,7 +294,7 @@
       "enabled": false
     },
     "NoF1": {
-      "enabled": false
+      "enabled": true
     },
     "NoMaskedUrlPaste": {
       "enabled": false
@@ -289,7 +303,7 @@
       "enabled": false
     },
     "NoOnboardingDelay": {
-      "enabled": false
+      "enabled": true
     },
     "NoPendingCount": {
       "enabled": false
@@ -531,7 +545,8 @@
       "enabled": false
     },
     "VolumeBooster": {
-      "enabled": false
+      "enabled": true,
+      "multiplier": 3
     },
     "WebContextMenus": {
       "addBack": true,
@@ -562,11 +577,12 @@
       "enabled": false
     },
     "petpet": {
-      "enabled": false
+      "enabled": true
     }
   },
   "themeLinks": [
-    "https://catppuccin.github.io/discord/dist/catppuccin-frappe-blue.theme.css"
+    "https://catppuccin.github.io/discord/dist/catppuccin-frappe-blue.theme.css",
+    "https://raw.githubusercontent.com/MiniDiscordThemes/Frostcord/refs/heads/main/frostcord.theme.css"
   ],
   "transparent": false,
   "useQuickCss": true,
