@@ -3,20 +3,17 @@
   pkgs,
   user,
   lib,
-  mkBoolFalse,
-  mkBoolTrue,
+  mkBoolDefaultFalse,
+  mkBoolDefaultTrue,
+  mkSubmodule,
   ...
 }:
 
 {
   options.gnome.blur-my-shell = with lib; {
-    enable = mkBoolTrue;
-    app-blur = mkOption {
-      type = types.submodule {
-        options = {
-          enable = mkBoolFalse;
-        };
-      };
+    enable = mkBoolDefaultTrue;
+    app-blur = mkSubmodule {
+      enable = mkBoolDefaultFalse;
     };
 
     hacks-level = mkOption {

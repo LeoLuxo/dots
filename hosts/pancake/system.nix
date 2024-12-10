@@ -9,9 +9,19 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  gnome = {
-    power-button-action = "suspend";
+  gnome.power = {
+    button-action = "suspend";
     confirm-shutdown = true;
+
+    screen-idle = {
+      enable = true;
+      delay = 150;
+    };
+
+    suspend-idle = {
+      enable = true;
+      delay = 300;
+    };
   };
 
   # SD Card

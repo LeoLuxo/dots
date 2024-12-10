@@ -49,21 +49,17 @@
     qmk
   ];
 
-  # Home-Manager config
-  home-manager.users.${user} = {
+  # Extra packages that don't necessarily need an entire dedicated module
+  home-manager.users.${user}.home.packages = with pkgs; [
+    bitwarden-desktop
 
-    # Extra packages that don't necessarily need an entire dedicated module
-    home.packages = with pkgs; [
-      bitwarden-desktop
+    textpieces
+    hieroglyphic
 
-      textpieces
-      hieroglyphic
+    teams-for-linux
 
-      teams-for-linux
-
-      guitarix
-    ];
-  };
+    guitarix
+  ];
 
   # Set wallpaper  
   wallpaper = {
