@@ -46,6 +46,14 @@
     #     "default.clock.max-quantum" = 48;
     #   };
     # };
+    # extraConfig.pipewire."99-stop-microphone-auto-adjust" = {
+    #   "context.properties" = {
+    #     "default.clock.rate" = 48000;
+    #     "default.clock.quantum" = 48;
+    #     "default.clock.min-quantum" = 48;
+    #     "default.clock.max-quantum" = 48;
+    #   };
+    # };
     # extraConfig.pipewire = {
     #   pipewire-pulse = {
     #     "92-low-latency" = {
@@ -81,6 +89,25 @@
     };
 
   };
+
+  # Disable auto-adjusting of microphone volume from certain apps
+  services.pipewire.wireplumber.configPackages = [
+    (pkgs.writeTextDir "share/wireplumber/main.lua.d/99-stop-microphone-auto-adjust.lua" ''
+      table.insert(default_access.rules, {
+        matches = {
+          {
+            { "application.process.binary", "=", "electron" },
+            { "application.process.binary", "=", "webcord" },
+            { "application.process.binary", "=", "vesktop" },
+            { "application.process.binary", "=", "firefox" },
+            { "application.process.binary", "=", "Chromium" },
+            { "application.process.binary", "=", "chromium" }
+          }
+        },
+        default_permissions = "rx",
+      })
+    '')
+  ];
 
   environment.systemPackages = with pkgs; [
     playerctl
