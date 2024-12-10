@@ -1,7 +1,7 @@
 {
   nixpkgs,
   system,
-  nixRepoPath,
+  dotsRepoPath,
   ...
 }:
 
@@ -246,7 +246,7 @@ rec {
           home.activation."sync file ${builtins.toString xdgPath}" =
 
             let
-              syncPathStr = "${nixRepoPath}/synced/${syncPath}";
+              syncPathStr = "${dotsRepoPath}/synced/${syncPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
               src = toNix (readOrDefault syncPathStr);
               xdg = toNix (readOrDefault xdgPathStr);
