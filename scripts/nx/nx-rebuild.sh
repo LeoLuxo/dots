@@ -20,7 +20,7 @@ RESET='\033[0m'
 sudo echo -e "${INFO}Running as superuser${RESET}"
 
 # cd to our config dir
-pushd $NX_REPO 1>/dev/null
+pushd $NX_DOTS 1>/dev/null
 
 # Autoformat nix files
 nixfmt --quiet . ||

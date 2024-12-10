@@ -55,7 +55,9 @@
           hostName,
           system,
           modules,
-          nixRepoPath ? "/etc/nixos/dots",
+          nixPath ? "/etc/nixos",
+          dotsRepoPath ? (nixPath + "/dots"),
+          secretsRepoPath ? (nixPath + "/secrets"),
         }:
         let
           constants = {
@@ -64,7 +66,9 @@
               userHome
               hostName
               system
-              nixRepoPath
+              nixPath
+              dotsRepoPath
+              secretsRepoPath
               ;
           };
           libs = import ./libs.nix (inputs // constants);
