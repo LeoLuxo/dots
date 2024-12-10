@@ -46,14 +46,6 @@
     #     "default.clock.max-quantum" = 48;
     #   };
     # };
-    # extraConfig.pipewire."99-stop-microphone-auto-adjust" = {
-    #   "context.properties" = {
-    #     "default.clock.rate" = 48000;
-    #     "default.clock.quantum" = 48;
-    #     "default.clock.min-quantum" = 48;
-    #     "default.clock.max-quantum" = 48;
-    #   };
-    # };
     # extraConfig.pipewire = {
     #   pipewire-pulse = {
     #     "92-low-latency" = {
@@ -112,7 +104,8 @@
   environment.systemPackages = with pkgs; [
     playerctl
     pulsemixer
-    qpwgraph
+    # qpwgraph
+    helvum
     alsa-scarlett-gui
   ];
 
