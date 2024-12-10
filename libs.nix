@@ -272,14 +272,23 @@ rec {
         };
     };
 
-  mkBoolFalse = mkOption {
+  mkBoolDefaultFalse = mkOption {
     type = types.bool;
     default = false;
   };
 
-  mkBoolTrue = mkOption {
+  mkBoolDefaultTrue = mkOption {
     type = types.bool;
     default = true;
   };
+
+  mkSubmodule =
+    options:
+    mkOption {
+      type = types.submodule {
+        inherit options;
+      };
+      default = { };
+    };
 
 }

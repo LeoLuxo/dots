@@ -4,7 +4,9 @@
   user,
   mkGnomeKeybind,
   lib,
-  mkBoolTrue,
+  mkBoolDefaultTrue,
+  mkSubmodule,
+  mkBoolDefaultFalse,
   ...
 }:
 {
@@ -19,19 +21,39 @@
   ];
 
   options.gnome = with lib; {
-    enable = mkBoolTrue;
+    enable = mkBoolDefaultTrue;
 
-    power-button-action = mkOption {
-      type = types.enum [
-        "power off"
-        "suspend"
-        "hibernate"
-        "nothing"
-      ];
-      default = "power off";
+    power = mkSubmodule {
+      button-action = mkOption {
+        type = types.enum [
+          "power off"
+          "suspend"
+          "hibernate"
+          "nothing"
+        ];
+        default = "power off";
+      };
+
+      confirm-shutdown = mkBoolDefaultTrue;
+
+      screen-idle = mkSubmodule {
+        enable = mkBoolDefaultTrue;
+
+        delay = mkOption {
+          type = types.ints.unsigned;
+          default = 300;
+        };
+      };
+
+      suspend-idle = mkSubmodule {
+        enable = mkBoolDefaultFalse;
+
+        delay = mkOption {
+          type = types.ints.unsigned;
+          default = 1800;
+        };
+      };
     };
-
-    confirm-shutdown = mkBoolTrue;
   };
 
   config =
@@ -81,11 +103,18 @@
                   "hibernate" = "hibernate";
                   "nothing" = "nothing";
                 }
-                .${cfg.power-button-action};
+                .${cfg.power.button-action};
+
+              sleep-inactive-ac-type = if cfg.power.suspend-idle.enable then "suspend" else "nothing";
+              sleep-inactive-ac-timeout = cfg.power.suspend-idle.delay;
             };
 
             "org/gnome/gnome-session" = {
-              logout-prompt = cfg.confirm-shutdown;
+              logout-prompt = cfg.power.confirm-shutdown;
+            };
+
+            "org/gnome/desktop/session" = {
+              idle-delay = mkUint32 (if cfg.power.screen-idle.enable then cfg.power.screen-idle.delay else 0);
             };
 
             # System shortcuts
