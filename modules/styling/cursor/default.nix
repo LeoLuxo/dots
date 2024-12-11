@@ -8,15 +8,15 @@ let
 in
 
 let
-  cfg = config.styling.theme;
+  cfg = config.styling.cursor;
 in
 {
   imports = [ ./catppuccin.nix ];
 
-  options.styling.theme = {
+  options.styling.cursor = {
     enable = options.mkOption {
       type = types.bool;
-      default = cfg.name != null;
+      default = cfg.image != null;
     };
 
     name = options.mkOption {

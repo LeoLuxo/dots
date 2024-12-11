@@ -48,20 +48,6 @@ in
 
   # Extra packages that don't necessarily need an entire dedicated module
   home-manager.users.${user} = {
-
-    home.pointerCursor = {
-      gtk.enable = true;
-      x11.enable = true;
-      name = "catppuccin-frappe-dark-cursors";
-      package = pkgs.catppuccin-cursors.frappeDark;
-      size = 16;
-    };
-
-    gtk.cursorTheme = {
-      name = "catppuccin-frappe-dark-cursors";
-      package = pkgs.catppuccin-cursors.frappeDark;
-    };
-
     home.packages = with pkgs; [
       bitwarden-desktop
       textpieces
@@ -83,6 +69,13 @@ in
       name = "catppuccin";
       flavor = "frappe";
       accent = "blue";
+    };
+
+    cursor = {
+      enable = true;
+      name = "catppuccin";
+      flavor = "frappe";
+      accent = "dark";
     };
 
     bootscreen.enable = true;
