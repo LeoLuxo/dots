@@ -52,13 +52,11 @@ in
   # Extra packages that don't necessarily need an entire dedicated module
   home-manager.users.${user}.home.packages = with pkgs; [
     bitwarden-desktop
-
     textpieces
     hieroglyphic
-
     teams-for-linux
-
     guitarix
+    r2modman
   ];
 
   # Set wallpaper  
