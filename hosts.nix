@@ -5,7 +5,7 @@ mkHost: {
     mkHost
       [
         ./hosts/coffee
-        ./hosts/common.nix
+        ./hosts/base.nix
         ./hosts/secrets.nix
       ]
       {
@@ -19,7 +19,7 @@ mkHost: {
     mkHost
       [
         ./hosts/pancake
-        ./hosts/common.nix
+        ./hosts/base.nix
         ./hosts/secrets.nix
       ]
       {
