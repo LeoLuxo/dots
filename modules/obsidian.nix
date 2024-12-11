@@ -12,7 +12,7 @@ in
 {
   # Require fonts
   imports = with directories.modules; [
-    style.fonts
+    fonts
   ];
 
   home-manager.users.${user} = {

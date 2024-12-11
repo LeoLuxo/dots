@@ -12,10 +12,7 @@ in
 {
   # Include global modules
   imports = with directories.modules; [
-    style.bootscreen
-    style.fonts
-    style.wallpapers
-    style.themes.catppuccin
+    styling
 
     gnome.gnome
     gnome.extensions.blur-my-shell
@@ -29,10 +26,10 @@ in
     gnome.extensions.burn-my-windows
 
     terminal.ddterm
-    shell.prompt.starship
     shell.bash
     shell.fish
     # shell.nushell
+    shell.prompt.starship
 
     nix-utils
     snip
@@ -75,10 +72,20 @@ in
     ];
   };
 
-  # Set wallpaper  
-  wallpaper = {
-    enable = true;
-    image = directories.wallpapers."Riverside";
+  styling = {
+    wallpaper = {
+      enable = true;
+      image = directories.wallpapers."Riverside";
+    };
+
+    theme = {
+      enable = true;
+      name = "catppuccin";
+      flavor = "frappe";
+      accent = "blue";
+    };
+
+    bootscreen.enable = true;
   };
 
   # Set default shell
