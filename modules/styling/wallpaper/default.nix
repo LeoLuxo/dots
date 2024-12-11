@@ -76,8 +76,26 @@ in
         }
       ];
 
-      # TODO: handle static wallpapers
+      # Handle static wallpapers
+      systemd.user.services.wallutils-static = modules.mkIf (!cfg.isTimed) {
+        unitConfig = {
+          Description = "Wallutils static wallpaper service";
+          PartOf = [ "graphical-session.target" ];
+          After = [ "graphical-session.target" ];
+        };
+        # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
+        path = [ "/run/current-system/sw" ];
+        serviceConfig = {
+          Type = "oneshot";
+          Environment = "PATH=/run/current-system/sw/bin/";
+          ExecStart = ''
+            ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${wallpaper}
+          '';
+        };
+        wantedBy = [ "graphical-session.target" ];
+      };
 
+      # Handle dynamic wallpapers
       # Run wallutils settimed as a systemd service
       systemd.user.services.wallutils-timed = modules.mkIf cfg.isTimed {
         unitConfig = {
