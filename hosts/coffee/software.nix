@@ -23,9 +23,9 @@ in
     gnome.extensions.gsconnect
     gnome.extensions.just-perfection
     gnome.extensions.rounded-corners
-    gnome.extensions.system-monitor
     # gnome.extensions.emojis
     # gnome.extensions.weather
+    gnome.extensions.system-monitor
     gnome.extensions.burn-my-windows
 
     terminal.ddterm
@@ -57,6 +57,8 @@ in
     teams-for-linux
     guitarix
     r2modman
+
+    catppuccin-cursors.frappeDark
   ];
 
   # Set wallpaper  
