@@ -77,7 +77,7 @@ in
       ];
 
       # Handle static wallpapers
-      systemd.user.services.wallutils-static = modules.mkIf (!cfg.isTimed) {
+      systemd.user.services."wallutils-static" = modules.mkIf (!cfg.isTimed) {
         unitConfig = {
           Description = "Wallutils static wallpaper service";
           PartOf = [ "graphical-session.target" ];
@@ -102,7 +102,7 @@ in
 
       # Handle dynamic wallpapers
       # Run wallutils settimed as a systemd service
-      systemd.user.services.wallutils-timed = modules.mkIf cfg.isTimed {
+      systemd.user.services."wallutils-timed" = modules.mkIf cfg.isTimed {
         unitConfig = {
           Description = "Wallutils timed wallpaper service";
           PartOf = [ "graphical-session.target" ];
@@ -125,7 +125,7 @@ in
       };
 
       # Sends a refresh signal to the wallutils service when an unlock is detected
-      systemd.user.services.wallutils-refresh = modules.mkIf (cfg.isTimed && cfg.refreshOnUnlock) {
+      systemd.user.services."wallutils-refresh" = modules.mkIf (cfg.isTimed && cfg.refreshOnUnlock) {
         unitConfig = {
           Description = "Wallutils refresher";
           PartOf = [ "graphical-session.target" ];
