@@ -6,6 +6,7 @@
 
     ./wallpaper
     ./theme
+    ./cursor
 
     ./bootscreen.nix
   ];
