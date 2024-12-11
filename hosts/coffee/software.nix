@@ -50,16 +50,30 @@ in
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
-  home-manager.users.${user}.home.packages = with pkgs; [
-    bitwarden-desktop
-    textpieces
-    hieroglyphic
-    teams-for-linux
-    guitarix
-    r2modman
+  home-manager.users.${user} = {
 
-    catppuccin-cursors.frappeDark
-  ];
+    home.pointerCursor = {
+      gtk.enable = true;
+      x11.enable = true;
+      name = "catppuccin-frappe-dark-cursors";
+      package = pkgs.catppuccin-cursors.frappeDark;
+      size = 16;
+    };
+
+    gtk.cursorTheme = {
+      name = "catppuccin-frappe-dark-cursors";
+      package = pkgs.catppuccin-cursors.frappeDark;
+    };
+
+    home.packages = with pkgs; [
+      bitwarden-desktop
+      textpieces
+      hieroglyphic
+      teams-for-linux
+      guitarix
+      r2modman
+    ];
+  };
 
   # Set wallpaper  
   wallpaper = {
