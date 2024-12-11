@@ -1,14 +1,22 @@
 {
   config,
   pkgs,
-  user,
-  mkGnomeKeybind,
   lib,
-  mkBoolDefaultTrue,
-  mkSubmodule,
-  mkBoolDefaultFalse,
+  constants,
+  extra-libs,
   ...
 }:
+
+let
+  inherit (constants) user;
+  inherit (extra-libs)
+    mkGnomeKeybind
+    mkBoolDefaultTrue
+    mkSubmodule
+    mkBoolDefaultFalse
+    ;
+in
+
 {
   imports = [
     ./triple-buffering.nix
@@ -57,11 +65,11 @@
   };
 
   config =
-    with lib;
     let
+      inherit (lib) modules;
       cfg = config.gnome;
     in
-    mkIf cfg.enable {
+    modules.mkIf cfg.enable {
 
       # Enable and configure the X11 windowing system.
       # It's a bit weird because we're running gnome under wayland?

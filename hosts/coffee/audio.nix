@@ -1,9 +1,14 @@
 {
   pkgs,
-  user,
   musnix,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
+
 {
   imports = [ musnix.nixosModules.musnix ];
 

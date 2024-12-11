@@ -1,10 +1,13 @@
 {
   config,
   directories,
-  user,
-  userHome,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user userHome;
+in
 
 let
   syncthingFolder = "${userHome}/.config/syncthing";
