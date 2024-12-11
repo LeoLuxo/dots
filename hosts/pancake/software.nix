@@ -12,10 +12,7 @@ in
 {
   # Include global modules
   imports = with directories.modules; [
-    style.bootscreen
-    style.fonts
-    style.wallpapers
-    style.themes.catppuccin
+    styling
 
     gnome.gnome
     gnome.extensions.blur-my-shell
@@ -48,10 +45,27 @@ in
     steam
   ];
 
-  # Set wallpaper  
-  wallpaper = {
-    enable = true;
-    image = directories.wallpapers."Tree and shore";
+  styling = {
+    wallpaper = {
+      enable = true;
+      image = directories.wallpapers."Tree and shore";
+    };
+
+    theme = {
+      enable = true;
+      name = "catppuccin";
+      flavor = "frappe";
+      accent = "blue";
+    };
+
+    cursor = {
+      enable = true;
+      name = "catppuccin";
+      flavor = "frappe";
+      accent = "dark";
+    };
+
+    bootscreen.enable = true;
   };
 
   # Set default shell
