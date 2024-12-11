@@ -12,7 +12,7 @@ in
 {
   imports = with directories.modules; [
     # Require fonts for vscode
-    style.fonts
+    fonts
 
     direnv
   ];
