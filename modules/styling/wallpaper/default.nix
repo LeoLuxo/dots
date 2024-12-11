@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (extra-libs) sanitizePath mkBoolDefaultFalse;
+  inherit (extra-libs) sanitizePath;
   inherit (lib)
     options
     types
@@ -29,7 +29,10 @@ in
   imports = [ ./wallutils-fix-dark-mode.nix ];
 
   options.styling.wallpaper = {
-    enable = mkBoolDefaultFalse;
+    enable = options.mkOption {
+      type = types.bool;
+      default = cfg.image != null;
+    };
 
     image = options.mkOption {
       type = types.nullOr types.path;
