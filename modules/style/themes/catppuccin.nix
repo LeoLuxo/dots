@@ -1,8 +1,12 @@
 {
-  user,
   catppuccin,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
 
 {
   imports = [

@@ -1,63 +1,17 @@
 {
   nixpkgs,
-  system,
-  dotsRepoPath,
+  constants,
   ...
 }:
 
-with nixpkgs.lib;
-with builtins;
 let
+  inherit (constants) dotsRepoPath system;
+  inherit (nixpkgs) lib;
+  inherit (lib) strings attrsets filesystem;
   pkgs = nixpkgs.legacyPackages.${system};
-
 in
+
 rec {
-  directories = rec {
-    modules = findFiles {
-      dir = ./modules;
-      extensions = [ "nix" ];
-      allowDefault = true;
-    };
-
-    hosts = findFiles {
-      dir = ./hosts;
-      extensions = [ "nix" ];
-      allowDefault = true;
-    };
-
-    scripts = findFiles {
-      dir = ./scripts;
-      extensions = [
-        "sh"
-        "nu"
-        "py"
-      ];
-      allowDefault = true;
-    };
-
-    images = findFiles {
-      dir = ./assets;
-      extensions = [
-        "png"
-        "jpg"
-        "jpeg"
-        "gif"
-        "svg"
-        "heic"
-      ];
-    };
-
-    wallpapers = images.wallpapers;
-
-    icons = findFiles {
-      dir = ./assets/icons;
-      extensions = [
-        "ico"
-        "icns"
-      ];
-    };
-  };
-
   writeScriptWithDeps =
     {
       name,
@@ -69,33 +23,12 @@ rec {
       builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
     in
     pkgs.writeShellScriptBin name ''
-      for i in ${concatStringsSep " " deps}; do
+      for i in ${strings.concatStringsSep " " deps}; do
         export PATH="$i/bin:$PATH"
       done
 
       exec ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
     '';
-
-  # Create scripts for every script file
-  scriptBin =
-    # (nix is maximally lazy so this is only run if and when a script is added to the packages)
-    mapAttrsRecursive (
-      path: value:
-      let
-        filename = lists.last path;
-      in
-      {
-        rename ? filename,
-        deps ? [ ],
-        shell ? false,
-      }:
-      writeScriptWithDeps {
-        name = rename;
-        text = (builtins.readFile value);
-        inherit deps shell;
-      }
-      # (Ignores all _dir attributes)
-    ) (attrsets.filterAttrsRecursive (n: v: n != "_dir") directories.scripts);
 
   # Sanitize a path so that it doesn't cause problems in the nix store
   sanitizePath =
@@ -130,7 +63,7 @@ rec {
             attrsets.mapAttrs' (
               fileName: type:
               let
-                extMatch = match "(.*)\\.${extRegex}" fileName;
+                extMatch = builtins.match "(.*)\\.${extRegex}" fileName;
                 filePath = dir + "/${fileName}";
               in
               # If regular file, then add it to the file list only if the extension regex matches
@@ -140,16 +73,16 @@ rec {
                 else
                   {
                     # Filename without the extension
-                    name = elemAt extMatch 0;
+                    name = builtins.elemAt extMatch 0;
                     value = filePath;
                   }
               # If directory, ...
               else if type == "directory" then
                 let
                   # ... then search for a default.ext file
-                  files = readDir filePath;
+                  files = builtins.readDir filePath;
                   defaultFiles = map (ext: "default.${ext}") extensions;
-                  hasDefault = any (defaultFile: files ? ${defaultFile}) defaultFiles;
+                  hasDefault = builtins.any (defaultFile: files ? ${defaultFile}) defaultFiles;
                 in
                 # if the default file exists, add the directory to our file list
                 if allowDefault && hasDefault then
@@ -170,7 +103,7 @@ rec {
               else
                 # any other file types we ignore (i.e. symlink and unknown)
                 ignore fileName
-            ) (readDir dir)
+            ) (builtins.readDir dir)
           );
     in
     findFilesRecursive (sanitizePath dir);
@@ -188,10 +121,10 @@ rec {
         scriptName = "keybind-${id}";
       in
       # Module to be imported
-      { pkgs, user, ... }:
+      { pkgs, constants, ... }:
       {
         programs.dconf.enable = true;
-        home-manager.users.${user} = {
+        home-manager.users.${constants.user} = {
           # Create an extra script for the keybind, this avoids a bunch of weird issues
           home.packages = [
             (pkgs.writeShellScriptBin scriptName command)
@@ -217,7 +150,7 @@ rec {
   mkSyncedJSON =
     let
       # Custom pretty json instead of builtins.toJSON
-      toPrettyJSON = attrs: readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
+      toPrettyJSON = attrs: builtins.readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
     in
     mkSyncedFile {
       toNix = builtins.fromJSON;
@@ -238,9 +171,9 @@ rec {
         file: if filesystem.pathIsRegularFile file then builtins.readFile file else fallback;
     in
     # Module to be imported
-    { pkgs, user, ... }:
+    { pkgs, constants, ... }:
     {
-      home-manager.users.${user} =
+      home-manager.users.${constants.user} =
         { lib, config, ... }:
         {
           home.activation."sync file ${builtins.toString xdgPath}" =
@@ -272,20 +205,20 @@ rec {
         };
     };
 
-  mkBoolDefaultFalse = mkOption {
-    type = types.bool;
+  mkBoolDefaultFalse = lib.options.mkOption {
+    type = lib.types.bool;
     default = false;
   };
 
-  mkBoolDefaultTrue = mkOption {
-    type = types.bool;
+  mkBoolDefaultTrue = lib.options.mkOption {
+    type = lib.types.bool;
     default = true;
   };
 
   mkSubmodule =
     options:
-    mkOption {
-      type = types.submodule {
+    lib.options.mkOption {
+      type = lib.types.submodule {
         inherit options;
       };
       default = { };

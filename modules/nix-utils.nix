@@ -1,13 +1,21 @@
 {
   pkgs,
-  user,
-  userHome,
-  scriptBin,
-  dotsRepoPath,
-  secretsRepoPath,
   nix-index-database,
+  constants,
+  directories,
   ...
 }:
+
+let
+  inherit (constants)
+    user
+    userHome
+    dotsRepoPath
+    secretsRepoPath
+    ;
+  inherit (directories) scriptBin;
+in
+
 {
   imports = [
     nix-index-database.nixosModules.nix-index
