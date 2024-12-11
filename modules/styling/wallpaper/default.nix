@@ -92,6 +92,11 @@ in
             ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${wallpaper}
           '';
         };
+        restartIfChanged = true;
+        restartTriggers = [
+          cfg.mode
+          wallpaper
+        ];
         wantedBy = [ "graphical-session.target" ];
       };
 
