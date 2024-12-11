@@ -38,7 +38,7 @@ in
         [burn-my-windows-profile]
         fire-enable-effect=false
         pixel-wipe-enable-effect=true
-        pixel-wipe-animation-time=300
+        pixel-wipe-animation-time=400
       '';
     };
 }
