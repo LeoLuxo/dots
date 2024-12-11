@@ -61,7 +61,7 @@ in
   styling = {
     wallpaper = {
       enable = true;
-      image = directories.wallpapers."nixos-catppuccin";
+      image = directories.wallpapers."Earth";
     };
 
     theme = {
