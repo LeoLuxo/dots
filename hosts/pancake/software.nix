@@ -10,9 +10,8 @@ let
 in
 
 {
+  # Include global modules
   imports = with directories.modules; [
-
-    # Include global modules
     style.bootscreen
     style.fonts
     style.wallpapers
