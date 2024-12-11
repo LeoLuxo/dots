@@ -1,9 +1,13 @@
 {
   lib,
   pkgs,
-  user,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
 
 {
   # Package for https://github.com/kumakichi/Deepl-linux-electron

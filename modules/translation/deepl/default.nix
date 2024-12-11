@@ -1,8 +1,13 @@
 {
   pkgs,
-  user,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
+
 {
   imports = [
     ./deepl-linux-electron.nix

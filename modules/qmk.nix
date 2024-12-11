@@ -1,8 +1,13 @@
 {
   pkgs,
-  user,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
+
 {
   # https://nixos.wiki/wiki/Qmk
 

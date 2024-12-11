@@ -1,18 +1,20 @@
 {
-  user,
   pkgs,
   lib,
+  constants,
   ...
 }:
+
 let
-  inherit (pkgs) bash;
+  inherit (constants) user;
 in
+
 {
   imports = [ ./module.nix ];
 
   shell.default = lib.mkDefault "bash";
 
-  environment.shells = [ bash ];
+  environment.shells = [ pkgs.bash ];
 
   home-manager.users.${user} = {
     # Let home manager manage bash; needed to set sessionVariables

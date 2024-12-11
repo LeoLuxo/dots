@@ -1,14 +1,19 @@
 {
   pkgs,
-  user,
-  scriptBin,
+  constants,
+  directories,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
+
 {
   home-manager.users.${user} = {
     home.packages = with pkgs; [
 
-      (scriptBin.boot-windows {
+      (directories.scriptBin."boot-windows" {
         deps = [
           # To query and change the boot order 
           efibootmgr

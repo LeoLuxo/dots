@@ -1,4 +1,12 @@
-{ pkgs, user, ... }:
+{
+  pkgs,
+  constants,
+  ...
+}:
+
+let
+  inherit (constants) user;
+in
 
 {
   home-manager.users.${user} = {

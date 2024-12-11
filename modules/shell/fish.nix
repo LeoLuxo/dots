@@ -1,11 +1,12 @@
 {
-  user,
   pkgs,
   lib,
+  constants,
   ...
 }:
+
 let
-  inherit (pkgs) fish;
+  inherit (constants) user;
 in
 {
   imports = [ ./module.nix ];
@@ -13,7 +14,7 @@ in
   shell.default = lib.mkDefault "fish";
 
   programs.fish.enable = true;
-  environment.shells = [ fish ];
+  environment.shells = [ pkgs.fish ];
 
   home-manager.users.${user} = {
     programs.fish = {

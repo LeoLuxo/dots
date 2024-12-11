@@ -63,15 +63,25 @@
             dotsRepoPath = (nixosPath + "/dots");
             secretsRepoPath = (nixosPath + "/secrets");
           };
-          constants = defaultConstants // hostConstants;
-          libs = import ./libs.nix (inputs // constants);
+
+          const = {
+            constants = defaultConstants // hostConstants;
+          };
+
+          libs = {
+            extra-libs = import ./libs.nix (inputs // const);
+          };
+
+          dirs = {
+            directories = import ./dirs.nix (inputs // libs // const);
+          };
         in
         nixpkgs.lib.nixosSystem {
           inherit (hostConstants) system;
           inherit modules;
 
           # Additional args passed to the module
-          specialArgs = inputs // libs // constants;
+          specialArgs = inputs // libs // dirs // const;
         };
 
     in

@@ -2,11 +2,14 @@
   config,
   pkgs,
   home-manager,
-  user,
-  userHome,
-  hostName,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user userHome hostName;
+in
+
 {
   imports = [
     # Include home manager module

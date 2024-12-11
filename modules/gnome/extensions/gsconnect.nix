@@ -1,8 +1,12 @@
 {
   pkgs,
-  user,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
 
 {
   programs.dconf.enable = true;

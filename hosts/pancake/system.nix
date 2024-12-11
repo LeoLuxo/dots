@@ -3,6 +3,7 @@
   nixos-hardware,
   ...
 }:
+
 {
   imports = [
     # Include hardware stuff and kernel patches for surface pro 7

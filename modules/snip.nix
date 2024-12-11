@@ -1,10 +1,16 @@
 {
   pkgs,
-  user,
-  scriptBin,
-  mkGnomeKeybind,
+  constants,
+  extra-libs,
+  directories,
   ...
 }:
+
+let
+  inherit (constants) user;
+  inherit (extra-libs) mkGnomeKeybind;
+in
+
 {
   imports = [
     (mkGnomeKeybind {
@@ -16,7 +22,7 @@
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      (scriptBin.snip {
+      (directories.scriptBin.snip {
         deps = [
           gnome-screenshot
           wl-clipboard
