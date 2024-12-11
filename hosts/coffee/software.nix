@@ -61,7 +61,7 @@ in
   styling = {
     wallpaper = {
       enable = true;
-      image = directories.wallpapers."Fuji";
+      image = directories.wallpapers."Earth";
     };
 
     theme = {
