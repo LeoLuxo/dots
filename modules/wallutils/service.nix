@@ -2,15 +2,24 @@
   config,
   lib,
   pkgs,
+  extra-libs,
   ...
 }:
 
-with lib;
+let
+  inherit (extra-libs) mkEnableOption;
+  inherit (lib)
+    options
+    types
+    modules
+    strings
+    ;
+in
 
 let
   cfg = config.services.wallutils;
 
-  modeOption = mkOption {
+  modeOption = options.mkOption {
     type = types.either (types.enum [
       "stretch"
       "center"
@@ -28,23 +37,23 @@ in
   options.services.wallutils = {
     enable = mkEnableOption "Wallutils automatic wallpaper tool";
 
-    package = mkOption {
+    package = options.mkOption {
       type = types.package;
       default = pkgs.wallutils;
       defaultText = "pkgs.wallutils";
     };
 
-    timed = mkOption {
+    timed = options.mkOption {
       type = types.submodule {
         options = {
           enable = mkEnableOption "Systemd service for the timed wallpaper";
 
-          refreshOnUnlock = mkOption {
+          refreshOnUnlock = options.mkOption {
             type = types.bool;
             default = true;
           };
 
-          theme = mkOption {
+          theme = options.mkOption {
             type = types.path;
             example = "mojave-timed";
             description = ''
@@ -58,7 +67,7 @@ in
         };
       };
       default = { };
-      example = literalExpression ''
+      example = options.literalExpression ''
         {
           enable = true;
           theme = "''${pkgs.gnome.gnome-backgrounds}/share/backgrounds/gnome/adwaita-timed.xml";
@@ -67,18 +76,18 @@ in
       '';
     };
 
-    static = mkOption {
+    static = options.mkOption {
       type = types.submodule {
         options = {
           enable = mkEnableOption "Systemd service to set the wallpaper";
 
-          image = mkOption {
+          image = options.mkOption {
             type = types.str;
             example = "\${config.home.homeDirectory}/Pictures/my-wallpaper.png";
             description = "Path or URL of the wallpaper";
           };
 
-          downloadDir = mkOption {
+          downloadDir = options.mkOption {
             type = types.nullOr types.path;
             default = null;
             example = "\${config.home.homeDirectory}/Downloads";
@@ -89,7 +98,7 @@ in
         };
       };
       default = { };
-      example = literalExpression ''
+      example = options.literalExpression ''
         {
           enable = true;
           image = "https://source.unsplash.com/3840x2160/?mountains";
@@ -100,7 +109,7 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = modules.mkIf cfg.enable {
     assertions = [
       {
         assertion = !(cfg.timed.enable && cfg.static.enable);
@@ -110,7 +119,7 @@ in
       }
     ];
 
-    systemd.user.services.wallutils-timed = mkIf cfg.timed.enable {
+    systemd.user.services.wallutils-timed = modules.mkIf cfg.timed.enable {
       unitConfig = {
         Description = "Wallutils timed wallpaper service";
         PartOf = [ "graphical-session.target" ];
@@ -128,7 +137,7 @@ in
     };
 
     # Sends a refresh signal to the wallutils service when an unlock is detected
-    systemd.user.services.wallutils-refresh = mkIf cfg.timed.refreshOnUnlock {
+    systemd.user.services.wallutils-refresh = modules.mkIf cfg.timed.refreshOnUnlock {
       unitConfig = {
         Description = "Wallutils refresher";
         PartOf = [ "graphical-session.target" ];
@@ -151,7 +160,7 @@ in
       wantedBy = [ "graphical-session.target" ];
     };
 
-    systemd.user.services.wallutils-static = mkIf cfg.static.enable {
+    systemd.user.services.wallutils-static = modules.mkIf cfg.static.enable {
       unitConfig = {
         Description = "Wallutils static wallpaper service";
         PartOf = [ "graphical-session.target" ];
@@ -160,12 +169,12 @@ in
       serviceConfig = {
         Type = "oneshot";
         Environment = "PATH=/run/current-system/sw/bin/";
-        ExecStart = concatStringsSep " " [
+        ExecStart = strings.concatStringsSep " " [
           "${cfg.package}/bin/setwallpaper"
           "--mode ${cfg.static.mode}"
-          (optionalString (
+          (strings.optionalString (
             cfg.static.downloadDir != null
-          ) "--download ${escapeShellArg cfg.static.downloadDir}")
+          ) "--download ${strings.escapeShellArg cfg.static.downloadDir}")
           "${cfg.static.image}"
         ];
       };

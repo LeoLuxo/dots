@@ -2,11 +2,19 @@
   pkgs,
   config,
   lib,
-  sanitizePath,
+  extra-libs,
   ...
 }:
 
-with lib;
+let
+  inherit (extra-libs) sanitizePath;
+  inherit (lib)
+    options
+    types
+    strings
+    modules
+    ;
+in
 
 let
   cfg = config.wallpaper;
@@ -15,17 +23,16 @@ let
     pkgs.callPackage (import ./heic-converter.nix) {
       inherit file;
     };
-
 in
 {
   imports = [ ./wallutils-fix-dark-mode.nix ];
 
   options.wallpaper = {
-    image = mkOption {
+    image = options.mkOption {
       type = types.path;
     };
 
-    mode = mkOption {
+    mode = options.mkOption {
       type = types.enum [
         "stretch"
         "center"
@@ -38,25 +45,25 @@ in
       description = "Wallpaper mode";
     };
 
-    enable = mkOption {
+    enable = options.mkOption {
       type = types.bool;
       default = false;
     };
 
-    isTimed = mkOption {
+    isTimed = options.mkOption {
       type = types.bool;
       default = strings.hasSuffix ".heic" cfg.image;
     };
 
-    refreshOnUnlock = mkOption {
+    refreshOnUnlock = options.mkOption {
       type = types.bool;
       default = true;
     };
 
-    # packages = mkOption {
+    # packages = options.mkOption {
     #   type = types.submodule {
     #     options = {
-    #       wallutils = mkOption {
+    #       wallutils = options.mkOption {
     #         type = types.package;
     #         default = pkgs.wallutils;
     #         defaultText = "pkgs.wallutils";
@@ -66,7 +73,7 @@ in
     # };
   };
 
-  config = mkIf cfg.enable (
+  config = modules.mkIf cfg.enable (
     let
       fixedImage = sanitizePath cfg.image;
 
@@ -74,7 +81,7 @@ in
     in
     {
       # Run wallutils settimed as a systemd service
-      systemd.user.services.wallutils-timed = mkIf cfg.isTimed {
+      systemd.user.services.wallutils-timed = modules.mkIf cfg.isTimed {
         unitConfig = {
           Description = "Wallutils timed wallpaper service";
           PartOf = [ "graphical-session.target" ];
@@ -97,7 +104,7 @@ in
       };
 
       # Sends a refresh signal to the wallutils service when an unlock is detected
-      systemd.user.services.wallutils-refresh = mkIf (cfg.isTimed && cfg.refreshOnUnlock) {
+      systemd.user.services.wallutils-refresh = modules.mkIf (cfg.isTimed && cfg.refreshOnUnlock) {
         unitConfig = {
           Description = "Wallutils refresher";
           PartOf = [ "graphical-session.target" ];

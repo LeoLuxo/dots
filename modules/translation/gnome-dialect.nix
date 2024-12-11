@@ -1,9 +1,14 @@
 {
   pkgs,
-  user,
-  mkGnomeKeybind,
+  constants,
+  extra-libs,
   ...
 }:
+
+let
+  inherit (constants) user;
+  inherit (extra-libs) mkGnomeKeybind;
+in
 
 {
   imports = [

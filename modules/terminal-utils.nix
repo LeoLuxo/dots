@@ -1,9 +1,15 @@
 {
   pkgs,
-  user,
-  scriptBin,
+  constants,
+  directories,
   ...
 }:
+
+let
+  inherit (constants) user;
+  inherit (directories) scriptBin;
+in
+
 {
   home-manager.users.${user} = {
     home.packages = with pkgs; [

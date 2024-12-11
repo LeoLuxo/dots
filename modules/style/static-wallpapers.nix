@@ -1,9 +1,13 @@
 {
   pkgs,
-  user,
   directories,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
 
 {
   # Disable default gnome wallpapers

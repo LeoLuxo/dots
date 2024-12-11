@@ -1,9 +1,13 @@
 {
   pkgs,
-  user,
   directories,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
 
 {
   imports = with directories.modules; [

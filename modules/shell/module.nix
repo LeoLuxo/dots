@@ -1,16 +1,19 @@
 {
   pkgs,
-  user,
   lib,
   config,
+  constants,
   ...
 }:
 
-with lib;
+let
+  inherit (constants) user;
+  inherit (lib) options types;
+in
 
 {
   options.shell = {
-    default = mkOption {
+    default = options.mkOption {
       type = types.enum [
         "bash"
         "zsh"

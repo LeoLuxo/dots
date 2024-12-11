@@ -1,11 +1,12 @@
 {
-  user,
   pkgs,
   lib,
+  constants,
   ...
 }:
+
 let
-  inherit (pkgs) zsh;
+  inherit (constants) user;
 in
 {
   imports = [ ./module.nix ];
@@ -13,7 +14,7 @@ in
   shell.default = lib.mkDefault "zsh";
 
   programs.zsh.enable = true;
-  environment.shells = [ zsh ];
+  environment.shells = [ pkgs.zsh ];
 
   home-manager.users.${user} = {
     programs.zsh = {

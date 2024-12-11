@@ -1,13 +1,15 @@
 {
-  userHome,
   lib,
   agenix,
-  system,
-  secretsRepoPath,
+  constants,
   ...
 }:
-with builtins;
-with lib;
+
+let
+  inherit (constants) userHome system secretsRepoPath;
+  inherit (lib) attrsets strings;
+in
+
 let
   # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
   secretsPath = builtins.fetchGit {
@@ -16,10 +18,10 @@ let
   };
   secretsFile = "${secretsPath}/secrets.nix";
   extractedSecrets =
-    if pathExists secretsFile then
-      mapAttrs' (
+    if builtins.pathExists secretsFile then
+      attrsets.mapAttrs' (
         n: _:
-        nameValuePair (removeSuffix ".age" n) {
+        attrsets.nameValuePair (strings.removeSuffix ".age" n) {
           file = "${secretsPath}/${n}";
         }
       ) (import secretsFile)

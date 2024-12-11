@@ -1,13 +1,16 @@
 {
   config,
   pkgs,
-  user,
   lib,
-  mkBoolDefaultFalse,
-  mkBoolDefaultTrue,
-  mkSubmodule,
+  constants,
+  extra-libs,
   ...
 }:
+
+let
+  inherit (constants) user;
+  inherit (extra-libs) mkBoolDefaultFalse mkBoolDefaultTrue mkSubmodule;
+in
 
 {
   options.gnome.blur-my-shell = with lib; {
@@ -27,11 +30,11 @@
   };
 
   config =
-    with lib;
     let
+      inherit (lib) modules;
       cfg = config.gnome.blur-my-shell;
     in
-    mkIf cfg.enable {
+    modules.mkIf cfg.enable {
       programs.dconf.enable = true;
 
       home-manager.users.${user} =

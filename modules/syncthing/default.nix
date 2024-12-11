@@ -1,9 +1,14 @@
 {
   pkgs,
   directories,
-  user,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
+
 {
   # By default if syncthing.user is not set, a user named "syncthing" will be created whose home directory is dataDir, and it will run under a group "syncthing".
   services.syncthing.group = "users";

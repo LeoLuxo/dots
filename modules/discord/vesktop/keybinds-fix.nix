@@ -1,4 +1,9 @@
-{ mkGnomeKeybind, ... }:
+{ extra-libs, ... }:
+
+let
+  inherit (extra-libs) mkGnomeKeybind;
+in
+
 {
   imports = [
     (mkGnomeKeybind {

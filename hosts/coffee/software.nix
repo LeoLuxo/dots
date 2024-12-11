@@ -1,9 +1,14 @@
 {
-  user,
-  directories,
   pkgs,
+  directories,
+  constants,
   ...
 }:
+
+let
+  inherit (constants) user;
+in
+
 {
   # Include global modules
   imports = with directories.modules; [

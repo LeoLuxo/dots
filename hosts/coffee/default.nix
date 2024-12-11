@@ -1,6 +1,4 @@
-{
-  ...
-}:
+{ ... }:
 {
   # Include local modules
   imports = [

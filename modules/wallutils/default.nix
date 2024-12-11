@@ -1,4 +1,13 @@
-{ pkgs, user, ... }:
+{
+  pkgs,
+  constants,
+  ...
+}:
+
+let
+  inherit (constants) user;
+in
+
 {
   imports = [
     ./service.nix

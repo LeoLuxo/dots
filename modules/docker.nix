@@ -1,4 +1,12 @@
-{ user, ... }:
+{
+  constants,
+  ...
+}:
+
+let
+  inherit (constants) user;
+in
+
 {
   virtualisation.docker.enable = true;
 
