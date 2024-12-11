@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (extra-libs) sanitizePath;
+  inherit (extra-libs) sanitizePath mkBoolDefaultFalse;
   inherit (lib)
     options
     types
@@ -17,7 +17,8 @@ let
 in
 
 let
-  cfg = config.wallpaper;
+  cfg = config.styling.wallpaper;
+
   heicConverter =
     file:
     pkgs.callPackage (import ./heic-converter.nix) {
@@ -27,9 +28,12 @@ in
 {
   imports = [ ./wallutils-fix-dark-mode.nix ];
 
-  options.wallpaper = {
+  options.styling.wallpaper = {
+    enable = mkBoolDefaultFalse;
+
     image = options.mkOption {
-      type = types.path;
+      type = types.nullOr types.path;
+      default = null;
     };
 
     mode = options.mkOption {
@@ -45,11 +49,6 @@ in
       description = "Wallpaper mode";
     };
 
-    enable = options.mkOption {
-      type = types.bool;
-      default = false;
-    };
-
     isTimed = options.mkOption {
       type = types.bool;
       default = strings.hasSuffix ".heic" cfg.image;
@@ -59,27 +58,23 @@ in
       type = types.bool;
       default = true;
     };
-
-    # packages = options.mkOption {
-    #   type = types.submodule {
-    #     options = {
-    #       wallutils = options.mkOption {
-    #         type = types.package;
-    #         default = pkgs.wallutils;
-    #         defaultText = "pkgs.wallutils";
-    #       };
-    #     };
-    #   };
-    # };
   };
 
-  config = modules.mkIf cfg.enable (
+  config =
     let
       fixedImage = sanitizePath cfg.image;
-
       wallpaper = if cfg.isTimed then "${(heicConverter fixedImage)}/wallpaper.stw" else fixedImage;
     in
-    {
+    modules.mkIf cfg.enable {
+      assertions = [
+        {
+          assertion = cfg.image != null;
+          message = "Wallpaper image must be set!";
+        }
+      ];
+
+      # TODO: handle static wallpapers
+
       # Run wallutils settimed as a systemd service
       systemd.user.services.wallutils-timed = modules.mkIf cfg.isTimed {
         unitConfig = {
@@ -126,6 +121,5 @@ in
         };
         wantedBy = [ "graphical-session.target" ];
       };
-    }
-  );
+    };
 }
