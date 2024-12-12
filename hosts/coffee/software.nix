@@ -61,7 +61,7 @@ in
   styling = {
     wallpaper = {
       enable = true;
-      image = directories.wallpapers."Earth";
+      image = directories.wallpapers."Garden";
     };
 
     theme = {
@@ -88,7 +88,7 @@ in
     # Enable blur for all applications
     app-blur.enable = true;
 
-    # Set hacks to 1
+    # Set hacks to best looking
     hacks-level = "no artifact";
   };
 }
