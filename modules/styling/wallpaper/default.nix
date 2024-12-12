@@ -52,9 +52,14 @@ in
       description = "Wallpaper mode";
     };
 
-    isTimed = options.mkOption {
+    isHeic = options.mkOption {
       type = types.bool;
       default = strings.hasSuffix ".heic" cfg.image;
+    };
+
+    isTimed = options.mkOption {
+      type = types.bool;
+      default = cfg.isHeic || (builtins.pathExists "${cfg.image}/wallpaper.stw");
     };
 
     refreshOnUnlock = options.mkOption {
@@ -66,8 +71,12 @@ in
   config =
     let
       image = sanitizePath cfg.image;
-      timedWallpaperFolder = "${(heicConverter image)}";
-      wallpaper = if cfg.isTimed then "${timedWallpaperFolder}/wallpaper.stw" else image;
+
+      wallpaper =
+        if cfg.isTimed then
+          "${if cfg.isHeic then (heicConverter image) else image}/wallpaper.stw"
+        else
+          image;
     in
     modules.mkIf cfg.enable {
       assertions = [
@@ -114,7 +123,7 @@ in
           Type = "simple";
           ExecStart = (
             pkgs.writeShellScript "wallutils-timed" ''
-              pushd "${timedWallpaperFolder}"
+              pushd "${builtins.baseNameOf wallpaper}"
               ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
             ''
           );
