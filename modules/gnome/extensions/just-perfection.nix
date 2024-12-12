@@ -68,7 +68,7 @@ in
           workspace-popup = true;
           workspace-switcher-should-show = true;
           workspace-switcher-size = 20;
-          workspace-wrap-around = false;
+          workspace-wrap-around = true;
           workspaces-in-app-grid = true;
           world-clock = false;
         };
