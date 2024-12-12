@@ -178,7 +178,7 @@ in
             "org/gnome/mutter" = {
               edge-tiling = true;
               dynamic-workspaces = true;
-              workspaces-only-on-primary = true;
+              workspaces-only-on-primary = false;
             };
 
             "org/gnome/shell/window-switcher" = {
