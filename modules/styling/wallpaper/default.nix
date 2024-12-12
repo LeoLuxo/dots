@@ -87,7 +87,6 @@ in
         path = [ "/run/current-system/sw" ];
         serviceConfig = {
           Type = "oneshot";
-          Environment = "PATH=/run/current-system/sw/bin/";
           ExecStart = ''
             ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${wallpaper}
           '';
