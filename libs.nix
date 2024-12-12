@@ -45,7 +45,7 @@ rec {
     {
       dir,
       extensions,
-      allowDefault ? false,
+      defaultFiles ? [ ],
     }:
     let
       extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
@@ -81,11 +81,11 @@ rec {
                 let
                   # ... then search for a default.ext file
                   files = builtins.readDir filePath;
-                  defaultFiles = map (ext: "default.${ext}") extensions;
-                  hasDefault = builtins.any (defaultFile: files ? ${defaultFile}) defaultFiles;
+                  # defaultFiles = map (ext: "default.${ext}") extensions;
+                  hasDefault = builtins.any (defaultFile: files ? ${defaultFile}) defaultFiles; # builtins.any returns false given an empty list
                 in
-                # if the default file exists, add the directory to our file list
-                if allowDefault && hasDefault then
+                # if a default file exists, add the directory to our file list
+                if hasDefault then
                   {
                     name = fileName;
                     value = filePath;
