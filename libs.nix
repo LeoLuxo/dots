@@ -35,12 +35,12 @@ rec {
     path:
     builtins.path {
       inherit path;
-      name = strings.sanitizeDerivationName (baseNameOf path);
+      name = strings.sanitizeDerivationName (builtins.baseNameOf path);
     };
 
   # Recursively find modules in a given directory and map them to a logical set:
   # dir/a/b/file.ext         => .a.b.file
-  # dir/a/b/file/default.ext => .a.b.file
+  # dir/a/b/file/default.nix => .a.b.file
   findFiles =
     {
       dir,
@@ -79,9 +79,8 @@ rec {
               # If directory, ...
               else if type == "directory" then
                 let
-                  # ... then search for a default.ext file
+                  # ... then search for a default file (ie. default.nix, ...)
                   files = builtins.readDir filePath;
-                  # defaultFiles = map (ext: "default.${ext}") extensions;
                   hasDefault = builtins.any (defaultFile: files ? ${defaultFile}) defaultFiles; # builtins.any returns false given an empty list
                 in
                 # if a default file exists, add the directory to our file list
