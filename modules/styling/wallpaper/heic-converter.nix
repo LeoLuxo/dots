@@ -29,6 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
 
     # Convert the .heic timing info to .stw and fix the hardcoded path in the .stw
     heic2stw "$src" > "$out/wallpaper.stw"
-    sed -i "s&^format:.*&format: $out/%s.jpg&" "$out/wallpaper.stw"
+    sed -i "s&^format:.*&format: %s.jpg&" "$out/wallpaper.stw"
   '';
 })

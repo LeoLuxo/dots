@@ -60,7 +60,7 @@ in
   styling = {
     wallpaper = {
       enable = true;
-      image = directories.wallpapers."Garden";
+      image = directories.wallpapers."Village";
     };
 
     theme = {
