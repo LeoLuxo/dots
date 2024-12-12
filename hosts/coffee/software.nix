@@ -61,7 +61,7 @@ in
   styling = {
     wallpaper = {
       enable = true;
-      image = directories.wallpapers."sky";
+      image = directories.wallpapers."Garden";
     };
 
     theme = {
