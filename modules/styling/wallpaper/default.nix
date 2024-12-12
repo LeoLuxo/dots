@@ -3,7 +3,6 @@
   config,
   lib,
   extra-libs,
-  constants,
   ...
 }:
 
@@ -15,7 +14,6 @@ let
     strings
     modules
     ;
-  inherit (constants) user;
 in
 
 let
