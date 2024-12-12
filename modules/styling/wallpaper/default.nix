@@ -3,6 +3,7 @@
   config,
   lib,
   extra-libs,
+  constants,
   ...
 }:
 
@@ -14,6 +15,7 @@ let
     strings
     modules
     ;
+  inherit (constants) user;
 in
 
 let
@@ -148,9 +150,17 @@ in
       };
 
       # Force reload of the services at activation (ie. nix rebuild) to display the new wallpaper without needing to log out
-      system.userActivationScripts."force-reload-wallutils".text = ''
-        systemctl --user restart wallutils-timed.service  || true
-        systemctl --user restart wallutils-static.service || true
-      '';
+      home-manager.users.${user} = {
+        home.shellAliases = {
+          "reload-wallpaper" = ''
+            systemctl --user restart wallutils-timed.service  || true
+            systemctl --user restart wallutils-static.service || true
+          '';
+        };
+      };
+      # system.userActivationScripts."force-reload-wallutils".text = ''
+      #   systemctl --user restart wallutils-timed.service  || true
+      #   systemctl --user restart wallutils-static.service || true
+      # '';
     };
 }

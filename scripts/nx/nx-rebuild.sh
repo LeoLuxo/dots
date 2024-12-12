@@ -60,6 +60,9 @@ nh os switch . --no-nom \
 		exit 1
 	)
 
+# Reload the wallpaper
+reload-wallpaper
+
 # Get current generation metadata
 current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
 echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
