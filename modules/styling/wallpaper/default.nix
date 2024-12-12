@@ -89,7 +89,6 @@ in
         serviceConfig = {
           Type = "oneshot";
           ExecStart = ''
-            cd "${timedWallpaperFolder}"
             ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${wallpaper}
           '';
         };
@@ -114,6 +113,7 @@ in
         serviceConfig = {
           Type = "simple";
           ExecStart = ''
+            cd "${timedWallpaperFolder}"
             ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
           '';
         };
