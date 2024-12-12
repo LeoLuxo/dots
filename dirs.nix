@@ -9,13 +9,13 @@ rec {
   modules = findFiles {
     dir = ./modules;
     extensions = [ "nix" ];
-    allowDefault = true;
+    defaultFiles = [ "default.nix" ];
   };
 
   hosts = findFiles {
     dir = ./hosts;
     extensions = [ "nix" ];
-    allowDefault = true;
+    defaultFiles = [ "default.nix" ];
   };
 
   scripts = findFiles {
@@ -25,7 +25,6 @@ rec {
       "nu"
       "py"
     ];
-    allowDefault = true;
   };
 
   images = findFiles {
@@ -40,7 +39,16 @@ rec {
     ];
   };
 
-  wallpapers = images.wallpapers;
+  wallpapers = findFiles {
+    dir = ./assets/wallpapers;
+    extensions = [
+      "png"
+      "jpg"
+      "jpeg"
+      "heic"
+    ];
+    defaultFiles = [ "wallpaper.stw" ];
+  };
 
   icons = findFiles {
     dir = ./assets/icons;
