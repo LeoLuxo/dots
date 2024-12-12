@@ -65,8 +65,9 @@ in
 
   config =
     let
-      fixedImage = sanitizePath cfg.image;
-      wallpaper = if cfg.isTimed then "${(heicConverter fixedImage)}/wallpaper.stw" else fixedImage;
+      image = sanitizePath cfg.image;
+      timedWallpaperFolder = "${(heicConverter image)}";
+      wallpaper = if cfg.isTimed then "${timedWallpaperFolder}/wallpaper.stw" else image;
     in
     modules.mkIf cfg.enable {
       assertions = [
@@ -88,6 +89,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           ExecStart = ''
+            cd "${timedWallpaperFolder}"
             ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${wallpaper}
           '';
         };
