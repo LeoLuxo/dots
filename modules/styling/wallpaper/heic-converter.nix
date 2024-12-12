@@ -1,12 +1,16 @@
 {
+  lib,
   stdenv,
   wallutils,
   imagemagick,
   file,
 }:
 
+let
+  filename = builtins.baseNameOf file;
+in
 stdenv.mkDerivation (finalAttrs: {
-  name = "heic-converted-wallpaper";
+  name = lib.strings.sanitizeDerivationName "heic-converted-wallpaper-${filename}";
   src = file;
 
   nativeBuildInputs = [
