@@ -148,19 +148,5 @@ in
         };
         wantedBy = [ "graphical-session.target" ];
       };
-
-      # Force reload of the services at activation (ie. nix rebuild) to display the new wallpaper without needing to log out
-      home-manager.users.${user} = {
-        home.shellAliases = {
-          "reload-wallpaper" = ''
-            systemctl --user restart wallutils-timed.service  || true
-            systemctl --user restart wallutils-static.service || true
-          '';
-        };
-      };
-      # system.userActivationScripts."force-reload-wallutils".text = ''
-      #   systemctl --user restart wallutils-timed.service  || true
-      #   systemctl --user restart wallutils-static.service || true
-      # '';
     };
 }
