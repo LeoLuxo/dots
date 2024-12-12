@@ -112,10 +112,12 @@ in
         path = [ "/run/current-system/sw" ];
         serviceConfig = {
           Type = "simple";
-          ExecStart = ''
-            cd "${timedWallpaperFolder}"
-            ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
-          '';
+          ExecStart = (
+            pkgs.writeShellScript "wallutils-timed" ''
+              pushd "${timedWallpaperFolder}"
+              ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
+            ''
+          );
         };
         restartIfChanged = true;
         restartTriggers = [
