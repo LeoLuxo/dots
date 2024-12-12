@@ -16,9 +16,8 @@ in
 
     gnome.gnome
     gnome.extensions.blur-my-shell
-    gnome.extensions.clipboard
+    gnome.extensions.clipboard-indicator
     gnome.extensions.gsconnect
-    gnome.extensions.just-perfection
     gnome.extensions.rounded-corners
     # gnome.extensions.emojis
     # gnome.extensions.weather

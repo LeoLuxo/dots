@@ -1,7 +1,7 @@
 {
   config,
-  pkgs,
   lib,
+  directories,
   constants,
   extra-libs,
   ...
@@ -18,8 +18,14 @@ let
 in
 
 {
-  imports = [
+  imports = with directories.modules; [
+    # Triple buffering fork thing
     ./triple-buffering.nix
+
+    # Base extensions that should be included by default
+    gnome.extensions.just-perfection
+    gnome.extensions.removable-drive-menu
+    gnome.extensions.appindicator
 
     (mkGnomeKeybind {
       name = "GNOME Console";
@@ -88,20 +94,7 @@ in
         with lib.hm.gvariant;
 
         {
-          home.packages = with pkgs; [
-            gnomeExtensions.removable-drive-menu
-            gnomeExtensions.appindicator
-          ];
-
           dconf.settings = {
-            # Base extensions
-            "org/gnome/shell" = {
-              enabled-extensions = [
-                "drive-menu@gnome-shell-extensions.gcampax.github.com"
-                "appindicatorsupport@rgcjonas.gmail.com"
-              ];
-            };
-
             # Power settings
             "org/gnome/settings-daemon/plugins/power" = {
               power-button-action =
@@ -214,12 +207,6 @@ in
             "org/gnome/desktop/interface" = {
               color-scheme = "prefer-dark";
               gtk-enable-primary-paste = false;
-            };
-
-            # Base extension settings
-            "org/gnome/shell/extensions/appindicator" = {
-              icon-size = 0;
-              tray-pos = "left";
             };
           };
         };
