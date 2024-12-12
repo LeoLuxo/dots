@@ -123,7 +123,7 @@ in
           Type = "simple";
           ExecStart = (
             pkgs.writeShellScript "wallutils-timed" ''
-              pushd "${builtins.baseNameOf wallpaper}"
+              pushd "${builtins.dirOf wallpaper}"
               ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
             ''
           );
