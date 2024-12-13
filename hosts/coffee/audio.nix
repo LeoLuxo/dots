@@ -2,15 +2,34 @@
   pkgs,
   musnix,
   constants,
+  extra-libs,
   ...
 }:
 
 let
   inherit (constants) user;
+  inherit (extra-libs) mkGlobalKeybind;
 in
 
+let
+  getIdForDevice = device: "pw-cli ls ${device} | grep -Poi '(?<=id )\d+'";
+in
 {
-  imports = [ musnix.nixosModules.musnix ];
+  imports = [
+    musnix.nixosModules.musnix
+
+    (mkGlobalKeybind {
+      name = "Toggle audio to speakers";
+      binding = "XF86TouchpadOff"; # F23
+      command = "wpctl set-default ${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"}";
+    })
+
+    (mkGlobalKeybind {
+      name = "Toggle audio to headphones";
+      binding = "XF86TouchpadOn"; # F22
+      command = "wpctl set-default ${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"}";
+    })
+  ];
 
   musnix = {
     enable = true;
@@ -40,49 +59,53 @@ in
     };
     pulse.enable = true;
     jack.enable = true;
-    # lowLatency = {
-    #   enable = true;
-    # };
-    extraConfig.pipewire."92-low-latency" = {
-      "context.properties" = {
-        "default.clock.rate" = 48000;
-        "default.clock.quantum" = 64;
-        "default.clock.min-quantum" = 64;
-        "default.clock.max-quantum" = 64;
+
+    extraConfig = {
+      # Low latency config for pipewire
+      pipewire."92-low-latency" = {
+        "context.properties" = {
+          "default.clock.rate" = 48000;
+          "default.clock.quantum" = 64;
+          "default.clock.min-quantum" = 64;
+          "default.clock.max-quantum" = 64;
+        };
+      };
+
+      # Low latency config for pulseaudio applications
+      pipewire-pulse."92-low-latency" = {
+        "context.properties" = [
+          {
+            name = "libpipewire-module-protocol-pulse";
+            args = { };
+          }
+        ];
+        "pulse.properties" = {
+          "pulse.min.req" = "64/48000";
+          "pulse.default.req" = "64/48000";
+          "pulse.max.req" = "64/48000";
+          "pulse.min.quantum" = "64/48000";
+          "pulse.max.quantum" = "64/48000";
+        };
+        "stream.properties" = {
+          "node.latency" = "64/48000";
+          "resample.quality" = 1;
+        };
       };
     };
+
     wireplumber = {
       enable = true;
       extraConfig = {
-        # "10-disable-camera" = {
-        #   "wireplumber.profiles" = {
-        #     main."monitor.libcamera" = "disabled";
-        #   };
-        # };
+        "52-mic-pro-audio"."monitor.alsa.rules" = [
+          {
+            matches = [ { "device.name" = "alsa_input.usb-Anua_Mic_CM_900_Anua_Mic_CM_900-00"; } ];
+            actions.update-props."device.profile" = "pro-audio";
+          }
+        ];
       };
       extraScripts = { };
     };
-
   };
-
-  # Disable auto-adjusting of microphone volume from certain apps
-  # services.pipewire.wireplumber.configPackages = [
-  #   (pkgs.writeTextDir "share/wireplumber/main.lua.d/99-stop-microphone-auto-adjust.lua" ''
-  #     table.insert(default_access.rules, {
-  #       matches = {
-  #         {
-  #           { "application.process.binary", "=", "electron" },
-  #           { "application.process.binary", "=", "webcord" },
-  #           { "application.process.binary", "=", "vesktop" },
-  #           { "application.process.binary", "=", "firefox" },
-  #           { "application.process.binary", "=", "Chromium" },
-  #           { "application.process.binary", "=", "Chromium input" }
-  #         }
-  #       },
-  #       default_permissions = "rx",
-  #     })
-  #   '')
-  # ];
 
   environment.systemPackages = with pkgs; [
     playerctl
