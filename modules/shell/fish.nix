@@ -34,6 +34,9 @@ in
         # Bind CTRL-Delete
         bind \e\[3\;5~ kill-bigword
 
+        # Bind CTRL-\|
+        bind \x1c beginning-of-line
+
         # Rebind left to accept only a single word instead of the entire autosuggestion
         bind \e\[C forward-bigword
       '';
