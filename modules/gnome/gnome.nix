@@ -167,6 +167,8 @@ in
             "org/gnome/settings-daemon/plugins/media-keys" = {
               screenreader = [ ]; # Disable screenreader, defaults to Alt+Super+S
               help = [ ]; # Disable help, defaults to Super+F1
+              touchpad-off-static = [ ]; # Defaults to XF86TouchpadOff = F23
+              touchpad-on-static = [ ]; # Defaults to XF86TouchpadOn = F22
             };
 
             "org/gnome/mutter/keybindings" = {
