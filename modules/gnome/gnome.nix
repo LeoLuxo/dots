@@ -172,7 +172,7 @@ in
             };
 
             "org/gnome/mutter/keybindings" = {
-              switch-monitor = [ "XF86Display" ]; # Disable switching monitor, defaults to Super+P (no idea what XF86Display is tho)
+              switch-monitor = [ ]; # Disable switching monitor, defaults to Super+P and XF86Display
             };
 
             # Desktop settings
