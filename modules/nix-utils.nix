@@ -24,13 +24,13 @@ in
 
     (mkGlobalKeybind {
       name = "Open nx-code";
-      binding = "<Ctrl><Super>F9";
+      binding = "<Super>F9";
       command = "nx-code";
     })
 
     (mkGlobalKeybind {
       name = "Open nx-todo";
-      binding = "<Ctrl><Super>F10";
+      binding = "<Super>F10";
       command = "nx-todo";
     })
   ];
