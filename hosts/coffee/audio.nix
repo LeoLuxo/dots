@@ -21,13 +21,19 @@ in
     (mkGlobalKeybind {
       name = "Toggle audio to speakers";
       binding = "XF86TouchpadOff"; # F23
-      command = "wpctl set-default $(${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"})";
+      command = ''
+        id=$(${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"})
+        wpctl set-default $id
+      '';
     })
 
     (mkGlobalKeybind {
       name = "Toggle audio to headphones";
       binding = "XF86TouchpadOn"; # F22
-      command = "wpctl set-default $(${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"})";
+      command = ''
+        id=$(${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"})
+        wpctl set-default $id
+      '';
     })
   ];
 
