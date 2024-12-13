@@ -1,7 +1,9 @@
 {
+  lib,
   pkgs,
   constants,
   extra-libs,
+  directories,
   ...
 }:
 
@@ -11,20 +13,11 @@ let
 in
 
 {
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      # Discord fork that fixes streaming issues on linux
-      vesktop
-    ];
-
-    home.shellAliases = {
-      "discord" = "vesktop";
-    };
-  };
-
-  imports = [
+  imports = with directories.modules; [
     ./icons.nix
     ./keybinds-fix.nix
+
+    default-programs
 
     (mkSyncedJSON {
       xdgPath = "vesktop/settings.json";
@@ -35,5 +28,15 @@ in
       xdgPath = "vesktop/settings/settings.json";
       cfgPath = "vesktop/settings2.json";
     })
+
   ];
+
+  defaultPrograms.communication = lib.mkDefault "vesktop";
+
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      # Discord fork that fixes streaming issues on linux
+      vesktop
+    ];
+  };
 }
