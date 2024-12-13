@@ -94,6 +94,11 @@ in
         with lib.hm.gvariant;
 
         {
+          # Add aliases
+          home.shellAliases = {
+            "find-shortcut" = "gsettings list-recursively | grep -i";
+          };
+
           dconf.settings = {
             # Power settings
             "org/gnome/settings-daemon/plugins/power" = {
