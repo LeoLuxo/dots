@@ -36,6 +36,7 @@ in
     wl-clipboard
     boot-windows
 
+    youtube-music
     obsidian
     firefox
     discord
