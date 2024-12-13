@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   directories,
   constants,
@@ -15,7 +16,11 @@ in
     fonts
 
     direnv
+
+    default-programs
   ];
+
+  defaultPrograms.codeEditor = lib.mkDefault "code";
 
   environment.variables = {
     EDITOR = "code";
