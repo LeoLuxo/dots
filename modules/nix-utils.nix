@@ -3,6 +3,7 @@
   nix-index-database,
   constants,
   directories,
+  extra-libs,
   ...
 }:
 
@@ -14,11 +15,24 @@ let
     secretsRepoPath
     ;
   inherit (directories) scriptBin;
+  inherit (extra-libs) mkGlobalKeybind;
 in
 
 {
   imports = [
     nix-index-database.nixosModules.nix-index
+
+    (mkGlobalKeybind {
+      name = "Open nx-code";
+      binding = "<Ctrl><Super>F9";
+      command = "nx-code";
+    })
+
+    (mkGlobalKeybind {
+      name = "Open nx-todo";
+      binding = "<Ctrl><Super>F10";
+      command = "nx-todo";
+    })
   ];
 
   # Install comma via nix-index so that it's wrapped correctly

@@ -222,7 +222,7 @@ rec {
     };
 
   mkString = lib.options.mkOption {
-    type = lib.types.string;
+    type = lib.types.str;
   };
 
   mkBoolDefaultFalse = lib.options.mkOption {
