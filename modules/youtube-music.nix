@@ -21,6 +21,6 @@ in
       youtube-music
     ];
 
-    # xdg.configFile."Youtube Music/theme.css".source = "${dotsRepoPath}/synced/youtube-music/theme.css";
+    xdg.configFile."Youtube Music/theme.css".source = "${dotsRepoPath}/synced/youtube-music/theme.css";
   };
 }
