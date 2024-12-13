@@ -9,16 +9,23 @@ let
   inherit (extra-libs) mkSyncedJSON;
 in
 {
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      youtube-music
+    ];
+  };
+
   imports = [
     (mkSyncedJSON {
-      cfgPath = "youtube-music/config.json";
       xdgPath = "YouTube Music/config.json";
+      cfgPath = "youtube-music/config.json";
       modify = (
         file:
         file
         // {
           options = {
             themes = [
+              # This explicitly copies the file to the nix store
               "${/. + "${dotsRepoPath}/config/youtube-music/theme.css"}"
             ];
           };
@@ -26,12 +33,4 @@ in
       );
     })
   ];
-
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      youtube-music
-    ];
-
-    # xdg.configFile."YouTube Music/theme.css".source = "${dotsRepoPath}/config/youtube-music/theme.css";
-  };
 }
