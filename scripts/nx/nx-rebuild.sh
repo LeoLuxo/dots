@@ -71,7 +71,7 @@ echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
 dconf dump / >$DCONF_DIFF
 
 # RE-add any auto-generated files
-git add ./synced
+git add ./config
 
 # Shows NEW changes
 changes=$(

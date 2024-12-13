@@ -5,33 +5,27 @@
     }
   },
   "options": {
-    "alwaysOnTop": false,
-    "appVisible": true,
-    "autoResetAppCache": false,
-    "autoUpdates": true,
-    "disableHardwareAcceleration": false,
-    "hideMenu": false,
-    "hideMenuWarned": false,
-    "likeButtons": "",
-    "overrideUserAgent": false,
-    "proxy": "",
-    "removeUpgradeButton": false,
-    "restartOnConfigChanges": false,
-    "resumeOnStart": true,
-    "startAtLogin": false,
-    "startingPage": "Library",
-    "themes": [],
-    "tray": false,
-    "trayClickPlayPause": false,
-    "usePodcastParticipantAsArtist": false
+    "themes": [
+      "/nix/store/mircc5av50s1ifvvn6bqs156zrymyi3r-theme.css"
+    ]
   },
   "plugins": {
     "album-actions": {
       "enabled": true
     },
     "album-color-theme": {
-      "enabled": true,
+      "enabled": false,
       "ratio": 0.2
+    },
+    "ambient-mode": {
+      "blur": 100,
+      "buffer": 30,
+      "enabled": true,
+      "fullscreen": false,
+      "interpolationTime": 1500,
+      "opacity": 1,
+      "quality": 50,
+      "size": 100
     },
     "audio-compressor": {
       "enabled": false
@@ -71,6 +65,10 @@
       "enabled": true
     },
     "video-toggle": {
+      "align": "left",
+      "enabled": true,
+      "forceHide": false,
+      "hideVideo": true,
       "mode": "custom"
     },
     "visualizer": {
@@ -153,15 +151,15 @@
       }
     }
   },
-  "url": "https://music.youtube.com/watch?v=ODkCbgr3IXY&list=OLAK5uy_mnmyJy5EnVHCc3mqjKbKYT51qvSTbVM3A&index=0",
-  "window-maximized": true,
+  "url": "https://music.youtube.com/watch?v=BciS5krYL80&list=PLldAoFC_uLaL7y9TPMCW0wRm-osD-Yh4i&index=0",
+  "window-maximized": false,
   "window-position": {
-    "x": 3582,
+    "x": 2560,
     "y": 294
   },
   "window-size": {
-    "height": 275,
-    "width": 450
+    "height": 1044,
+    "width": 1919
   }
 }
 
