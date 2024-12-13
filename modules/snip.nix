@@ -8,12 +8,12 @@
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkGnomeKeybind;
+  inherit (extra-libs) mkGlobalKeybind;
 in
 
 {
   imports = [
-    (mkGnomeKeybind {
+    (mkGlobalKeybind {
       name = "Instant screenshot";
       binding = "<Super>s";
       command = "snip";
