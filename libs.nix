@@ -221,6 +221,10 @@ rec {
         };
     };
 
+  mkString = lib.options.mkOption {
+    type = lib.types.string;
+  };
+
   mkBoolDefaultFalse = lib.options.mkOption {
     type = lib.types.bool;
     default = false;

@@ -29,5 +29,4 @@ mkHost: {
         hostName = "pancake";
         system = "x86_64-linux";
       };
-
 }

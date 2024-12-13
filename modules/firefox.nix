@@ -1,11 +1,17 @@
 {
+  lib,
+  directories,
   ...
 }:
 
 {
+  imports = with directories.modules; [
+    default-programs
+  ];
+
+  defaultPrograms.browser = lib.mkDefault "firefox";
 
   programs = {
-
     # Setup firefox.
     firefox = {
       enable = true;
@@ -26,6 +32,5 @@
           };
         };
     };
-
   };
 }
