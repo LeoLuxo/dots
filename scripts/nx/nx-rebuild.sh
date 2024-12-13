@@ -68,7 +68,7 @@ current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s
 echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
 
 # Save current dconf settings (for nx-dconf-diff)
-dconf dump / >$DCONF_DIFF
+dconf dump / >"$DCONF_DIFF"
 
 # RE-add any auto-generated files
 git add ./config
