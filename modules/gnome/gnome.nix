@@ -158,21 +158,19 @@ in
             };
 
             "org/gnome/shell/keybindings" = {
-              # Defaults to Super+S
-              toggle-quick-settings = [ ];
-
-              # Defaults to Super+V
-              toggle-message-tray = [ ];
-
+              toggle-quick-settings = [ ]; # Defaults to Super+S
+              toggle-message-tray = [ ]; # Defaults to Super+V
+              toggle-application-view = [ ]; # Defaults to Super+A
               show-screen-recording-ui = [ "<Super>r" ];
             };
 
             "org/gnome/settings-daemon/plugins/media-keys" = {
-              # Disable screenreader, defaults to Alt+Super+S
-              screenreader = [ ];
+              screenreader = [ ]; # Disable screenreader, defaults to Alt+Super+S
+              help = [ ]; # Disable help, defaults to Super+F1
+            };
 
-              # Disable help, defaults to Super+F1
-              help = [ ];
+            "org/gnome/mutter/keybindings" = {
+              switch-monitor = [ "XF86Display" ]; # Disable switching monitor, defaults to Super+P (no idea what XF86Display is tho)
             };
 
             # Desktop settings
