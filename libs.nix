@@ -108,7 +108,7 @@ rec {
     findFilesRecursive (sanitizePath dir);
 
   # Utility to easily create a new keybind
-  mkGnomeKeybind =
+  mkGlobalKeybind =
     {
       name,
       binding,
@@ -120,9 +120,15 @@ rec {
         scriptName = "keybind-${id}";
       in
       # Module to be imported
-      { pkgs, constants, ... }:
+      {
+        config,
+        pkgs,
+        constants,
+        ...
+      }:
       {
         programs.dconf.enable = true;
+
         home-manager.users.${constants.user} = {
           # Create an extra script for the keybind, this avoids a bunch of weird issues
           home.packages = [
@@ -130,18 +136,22 @@ rec {
           ];
 
           # Add the keybind to dconf
-          dconf.settings = {
-            "org/gnome/settings-daemon/plugins/media-keys" = {
-              custom-keybindings = [
-                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
-              ];
-            };
+          dconf.settings =
+            if config.gnome.enable then
+              {
+                "org/gnome/settings-daemon/plugins/media-keys" = {
+                  custom-keybindings = [
+                    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
+                  ];
+                };
 
-            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
-              inherit binding name;
-              command = scriptName;
-            };
-          };
+                "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
+                  inherit binding name;
+                  command = scriptName;
+                };
+              }
+            else
+              abort "gnome disabled, cannot create keybind!";
         };
       }
     );

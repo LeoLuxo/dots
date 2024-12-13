@@ -12,7 +12,7 @@ in
   imports = [
     ./deepl-linux-electron.nix
 
-    # (mkGnomeKeybind {
+    # (mkGlobalKeybind {
     #   name = "Instant translate";
     #   binding = "<Super>d";
     #   command = "dialect --selection";

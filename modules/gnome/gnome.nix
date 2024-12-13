@@ -10,7 +10,7 @@
 let
   inherit (constants) user;
   inherit (extra-libs)
-    mkGnomeKeybind
+    mkGlobalKeybind
     mkBoolDefaultTrue
     mkSubmodule
     mkBoolDefaultFalse
@@ -27,7 +27,7 @@ in
     gnome.extensions.removable-drive-menu
     gnome.extensions.appindicator
 
-    (mkGnomeKeybind {
+    (mkGlobalKeybind {
       name = "GNOME Console";
       binding = "<Super>t";
       command = "kgx";
@@ -153,6 +153,8 @@ in
                 "<Alt>F4"
                 "<Super>q"
               ];
+
+              toggle-fullscreen = [ "<Super>f" ];
             };
 
             "org/gnome/shell/keybindings" = {
@@ -161,6 +163,19 @@ in
 
               # Defaults to Super+V
               toggle-message-tray = [ ];
+
+              show-screen-recording-ui = [ "<Super>r" ];
+            };
+
+            "org/gnome/settings-daemon/plugins/media-keys" = {
+              # Disable screenreader, defaults to Alt+Super+S
+              screenreader = [ ];
+
+              # Disable help, defaults to Super+F1
+              help = [ ];
+              # Open Web Browser
+              www = [ "<Super>F1" ];
+
             };
 
             # Desktop settings

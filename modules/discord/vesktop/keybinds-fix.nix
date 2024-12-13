@@ -1,18 +1,18 @@
 { extra-libs, ... }:
 
 let
-  inherit (extra-libs) mkGnomeKeybind;
+  inherit (extra-libs) mkGlobalKeybind;
 in
 
 {
   imports = [
-    (mkGnomeKeybind {
+    (mkGlobalKeybind {
       name = "Discord mute";
       binding = "<Super>m";
       command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
     })
 
-    (mkGnomeKeybind {
+    (mkGlobalKeybind {
       name = "Discord deafen";
       binding = "<Super><Shift>m";
       command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
