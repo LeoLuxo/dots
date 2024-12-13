@@ -35,7 +35,7 @@ in
         bind \e\[3\;5~ kill-bigword
 
         # Rebind left to accept only a single word instead of the entire autosuggestion
-        bind \e\[C forward-word
+        bind \e\[C forward-bigword
       '';
     };
   };
