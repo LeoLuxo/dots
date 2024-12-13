@@ -12,7 +12,7 @@ let
 in
 
 let
-  getIdForDevice = device: "pw-cli ls ${device} | grep -Poi '(?<=id )\d+'";
+  getIdForDevice = device: "pw-cli ls \"${device}\" | grep -Poi '(?<=id )\d+'";
 in
 {
   imports = [
