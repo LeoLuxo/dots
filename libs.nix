@@ -183,10 +183,13 @@ rec {
               src = toNix (readOrDefault syncPathStr);
               xdg = toNix (readOrDefault xdgPathStr);
               merged = fromNix (src // xdg);
-
             in
 
             lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              # Make sure both dirs exist
+              mkdir --parents "${builtins.dirOf syncPathStr}"
+              mkdir --parents "${builtins.dirOf xdgPathStr}"
+
               # Save new merged content to dots
               cat >"${syncPathStr}" <<EOL
               ${merged}
@@ -198,7 +201,6 @@ rec {
               fi
 
               # Copy merged content to new file
-              mkdir --parents "$(dirname "${xdgPathStr}")"
               cp "${syncPathStr}" "${xdgPathStr}" --force
             '';
         };
