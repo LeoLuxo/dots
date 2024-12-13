@@ -173,9 +173,6 @@ in
 
               # Disable help, defaults to Super+F1
               help = [ ];
-              # Open Web Browser
-              www = [ "<Super>F1" ];
-
             };
 
             # Desktop settings
