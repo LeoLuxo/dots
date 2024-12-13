@@ -18,9 +18,10 @@ in
   imports = [
     musnix.nixosModules.musnix
 
+    # https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/
     (mkGlobalKeybind {
       name = "Toggle audio to speakers";
-      binding = "XF86TouchpadOff"; # F23
+      binding = "XF86Launch6"; # F15
       command = ''
         id=$(${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"})
         wpctl set-default $id
@@ -29,7 +30,7 @@ in
 
     (mkGlobalKeybind {
       name = "Toggle audio to headphones";
-      binding = "XF86TouchpadOn"; # F22
+      binding = "XF86Launch5"; # F14
       command = ''
         id=$(${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"})
         wpctl set-default $id
