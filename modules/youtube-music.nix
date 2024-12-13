@@ -11,8 +11,19 @@ in
 {
   imports = [
     (mkSyncedJSON {
-      syncPath = "youtube-music/config.json";
+      cfgPath = "youtube-music/config.json";
       xdgPath = "YouTube Music/config.json";
+      modify = (
+        file:
+        file
+        // {
+          options = {
+            themes = [
+              "${/. + "${dotsRepoPath}/config/youtube-music/theme.css"}"
+            ];
+          };
+        }
+      );
     })
   ];
 
@@ -21,6 +32,6 @@ in
       youtube-music
     ];
 
-    xdg.configFile."Youtube Music/theme.css".source = "${dotsRepoPath}/synced/youtube-music/theme.css";
+    # xdg.configFile."YouTube Music/theme.css".source = "${dotsRepoPath}/config/youtube-music/theme.css";
   };
 }

@@ -163,7 +163,11 @@ rec {
       fromNix,
       fallback ? "",
     }:
-    { syncPath, xdgPath }:
+    {
+      cfgPath,
+      xdgPath,
+      modify ? (file: file),
+    }:
 
     let
       readOrDefault =
@@ -178,21 +182,22 @@ rec {
           home.activation."sync file ${builtins.toString xdgPath}" =
 
             let
-              syncPathStr = "${dotsRepoPath}/synced/${syncPath}";
+              cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
-              src = toNix (readOrDefault syncPathStr);
+              src = toNix (readOrDefault cfgPathStr);
               xdg = toNix (readOrDefault xdgPathStr);
-              merged = fromNix (src // xdg);
+              merged = modify (src // xdg);
+              final = fromNix merged;
             in
 
             lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               # Make sure both dirs exist
-              mkdir --parents "${builtins.dirOf syncPathStr}"
+              mkdir --parents "${builtins.dirOf cfgPathStr}"
               mkdir --parents "${builtins.dirOf xdgPathStr}"
 
               # Save new merged content to dots
-              cat >"${syncPathStr}" <<EOL
-              ${merged}
+              cat >"${cfgPathStr}" <<EOL
+              ${final}
               EOL
 
               # Backup old file
@@ -201,7 +206,7 @@ rec {
               fi
 
               # Copy merged content to new file
-              cp "${syncPathStr}" "${xdgPathStr}" --force
+              cp "${cfgPathStr}" "${xdgPathStr}" --force
             '';
         };
     };

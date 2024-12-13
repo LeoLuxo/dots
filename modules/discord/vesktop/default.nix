@@ -23,12 +23,12 @@ in
     ./keybinds-fix.nix
 
     (mkSyncedJSON {
-      syncPath = "vesktop/settings1.json";
+      cfgPath = "vesktop/settings1.json";
       xdgPath = "vesktop/settings.json";
     })
 
     (mkSyncedJSON {
-      syncPath = "vesktop/settings2.json";
+      cfgPath = "vesktop/settings2.json";
       xdgPath = "vesktop/settings/settings.json";
     })
   ];
