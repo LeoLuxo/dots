@@ -164,8 +164,8 @@ rec {
       fallback ? "",
     }:
     {
-      cfgPath,
       xdgPath,
+      cfgPath,
       modify ? (file: file),
     }:
 
