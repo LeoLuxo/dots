@@ -16,6 +16,10 @@ in
       # Discord fork that fixes streaming issues on linux
       vesktop
     ];
+
+    home.shellAliases = {
+      "discord" = "vesktop";
+    };
   };
 
   imports = [
