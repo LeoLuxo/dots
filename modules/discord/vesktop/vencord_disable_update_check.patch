@@ -1,26 +1,22 @@
-diff --git a/scripts/build/build.mjs b/scripts/build/build.mjs
-index 623f9f94..92607b9b 100755
---- a/scripts/build/build.mjs
-+++ b/scripts/build/build.mjs
-@@ -27,7 +27,7 @@ const defines = {
-     IS_STANDALONE,
-     IS_DEV,
-     IS_REPORTER,
--    IS_UPDATER_DISABLED,
-+    IS_UPDATER_DISABLED: true,
-     IS_WEB: false,
-     IS_EXTENSION: false,
-     VERSION: JSON.stringify(VERSION),
-diff --git a/scripts/build/common.mjs b/scripts/build/common.mjs
-index e88f1e2b..3629cd6e 100644
---- a/scripts/build/common.mjs
-+++ b/scripts/build/common.mjs
-@@ -42,7 +42,7 @@ export const IS_DEV = watch || process.argv.includes("--dev");
- export const IS_REPORTER = process.argv.includes("--reporter");
- export const IS_STANDALONE = process.argv.includes("--standalone");
+diff --git a/src/utils/updater.ts b/src/utils/updater.ts
+index f99c6ca1..d432f988 100644
+--- a/src/utils/updater.ts
++++ b/src/utils/updater.ts
+@@ -38,6 +38,8 @@ async function Unwrap<T>(p: Promise<IpcRes<T>>) {
+ }
  
--export const IS_UPDATER_DISABLED = process.argv.includes("--disable-updater");
-+export const IS_UPDATER_DISABLED = true;
- export const gitHash = process.env.VENCORD_HASH || execSync("git rev-parse --short HEAD", { encoding: "utf-8" }).trim();
+ export async function checkForUpdates() {
++    return (isOutdated = false);
++
+     changes = await Unwrap(VencordNative.updater.getUpdates());
+     if (changes.some(c => c.hash === gitHash)) {
+         isNewer = true;
+@@ -63,6 +65,8 @@ export async function update() {
+ export const getRepo = () => Unwrap(VencordNative.updater.getRepo());
  
- export const banner = {
+ export async function maybePromptToUpdate(confirmMessage: string, checkForDev = false) {
++    return;
++
+     if (IS_WEB || IS_UPDATER_DISABLED) return;
+     if (checkForDev && IS_DEV) return;
+ 
