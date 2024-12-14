@@ -19,11 +19,7 @@ in
 let
   cfg = config.styling.wallpaper;
 
-  heicConverter =
-    file:
-    pkgs.callPackage (import ./heic-converter.nix) {
-      inherit file;
-    };
+  heicConverter = file: pkgs.callPackage ./heic-converter.nix { inherit file; };
 in
 {
   imports = [
