@@ -16,7 +16,7 @@
               pre = ''return g.Set("picture-uri", "file://"+imageFilename)'';
               post = ''g.Set("picture-uri-dark", "file://"+imageFilename); '' + pre;
             in
-            (oldAttrs.postPath or "")
+            (oldAttrs.postPatch or "")
             + ''
               grep -rl "picture-uri" . | xargs sed -i 's#${pre}#${post}#g'
             '';
