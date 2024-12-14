@@ -8,18 +8,31 @@
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkSyncedJSON quickPatch;
+  inherit (extra-libs) mkSyncedJSON quickPatch mkGlobalKeybind;
 in
 
 {
   imports = [
     ./icons.nix
     ./keybinds-fix.nix
-    # ./disable-update-check.nix
 
     (quickPatch {
       package = "vesktop";
-      patches = [ ./disable_update_checking.patch ];
+      patches = [
+        ./disable_update_checking.patch
+      ];
+    })
+
+    (mkGlobalKeybind {
+      name = "Discord mute";
+      binding = "<Super>m";
+      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+    })
+
+    (mkGlobalKeybind {
+      name = "Discord deafen";
+      binding = "<Super><Shift>m";
+      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
     })
 
     (mkSyncedJSON {
@@ -39,7 +52,8 @@ in
   home-manager.users.${user} = {
     home.packages = with pkgs; [
       # Discord fork that fixes streaming issues on linux
-      (vesktop.override { withSystemVencord = true; })
+      # (vesktop.override { withSystemVencord = true; })
+      vesktop
     ];
   };
 }

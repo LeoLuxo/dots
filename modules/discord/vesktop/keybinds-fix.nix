@@ -1,44 +1,25 @@
-{ extra-libs, ... }:
-
-let
-  inherit (extra-libs) mkGlobalKeybind;
-in
-
+{ ... }:
 {
-  imports = [
-    (mkGlobalKeybind {
-      name = "Discord mute";
-      binding = "<Super>m";
-      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    })
-
-    (mkGlobalKeybind {
-      name = "Discord deafen";
-      binding = "<Super><Shift>m";
-      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    })
-  ];
-
   # Overlay to patch global keybinds
   # TODO: Remove when the PR is merged
   nixpkgs.overlays = [
     (final: prev: {
       vesktop = prev.vesktop.overrideAttrs (
         finalAttrs: oldAttrs: {
-          # Patching isn't working for some reason so just replace the entire source with the PR repo
-          src = prev.fetchFromGitHub {
-            owner = "PolisanTheEasyNick";
-            repo = "Vesktop";
-            rev = "3a84dbc0d28a8152284d82004b1315e7fe03778a";
-            hash = "sha256-i+i0oOLST72cMWwtSHJnVDaWojMA3g7TXGvBBewGBcE=";
-          };
-
           # patches = [
           #   (prev.fetchpatch {
           #     url = "https://patch-diff.githubusercontent.com/raw/Vencord/Vesktop/pull/609.patch";
           #     hash = "sha256-UaAYbBmMN3/kYVUwNV0/tH7aNZk32JnaUwjsAaZqXwk=";
           #   })
           # ];
+
+          # Patching isn't working because the nixpkgs version is behind, so just replace the entire source with the PR repo
+          src = prev.fetchFromGitHub {
+            owner = "PolisanTheEasyNick";
+            repo = "Vesktop";
+            rev = "3a84dbc0d28a8152284d82004b1315e7fe03778a";
+            hash = "sha256-i+i0oOLST72cMWwtSHJnVDaWojMA3g7TXGvBBewGBcE=";
+          };
 
           # Make sure the dependencies get updated as well
           pnpmDeps = prev.pnpm_9.fetchDeps {
