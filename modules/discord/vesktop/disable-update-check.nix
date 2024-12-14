@@ -11,12 +11,19 @@
           # Very cursed but very functional
           postPatch =
             let
-              pre = ''autoUpdater.checkForUpdatesAndNotify();'';
-              post = '''';
+              patch1 = {
+                pre = ''autoUpdater.checkForUpdatesAndNotify();'';
+                post = '''';
+              };
+              patch2 = {
+                pre = ''import { autoUpdater } from "electron-updater";'';
+                post = '''';
+              };
             in
             (oldAttrs.postPatch or "")
             + ''
-              sed -i 's#${pre}#${post}#g' "src/main/index.ts"
+              sed -i 's#${patch1.pre}#${patch1.post}#g' "src/main/index.ts"
+              sed -i 's#${patch2.pre}#${patch2.post}#g' "src/main/index.ts"
             '';
         }
       );
