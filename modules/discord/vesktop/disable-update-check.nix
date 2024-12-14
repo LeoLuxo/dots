@@ -4,19 +4,19 @@
   # Overlay to disable update checking
   nixpkgs.overlays = [
     (final: prev: {
-      wallutils = prev.wallutils.overrideAttrs (
+      vesktop = prev.vesktop.overrideAttrs (
         finalAttrs: oldAttrs: {
 
           # Straight up return when trying to check update
           # Very cursed but very functional
           postPatch =
             let
-              pre = ''export async function checkUpdates() {'';
-              post = pre + ''return;'';
+              pre = ''autoUpdater.checkForUpdatesAndNotify();'';
+              post = '''';
             in
-            (oldAttrs.postPath or "")
+            (oldAttrs.postPatch or "")
             + ''
-              sed -i 's#${pre}#${post}#g' "src/updater/main.ts"
+              sed -i 's#${pre}#${post}#g' "src/main/index.ts"
             '';
         }
       );
