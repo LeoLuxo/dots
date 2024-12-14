@@ -52,6 +52,11 @@ in
     home.packages = with pkgs; [
       textpieces
       hieroglyphic
+      impression
+      switcheroo
+      video-trimmer
+      warp
+
       teams-for-linux
       guitarix
       r2modman

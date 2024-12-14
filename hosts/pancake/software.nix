@@ -76,6 +76,10 @@ in
 
     textpieces
     hieroglyphic
+    impression
+    switcheroo
+    video-trimmer
+    warp
 
     # Original electron teams package was abandoned
     teams-for-linux
