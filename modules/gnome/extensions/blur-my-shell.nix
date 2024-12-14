@@ -118,7 +118,7 @@ in
               dynamic-opacity = true;
               enable-all = true;
               brightness = 0.4;
-              opacity = 210;
+              opacity = 160;
             };
           };
         };
