@@ -55,6 +55,7 @@ in
       teams-for-linux
       guitarix
       r2modman
+      gnome-2048
     ];
   };
 
