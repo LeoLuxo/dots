@@ -19,7 +19,14 @@ in
     (quickPatch {
       package = "vesktop";
       patches = [
-        ./disable_update_checking.patch
+        ./vesktop_disable_update_check.patch
+      ];
+    })
+
+    (quickPatch {
+      package = "vencord";
+      patches = [
+        ./vencord_disable_update_check.patch
       ];
     })
 
