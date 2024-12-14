@@ -4,7 +4,7 @@
   "cloud": {
     "authenticated": false,
     "settingsSync": false,
-    "settingsSyncVersion": 1733820851271,
+    "settingsSyncVersion": 1734211233387,
     "url": "https://api.vencord.dev/"
   },
   "disableMinSize": false,
@@ -546,7 +546,7 @@
     },
     "VolumeBooster": {
       "enabled": true,
-      "multiplier": 3
+      "multiplier": 2
     },
     "WebContextMenus": {
       "addBack": true,
@@ -581,8 +581,7 @@
     }
   },
   "themeLinks": [
-    "https://catppuccin.github.io/discord/dist/catppuccin-frappe-blue.theme.css",
-    "https://raw.githubusercontent.com/MiniDiscordThemes/Frostcord/refs/heads/main/frostcord.theme.css"
+    "https://catppuccin.github.io/discord/dist/catppuccin-frappe-blue.theme.css"
   ],
   "transparent": false,
   "useQuickCss": true,
