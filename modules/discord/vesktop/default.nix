@@ -17,16 +17,21 @@ in
     ./keybinds-fix.nix
 
     (quickPatch {
-      package = "vesktop";
+      package = "vencord";
       patches = [
-        ./vesktop_disable_update_check.patch
+        ./vencord_disable_update_check.patch
       ];
     })
 
     (quickPatch {
-      package = "vencord";
+      package = "vesktop";
       patches = [
-        ./vencord_disable_update_check.patch
+        ./vesktop_disable_update_check.patch
+
+        (pkgs.substituteAll {
+          src = ./use_custom_vencord.patch;
+          inherit (pkgs) vencord;
+        })
       ];
     })
 
