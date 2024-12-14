@@ -44,16 +44,15 @@ in
       xdgPath = "vesktop/settings/settings.json";
       cfgPath = "vesktop/settings2.json";
     })
-
   ];
 
   defaultPrograms.communication = lib.mkDefault "vesktop";
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      # Discord fork that fixes streaming issues on linux
-      # (vesktop.override { withSystemVencord = true; })
-      vesktop
+      # Vencord is being a little annoying so use the system vencord and then patch it to disable updates
+      (vesktop.override { withSystemVencord = true; })
+      vencord
     ];
   };
 }
