@@ -50,12 +50,12 @@ in
 
     (mkSyncedJSON {
       xdgPath = "vesktop/settings.json";
-      cfgPath = "vesktop/settings1.json";
+      cfgPath = "vesktop/vesktop.json";
     })
 
     (mkSyncedJSON {
       xdgPath = "vesktop/settings/settings.json";
-      cfgPath = "vesktop/settings2.json";
+      cfgPath = "vesktop/vencord.json";
     })
   ];
 
@@ -63,8 +63,10 @@ in
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      vesktop
-      # vencord
+      (vesktop.override {
+        withSystemVencord = true;
+        inherit vencord;
+      })
     ];
   };
 }
