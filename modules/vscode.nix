@@ -16,8 +16,6 @@ in
     fonts
 
     direnv
-
-    default-programs
   ];
 
   defaultPrograms.codeEditor = lib.mkDefault "code";
