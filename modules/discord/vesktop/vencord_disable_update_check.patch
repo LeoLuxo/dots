@@ -1,3 +1,16 @@
+diff --git a/scripts/build/build.mjs b/scripts/build/build.mjs
+index 623f9f94..92607b9b 100755
+--- a/scripts/build/build.mjs
++++ b/scripts/build/build.mjs
+@@ -27,7 +27,7 @@ const defines = {
+     IS_STANDALONE,
+     IS_DEV,
+     IS_REPORTER,
+-    IS_UPDATER_DISABLED,
++    IS_UPDATER_DISABLED: true,
+     IS_WEB: false,
+     IS_EXTENSION: false,
+     VERSION: JSON.stringify(VERSION),
 diff --git a/scripts/build/common.mjs b/scripts/build/common.mjs
 index e88f1e2b..3629cd6e 100644
 --- a/scripts/build/common.mjs
