@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (extra-libs) sanitizePath;
+  inherit (extra-libs) sanitizePath quickPatch;
   inherit (lib)
     options
     types
@@ -26,7 +26,15 @@ let
     };
 in
 {
-  imports = [ ./wallutils-fix-dark-mode.nix ];
+  imports = [
+    # Patch to fix the bug where settimed doesn't work for the dark theme of gnome
+    # https://github.com/xyproto/wallutils/issues/44
+    # TODO: Remove when the issue gets fixed
+    (quickPatch {
+      package = "wallutils";
+      patches = [ ./fix_dark_mode.patch ];
+    })
+  ];
 
   options.styling.wallpaper = {
     enable = options.mkOption {
