@@ -139,6 +139,11 @@ in
               favorite-apps = [ ];
             };
 
+            "org/gnome/desktop/app-folders" = {
+              # Clear out all default folders in the app drawer 
+              folder-children = [ ];
+            };
+
             # Touchpad
             "org/gnome/desktop/peripherals/touchpad" = {
               natural-scroll = true;
