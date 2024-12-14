@@ -29,6 +29,7 @@ in
     gnome.extensions.just-perfection
     gnome.extensions.removable-drive-menu
     gnome.extensions.appindicator
+    gnome.extensions.bluetooth-quick-connect
 
     (mkGlobalKeybind {
       name = "GNOME Console";
