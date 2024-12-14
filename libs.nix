@@ -12,6 +12,8 @@ let
 in
 
 rec {
+  # Write a script just like pkgs.writeShellScriptBin and pkgs.writeScriptBin, but optionally add some dependencies.
+  # Is automatically wrapped in another script with the deps on the PATH.
   writeScriptWithDeps =
     {
       name,
@@ -107,7 +109,8 @@ rec {
     in
     findFilesRecursive (sanitizePath dir);
 
-  # Utility to easily create a new keybind
+  # Utility to easily create a new global keybind.
+  # Currently only implemented for Gnome
   mkGlobalKeybind =
     {
       name,
@@ -156,17 +159,12 @@ rec {
       }
     );
 
-  mkSyncedJSON =
-    let
-      # Custom pretty json instead of builtins.toJSON
-      toPrettyJSON = attrs: builtins.readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
-    in
-    mkSyncedFile {
-      toNix = builtins.fromJSON;
-      fromNix = toPrettyJSON;
-      fallback = "{}";
-    };
-
+  # Add a file that is to be synced between its destination and here in the repo
+  # This is so that whenever the file changes at the destionation (changed through the program ui for example),
+  # it gets copied to the nix config repo. But also if the file is missing from the destination, it automatically
+  # is added there.
+  # Any differences between the two files are merged automatically, with the destination file having priority.
+  # The file format needs to be convertible to- and from nix, to be able to merge the files properly.
   mkSyncedFile =
     {
       toNix,
@@ -221,20 +219,50 @@ rec {
         };
     };
 
+  # Specialized version of mkSyncedFile for JSON
+  mkSyncedJSON =
+    let
+      # Custom pretty json instead of builtins.toJSON
+      toPrettyJSON = attrs: builtins.readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
+    in
+    mkSyncedFile {
+      toNix = builtins.fromJSON;
+      fromNix = toPrettyJSON;
+      fallback = "{}";
+    };
+
+  # Apply one or more patches to a package without having to create an entire overlay for it
+  quickPatch =
+    { package, patches }:
+    { ... }:
+    {
+      nixpkgs.overlays = [
+        (final: prev: {
+          ${package} = prev.${package}.overrideAttrs (
+            finalAttrs: oldAttrs: { patches = (prev.patches or [ ]) ++ patches; }
+          );
+        })
+      ];
+    };
+
+  # Options shortcut for a string option
   mkString = lib.options.mkOption {
     type = lib.types.str;
   };
 
+  # Options shortcut for a boolean option with default of false
   mkBoolDefaultFalse = lib.options.mkOption {
     type = lib.types.bool;
     default = false;
   };
 
+  # Options shortcut for a boolean option with default of true
   mkBoolDefaultTrue = lib.options.mkOption {
     type = lib.types.bool;
     default = true;
   };
 
+  # Options shortcut for a submodule
   mkSubmodule =
     options:
     lib.options.mkOption {

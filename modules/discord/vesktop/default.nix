@@ -3,22 +3,24 @@
   pkgs,
   constants,
   extra-libs,
-  directories,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkSyncedJSON;
+  inherit (extra-libs) mkSyncedJSON quickPatch;
 in
 
 {
-  imports = with directories.modules; [
+  imports = [
     ./icons.nix
     ./keybinds-fix.nix
     # ./disable-update-check.nix
 
-    default-programs
+    (quickPatch {
+      package = "vesktop";
+      patches = [ ./disable_update_checking.patch ];
+    })
 
     (mkSyncedJSON {
       xdgPath = "vesktop/settings.json";
