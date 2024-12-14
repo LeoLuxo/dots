@@ -16,6 +16,7 @@ in
   imports = with directories.modules; [
     ./icons.nix
     ./keybinds-fix.nix
+    ./disable-update-check.nix
 
     default-programs
 
