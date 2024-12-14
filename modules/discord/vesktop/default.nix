@@ -28,6 +28,7 @@ in
       patches = [
         ./vesktop_disable_update_check.patch
 
+        # Vencord is being a little annoying so use our custom vencord and patch that to disable updates
         (pkgs.substituteAll {
           src = ./use_custom_vencord.patch;
           inherit (pkgs) vencord;
@@ -62,8 +63,7 @@ in
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      # Vencord is being a little annoying so use the system vencord and then patch it to disable updates
-      (vesktop.override { withSystemVencord = true; })
+      vesktop
       vencord
     ];
   };
