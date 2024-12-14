@@ -14,8 +14,6 @@ in
   imports = with directories.modules; [
     # Require fonts
     fonts
-
-    default-programs
   ];
 
   defaultPrograms.notes = lib.mkDefault "obsidian";

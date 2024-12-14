@@ -3,6 +3,7 @@
   pkgs,
   home-manager,
   constants,
+  directories,
   ...
 }:
 
@@ -14,6 +15,8 @@ in
   imports = [
     # Include home manager module
     home-manager.nixosModules.home-manager
+
+    directories.modules.default-programs
   ];
 
   # Allow unfree packages

@@ -1,16 +1,13 @@
 {
   config,
   extra-libs,
-  directories,
   ...
 }:
 let
   inherit (extra-libs) mkGlobalKeybind;
 in
 {
-  imports = with directories.modules; [
-    default-programs
-
+  imports = [
     (mkGlobalKeybind {
       name = "Open web browser";
       binding = "<Super>F1";
