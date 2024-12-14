@@ -7,8 +7,7 @@
       vesktop = prev.vesktop.overrideAttrs (
         finalAttrs: oldAttrs: {
 
-          # Straight up return when trying to check update
-          # Very cursed but very functional
+          # Disable the updater for vesktop
           postPatch =
             let
               patch1 = {

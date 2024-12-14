@@ -16,7 +16,7 @@ in
   imports = with directories.modules; [
     ./icons.nix
     ./keybinds-fix.nix
-    ./disable-update-check.nix
+    # ./disable-update-check.nix
 
     default-programs
 
@@ -37,7 +37,7 @@ in
   home-manager.users.${user} = {
     home.packages = with pkgs; [
       # Discord fork that fixes streaming issues on linux
-      vesktop
+      (vesktop.override { withSystemVencord = true; })
     ];
   };
 }
