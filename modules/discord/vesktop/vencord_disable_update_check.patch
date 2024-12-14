@@ -1,3 +1,44 @@
+diff --git a/src/Vencord.ts b/src/Vencord.ts
+index c4c6d470..4a969597 100644
+--- a/src/Vencord.ts
++++ b/src/Vencord.ts
+@@ -91,36 +91,6 @@ async function init() {
+ 
+     syncSettings();
+ 
+-    if (!IS_WEB && !IS_UPDATER_DISABLED) {
+-        try {
+-            const isOutdated = await checkForUpdates();
+-            if (!isOutdated) return;
+-
+-            if (Settings.autoUpdate) {
+-                await update();
+-                if (Settings.autoUpdateNotification)
+-                    setTimeout(() => showNotification({
+-                        title: "Vencord has been updated!",
+-                        body: "Click here to restart",
+-                        permanent: true,
+-                        noPersist: true,
+-                        onClick: relaunch
+-                    }), 10_000);
+-                return;
+-            }
+-
+-            setTimeout(() => showNotification({
+-                title: "A Vencord update is available!",
+-                body: "Click here to view the update",
+-                permanent: true,
+-                noPersist: true,
+-                onClick: openUpdaterModal!
+-            }), 10_000);
+-        } catch (err) {
+-            UpdateLogger.error("Failed to check for updates", err);
+-        }
+-    }
+-
+     if (IS_DEV) {
+         const pendingPatches = patches.filter(p => !p.all && p.predicate?.() !== false);
+         if (pendingPatches.length)
 diff --git a/src/utils/updater.ts b/src/utils/updater.ts
 index f99c6ca1..d432f988 100644
 --- a/src/utils/updater.ts
