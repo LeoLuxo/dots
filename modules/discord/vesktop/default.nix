@@ -63,7 +63,7 @@ in
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      vesktop
+      (vesktop.override { withSystemVencord = true; })
       vencord
     ];
   };
