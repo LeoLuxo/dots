@@ -74,7 +74,7 @@
     "video-toggle": {
       "align": "left",
       "enabled": true,
-      "forceHide": false,
+      "forceHide": true,
       "hideVideo": true,
       "mode": "custom"
     },
@@ -158,11 +158,11 @@
       }
     }
   },
-  "url": "https://music.youtube.com/watch?v=_WJ2VWkoz-A&list=RDAMVMzEhO3u2vm2U&index=0",
+  "url": "https://music.youtube.com/watch?v=JqtzeO9DDMo&list=RDAMVMJqtzeO9DDMo&index=0",
   "window-maximized": true,
   "window-position": {
-    "x": 2635,
-    "y": 243
+    "x": 320,
+    "y": 180
   },
   "window-size": {
     "height": 1080,
