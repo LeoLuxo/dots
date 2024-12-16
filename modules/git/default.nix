@@ -17,6 +17,11 @@ in
       commit
     ];
 
+    # Add aliases
+    home.shellAliases = {
+      gs = "git status";
+    };
+
     programs.git = {
       enable = true;
 
