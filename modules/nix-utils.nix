@@ -63,6 +63,7 @@ in
 
       (scriptBin.nx.nx-code { })
       (scriptBin.nx.nx-todo { })
+      (scriptBin.nx.nx-template { })
 
       (scriptBin.nx.nx-cleanup { deps = [ nh ]; })
 
