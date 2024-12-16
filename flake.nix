@@ -88,5 +88,8 @@
     {
       # Define nixos configs
       nixosConfigurations = import ./hosts.nix mkHost;
+
+      # Define templates
+      templates = import ./templates;
     };
 }
