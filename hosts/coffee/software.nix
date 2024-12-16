@@ -22,6 +22,7 @@ in
     # gnome.extensions.emojis
     # gnome.extensions.weather
     gnome.extensions.system-monitor
+    gnome.extensions.media-controls
     gnome.extensions.burn-my-windows
 
     terminal.ddterm

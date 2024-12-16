@@ -11,18 +11,16 @@ in
 {
   programs.dconf.enable = true;
 
-  programs.kdeconnect = {
-    enable = true;
-    # KDE Connect implementation for Gnome Shell.
-    package = pkgs.gnomeExtensions.gsconnect;
-  };
-
   home-manager.users.${user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkUint32;
     in
     {
+      home.packages = with pkgs; [
+        gnomeExtensions.media-controls
+      ];
+
       dconf.settings = {
         "org/gnome/shell" = {
           enabled-extensions = [ "mediacontrols@cliffniff.github.com" ];
