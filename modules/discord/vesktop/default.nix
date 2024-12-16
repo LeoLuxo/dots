@@ -19,18 +19,18 @@ in
     (quickPatch {
       package = "vencord";
       patches = [
-        ./vencord_disable_update_check.patch
+        ./vencord-disable-update-check.patch
       ];
     })
 
     (quickPatch {
       package = "vesktop";
       patches = [
-        ./vesktop_disable_update_check.patch
+        ./vesktop-disable-update-check.patch
 
         # Vencord is being a little annoying so use our custom vencord and patch that to disable updates
         # (pkgs.substituteAll {
-        #   src = ./use_custom_vencord.patch;
+        #   src = ./use-custom-vencord.patch;
         #   inherit (pkgs) vencord;
         # })
       ];

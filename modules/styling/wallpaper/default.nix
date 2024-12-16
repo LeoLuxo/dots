@@ -28,7 +28,7 @@ in
     # TODO: Remove when the issue gets fixed
     (quickPatch {
       package = "wallutils";
-      patches = [ ./fix_dark_mode.patch ];
+      patches = [ ./fix-dark-mode.patch ];
     })
   ];
 
