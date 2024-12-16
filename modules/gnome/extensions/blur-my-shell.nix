@@ -39,7 +39,6 @@ in
 
       home-manager.users.${user} =
         { lib, ... }:
-        # with lib.hm.gvariant;
         {
           home.packages = with pkgs; [
             gnomeExtensions.blur-my-shell

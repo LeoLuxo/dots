@@ -13,7 +13,6 @@ in
 
   home-manager.users.${user} =
     { lib, ... }:
-    # with lib.hm.gvariant;
     {
       home.packages = with pkgs; [
         gnomeExtensions.ddterm
@@ -29,6 +28,7 @@ in
           background-opacity = 0.9;
           backspace-binding = "auto";
           bold-is-bright = false;
+          panel-icon-type = "none";
           cursor-blink-mode = "on";
           cursor-shape = "ibeam";
           custom-font = "Mononoki Nerd Font 14";

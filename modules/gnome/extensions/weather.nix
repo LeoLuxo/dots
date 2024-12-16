@@ -18,7 +18,9 @@ in
 
   home-manager.users.${user} =
     { lib, ... }:
-    with lib.hm.gvariant;
+    let
+      inherit (lib.hm.gvariant) mkTuple mkUint32;
+    in
     {
       home.packages = with pkgs; [
         gnomeExtensions.openweather-refined
