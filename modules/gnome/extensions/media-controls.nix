@@ -33,8 +33,8 @@ in
             "LABEL"
             "CONTROLS"
           ];
-          extension-index = mkUint32 2;
-          extension-position = "Right";
+          extension-index = mkUint32 1;
+          extension-position = "Left";
           fixed-label-width = false;
           label-width = mkUint32 200;
           mouse-action-double = "RAISE_PLAYER";
