@@ -242,16 +242,17 @@ rec {
         bash = ''$(fc -ln -1)'';
         zsh = ''''${history[@][1]}'';
       };
+
+      mappedCommands = builtins.mapAttrs (
+        _: lastCommand: command { inherit lastCommand; }
+      ) historyCommands;
     in
     { constants, ... }:
     {
       home-manager.users.${constants.user} = {
-        # result: programs.${shell}.shellAliases.${alias} = "";
-        programs = (
-          builtins.mapAttrs (_: lastCommand: {
-            shellAliases.${name} = command { inherit lastCommand; };
-          }) historyCommands
-        );
+        programs.bash.shellAliases.${name} = mappedCommands.bash;
+        programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
+        programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
       };
     };
 
