@@ -9,8 +9,9 @@ let
 in
 
 {
-  home-manager.users.${user} = {
+  imports = [ ./gitignore.nix ];
 
+  home-manager.users.${user} = {
     home.packages = with pkgs; [
       # Gnome circles commit editor
       commit
