@@ -30,8 +30,9 @@ in
 
       home-manager.users.${user} =
         { lib, ... }:
-        with lib.hm.gvariant;
-
+        let
+          inherit (lib.hm.gvariant) mkUint32;
+        in
         {
           # Add aliases
           home.shellAliases = {
