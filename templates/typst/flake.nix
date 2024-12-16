@@ -33,10 +33,10 @@
         inherit (pkgs) lib;
 
         typixLib = typix.lib.${system};
-        typstPackagesSrc = "${typst-packages}/packages";
+
         typstPackagesCache = pkgs.stdenv.mkDerivation {
           name = "typst-packages-cache";
-          src = typstPackagesSrc;
+          src = "${typst-packages}/packages";
           dontBuild = true;
           installPhase = ''
             mkdir -p "$out/typst/packages"
@@ -44,8 +44,18 @@
           '';
         };
 
-        project = {
+        projectExtraArgs = {
+          # Include the whole dir
           src = lib.sources.cleanSource ./.;
+
+          # Add the typst package cache in the cache so typst can read it
+          XDG_CACHE_HOME = typstPackagesCache;
+
+          # typst respects this env-var as "the current time", so add it for when datetime is used in the document
+          SOURCE_DATE_EPOCH = builtins.toString self.sourceInfo.lastModified;
+        };
+
+        project = {
           typstSource = "main.typ";
 
           fontPaths = [
@@ -60,28 +70,30 @@
             #   src = "${inputs.font-awesome}/svgs/regular";
             # }
           ];
-
-          # Add the typst package cache in the cache so typst can read it
-          XDG_CACHE_HOME = typstPackagesCache;
-
-          # typst respects this env-var as "the current time", so add it for when datetime is used in the document
-          SOURCE_DATE_EPOCH = builtins.toString self.sourceInfo.lastModified;
         };
 
-        # Compile a Typst project, *without* copying the result to the current directory
-        build = typixLib.buildTypstProject project;
+        # Compile the typst project, *without* copying the result to the current directory
+        build = typixLib.buildTypstProject (project // projectExtraArgs);
 
-        # Compile a Typst project, and then copy the result to the current directory
-        buildCopy = typixLib.buildTypstProjectLocal project;
+        # Compile the typst project, and then copy the result to the current directory
+        buildAndCopy = typixLib.buildTypstProjectLocal (project // projectExtraArgs);
+
+        # Watch the typst project and recompile on changes
+        watch = typixLib.watchTypstProject project;
       in
-      {
+      rec {
         checks = {
-          inherit build buildCopy;
+          inherit build buildAndCopy watch;
         };
 
         packages.default = build;
 
-        apps.default = flake-utils.lib.mkApp { drv = buildCopy; };
+        apps = {
+          buildAndCopy = flake-utils.lib.mkApp { drv = buildAndCopy; };
+          watch = flake-utils.lib.mkApp { drv = watch; };
+        };
+
+        apps.default = apps.buildAndCopy;
 
         devShells.default = typixLib.devShell {
           inherit (project) fontPaths virtualPaths;
