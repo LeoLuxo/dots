@@ -3,13 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
 
     typix = {
       url = "github:loqusion/typix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    flake-utils.url = "github:numtide/flake-utils";
 
     # https://loqusion.github.io/typix/recipes/using-typst-packages.html
     typst-packages = {
@@ -20,6 +19,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       typix,
       flake-utils,
@@ -61,23 +61,27 @@
             # }
           ];
 
+          # Add the typst package cache in the cache so typst can read it
           XDG_CACHE_HOME = typstPackagesCache;
+
+          # typst respects this env-var as "the current time", so add it for when datetime is used in the document
+          SOURCE_DATE_EPOCH = builtins.toString self.sourceInfo.lastModified;
         };
 
         # Compile a Typst project, *without* copying the result to the current directory
         build = typixLib.buildTypstProject project;
 
         # Compile a Typst project, and then copy the result to the current directory
-        run = typixLib.buildTypstProjectLocal project;
+        buildCopy = typixLib.buildTypstProjectLocal project;
       in
       {
         checks = {
-          inherit run build;
+          inherit build buildCopy;
         };
 
         packages.default = build;
 
-        apps.default = flake-utils.lib.mkApp { drv = run; };
+        apps.default = flake-utils.lib.mkApp { drv = buildCopy; };
 
         devShells.default = typixLib.devShell {
           inherit (project) fontPaths virtualPaths;
