@@ -40,6 +40,13 @@
       "enabled": true,
       "listenAlong": true
     },
+    "in-app-menu": {
+      "enabled": true
+    },
+    "lyrics-genius": {
+      "enabled": true,
+      "romanizedLyrics": true
+    },
     "notifications": {},
     "picture-in-picture": {
       "alwaysOnTop": true,
@@ -151,15 +158,15 @@
       }
     }
   },
-  "url": "https://music.youtube.com/watch?v=VpEdxpZi4yU&list=RDAMVMVpEdxpZi4yU&index=0",
+  "url": "https://music.youtube.com/watch?v=_WJ2VWkoz-A&list=RDAMVMzEhO3u2vm2U&index=0",
   "window-maximized": true,
   "window-position": {
-    "x": 2561,
-    "y": 294
+    "x": 2635,
+    "y": 243
   },
   "window-size": {
-    "height": 1044,
-    "width": 1919
+    "height": 1080,
+    "width": 1920
   }
 }
 
