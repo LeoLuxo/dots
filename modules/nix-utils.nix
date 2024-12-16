@@ -88,6 +88,8 @@ in
       nx-cd = "cd $NX_DOTS";
       nxcd = "nx-cd";
 
+      nxr = "nx-rebuild";
+
       nx-edit = "nx-code";
       nx-search = "nh search --limit 4";
 
