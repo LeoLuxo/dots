@@ -41,7 +41,8 @@
       "listenAlong": true
     },
     "in-app-menu": {
-      "enabled": true
+      "enabled": true,
+      "hideDOMWindowControls": true
     },
     "lyrics-genius": {
       "enabled": true,
@@ -158,11 +159,11 @@
       }
     }
   },
-  "url": "https://music.youtube.com/watch?v=hy36vHo8WAo&list=OLAK5uy_ktfsek9wVVP35MfS6WiTlgctivojNvT0Q&index=0",
+  "url": "https://music.youtube.com/watch?v=MtLHwqbE1eI&list=OLAK5uy_ktfsek9wVVP35MfS6WiTlgctivojNvT0Q&index=0",
   "window-maximized": true,
   "window-position": {
-    "x": 320,
-    "y": 180
+    "x": 383,
+    "y": 32
   },
   "window-size": {
     "height": 1080,
