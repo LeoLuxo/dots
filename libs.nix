@@ -231,6 +231,30 @@ rec {
       fallback = "{}";
     };
 
+  mkShellHistoryAlias =
+    {
+      name,
+      command,
+    }:
+    let
+      historyCommands = {
+        fish = ''$history[1]'';
+        bash = ''$(fc -ln -1)'';
+        zsh = ''''${history[@][1]}'';
+      };
+    in
+    { constants, ... }:
+    {
+      home-manager.users.${constants.user} = {
+        # result: programs.${shell}.shellAliases.${alias} = "";
+        programs = (
+          builtins.mapAttrs (_: lastCommand: {
+            shellAliases.${name} = command { inherit lastCommand; };
+          }) historyCommands
+        );
+      };
+    };
+
   # Apply one or more patches to a package without having to create an entire overlay for it
   quickPatch =
     { package, patches }:

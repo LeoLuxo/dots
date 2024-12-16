@@ -20,10 +20,6 @@ in
     programs.fish = {
       enable = true;
 
-      shellAliases = {
-        last-command = "history --search -n 1";
-      };
-
       shellInit = ''
         # Bind CTRL-backspace 
         bind -k backspace backward-kill-path-component

@@ -2,18 +2,26 @@
   pkgs,
   constants,
   directories,
+  extra-libs,
   ...
 }:
 
 let
   inherit (constants) user;
   inherit (directories) scriptBin;
+  inherit (extra-libs) mkShellHistoryAlias;
 in
 
 {
+  imports = [
+    (mkShellHistoryAlias {
+      name = "please";
+      command = { lastCommand }: ''sudo ${lastCommand}'';
+    })
+  ];
+
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-
       # To query the filetype of files
       file
 
@@ -50,9 +58,21 @@ in
 
     # Add aliases
     home.shellAliases = {
-      please = "eval sudo \$(last-command)";
       pls = "please";
+
       l = "ls -Fhsla";
+
+      "." = "q";
+
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+      "....." = "cd ../../../..";
+      "......" = "cd ../../../../..";
+      "......." = "cd ../../../../../..";
+      "........" = "cd ../../../../../../..";
+      "........." = "cd ../../../../../../../..";
+      ".........." = "cd ../../../../../../../../..";
     };
   };
 
