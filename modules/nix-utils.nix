@@ -15,7 +15,7 @@ let
     secretsRepoPath
     ;
   inherit (directories) scriptBin;
-  inherit (extra-libs) mkGlobalKeybind;
+  inherit (extra-libs) mkGlobalKeybind mkShellHistoryAlias;
 in
 
 {
@@ -32,6 +32,11 @@ in
       name = "Open nx-todo";
       binding = "<Super>F10";
       command = "nx-todo";
+    })
+
+    (mkShellHistoryAlias {
+      name = ",,";
+      command = { lastCommand }: '', ${lastCommand}'';
     })
   ];
 
@@ -93,8 +98,6 @@ in
 
       nx-edit = "nx-code";
       nx-search = "nh search --limit 4";
-
-      ",," = "eval , \$(last-command)";
     };
   };
 
