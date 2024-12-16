@@ -11,14 +11,15 @@ in
 {
   programs.dconf.enable = true;
 
+  # Needs to be installed on system for everything to work
+  environment.systemPackages = with pkgs; [
+    gnomeExtensions.just-perfection
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
 
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.media-controls
-      ];
-
       dconf.settings = {
         "org/gnome/shell" = {
           enabled-extensions = [ "just-perfection-desktop@just-perfection" ];
