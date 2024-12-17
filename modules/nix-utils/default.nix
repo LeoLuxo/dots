@@ -2,7 +2,6 @@
   pkgs,
   nix-index-database,
   constants,
-  directories,
   extra-libs,
   ...
 }:
@@ -14,7 +13,6 @@ let
     dotsRepoPath
     secretsRepoPath
     ;
-  inherit (directories) scriptBin;
   inherit (extra-libs) mkGlobalKeybind mkShellHistoryAlias writeScriptWithDeps;
 in
 
