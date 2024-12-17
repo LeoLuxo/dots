@@ -22,31 +22,21 @@ rec {
     in
     head + tail;
 
-  # Convert a string to PascalCase
-  toPascalCase =
+  # Split words around space, dash - and underscore _
+  splitWords =
     string:
-    let
-      str = builtins.toString (lib.debug.traceValSeq string);
-      # builtins.split returns non-matches (as string) interleaved with the matches (as list), so we filter by string
-      words = builtins.filter builtins.isString (
-        # we split by space, dash - and underscore _
-        builtins.split "[ _-]" str
-      );
-    in
-    strings.concatMapStrings toUpperCaseFirstLetter words;
+    # builtins.split returns non-matches (as string) interleaved with the matches (as list), so we filter by string
+    builtins.filter builtins.isString (
+      # we split by space, dash - and underscore _
+      builtins.split "[ _-]" string
+    );
+
+  # Convert a string to PascalCase
+  toPascalCase = string: strings.concatMapStrings toUpperCaseFirstLetter (splitWords string);
 
   # Convert a string to PascalCase with spaces in between words
   toPascalCaseWithSpaces =
-    string:
-    let
-      str = builtins.toString (lib.debug.traceValSeq string);
-      # builtins.split returns non-matches (as string) interleaved with the matches (as list), so we filter by string
-      words = builtins.filter builtins.isString (
-        # we split by space, dash - and underscore _
-        builtins.split "[ _-]" str
-      );
-    in
-    strings.concatMapStringsSep " " toUpperCaseFirstLetter words;
+    string: strings.concatMapStringsSep " " toUpperCaseFirstLetter (splitWords string);
 
   # Write a script just like pkgs.writeShellScriptBin and pkgs.writeScriptBin, but optionally add some dependencies.
   # Is automatically wrapped in another script with the deps on the PATH.
