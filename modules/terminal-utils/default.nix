@@ -1,14 +1,12 @@
 {
   pkgs,
   constants,
-  directories,
   extra-libs,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (directories) scriptBin;
   inherit (extra-libs) mkShellHistoryAlias writeScriptWithDeps;
 in
 
