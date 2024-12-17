@@ -25,12 +25,11 @@ let
 in
 {
   imports = [
-
     (mkDesktopItem {
       name = "boot-windows";
       desktopName = "Boot into Windows";
       exec = "${package}";
-      icon = "${directories.images.windows7}";
+      icon = "${directories.images.syncthing}";
     })
   ];
 
