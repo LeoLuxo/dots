@@ -8,7 +8,7 @@
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkSyncedJSON quickPatch mkGlobalKeybind;
+  inherit (extra-libs) mkSyncedJSON mkQuickPatch mkGlobalKeybind;
 in
 
 {
@@ -16,14 +16,14 @@ in
     ./icons-and-name.nix
     ./keybinds-fix.nix
 
-    (quickPatch {
+    (mkQuickPatch {
       package = "vencord";
       patches = [
         ./vencord-disable-update-check.patch
       ];
     })
 
-    (quickPatch {
+    (mkQuickPatch {
       package = "vesktop";
       patches = [
         ./vesktop-disable-update-check.patch
