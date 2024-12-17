@@ -69,7 +69,7 @@ in
   styling = {
     wallpaper = {
       enable = true;
-      image = directories.wallpapers."Outset Island";
+      image = directories.wallpapers.dynamic."Outset Island";
     };
 
     theme = {
