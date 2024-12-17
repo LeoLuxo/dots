@@ -8,7 +8,7 @@
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkGlobalKeybind;
+  inherit (extra-libs) mkGlobalKeybind writeScriptWithDeps;
 in
 
 {
@@ -22,7 +22,9 @@ in
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      (directories.scriptBin.snip {
+      (writeScriptWithDeps {
+        name = "snip";
+        file = ./snip.sh;
         deps = [
           gnome-screenshot
           wl-clipboard
