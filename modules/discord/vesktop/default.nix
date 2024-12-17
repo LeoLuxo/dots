@@ -13,7 +13,7 @@ in
 
 {
   imports = [
-    ./icons.nix
+    ./icons-and-name.nix
     ./keybinds-fix.nix
 
     (quickPatch {

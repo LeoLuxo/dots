@@ -3,6 +3,6 @@ name: Outset Island
 format: Outset Island %s.jpg
 @00:00: night
 @06:00: morning
-@12:00: day
-@18:00: evening
-@21:00: night
+@10:00: day
+@16:00: evening
+@20:00: night
