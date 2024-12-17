@@ -2,7 +2,6 @@
   pkgs,
   constants,
   extra-libs,
-  directories,
   ...
 }:
 

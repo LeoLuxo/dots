@@ -53,7 +53,7 @@ rec {
       shell ? false,
     }:
     let
-      _ = throwIf (text == null) "script needs text";
+      scriptText = throwIf (text == null) "script needs text" text;
       builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
     in
     pkgs.writeShellScriptBin name ''
@@ -61,7 +61,7 @@ rec {
         export PATH="$i/bin:$PATH"
       done
 
-      exec ${builder "${name}-no-deps" text}/bin/${name}-no-deps $@
+      exec ${builder "${name}-no-deps" scriptText}/bin/${name}-no-deps $@
     '';
 
   # Sanitize a path so that it doesn't cause problems in the nix store
