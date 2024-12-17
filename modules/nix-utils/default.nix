@@ -15,7 +15,7 @@ let
     secretsRepoPath
     ;
   inherit (directories) scriptBin;
-  inherit (extra-libs) mkGlobalKeybind mkShellHistoryAlias;
+  inherit (extra-libs) mkGlobalKeybind mkShellHistoryAlias writeScriptWithDeps;
 in
 
 {
@@ -66,20 +66,39 @@ in
       nurl
       nix-init
 
-      (scriptBin.nx.nx-code { })
-      (scriptBin.nx.nx-todo { })
-      (scriptBin.nx.nx-template { })
+      (writeScriptWithDeps {
+        name = "nx-code";
+        file = ./scripts/nx-code.sh;
+      })
 
-      (scriptBin.nx.nx-cleanup { deps = [ nh ]; })
+      (writeScriptWithDeps {
+        name = "nx-todo";
+        file = ./scripts/nx-todo.sh;
+      })
 
-      (scriptBin.nx.nx-dconf-diff {
+      (writeScriptWithDeps {
+        name = "nx-template";
+        file = ./scripts/nx-template.sh;
+      })
+
+      (writeScriptWithDeps {
+        name = "nx-cleanup";
+        file = ./scripts/nx-cleanup.sh;
+        deps = [ nh ];
+      })
+
+      (writeScriptWithDeps {
+        name = "nx-dconf-diff";
+        file = ./scripts/nx-dconf-diff.sh;
         deps = [
           dconf
           difftastic
         ];
       })
 
-      (scriptBin.nx.nx-rebuild {
+      (writeScriptWithDeps {
+        name = "nx-rebuild";
+        file = ./scripts/nx-rebuild.sh;
         deps = [
           dconf
           git

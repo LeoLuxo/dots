@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (extra-libs) sanitizePath quickPatch;
+  inherit (extra-libs) sanitizePath mkQuickPatch;
   inherit (lib)
     options
     types
@@ -26,7 +26,7 @@ in
     # Patch to fix the bug where settimed doesn't work for the dark theme of gnome
     # https://github.com/xyproto/wallutils/issues/44
     # TODO: Remove when the issue gets fixed
-    (quickPatch {
+    (mkQuickPatch {
       package = "wallutils";
       patches = [ ./fix-dark-mode.patch ];
     })

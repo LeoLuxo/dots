@@ -9,7 +9,7 @@
 let
   inherit (constants) user;
   inherit (directories) scriptBin;
-  inherit (extra-libs) mkShellHistoryAlias;
+  inherit (extra-libs) mkShellHistoryAlias writeScriptWithDeps;
 in
 
 {
@@ -25,10 +25,20 @@ in
       # To query the filetype of files
       file
 
-      (scriptBin.size { })
-      (scriptBin.cheat { deps = [ curl ]; })
+      (writeScriptWithDeps {
+        name = "size";
+        file = ./size.sh;
+      })
 
-      (scriptBin.extract {
+      (writeScriptWithDeps {
+        name = "cheat";
+        file = ./cheat.sh;
+        deps = [ curl ];
+      })
+
+      (writeScriptWithDeps {
+        name = "extract";
+        file = ./extract.sh;
         # All the archive extractors used in the script
         deps = [
           gnutar
@@ -39,7 +49,9 @@ in
         ];
       })
 
-      (scriptBin.q {
+      (writeScriptWithDeps {
+        name = "q";
+        file = ./q.sh;
         deps = [
           # To highlight source code
           highlight
