@@ -47,7 +47,7 @@ in
   styling = {
     wallpaper = {
       enable = true;
-      image = directories.wallpapers."Tree and shore";
+      image = directories.wallpapers.dynamic."Tree and shore";
     };
 
     theme = {
