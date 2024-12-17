@@ -3,12 +3,14 @@
   lib,
   pkgs,
   constants,
+  extra-libs,
   ...
 }:
 
 let
   inherit (lib) modules options types;
   inherit (constants) user;
+  inherit (extra-libs) toPascalCase;
 in
 
 let
@@ -51,17 +53,8 @@ in
 
   config = modules.mkIf (cfg.enable && cfg.name == "catppuccin") (
     let
-      toCamelCase =
-        # Not true CamelCase, only first letter is capitalized
-        string:
-        let
-          head = lib.toUpper (lib.substring 0 1 string);
-          tail = lib.substring 1 (-1) string;
-        in
-        head + tail;
-
       name = "catppuccin-${cfg.flavor}-${cfg.accent}-cursors";
-      package = pkgs.catppuccin-cursors."${cfg.flavor}${toCamelCase cfg.accent}";
+      package = pkgs.catppuccin-cursors."${cfg.flavor}${toPascalCase cfg.accent}";
     in
     {
       home-manager.users.${user} = {

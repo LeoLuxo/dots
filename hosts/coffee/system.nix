@@ -7,8 +7,8 @@
   };
 
   # 4TB HDD
-  fileSystems."/data" = {
-    device = "/dev/disk/by-label/data";
+  fileSystems."/backup" = {
+    device = "/dev/disk/by-label/backup";
     fsType = "ntfs";
   };
 

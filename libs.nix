@@ -12,6 +12,42 @@ let
 in
 
 rec {
+  # Capitalize first letter
+  toUpperCaseFirstLetter =
+    string:
+    let
+      str = builtins.toString (lib.debug.traceValSeq string);
+      head = strings.toUpper (strings.substring 0 1 str);
+      tail = strings.substring 1 (-1) str;
+    in
+    head + tail;
+
+  # Convert a string to PascalCase
+  toPascalCase =
+    string:
+    let
+      str = builtins.toString (lib.debug.traceValSeq string);
+      # builtins.split returns non-matches (as string) interleaved with the matches (as list), so we filter by string
+      words = builtins.filter builtins.isString (
+        # we split by space, dash - and underscore _
+        builtins.split "[ _-]" str
+      );
+    in
+    strings.concatMapStrings toUpperCaseFirstLetter words;
+
+  # Convert a string to PascalCase with spaces in between words
+  toPascalCaseWithSpaces =
+    string:
+    let
+      str = builtins.toString (lib.debug.traceValSeq string);
+      # builtins.split returns non-matches (as string) interleaved with the matches (as list), so we filter by string
+      words = builtins.filter builtins.isString (
+        # we split by space, dash - and underscore _
+        builtins.split "[ _-]" str
+      );
+    in
+    strings.concatMapStringsSep " " toUpperCaseFirstLetter words;
+
   # Write a script just like pkgs.writeShellScriptBin and pkgs.writeScriptBin, but optionally add some dependencies.
   # Is automatically wrapped in another script with the deps on the PATH.
   writeScriptWithDeps =
@@ -231,6 +267,7 @@ rec {
       fallback = "{}";
     };
 
+  # Create a shell alias that is shell-agnostic but still capable of looking up past commands
   mkShellHistoryAlias =
     {
       name,
@@ -253,6 +290,57 @@ rec {
         programs.bash.shellAliases.${name} = mappedCommands.bash;
         programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
         programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
+      };
+    };
+
+  mkDesktopItem =
+    {
+      package ? null,
+      name ? package.name or package.pname,
+      desktopName ? toPascalCaseWithSpaces name,
+      exec ? package,
+      icon ? null,
+      keywords ? [ name ],
+      categories ? [ ],
+    }:
+    let
+      desktopItemPackage =
+        {
+          stdenv,
+          makeDesktopItem,
+          copyDesktopItems,
+          directories,
+        }:
+        stdenv.mkDerivation (finalAttrs: {
+          pname = "${name}-desktop-icon";
+          version = "0.0.0";
+          dontUnpack = true;
+          nativeBuildInputs = [ copyDesktopItems ];
+          desktopItems = (
+            makeDesktopItem {
+              inherit
+                name
+                desktopName
+                exec
+                icon
+                keywords
+                categories
+                ;
+            }
+          );
+        });
+    in
+    {
+      pkgs,
+      constants,
+      directories,
+      ...
+    }:
+    {
+      home-manager.users.${constants.user} = {
+        home.packages = [
+          (pkgs.callPackage desktopItemPackage { inherit directories; })
+        ];
       };
     };
 
