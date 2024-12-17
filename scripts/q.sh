@@ -8,7 +8,7 @@ SYMLINK='\033[0;33m'
 RESET='\033[0m'
 
 # Default depth of 1
-depth=${2:-1}
+depth=${DEPTH:-1}
 
 checkfile() {
 	echo -e "${FILE}File ${INFO}$(realpath "$1")${RESET}"
