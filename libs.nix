@@ -16,9 +16,8 @@ rec {
   toUpperCaseFirstLetter =
     string:
     let
-      str = builtins.toString (lib.debug.traceValSeq string);
-      head = strings.toUpper (strings.substring 0 1 str);
-      tail = strings.substring 1 (-1) str;
+      head = strings.toUpper (strings.substring 0 1 string);
+      tail = strings.substring 1 (-1) string;
     in
     head + tail;
 
