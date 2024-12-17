@@ -7,6 +7,9 @@ FILE='\033[1;95m'
 SYMLINK='\033[0;33m'
 RESET='\033[0m'
 
+# Default depth of 1
+depth=${2:-1}
+
 checkfile() {
 	echo -e "${FILE}File ${INFO}$(realpath "$1")${RESET}"
 	mime="$(file "$1" --mime)"
@@ -24,7 +27,7 @@ checkfile() {
 
 checkdir() {
 	echo -e "${DIR}Directory ${INFO}$(realpath "$1")${RESET}"
-	tree -a -L 1 --dirsfirst -h -v "$1" -C
+	tree -a -L $depth --dirsfirst -h -v "$1" -C
 }
 
 checkpath() {
