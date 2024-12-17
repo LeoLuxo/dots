@@ -7,7 +7,12 @@
 let
   inherit (constants) dotsRepoPath system;
   inherit (nixpkgs) lib;
-  inherit (lib) strings attrsets filesystem;
+  inherit (lib)
+    strings
+    attrsets
+    filesystem
+    throwIf
+    ;
   pkgs = nixpkgs.legacyPackages.${system};
 in
 
@@ -42,11 +47,13 @@ rec {
   writeScriptWithDeps =
     {
       name,
-      text,
+      file ? null,
+      text ? builtins.readFile file,
       deps ? [ ],
       shell ? false,
     }:
     let
+      _ = throwIf (text == null) "script needs text";
       builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
     in
     pkgs.writeShellScriptBin name ''
@@ -334,7 +341,7 @@ rec {
     };
 
   # Apply one or more patches to a package without having to create an entire overlay for it
-  quickPatch =
+  mkQuickPatch =
     { package, patches }:
     { ... }:
     {
