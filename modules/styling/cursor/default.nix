@@ -16,12 +16,17 @@ in
   options.styling.cursor = {
     enable = options.mkOption {
       type = types.bool;
-      default = cfg.image != null;
+      default = cfg.name != null;
     };
 
     name = options.mkOption {
       type = types.nullOr types.str;
       default = null;
+    };
+
+    size = options.mkOption {
+      type = types.ints.unsigned;
+      default = 32;
     };
   };
 

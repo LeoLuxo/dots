@@ -81,6 +81,7 @@ in
 
     cursor = {
       enable = true;
+      size = 16;
       name = "catppuccin";
       flavor = "frappe";
       accent = "dark";
