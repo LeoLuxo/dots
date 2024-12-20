@@ -4,7 +4,7 @@
   "cloud": {
     "authenticated": false,
     "settingsSync": false,
-    "settingsSyncVersion": 1734211233387,
+    "settingsSyncVersion": 1732891843213,
     "url": "https://api.vencord.dev/"
   },
   "disableMinSize": false,
@@ -28,9 +28,7 @@
       "enabled": false
     },
     "AlwaysTrust": {
-      "domain": true,
-      "enabled": true,
-      "file": true
+      "enabled": true
     },
     "AnonymiseFileNames": {
       "enabled": false
@@ -81,7 +79,7 @@
       "enabled": false
     },
     "ClearURLs": {
-      "enabled": true
+      "enabled": false
     },
     "ClientTheme": {
       "enabled": false
@@ -147,8 +145,7 @@
       "enabled": false
     },
     "FakeProfileThemes": {
-      "enabled": false,
-      "nitroFirst": true
+      "enabled": false
     },
     "FavoriteEmojiFirst": {
       "enabled": false
@@ -202,8 +199,7 @@
       "enabled": false
     },
     "ImplicitRelationships": {
-      "enabled": false,
-      "sortByAffinity": true
+      "enabled": false
     },
     "InvisibleChat": {
       "enabled": false
@@ -215,12 +211,7 @@
       "enabled": false
     },
     "LoadingQuotes": {
-      "additionalQuotes": "",
-      "additionalQuotesDelimiter": "|",
-      "enableDiscordPresetQuotes": false,
-      "enablePluginPresetQuotes": true,
-      "enabled": false,
-      "replaceEvents": true
+      "enabled": false
     },
     "MemberCount": {
       "enabled": false
@@ -241,7 +232,7 @@
       "enabled": false
     },
     "MessageEventsAPI": {
-      "enabled": true
+      "enabled": false
     },
     "MessageLatency": {
       "enabled": false
@@ -271,18 +262,13 @@
       "enabled": false
     },
     "Moyai": {
-      "enabled": false,
-      "ignoreBlocked": true,
-      "ignoreBots": true,
-      "quality": "Normal",
-      "triggerWhenUnfocused": true,
-      "volume": 0.5
+      "enabled": false
     },
     "MutualGroupDMs": {
       "enabled": false
     },
     "NSFWGateBypass": {
-      "enabled": true
+      "enabled": false
     },
     "NewGuildSettings": {
       "enabled": false
@@ -294,7 +280,7 @@
       "enabled": false
     },
     "NoF1": {
-      "enabled": true
+      "enabled": false
     },
     "NoMaskedUrlPaste": {
       "enabled": false
@@ -303,7 +289,7 @@
       "enabled": false
     },
     "NoOnboardingDelay": {
-      "enabled": true
+      "enabled": false
     },
     "NoPendingCount": {
       "enabled": false
@@ -545,8 +531,7 @@
       "enabled": false
     },
     "VolumeBooster": {
-      "enabled": true,
-      "multiplier": 2
+      "enabled": false
     },
     "WebContextMenus": {
       "addBack": true,
@@ -577,7 +562,7 @@
       "enabled": false
     },
     "petpet": {
-      "enabled": true
+      "enabled": false
     }
   },
   "themeLinks": [
