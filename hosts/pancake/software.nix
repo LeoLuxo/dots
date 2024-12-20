@@ -60,6 +60,7 @@ in
 
     cursor = {
       enable = true;
+      size = 32;
       name = "catppuccin";
       flavor = "frappe";
       accent = "dark";
