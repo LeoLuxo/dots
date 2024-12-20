@@ -21,6 +21,7 @@ in
     gnome.extensions.rounded-corners
     # gnome.extensions.emojis
     # gnome.extensions.weather
+    gnome.extensions.burn-my-windows
 
     terminal.ddterm
     shell.prompt.starship
