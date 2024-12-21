@@ -60,8 +60,8 @@ in
       home-manager.users.${user} = {
         home.pointerCursor = {
           inherit name package;
-          inherit (cfg) size;
 
+          size = cfg.size;
           gtk.enable = true;
           x11.enable = true;
         };
@@ -69,6 +69,10 @@ in
         gtk.cursorTheme = {
           inherit name package;
         };
+      };
+
+      environment.variables = {
+        XCURSOR_SIZE = cfg.size;
       };
     }
   );
