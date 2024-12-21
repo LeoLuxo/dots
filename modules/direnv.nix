@@ -1,4 +1,4 @@
-{ ... }:
+{ constants, ... }:
 {
   programs.direnv = {
     enable = true;
@@ -15,5 +15,14 @@
 
       echo -e "\033[1;96mDirenv loaded"
     '';
+  };
+
+  home-manager.users.${constants.user} = {
+
+    # Add aliases
+    home.shellAliases = {
+      da = "direnv allow";
+      ok = "da";
+    };
   };
 }
