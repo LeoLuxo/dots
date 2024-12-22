@@ -2,6 +2,7 @@
 	<img src="./.github/assets/nixos-logo.png" width="100px"/>
 	<br>
 	liliOS
+	<br>
 	<img src="./.github/assets/macchiato.png" width="600px"/>
 	<br>
 	<div align="center">
