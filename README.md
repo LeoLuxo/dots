@@ -1,10 +1,10 @@
 <h1 align="center">
-   <img src="./.github/assets/nixos-logo.png" width="100px" /> 
+   <img src="./.github/assets/nixos-logo.png" width="100px"/> 
    <br>
-      liliOS
+   liliOS
    <br>
-      <img src="./.github/assets/macchiato.png" width="600px" /> <br>
-
+	<img src="./.github/assets/macchiato.png" width="600px"/>
+	<br>
    <div align="center">
       <p></p>
       <div align="center">
