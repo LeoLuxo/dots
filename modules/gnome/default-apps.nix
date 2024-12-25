@@ -36,6 +36,5 @@
     # gnome-system-monitor
     gnome-weather
     # gnome-disk-utility
-    xterm
   ];
 }
