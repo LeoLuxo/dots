@@ -2,6 +2,7 @@
   config,
   lib,
   constants,
+  pkgs,
   ...
 }:
 
@@ -24,6 +25,9 @@ in
         # Enable the GNOME Desktop Environment.
         displayManager.gdm.enable = true;
         desktopManager.gnome.enable = true;
+
+        # Remove xterm from the gnome apps list
+        excludePackages = [ pkgs.xterm ];
       };
 
       programs.dconf.enable = true;
