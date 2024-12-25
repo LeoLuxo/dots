@@ -23,7 +23,7 @@ in
       # Use fish_key_reader to get keycodes
       # https://fishshell.com/docs/current/cmds/bind.html
       shellInit = ''
-        # Bind CTRL-backspace 
+        # Rebind CTRL-backspace
         bind -k backspace backward-kill-path-component
 
         # Bind CTRL-W
@@ -37,6 +37,12 @@ in
 
         # Rebind right to accept only a single char instead of the entire autosuggestion
         bind \e\[C forward-single-char
+
+        # Bind CTRL-Space to open autocomplete search
+        bind -k nul complete-and-search
+
+        # Rebind tab to accept suggestion
+        bind \t accept-autosuggestion
       '';
     };
   };
