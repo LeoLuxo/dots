@@ -20,6 +20,8 @@ in
     programs.fish = {
       enable = true;
 
+      # Use fish_key_reader to get keycodes
+      # https://fishshell.com/docs/current/cmds/bind.html
       shellInit = ''
         # Bind CTRL-backspace 
         bind -k backspace backward-kill-path-component
@@ -33,8 +35,8 @@ in
         # Bind CTRL-\|
         bind \x1c beginning-of-line
 
-        # Rebind left to accept only a single word instead of the entire autosuggestion
-        bind \e\[C forward-bigword
+        # Rebind right to accept only a single char instead of the entire autosuggestion
+        bind \e\[C forward-single-char
       '';
     };
   };
