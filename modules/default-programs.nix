@@ -11,5 +11,7 @@ in
     notes = mkString;
     communication = mkString;
     codeEditor = mkString;
+    terminal = mkString;
+    backupTerminal = mkString;
   };
 }
