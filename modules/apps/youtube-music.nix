@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (constants) user dotsRepoPath;
+  inherit (constants) user;
   inherit (extra-libs) mkSyncedJSON;
 in
 {
@@ -19,18 +19,6 @@ in
     (mkSyncedJSON {
       xdgPath = "YouTube Music/config.json";
       cfgPath = "youtube-music/config.json";
-      modify = (
-        file:
-        file
-        // {
-          options = {
-            themes = [
-              # This explicitly copies the file to the nix store
-              "${/. + "${dotsRepoPath}/config/youtube-music/theme.css"}"
-            ];
-          };
-        }
-      );
     })
   ];
 }

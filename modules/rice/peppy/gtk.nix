@@ -12,14 +12,14 @@ let
 in
 
 let
-  cfg = config.styling.theme;
+  cfg = config.rice.theme;
 in
 {
   imports = [
     catppuccin.nixosModules.catppuccin
   ];
 
-  options.styling.theme = {
+  options.rice.theme = {
     flavor = options.mkOption {
       type = types.enum [
         "latte"
@@ -27,6 +27,7 @@ in
         "macchiato"
         "mocha"
       ];
+      default = "frappe";
     };
 
     accent = options.mkOption {
@@ -46,10 +47,11 @@ in
         "teal"
         "yellow"
       ];
+      default = "blue";
     };
   };
 
-  config = modules.mkIf (cfg.enable && cfg.name == "catppuccin") {
+  config = {
     catppuccin = {
       # Enable the theme for all compatible apps
       enable = true;

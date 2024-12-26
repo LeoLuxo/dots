@@ -14,11 +14,11 @@ let
 in
 
 {
-  options.styling.fonts = {
+  options.fonts = {
     enable = mkBoolDefaultTrue;
   };
 
-  config = modules.mkIf config.styling.fonts.enable {
+  config = modules.mkIf config.fonts.enable {
     home-manager.users.${user} = {
       home.packages = with pkgs; [
         # FUTURE:
