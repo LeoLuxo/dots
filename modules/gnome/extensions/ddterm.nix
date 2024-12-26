@@ -13,7 +13,7 @@ in
 
   programs.dconf.enable = true;
 
-  defaultPrograms.terminal = lib.mkDefault "ddterm-toggle";
+  defaultPrograms.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
 
   home-manager.users.${user} =
     { lib, ... }:
@@ -21,11 +21,6 @@ in
       home.packages = with pkgs; [
         gnomeExtensions.ddterm
       ];
-
-      # Add toggle aliases
-      home.shellAliases = {
-        "ddterm-toggle" = "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
-      };
 
       dconf.settings = {
         "org/gnome/shell" = {
