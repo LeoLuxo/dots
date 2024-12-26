@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (lib) modules options types;
+  inherit (lib) options types;
   inherit (constants) user;
 in
 
