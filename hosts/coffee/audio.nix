@@ -23,9 +23,7 @@ in
       name = "Toggle audio to speakers";
       binding = "XF86Launch6"; # F15
       command = ''
-        echo "${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"}"
         id=$(${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"})
-        echo $id
         wpctl set-default $id
       '';
     })
@@ -34,9 +32,7 @@ in
       name = "Toggle audio to headphones";
       binding = "XF86Launch5"; # F14
       command = ''
-        echo "${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"}"
         id=$(${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"})
-        echo $id
         wpctl set-default $id
       '';
     })
