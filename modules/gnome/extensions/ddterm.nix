@@ -1,6 +1,7 @@
 {
   pkgs,
   constants,
+  lib,
   ...
 }:
 
@@ -9,7 +10,10 @@ let
 in
 
 {
+
   programs.dconf.enable = true;
+
+  defaultPrograms.terminal = lib.mkDefault "ddterm-toggle";
 
   home-manager.users.${user} =
     { lib, ... }:
@@ -18,12 +22,18 @@ in
         gnomeExtensions.ddterm
       ];
 
+      # Add toggle aliases
+      home.shellAliases = {
+        "ddterm-toggle" = "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
+      };
+
       dconf.settings = {
         "org/gnome/shell" = {
           enabled-extensions = [ "ddterm@amezin.github.com" ];
         };
 
         "com/github/amezin/ddterm" = {
+          ddterm-toggle-hotkey = [ ]; # Use the terminal shortcut instead
           background-color = "rgb(46,52,54)";
           background-opacity = 0.9;
           backspace-binding = "auto";
@@ -32,7 +42,6 @@ in
           cursor-blink-mode = "on";
           cursor-shape = "ibeam";
           custom-font = "Mononoki Nerd Font 14";
-          ddterm-toggle-hotkey = [ "<Super>grave" ];
           delete-binding = "auto";
           foreground-color = "rgb(211,215,207)";
           hide-when-focus-lost = true;

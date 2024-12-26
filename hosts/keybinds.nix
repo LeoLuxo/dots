@@ -9,6 +9,18 @@ in
 {
   imports = [
     (mkGlobalKeybind {
+      name = "Open terminal";
+      binding = "<Super>grave";
+      command = config.defaultPrograms.terminal;
+    })
+
+    (mkGlobalKeybind {
+      name = "Open backup terminal";
+      binding = "<Super>t";
+      command = config.defaultPrograms.backupTerminal;
+    })
+
+    (mkGlobalKeybind {
       name = "Open web browser";
       binding = "<Super>F1";
       command = config.defaultPrograms.browser;
