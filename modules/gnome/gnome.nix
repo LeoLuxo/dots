@@ -8,7 +8,6 @@
 
 let
   inherit (extra-libs)
-    mkGlobalKeybind
     mkBoolDefaultTrue
     mkSubmodule
     mkBoolDefaultFalse
@@ -31,12 +30,6 @@ in
     gnome.extensions.removable-drive-menu
     gnome.extensions.appindicator
     gnome.extensions.bluetooth-quick-connect
-
-    (mkGlobalKeybind {
-      name = "GNOME Console";
-      binding = "<Super>t";
-      command = "kgx";
-    })
   ];
 
   options.gnome = with lib; {
@@ -93,5 +86,8 @@ in
         };
         desktopManager.gnome.enable = true;
       };
+
+      defaultPrograms.backupTerminal = lib.mkDefault "kgx";
+      defaultPrograms.terminal = lib.mkOverride 1050 "kgx";
     };
 }
