@@ -1,5 +1,7 @@
 { directories, ... }:
 
 {
-  imports = with directories.modules; [ gnome.extensions.ddterm ];
+  imports = with directories.modules; [
+    desktop.gnome.extensions.ddterm
+  ];
 }
