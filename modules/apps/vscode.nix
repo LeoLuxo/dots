@@ -15,7 +15,7 @@ in
     # Require fonts for vscode
     fonts
 
-    direnv
+    apps.direnv
   ];
 
   defaultPrograms.codeEditor = lib.mkDefault "code";
