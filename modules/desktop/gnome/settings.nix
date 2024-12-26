@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   constants,
   ...
 }:
@@ -10,10 +9,9 @@ let
 in
 
 let
-  inherit (lib) modules;
-  cfg = config.gnome;
+  cfg = config.desktop;
 in
-modules.mkIf cfg.enable {
+{
   programs.dconf.enable = true;
 
   home-manager.users.${user} =
