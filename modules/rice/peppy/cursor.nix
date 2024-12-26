@@ -8,17 +8,21 @@
 }:
 
 let
-  inherit (lib) modules options types;
+  inherit (lib) options types;
   inherit (constants) user;
   inherit (extra-libs) toPascalCase;
 in
 
 let
-  cfg = config.styling.cursor;
+  cfg = config.rice.cursor;
 in
 {
+  options.rice.cursor = {
+    size = options.mkOption {
+      type = types.ints.unsigned;
+      default = 32;
+    };
 
-  options.styling.cursor = {
     flavor = options.mkOption {
       type = types.enum [
         "latte"
@@ -26,6 +30,7 @@ in
         "macchiato"
         "mocha"
       ];
+      default = "frappe";
     };
 
     accent = options.mkOption {
@@ -48,10 +53,11 @@ in
         "teal"
         "yellow"
       ];
+      default = "dark";
     };
   };
 
-  config = modules.mkIf (cfg.enable && cfg.name == "catppuccin") (
+  config =
     let
       name = "catppuccin-${cfg.flavor}-${cfg.accent}-cursors";
       package = pkgs.catppuccin-cursors."${cfg.flavor}${toPascalCase cfg.accent}";
@@ -74,6 +80,5 @@ in
       environment.variables = {
         XCURSOR_SIZE = cfg.size;
       };
-    }
-  );
+    };
 }

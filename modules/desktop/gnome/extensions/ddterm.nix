@@ -10,7 +10,6 @@ let
 in
 
 {
-
   programs.dconf.enable = true;
 
   defaultPrograms.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
