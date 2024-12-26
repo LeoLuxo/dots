@@ -1,25 +1,26 @@
 {
   config,
   pkgs,
-  lib,
   constants,
+  lib,
   extra-libs,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkBoolDefaultFalse mkBoolDefaultTrue mkSubmodule;
+  inherit (extra-libs) mkBoolDefaultTrue mkSubmodule mkBoolDefaultFalse;
+  inherit (lib) options types;
 in
 
 {
-  options.gnome.blur-my-shell = with lib; {
+  options.gnome.blur-my-shell = {
     enable = mkBoolDefaultTrue;
     app-blur = mkSubmodule {
       enable = mkBoolDefaultFalse;
     };
 
-    hacks-level = mkOption {
+    hacks-level = options.mkOption {
       type = types.enum [
         "high performance"
         "default"
@@ -31,10 +32,9 @@ in
 
   config =
     let
-      inherit (lib) modules;
       cfg = config.gnome.blur-my-shell;
     in
-    modules.mkIf cfg.enable {
+    {
       programs.dconf.enable = true;
 
       home-manager.users.${user} =
@@ -113,7 +113,7 @@ in
             };
 
             "org/gnome/shell/extensions/blur-my-shell/applications" = {
-              blur = cfg.app-blur.enable;
+              blur = cfg.enable;
               dynamic-opacity = true;
               enable-all = true;
               brightness = 0.4;
