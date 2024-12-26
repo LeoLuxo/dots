@@ -10,7 +10,7 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  gnome.power = {
+  desktop.power = {
     button-action = "suspend";
     confirm-shutdown = true;
 
