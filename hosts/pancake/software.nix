@@ -14,14 +14,14 @@ in
   imports = with directories.modules; [
     styling
 
-    gnome.gnome
-    gnome.extensions.blur-my-shell
-    gnome.extensions.clipboard-indicator
-    gnome.extensions.gsconnect
-    gnome.extensions.rounded-corners
-    # gnome.extensions.emojis
-    # gnome.extensions.weather
-    gnome.extensions.burn-my-windows
+    desktop.gnome.gnome
+    desktop.gnome.extensions.blur-my-shell
+    desktop.gnome.extensions.clipboard-indicator
+    desktop.gnome.extensions.gsconnect
+    desktop.gnome.extensions.rounded-corners
+    # desktop.gnome.extensions.emojis
+    # desktop.gnome.extensions.weather
+    desktop.gnome.extensions.burn-my-windows
 
     terminal.ddterm
     shell.prompt.starship
