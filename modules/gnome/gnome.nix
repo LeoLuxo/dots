@@ -1,4 +1,6 @@
 {
+  pkgs,
+  config,
   lib,
   directories,
   extra-libs,
@@ -73,4 +75,27 @@ in
       };
     };
   };
+
+  config =
+    let
+      inherit (lib) modules;
+      cfg = config.gnome;
+    in
+    modules.mkIf cfg.enable {
+      # Enable and configure the X11 windowing system.
+      # It's a bit weird because we're running gnome under wayland?
+      services.xserver = {
+        enable = true;
+
+        # Enable the GNOME Desktop Environment.
+        displayManager.gdm = {
+          enable = true;
+          wayland = true;
+        };
+        desktopManager.gnome.enable = true;
+
+        # Remove xterm from the gnome apps list
+        excludePackages = [ pkgs.xterm ];
+      };
+    };
 }
