@@ -12,24 +12,11 @@ in
 {
   # Include global modules
   imports = with directories.modules; [
-    styling
+    rice.peppy
 
-    desktop.gnome.gnome
-    desktop.gnome.extensions.blur-my-shell
-    desktop.gnome.extensions.clipboard-indicator
-    desktop.gnome.extensions.gsconnect
-    desktop.gnome.extensions.rounded-corners
-    # desktop.gnome.extensions.emojis
-    # desktop.gnome.extensions.weather
-    desktop.gnome.extensions.system-monitor
-    desktop.gnome.extensions.media-controls
-    desktop.gnome.extensions.burn-my-windows
-
-    terminal.ddterm
     shell.bash
     shell.fish
     # shell.nushell
-    shell.prompt.starship
 
     scripts.nix-utils
     scripts.snip
@@ -64,30 +51,6 @@ in
       gnome-2048
       muzika
     ];
-  };
-
-  styling = {
-    wallpaper = {
-      enable = true;
-      image = directories.wallpapers.dynamic."Outset Island";
-    };
-
-    theme = {
-      enable = true;
-      name = "catppuccin";
-      flavor = "frappe";
-      accent = "blue";
-    };
-
-    cursor = {
-      enable = true;
-      size = 16;
-      name = "catppuccin";
-      flavor = "frappe";
-      accent = "dark";
-    };
-
-    bootscreen.enable = true;
   };
 
   # Set default shell
