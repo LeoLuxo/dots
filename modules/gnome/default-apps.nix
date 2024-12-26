@@ -37,4 +37,9 @@
     gnome-weather
     # gnome-disk-utility
   ];
+
+  # Remove xterm from the gnome apps list
+  services.xserver.excludePackages = with pkgs; [
+    xterm
+  ];
 }
