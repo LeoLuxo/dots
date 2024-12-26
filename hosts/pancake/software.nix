@@ -37,7 +37,6 @@ in
   wallpaper.image = directories.wallpapers.dynamic."Tree and shore";
 
   rice.cursor.size = 32;
-  rice.blur.app-blur.enable = false;
 
   # Set default shell
   shell.default = "fish";
