@@ -172,7 +172,7 @@ rec {
 
           # Add the keybind to dconf
           dconf.settings =
-            if config.gnome.enable then
+            if config.desktop.name == "gnome" then
               {
                 "org/gnome/settings-daemon/plugins/media-keys" = {
                   custom-keybindings = [

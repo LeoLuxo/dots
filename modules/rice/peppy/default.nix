@@ -13,20 +13,9 @@ in
     wallpaper
     fonts
 
+    ./gnome.nix
     ./cursor.nix
-    ./gtk.nix
     ./bootscreen.nix
-
-    desktop.gnome.gnome
-    desktop.gnome.extensions.blur-my-shell
-    desktop.gnome.extensions.clipboard-indicator
-    desktop.gnome.extensions.gsconnect
-    desktop.gnome.extensions.rounded-corners
-    # desktop.gnome.extensions.emojis
-    # desktop.gnome.extensions.weather
-    desktop.gnome.extensions.system-monitor
-    desktop.gnome.extensions.media-controls
-    desktop.gnome.extensions.burn-my-windows
 
     terminal.ddterm
     shell.prompt.starship
@@ -37,6 +26,7 @@ in
     image = mkDefault directories.wallpapers.static."nixos-catppuccin";
   };
 
+  # Apply catppuccin to certain apps
   syncedFiles.overrides = {
     "youtube-music/config.json" = {
       options.themes = [ "${./yt-music.css}" ];
