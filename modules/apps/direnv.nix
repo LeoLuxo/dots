@@ -11,7 +11,7 @@
       export NIX_CONFIG="warn-dirty = false"
 
       # Set a higher timeout to prevent the warning "direnv is taking too long"
-      export DIRENV_WARN_TIMEOUT=100y
+      export DIRENV_WARN_TIMEOUT=100h
 
       echo -e "\033[1;96mDirenv loaded"
     '';
