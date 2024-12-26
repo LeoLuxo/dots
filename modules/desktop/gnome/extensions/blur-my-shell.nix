@@ -113,7 +113,7 @@ in
             };
 
             "org/gnome/shell/extensions/blur-my-shell/applications" = {
-              blur = cfg.enable;
+              blur = cfg.app-blur.enable;
               dynamic-opacity = true;
               enable-all = true;
               brightness = 0.4;
