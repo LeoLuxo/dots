@@ -1,21 +1,13 @@
 {
-  config,
   lib,
   directories,
-  extra-libs,
   ...
 }:
 
-let
-  inherit (extra-libs)
-    mkBoolDefaultTrue
-    mkSubmodule
-    mkBoolDefaultFalse
-    ;
-in
-
 {
   imports = with directories.modules; [
+    ../options.nix
+
     # Triple buffering fork thing
     ./triple-buffering.nix
 
@@ -32,62 +24,22 @@ in
     desktop.gnome.extensions.bluetooth-quick-connect
   ];
 
-  options.gnome = with lib; {
-    enable = mkBoolDefaultTrue;
+  desktop.name = "gnome";
 
-    power = mkSubmodule {
-      button-action = mkOption {
-        type = types.enum [
-          "power off"
-          "suspend"
-          "hibernate"
-          "nothing"
-        ];
-        default = "power off";
-      };
+  # Enable and configure the X11 windowing system.
+  services.xserver = {
+    enable = true;
 
-      confirm-shutdown = mkBoolDefaultTrue;
-
-      screen-idle = mkSubmodule {
-        enable = mkBoolDefaultTrue;
-
-        delay = mkOption {
-          type = types.ints.unsigned;
-          default = 300;
-        };
-      };
-
-      suspend-idle = mkSubmodule {
-        enable = mkBoolDefaultFalse;
-
-        delay = mkOption {
-          type = types.ints.unsigned;
-          default = 1800;
-        };
-      };
+    # Enable the GNOME Desktop Environment.
+    displayManager.gdm = {
+      enable = true;
+      # UNder wayland
+      wayland = true;
     };
+    desktopManager.gnome.enable = true;
   };
 
-  config =
-    let
-      inherit (lib) modules;
-      cfg = config.gnome;
-    in
-    modules.mkIf cfg.enable {
-      # Enable and configure the X11 windowing system.
-      services.xserver = {
-        enable = true;
+  defaultPrograms.backupTerminal = lib.mkDefault "kgx";
+  defaultPrograms.terminal = lib.mkOverride 1050 "kgx";
 
-        # Enable the GNOME Desktop Environment.
-        displayManager.gdm = {
-          enable = true;
-          # UNder wayland
-          wayland = true;
-        };
-        desktopManager.gnome.enable = true;
-      };
-
-      defaultPrograms.backupTerminal = lib.mkDefault "kgx";
-      defaultPrograms.terminal = lib.mkOverride 1050 "kgx";
-    };
 }
