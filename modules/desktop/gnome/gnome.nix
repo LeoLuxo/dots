@@ -26,10 +26,10 @@ in
     ./settings.nix
 
     # Base extensions that should be included by default
-    gnome.extensions.just-perfection
-    gnome.extensions.removable-drive-menu
-    gnome.extensions.appindicator
-    gnome.extensions.bluetooth-quick-connect
+    desktop.gnome.extensions.just-perfection
+    desktop.gnome.extensions.removable-drive-menu
+    desktop.gnome.extensions.appindicator
+    desktop.gnome.extensions.bluetooth-quick-connect
   ];
 
   options.gnome = with lib; {
