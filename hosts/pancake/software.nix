@@ -12,19 +12,8 @@ in
 {
   # Include global modules
   imports = with directories.modules; [
-    styling
+    rice.peppy
 
-    desktop.gnome.gnome
-    desktop.gnome.extensions.blur-my-shell
-    desktop.gnome.extensions.clipboard-indicator
-    desktop.gnome.extensions.gsconnect
-    desktop.gnome.extensions.rounded-corners
-    # desktop.gnome.extensions.emojis
-    # desktop.gnome.extensions.weather
-    desktop.gnome.extensions.burn-my-windows
-
-    terminal.ddterm
-    shell.prompt.starship
     shell.bash
     shell.fish
     # shell.nushell
@@ -35,6 +24,7 @@ in
     scripts.clipboard
 
     # apps.deepl
+    apps.youtube-music
     apps.gnome-dialect
     apps.obsidian
     apps.firefox
@@ -44,29 +34,9 @@ in
     apps.steam
   ];
 
-  styling = {
-    wallpaper = {
-      enable = true;
-      image = directories.wallpapers.dynamic."Tree and shore";
-    };
+  wallpaper.image = directories.wallpapers.dynamic."Tree and shore";
 
-    theme = {
-      enable = true;
-      name = "catppuccin";
-      flavor = "frappe";
-      accent = "blue";
-    };
-
-    cursor = {
-      enable = true;
-      size = 32;
-      name = "catppuccin";
-      flavor = "frappe";
-      accent = "dark";
-    };
-
-    bootscreen.enable = true;
-  };
+  rice.cursor.size = 32;
 
   # Set default shell
   shell.default = "fish";
