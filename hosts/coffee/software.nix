@@ -31,11 +31,11 @@ in
     # shell.nushell
     shell.prompt.starship
 
-    nix-utils
-    snip
-    terminal-utils
-    wl-clipboard
-    boot-windows
+    scripts.nix-utils
+    scripts.snip
+    scripts.terminal-utils
+    scripts.clipboard
+    scripts.boot-windows
 
     youtube-music
     obsidian
