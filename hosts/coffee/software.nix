@@ -56,7 +56,9 @@ in
   # Set default shell
   shell.default = "fish";
 
-  gnome.blur-my-shell = {
+  rice.cursor.size = 16;
+
+  rice.blur = {
     # Enable blur for all applications
     app-blur.enable = true;
 
