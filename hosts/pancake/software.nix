@@ -29,20 +29,19 @@ in
     shell.fish
     # shell.nushell
 
-    # translation.deepl
-    translation.gnome-dialect
-
     scripts.nix-utils
     scripts.snip
     scripts.terminal-utils
     scripts.clipboard
 
-    obsidian
-    firefox
-    discord
-    vscode
-    git
-    steam
+    # apps.deepl
+    apps.gnome-dialect
+    apps.obsidian
+    apps.firefox
+    apps.discord
+    apps.vscode
+    apps.git
+    apps.steam
   ];
 
   styling = {

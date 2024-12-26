@@ -14,7 +14,7 @@ let
 in
 {
   imports = with directories.modules; [
-    syncthing
+    apps.syncthing
   ];
 
   services.syncthing = {
