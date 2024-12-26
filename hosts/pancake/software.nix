@@ -35,7 +35,7 @@ in
     scripts.nix-utils
     scripts.snip
     scripts.terminal-utils
-    # scripts.clipboard
+    scripts.clipboard
 
     obsidian
     firefox
