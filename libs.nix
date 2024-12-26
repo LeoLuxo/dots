@@ -186,7 +186,7 @@ rec {
                 };
               }
             else
-              abort "gnome disabled, cannot create keybind!";
+              (builtins.abort "gnome disabled, cannot create keybind!");
         };
       }
     );
