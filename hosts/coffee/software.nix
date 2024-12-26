@@ -37,15 +37,15 @@ in
     scripts.clipboard
     scripts.boot-windows
 
-    youtube-music
-    obsidian
-    firefox
-    discord
-    vscode
-    git
-    steam
-    qmk
-    bitwarden
+    apps.youtube-music
+    apps.obsidian
+    apps.firefox
+    apps.discord
+    apps.vscode
+    apps.git
+    apps.steam
+    apps.qmk
+    apps.bitwarden
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
