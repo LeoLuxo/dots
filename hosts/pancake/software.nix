@@ -32,10 +32,10 @@ in
     # translation.deepl
     translation.gnome-dialect
 
-    nix-utils
-    snip
-    terminal-utils
-    wl-clipboard
+    scripts.nix-utils
+    scripts.snip
+    scripts.terminal-utils
+    # scripts.clipboard
 
     obsidian
     firefox
