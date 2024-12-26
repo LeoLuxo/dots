@@ -17,7 +17,7 @@ let
 in
 
 let
-  cfg = config.styling.wallpaper;
+  cfg = config.wallpaper;
 
   heicConverter = file: pkgs.callPackage ./heic-converter.nix { inherit file; };
 in
@@ -32,7 +32,7 @@ in
     })
   ];
 
-  options.styling.wallpaper = {
+  options.wallpaper = {
     enable = options.mkOption {
       type = types.bool;
       default = cfg.image != null;

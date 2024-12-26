@@ -206,7 +206,7 @@ rec {
     {
       xdgPath,
       cfgPath,
-      modify ? (file: file),
+      overrides ? { },
     }:
 
     let
@@ -214,19 +214,30 @@ rec {
         file: if filesystem.pathIsRegularFile file then builtins.readFile file else fallback;
     in
     # Module to be imported
-    { pkgs, constants, ... }:
     {
-      home-manager.users.${constants.user} =
+      lib,
+      config,
+      pkgs,
+      constants,
+      ...
+    }:
+    let
+      overrides2 = config.syncedFiles.overrides.${cfgPath};
+    in
+    {
+      options.syncedFiles.overrides.${cfgPath} = lib.mkOption { default = { }; };
+
+      config.home-manager.users.${constants.user} =
         { lib, config, ... }:
         {
-          home.activation."sync file ${builtins.toString xdgPath}" =
+          home.activation."sync-file-${builtins.toString xdgPath}" =
 
             let
               cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
               src = toNix (readOrDefault cfgPathStr);
               xdg = toNix (readOrDefault xdgPathStr);
-              merged = modify (src // xdg);
+              merged = src // xdg // overrides // overrides2;
               final = fromNix merged;
             in
 
