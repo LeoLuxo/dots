@@ -76,7 +76,7 @@ in
       # Apply catppuccin to certain apps
       syncedFiles.overrides = {
         "youtube-music/config.json" = {
-          options.themes = [ "${./yt-music.css}" ];
+          options.themes = [ "${./assets/yt-music.css}" ];
         };
 
         "vesktop/vencord.json" = {
@@ -96,8 +96,8 @@ in
       home-manager.users.${constants.user} = {
         home.activation."vscode-catppuccin" = ''
           ${pkgs.vscode}/bin/code \
-            --install-extension catppuccin.catppuccin-vsc --force \
-            --install-extension PKief.material-icon-theme --force
+            --install-extension ${./assets/Catppuccin.catppuccin-vsc-3.16.0.vsix} --force \
+            --install-extension ${./assets/PKief.material-icon-theme-5.16.0.vsix} --force
         '';
       };
     };
