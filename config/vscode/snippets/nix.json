@@ -59,7 +59,7 @@
 			"nixpkgs.overlays = [",
 			"  (final: prev: {",
 			"    $1 = prev.$1.overrideAttrs (",
-			"      finalAttrs: oldAttrs:  {",
+			"      finalAttrs: oldAttrs: {",
 			"        $0",
 			"      }",
 			"    );",
