@@ -226,7 +226,7 @@ rec {
               # Copy path to dots
               if [ -d "${xdgPathStr}" ]; then
                 # Is a dir, we need the trailing slash because rsync
-                ${rsync} --mkpath -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
+                ${rsync} --mkpath -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}/"
               else
                 # Is a file
                 cp -r "${xdgPathStr}" "${cfgPathStr}"
