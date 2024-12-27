@@ -224,7 +224,7 @@ rec {
               mkdir --parents "${builtins.dirOf xdgPathStr}"
 
               # Copy dir to dots
-              ${rsync} -r ${excludesArgs} "${xdgPathStr}" "${cfgPathStr}"
+              ${rsync} --mkpath -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
 
               # Backup old dir
               if [ -d "${xdgPathStr}" ]; then
@@ -232,7 +232,7 @@ rec {
               fi
 
               # Copy merged dir back to xdg
-              ${rsync} -r ${excludesArgs} "${cfgPathStr}" "${xdgPathStr}"
+              ${rsync} --mkpath -r ${excludesArgs} "${cfgPathStr}/" "${xdgPathStr}"
             '';
         };
     };
