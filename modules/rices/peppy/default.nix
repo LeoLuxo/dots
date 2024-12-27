@@ -2,11 +2,14 @@
   directories,
   lib,
   config,
+  constants,
+  nix-vscode-extensions,
   ...
 }:
 
 let
   inherit (lib) mkDefault options types;
+  inherit (constants) user system;
 in
 
 {
@@ -78,6 +81,18 @@ in
             "https://catppuccin.github.io/discord/dist/catppuccin-${flavor}-${accent}.theme.css"
           ];
         };
+
+        "vscode/settings.json" = {
+          "workbench.colorTheme" = "Catppuccin Frappé";
+          "catppuccin.accentColor" = "lavender";
+        };
+      };
+
+      # Add catppuccin extension to vscode
+      home-manager.users.${user} = {
+        programs.vscode.extensions = with nix-vscode-extensions.extensions.${system}.vscode-marketplace; [
+          catppuccin.catppuccin-vsc
+        ];
       };
     };
 }
