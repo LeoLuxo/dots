@@ -3,11 +3,13 @@
   pkgs,
   directories,
   constants,
+  extra-libs,
   ...
 }:
 
 let
   inherit (constants) user;
+  inherit (extra-libs) mkSyncedJSON;
 in
 
 {
@@ -16,6 +18,14 @@ in
     fonts
 
     apps.direnv
+
+    (mkSyncedJSON {
+      xdgPath = "Code/User/settings.json";
+      cfgPath = "vscode/settings.json";
+      defaultOverrides = {
+        "workbench.colorTheme" = "";
+      };
+    })
   ];
 
   defaults.apps.codeEditor = lib.mkDefault "code";
