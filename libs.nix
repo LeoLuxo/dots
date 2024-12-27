@@ -211,6 +211,8 @@ rec {
           home.activation."sync-path-${builtins.toString xdgPath}" =
 
             let
+              rsync = "${pkgs.rsync}/bin/rsync";
+
               cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
               excludesArgs = lib.concatMapStrings (ex: ''--exclude="${ex}" '') excludes;
@@ -222,7 +224,7 @@ rec {
               mkdir --parents "${builtins.dirOf xdgPathStr}"
 
               # Copy dir to dots
-              ${pkgs.rsync} -avr ${excludesArgs} "${xdgPathStr}" "${cfgPathStr}"
+              ${rsync} -avr ${excludesArgs} "${xdgPathStr}" "${cfgPathStr}"
 
               # Backup old dir
               if [ -d "${xdgPathStr}" ]; then
@@ -230,7 +232,7 @@ rec {
               fi
 
               # Copy merged dir back to xdg
-              ${pkgs.rsync} -avr ${excludesArgs} "${cfgPathStr}" "${xdgPathStr}"
+              ${rsync} -avr ${excludesArgs} "${cfgPathStr}" "${xdgPathStr}"
             '';
         };
     };
