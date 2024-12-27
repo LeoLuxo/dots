@@ -36,7 +36,7 @@ in
 
   wallpaper.image = directories.wallpapers.dynamic."Tree and shore";
 
-  rice.cursor.size = 32;
+  rice.peppy.cursor.size = 32;
 
   # Set default shell
   shell.default = "fish";

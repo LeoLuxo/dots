@@ -1,13 +1,54 @@
 {
   lib,
   directories,
+  extra-libs,
+  config,
   ...
 }:
 
-{
-  imports = with directories.modules; [
-    ../options.nix
+let
+  inherit (extra-libs) mkSubmodule mkBoolDefaultTrue mkBoolDefaultFalse;
+  inherit (lib) options types modules;
+in
 
+{
+  options.desktop.gnome = {
+    enable = mkBoolDefaultTrue;
+
+    power = mkSubmodule {
+      button-action = options.mkOption {
+        type = types.enum [
+          "power off"
+          "suspend"
+          "hibernate"
+          "nothing"
+        ];
+        default = "power off";
+      };
+
+      confirm-shutdown = mkBoolDefaultTrue;
+
+      screen-idle = mkSubmodule {
+        enable = mkBoolDefaultTrue;
+
+        delay = options.mkOption {
+          type = types.ints.unsigned;
+          default = 300;
+        };
+      };
+
+      suspend-idle = mkSubmodule {
+        enable = mkBoolDefaultFalse;
+
+        delay = options.mkOption {
+          type = types.ints.unsigned;
+          default = 1800;
+        };
+      };
+    };
+  };
+
+  imports = with directories.modules; [
     # Triple buffering fork thing
     ./triple-buffering.nix
 
@@ -24,22 +65,25 @@
     desktop.gnome.extensions.bluetooth-quick-connect
   ];
 
-  desktop.name = "gnome";
+  config =
+    let
+      cfg = config.desktop.gnome;
+    in
+    modules.mkIf cfg.enable {
+      # Enable and configure the X11 windowing system.
+      services.xserver = {
+        enable = true;
 
-  # Enable and configure the X11 windowing system.
-  services.xserver = {
-    enable = true;
+        # Enable the GNOME Desktop Environment.
+        displayManager.gdm = {
+          enable = true;
+          # UNder wayland
+          wayland = true;
+        };
+        desktopManager.gnome.enable = true;
+      };
 
-    # Enable the GNOME Desktop Environment.
-    displayManager.gdm = {
-      enable = true;
-      # UNder wayland
-      wayland = true;
+      defaults.apps.backupTerminal = lib.mkDefault "kgx";
+      defaults.apps.terminal = lib.mkOverride 1050 "kgx";
     };
-    desktopManager.gnome.enable = true;
-  };
-
-  defaults.apps.backupTerminal = lib.mkDefault "kgx";
-  defaults.apps.terminal = lib.mkOverride 1050 "kgx";
-
 }

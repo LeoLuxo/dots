@@ -56,13 +56,15 @@ in
   # Set default shell
   shell.default = "fish";
 
-  rice.cursor.size = 16;
+  rice.peppy = {
+    cursor.size = 16;
 
-  rice.blur = {
-    # Enable blur for all applications
-    app-blur.enable = true;
+    blur = {
+      # Enable blur for all applications
+      app-blur.enable = true;
 
-    # Set hacks to best looking
-    hacks-level = "no artifact";
+      # Set hacks to best looking
+      hacks-level = "no artifact";
+    };
   };
 }

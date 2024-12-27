@@ -14,11 +14,8 @@ let
   inherit (extra-libs) mkBoolDefaultTrue mkBoolDefaultFalse mkSubmodule;
 in
 
-let
-  cfg = config.rice;
-in
 {
-  options.rice = {
+  options.rice.peppy = {
     blur = {
       enable = mkBoolDefaultTrue;
       app-blur = mkSubmodule {
@@ -51,36 +48,40 @@ in
     desktop.gnome.extensions.burn-my-windows
   ];
 
-  config = {
-    catppuccin = {
-      # Enable the theme for all compatible apps
-      enable = true;
-
-      # Choose flavor
-      flavor = cfg.theme.flavor;
-      accent = cfg.theme.accent;
-    };
-
-    home-manager.users.${user} = {
-      imports = [
-        catppuccin.homeManagerModules.catppuccin
-      ];
-
-      # Enable catppuccin for gtk
-      gtk = {
+  config =
+    let
+      cfg = config.rice.peppy;
+    in
+    {
+      catppuccin = {
+        # Enable the theme for all compatible apps
         enable = true;
-        catppuccin = {
+
+        # Choose flavor
+        flavor = cfg.theme.flavor;
+        accent = cfg.theme.accent;
+      };
+
+      home-manager.users.${user} = {
+        imports = [
+          catppuccin.homeManagerModules.catppuccin
+        ];
+
+        # Enable catppuccin for gtk
+        gtk = {
           enable = true;
-          flavor = cfg.theme.flavor;
-          accent = cfg.theme.accent;
-          size = "standard";
-          tweaks = [ "normal" ];
+          catppuccin = {
+            enable = true;
+            flavor = cfg.theme.flavor;
+            accent = cfg.theme.accent;
+            size = "standard";
+            tweaks = [ "normal" ];
+          };
         };
       };
+
+      boot.plymouth.catppuccin.enable = false;
+
+      gnome.blur-my-shell = cfg.blur;
     };
-
-    boot.plymouth.catppuccin.enable = false;
-
-    gnome.blur-my-shell = cfg.blur;
-  };
 }

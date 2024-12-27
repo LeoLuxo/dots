@@ -13,11 +13,8 @@ let
   inherit (extra-libs) toPascalCase;
 in
 
-let
-  cfg = config.rice.cursor;
-in
 {
-  options.rice.cursor = {
+  options.rice.peppy.cursor = {
     size = options.mkOption {
       type = types.ints.unsigned;
       default = 32;
@@ -30,7 +27,7 @@ in
         "macchiato"
         "mocha"
       ];
-      default = config.rice.theme.flavor;
+      default = config.rice.peppy.theme.flavor;
     };
 
     accent = options.mkOption {
@@ -59,6 +56,7 @@ in
 
   config =
     let
+      cfg = config.rice.peppy.cursor;
       name = "catppuccin-${cfg.flavor}-${cfg.accent}-cursors";
       package = pkgs.catppuccin-cursors."${cfg.flavor}${toPascalCase cfg.accent}";
     in
