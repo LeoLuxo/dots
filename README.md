@@ -3,8 +3,6 @@
 	<br>
 	liliOS
 	<br>
-	<img src="./.github/assets/macchiato.png" width="600px"/>
-	<br>
 	<div align="center">
 		<a = href="https://nixos.org">
 			<img src="https://img.shields.io/badge/NixOS-unstable-blue.svg?style=for-the-badge&labelColor=1E1E2E&logo=NixOS&logoColor=C6A0F6&color=A5ADCB">
