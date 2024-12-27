@@ -40,6 +40,7 @@ in
     (mkSyncedPath {
       xdgPath = "Code/User/profiles";
       cfgPath = "vscode/profiles";
+      excludes = [ "globalStorage" ];
     })
   ];
 
