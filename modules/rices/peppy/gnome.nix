@@ -19,38 +19,6 @@ let
 in
 {
   options.rice = {
-    theme = {
-      flavor = options.mkOption {
-        type = types.enum [
-          "latte"
-          "frappe"
-          "macchiato"
-          "mocha"
-        ];
-        default = "frappe";
-      };
-
-      accent = options.mkOption {
-        type = types.enum [
-          "blue"
-          "flamingo"
-          "green"
-          "lavender"
-          "maroon"
-          "mauve"
-          "peach"
-          "pink"
-          "red"
-          "rosewater"
-          "sapphire"
-          "sky"
-          "teal"
-          "yellow"
-        ];
-        default = "blue";
-      };
-    };
-
     blur = {
       enable = mkBoolDefaultTrue;
       app-blur = mkSubmodule {
