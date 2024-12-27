@@ -30,7 +30,7 @@ in
         "macchiato"
         "mocha"
       ];
-      default = "frappe";
+      default = config.rice.theme.flavor;
     };
 
     accent = options.mkOption {
