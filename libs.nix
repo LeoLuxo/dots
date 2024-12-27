@@ -191,13 +191,55 @@ rec {
       }
     );
 
+  # Add a path that is to be synced between its destination and here in the repo
+  mkSyncedPath =
+    {
+      xdgPath,
+      cfgPath,
+    }:
+    # Module to be imported
+    {
+      pkgs,
+      constants,
+      ...
+    }:
+    {
+      config.home-manager.users.${constants.user} =
+        { lib, config, ... }:
+        {
+          home.activation."sync-path-${builtins.toString xdgPath}" =
+
+            let
+              cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
+              xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
+            in
+
+            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              # Make sure both parent dirs exist
+              mkdir --parents "${builtins.dirOf cfgPathStr}"
+              mkdir --parents "${builtins.dirOf xdgPathStr}"
+
+              # Copy dir to dots
+              cp "${xdgPathStr}" "${cfgPathStr}" -r 
+
+              # Backup old dir
+              if [ -d "${xdgPathStr}" ]; then
+                cp "${xdgPathStr}" "${xdgPathStr}.bak" -r --force
+              fi
+
+              # Copy merged dir back to xdg
+              cp "${cfgPathStr}" "${xdgPathStr}" -r 
+            '';
+        };
+    };
+
   # Add a file that is to be synced between its destination and here in the repo
   # This is so that whenever the file changes at the destionation (changed through the program ui for example),
   # it gets copied to the nix config repo. But also if the file is missing from the destination, it automatically
   # is added there.
   # Any differences between the two files are merged automatically, with the destination file having priority.
   # The file format needs to be convertible to- and from nix, to be able to merge the files properly.
-  mkSyncedFile =
+  mkSyncedMergedFile =
     {
       toNix,
       fromNix,
@@ -265,13 +307,13 @@ rec {
         };
     };
 
-  # Specialized version of mkSyncedFile for JSON
-  mkSyncedJSON =
+  # Specialized version of mkSyncedMergedFile for JSON
+  mkSyncedMergedJSON =
     let
       # Custom pretty json instead of builtins.toJSON
       toPrettyJSON = attrs: builtins.readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
     in
-    mkSyncedFile {
+    mkSyncedMergedFile {
       toNix = builtins.fromJSON;
       fromNix = toPrettyJSON;
       fallback = "{}";

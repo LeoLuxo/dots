@@ -88,11 +88,11 @@ in
         };
       };
 
-      # Add catppuccin extension to vscode
-      home-manager.users.${user} = {
-        programs.vscode.extensions = with nix-vscode-extensions.extensions.${system}.vscode-marketplace; [
-          catppuccin.catppuccin-vsc
-        ];
-      };
+      # TODO Add catppuccin extension to vscode
+      # home-manager.users.${user} = {
+      #   programs.vscode.extensions = with nix-vscode-extensions.extensions.${system}.vscode-marketplace; [
+      #     catppuccin.catppuccin-vsc
+      #   ];
+      # };
     };
 }

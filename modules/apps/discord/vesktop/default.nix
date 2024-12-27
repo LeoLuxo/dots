@@ -8,7 +8,7 @@
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkSyncedJSON mkQuickPatch mkGlobalKeybind;
+  inherit (extra-libs) mkSyncedMergedJSON mkQuickPatch mkGlobalKeybind;
 in
 
 {
@@ -48,12 +48,12 @@ in
       command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
     })
 
-    (mkSyncedJSON {
+    (mkSyncedMergedJSON {
       xdgPath = "vesktop/settings.json";
       cfgPath = "vesktop/vesktop.json";
     })
 
-    (mkSyncedJSON {
+    (mkSyncedMergedJSON {
       xdgPath = "vesktop/settings/settings.json";
       cfgPath = "vesktop/vencord.json";
       defaultOverrides = {
