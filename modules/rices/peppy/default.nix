@@ -87,14 +87,17 @@ in
 
         "vscode/settings.json" = {
           "workbench.colorTheme" = "Catppuccin Frappé";
+          "workbench.iconTheme" = "catppuccin-perfect-dark";
           "catppuccin.accentColor" = "lavender";
         };
       };
 
-      # Install catppuccin extension to vscode
+      # Install catppuccin extensions to vscode
       home-manager.users.${constants.user} = {
         home.activation."vscode-catppuccin" = ''
-          ${pkgs.vscode}/bin/code --install-extension catppuccin.catppuccin-vsc --force
+          ${pkgs.vscode}/bin/code \
+            --install-extension catppuccin.catppuccin-vsc --force
+            --install-extension thang-nm.catppuccin-perfect-icons --force
         '';
       };
     };
