@@ -20,13 +20,13 @@
     }
   },
   "url": "https://music.youtube.com/watch?v=6Y4b25CYkkg&list=LM&index=0",
-  "window-maximized": true,
+  "window-maximized": false,
   "window-position": {
     "x": 0,
     "y": 0
   },
   "window-size": {
-    "height": 912,
+    "height": 844,
     "width": 1368
   }
 }
