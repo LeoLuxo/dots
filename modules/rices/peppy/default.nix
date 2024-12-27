@@ -3,14 +3,13 @@
   lib,
   config,
   constants,
-  nix-vscode-extensions,
   extra-libs,
+  pkgs,
   ...
 }:
 
 let
   inherit (lib) mkDefault options types;
-  inherit (constants) user system;
   inherit (extra-libs) mkBoolDefaultTrue;
 in
 
@@ -92,11 +91,11 @@ in
         };
       };
 
-      # TODO Add catppuccin extension to vscode
-      # home-manager.users.${user} = {
-      #   programs.vscode.extensions = with nix-vscode-extensions.extensions.${system}.vscode-marketplace; [
-      #     catppuccin.catppuccin-vsc
-      #   ];
-      # };
+      # Install catppuccin extension to vscode
+      home-manager.users.${constants.user} = {
+        home.activation."vscode-catppuccin" = ''
+          ${pkgs.vscode}/bin/code --install-extension catppuccin.catppuccin-vsc --force
+        '';
+      };
     };
 }
