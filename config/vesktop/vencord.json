@@ -565,9 +565,7 @@
       "enabled": false
     }
   },
-  "themeLinks": [
-    "https://catppuccin.github.io/discord/dist/catppuccin-frappe-blue.theme.css"
-  ],
+  "themeLinks": [],
   "transparent": false,
   "useQuickCss": true,
   "winCtrlQ": false,
