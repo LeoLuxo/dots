@@ -1,0 +1,8 @@
+{
+	"Import project imports": {
+		"prefix": "imports",
+		"body": [
+			"#import \"/imports.typ\": *"
+		],
+	}
+}
