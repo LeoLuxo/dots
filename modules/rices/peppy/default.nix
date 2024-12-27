@@ -4,12 +4,14 @@
   config,
   constants,
   nix-vscode-extensions,
+  extra-libs,
   ...
 }:
 
 let
   inherit (lib) mkDefault options types;
   inherit (constants) user system;
+  inherit (extra-libs) mkBoolDefaultTrue;
 in
 
 {
@@ -25,7 +27,9 @@ in
     shell.prompt.starship
   ];
 
-  options.rice = {
+  options.rice.peppy = {
+    enable = mkBoolDefaultTrue;
+
     theme = {
       flavor = options.mkOption {
         type = types.enum [
@@ -61,8 +65,8 @@ in
 
   config =
     let
-      flavor = config.rice.theme.flavor;
-      accent = config.rice.theme.accent;
+      flavor = config.rice.peppy.theme.flavor;
+      accent = config.rice.peppy.theme.accent;
     in
     {
       wallpaper = {

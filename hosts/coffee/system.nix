@@ -12,7 +12,7 @@
     fsType = "ntfs";
   };
 
-  gnome.power = {
+  desktop.gnome.power = {
     button-action = "power off";
     confirm-shutdown = false;
 
