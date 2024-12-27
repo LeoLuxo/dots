@@ -5,9 +5,7 @@
     }
   },
   "options": {
-    "themes": [
-      "/nix/store/7fn72psij7lir6kbmc0ffbhn04nl7c7y-yt-music.css"
-    ]
+    "themes": []
   },
   "plugins": {
     "discord": {

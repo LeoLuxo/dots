@@ -56,6 +56,9 @@ in
     (mkSyncedJSON {
       xdgPath = "vesktop/settings/settings.json";
       cfgPath = "vesktop/vencord.json";
+      defaultOverrides = {
+        themeLinks = [ ];
+      };
     })
   ];
 

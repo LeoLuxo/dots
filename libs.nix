@@ -206,7 +206,7 @@ rec {
     {
       xdgPath,
       cfgPath,
-      overrides ? { },
+      defaultOverrides ? { },
     }:
 
     let
@@ -222,7 +222,7 @@ rec {
       ...
     }:
     let
-      overrides2 = config.syncedFiles.overrides.${cfgPath};
+      overrides = config.syncedFiles.overrides.${cfgPath};
     in
     {
       options.syncedFiles.overrides.${cfgPath} = lib.mkOption { default = { }; };
@@ -237,8 +237,9 @@ rec {
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
               src = toNix (readOrDefault cfgPathStr);
               xdg = toNix (readOrDefault xdgPathStr);
-              merged = src // xdg // overrides // overrides2;
-              final = fromNix merged;
+              merged = src // xdg // defaultOverrides;
+              finalSrc = fromNix merged;
+              finalXdg = fromNix (merged // overrides);
             in
 
             lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -248,7 +249,7 @@ rec {
 
               # Save new merged content to dots
               cat >"${cfgPathStr}" <<EOL
-              ${final}
+              ${finalSrc}
               EOL
 
               # Backup old file
@@ -256,8 +257,10 @@ rec {
                 cp "${xdgPathStr}" "${xdgPathStr}.bak" --force
               fi
 
-              # Copy merged content to new file
-              cp "${cfgPathStr}" "${xdgPathStr}" --force
+              # Save merged content to xdg file
+              cat >"${xdgPathStr}" <<EOL
+              ${finalXdg}
+              EOL
             '';
         };
     };
