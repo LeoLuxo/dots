@@ -196,6 +196,7 @@ rec {
     {
       xdgPath,
       cfgPath,
+      excludes ? [ ],
     }:
     # Module to be imported
     {
@@ -212,6 +213,7 @@ rec {
             let
               cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
+              excludesArgs = lib.concatMapStrings (ex: ''--exclude="${ex}" '') excludes;
             in
 
             lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -220,7 +222,7 @@ rec {
               mkdir --parents "${builtins.dirOf xdgPathStr}"
 
               # Copy dir to dots
-              cp "${xdgPathStr}" "${cfgPathStr}" -r 
+              ${pkgs.rsync} -avr ${excludesArgs} "${xdgPathStr}" "${cfgPathStr}"
 
               # Backup old dir
               if [ -d "${xdgPathStr}" ]; then
@@ -228,7 +230,7 @@ rec {
               fi
 
               # Copy merged dir back to xdg
-              cp "${cfgPathStr}" "${xdgPathStr}" -r 
+              ${pkgs.rsync} -avr ${excludesArgs} "${cfgPathStr}" "${xdgPathStr}"
             '';
         };
     };
