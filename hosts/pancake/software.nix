@@ -12,7 +12,7 @@ in
 {
   # Include global modules
   imports = with directories.modules; [
-    rice.peppy
+    rices.peppy
 
     shell.bash
     shell.fish
