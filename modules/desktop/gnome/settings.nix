@@ -9,7 +9,7 @@ let
 in
 
 let
-  cfg = config.desktop;
+  cfg = config.desktop.gnome;
 in
 {
   programs.dconf.enable = true;
