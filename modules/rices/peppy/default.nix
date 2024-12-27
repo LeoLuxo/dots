@@ -96,7 +96,7 @@ in
       home-manager.users.${constants.user} = {
         home.activation."vscode-catppuccin" = ''
           ${pkgs.vscode}/bin/code \
-            --install-extension catppuccin.catppuccin-vsc --force
+            --install-extension catppuccin.catppuccin-vsc --force \
             --install-extension PKief.material-icon-theme --force
         '';
       };
