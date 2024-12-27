@@ -94,7 +94,7 @@ in
 
       # Install catppuccin extensions to vscode
       home-manager.users.${constants.user} = {
-        home.activation."vscode-catppuccin" = ''
+        home.activation."vscode-peppy" = ''
           ${pkgs.vscode}/bin/code \
             --install-extension ${./assets/Catppuccin.catppuccin-vsc-3.16.0.vsix} --force \
             --install-extension ${./assets/PKief.material-icon-theme-5.16.0.vsix} --force
