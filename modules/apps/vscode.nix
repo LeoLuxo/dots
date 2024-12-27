@@ -9,7 +9,7 @@
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkSyncedJSON;
+  inherit (extra-libs) mkSyncedMergedJSON mkSyncedPath;
 in
 
 {
@@ -19,12 +19,27 @@ in
 
     apps.direnv
 
-    (mkSyncedJSON {
+    (mkSyncedMergedJSON {
       xdgPath = "Code/User/settings.json";
       cfgPath = "vscode/settings.json";
       defaultOverrides = {
         "workbench.colorTheme" = "";
       };
+    })
+
+    (mkSyncedPath {
+      xdgPath = "Code/User/keybindings.json";
+      cfgPath = "vscode/keybindings.json";
+    })
+
+    (mkSyncedPath {
+      xdgPath = "Code/User/snippets";
+      cfgPath = "vscode/snippets";
+    })
+
+    (mkSyncedPath {
+      xdgPath = "Code/User/profiles";
+      cfgPath = "vscode/profiles";
     })
   ];
 
