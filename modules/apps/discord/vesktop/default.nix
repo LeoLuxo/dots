@@ -59,7 +59,7 @@ in
     })
   ];
 
-  defaultPrograms.communication = lib.mkDefault "vesktop";
+  defaults.apps.communication = lib.mkDefault "vesktop";
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
