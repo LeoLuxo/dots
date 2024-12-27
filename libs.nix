@@ -223,22 +223,24 @@ rec {
               mkdir --parents "${builtins.dirOf cfgPathStr}"
               mkdir --parents "${builtins.dirOf xdgPathStr}"
 
-              # Copy path to dots
-              if [ -d "${xdgPathStr}" ]; then
-                # Is a dir, we need the trailing slash because rsync
-                ${rsync} --ignore-times -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
-              else
-                # Is a file
-                cp -r "${xdgPathStr}" "${cfgPathStr}"
-              fi
-
               # Backup old dir/file
               if [ -e "${xdgPathStr}" ]; then
                 cp "${xdgPathStr}" "${xdgPathStr}.bak" -r --force
               fi
 
-              # Copy merged path back to xdg
-              cp -r "${cfgPathStr}" "${xdgPathStr}"
+              if [ -d "${xdgPathStr}" ]; then
+                # Is a dir, we need the trailing slash because rsync
+                
+                # Copy path to dots
+                ${rsync} --ignore-times -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
+                
+                # Copy merged path back to xdg
+                ${rsync} --ignore-times -r "${cfgPathStr}/" "${xdgPathStr}"
+              else
+                # Is a file
+                cp "${xdgPathStr}" "${cfgPathStr}"
+                cp "${cfgPathStr}" "${xdgPathStr}"
+              fi
             '';
         };
     };
