@@ -87,8 +87,8 @@ in
 
         "vscode/settings.json" = {
           "workbench.colorTheme" = "Catppuccin Frappé";
-          "workbench.iconTheme" = "catppuccin-perfect-dark";
           "catppuccin.accentColor" = "lavender";
+          "workbench.iconTheme" = "material-icon-theme";
         };
       };
 
@@ -97,7 +97,7 @@ in
         home.activation."vscode-catppuccin" = ''
           ${pkgs.vscode}/bin/code \
             --install-extension catppuccin.catppuccin-vsc --force
-            --install-extension thang-nm.catppuccin-perfect-icons --force
+            --install-extension PKief.material-icon-theme --force
         '';
       };
     };
