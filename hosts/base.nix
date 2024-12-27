@@ -16,7 +16,7 @@ in
     # Include home manager module
     home-manager.nixosModules.home-manager
 
-    directories.modules.default-programs
+    directories.modules.defaults
   ];
 
   # Allow unfree packages
