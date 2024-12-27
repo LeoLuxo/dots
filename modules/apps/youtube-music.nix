@@ -19,6 +19,9 @@ in
     (mkSyncedJSON {
       xdgPath = "YouTube Music/config.json";
       cfgPath = "youtube-music/config.json";
+      defaultOverrides = {
+        options.themes = [ ];
+      };
     })
   ];
 }
