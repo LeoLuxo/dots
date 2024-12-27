@@ -27,22 +27,23 @@ in
   home-manager.users.${user} = {
     programs.vscode = {
       enable = true;
-      # Vscode but repackaged to run in a FHS environment to make plugin compatibility better
-      package = pkgs.vscode.fhs;
+      # FHS is vscode but repackaged to run in a FHS environment to make plugin compatibility better
+      # package = pkgs.vscode.fhs;
+      package = pkgs.vscode.fhsWithPackages (
+        # Add required dependecies
+        ps: with ps; [
+          # nix formatter
+          nixfmt-rfc-style
+
+          # Nix Language Server
+          nil
+
+          # sh formatter
+          shfmt
+
+          vscode-extensions.rust-lang.rust-analyzer
+        ]
+      );
     };
-
-    home.packages = with pkgs; [
-      # nix formatter
-      nixfmt-rfc-style
-
-      # Nix Language Server
-      nil
-
-      # sh formatter
-      shfmt
-
-      #
-      vscode-extensions.rust-lang.rust-analyzer
-    ];
   };
 }
