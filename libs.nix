@@ -248,7 +248,7 @@ rec {
               mkdir --parents "${builtins.dirOf xdgPathStr}"
 
               # Save new merged content to dots
-              cat >"${cfgPathStr}" <<EOL
+              cat >"${cfgPathStr}" <<'EOL'
               ${finalSrc}
               EOL
 
@@ -258,7 +258,7 @@ rec {
               fi
 
               # Save merged content to xdg file
-              cat >"${xdgPathStr}" <<EOL
+              cat >"${xdgPathStr}" <<'EOL'
               ${finalXdg}
               EOL
             '';
