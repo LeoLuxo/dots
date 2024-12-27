@@ -41,6 +41,11 @@
     musnix = {
       url = "github:musnix/musnix";
     };
+
+    # VSCode extensions repository
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+    };
   };
 
   outputs =
