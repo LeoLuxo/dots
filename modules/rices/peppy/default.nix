@@ -96,9 +96,14 @@ in
       home-manager.users.${constants.user} = {
         home.activation."vscode-peppy" = ''
           ${pkgs.vscode}/bin/code \
-            --install-extension catppuccin.catppuccin-vsc --force \
-            --install-extension PKief.material-icon-theme --force
+            --install-extension ${./assets/Catppuccin.catppuccin-vsc-3.16.0.vsix} --force \
+            --install-extension ${./assets/PKief.material-icon-theme-5.16.0.vsix} --force
         '';
+        # home.activation."vscode-peppy" = ''
+        #   ${pkgs.vscode}/bin/code \
+        #     --install-extension catppuccin.catppuccin-vsc --force \
+        #     --install-extension PKief.material-icon-theme --force
+        # '';
       };
     };
 }
