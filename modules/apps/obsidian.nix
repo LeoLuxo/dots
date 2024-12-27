@@ -16,7 +16,7 @@ in
     fonts
   ];
 
-  defaultPrograms.notes = lib.mkDefault "obsidian";
+  defaults.apps.notes = lib.mkDefault "obsidian";
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
