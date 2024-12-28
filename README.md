@@ -24,7 +24,7 @@ It's not made to support multiple users per host however.
 ## Cool features
 - **Multi-host**: Individual hosts (i.e. devices) are defined in `hosts.nix` and `hosts/`.
 - **Synced config files**: The perfect middle-ground between declarative configuration and convenience. On rebuild, external config files are synced to this repo in `config/`, overrides are applied, and the merged configuration is synced back. Like this, no need to go all in with a declarative nix config or an application-modified config.
-- **Easy ricing**: The config is set up in such a way that anything appearance-related is separated from the rest of the config. Like this it's easy to *[rice](https://www.reddit.com/r/unixporn)* away to my heart's content, without touching or breaking my daily app config. And when needed, it's easy to switch back to a nice-looking and working rice.
+- **Easy ricing**: The config is set up in such a way that anything appearance-related is separated from the rest of the config. Like this it's easy to [rice](https://www.reddit.com/r/unixporn) away to my heart's content, without touching or breaking my regular application config. And when needed, it's easy to switch back to a nice-looking and working rice.
 - **Project templates**: You can check out my project/coding templates in `templates/`.
 
 ## Can I use this config on my computer?
