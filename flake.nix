@@ -1,5 +1,5 @@
 {
-  description = "My Nix configuration :)";
+  description = "My NixOS configuration :)";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.

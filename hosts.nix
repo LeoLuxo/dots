@@ -25,7 +25,7 @@ mkHost: {
         ./hosts/keybinds.nix
       ]
       {
-        user = "lili";
+        user = "kiwi";
         hostName = "pancake";
         system = "x86_64-linux";
       };
