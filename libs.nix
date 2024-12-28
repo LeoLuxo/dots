@@ -321,13 +321,13 @@ rec {
 
   # Specialized version of mkSyncedMergedFile for JSON
   mkSyncedMergedJSON =
-    let
-      # Custom pretty json instead of builtins.toJSON
-      toPrettyJSON = attrs: builtins.readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
-    in
+    # let
+    #   # Custom pretty json instead of builtins.toJSON
+    #   toPrettyJSON = attrs: builtins.readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
+    # in
     mkSyncedMergedFile {
       toNix = builtins.fromJSON;
-      fromNix = toPrettyJSON;
+      fromNix = builtins.toJSON;
       fallback = "{}";
     };
 
