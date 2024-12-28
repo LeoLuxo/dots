@@ -238,8 +238,8 @@ rec {
                 ${rsync} --ignore-times -r "${cfgPathStr}/" "${xdgPathStr}"
               else
                 # Is a file
-                cp "${xdgPathStr}" "${cfgPathStr}"
-                cp "${cfgPathStr}" "${xdgPathStr}"
+                cp "${xdgPathStr}" "${cfgPathStr}" --force || true
+                cp "${cfgPathStr}" "${xdgPathStr}" --force
               fi
             '';
         };
