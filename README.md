@@ -27,8 +27,8 @@ It's not made to support multiple users per host however.
 - **Easy ricing**: The config is set up in such a way that anything appearance-related is separated from the rest of the config. Like this it's easy to [rice](https://www.reddit.com/r/unixporn) away to my heart's content, without touching or breaking my regular application config. And when needed, it's easy to switch back to a nice-looking and working rice.
 - **Project templates**: You can check out my project/coding templates in `templates/`.
 
-## Can I use this config on my computer?
-**Warning**: I have no idea how this config would work as-is on any other computer, and I can't provide generic instructions on how to install or use it.
+## How can I use this config on my computer?
+I have no idea how this config would work as-is on any other computer, and I can't provide generic instructions on how to install or use it.
 However, I'm sure a bunch of individual modules, utility functions or other from this code could be useful for others!
 
 ## License
