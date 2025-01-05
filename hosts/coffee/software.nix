@@ -53,6 +53,8 @@ in
     ];
   };
 
+  wallpaper.image = directories.wallpapers.dynamic."Outset Island";
+
   # Set default shell
   shell.default = "fish";
 
