@@ -66,10 +66,11 @@ in
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      (vesktop.override {
-        withSystemVencord = true;
-        inherit vencord;
-      })
+      # (vesktop.override {
+      #   withSystemVencord = true;
+      #   inherit vencord;
+      # })
+      vesktop
     ];
   };
 }
