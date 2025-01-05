@@ -16,25 +16,25 @@ in
     ./icons-and-name.nix
     ./keybinds-fix.nix
 
-    # (mkQuickPatch {
-    #   package = "vencord";
-    #   patches = [
-    #     ./vencord-disable-update-check.patch
-    #   ];
-    # })
+    (mkQuickPatch {
+      package = "vencord";
+      patches = [
+        ./vencord-disable-update-check.patch
+      ];
+    })
 
-    # (mkQuickPatch {
-    #   package = "vesktop";
-    #   patches = [
-    #     ./vesktop-disable-update-check.patch
+    (mkQuickPatch {
+      package = "vesktop";
+      patches = [
+        ./vesktop-disable-update-check.patch
 
-    # Vencord is being a little annoying so use our custom vencord and patch that to disable updates
-    # (pkgs.substituteAll {
-    #   src = ./use-custom-vencord.patch;
-    #   inherit (pkgs) vencord;
-    # })
-    #   ];
-    # })
+        # Vencord is being a little annoying so use our custom vencord and patch that to disable updates
+        # (pkgs.substituteAll {
+        #   src = ./use-custom-vencord.patch;
+        #   inherit (pkgs) vencord;
+        # })
+      ];
+    })
 
     (mkGlobalKeybind {
       name = "Discord mute";
