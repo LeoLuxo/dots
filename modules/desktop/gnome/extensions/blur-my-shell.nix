@@ -113,11 +113,17 @@ in
             };
 
             "org/gnome/shell/extensions/blur-my-shell/applications" = {
+              blacklist = [
+                "Plank"
+                "com.desktop.ding"
+                "Conky"
+                "firefox"
+              ];
               blur = cfg.app-blur.enable;
               dynamic-opacity = true;
               enable-all = true;
               brightness = 0.4;
-              opacity = 160;
+              opacity = 180;
             };
           };
         };
