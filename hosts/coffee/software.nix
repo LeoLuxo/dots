@@ -63,7 +63,7 @@ in
 
     blur = {
       # Enable blur for all applications
-      app-blur.enable = true;
+      # app-blur.enable = true;
 
       # Set hacks to best looking
       hacks-level = "no artifact";
