@@ -22,6 +22,10 @@ in
       gs = "git status";
     };
 
+    # Needed for signing with ssh key
+    # ref: https://jeppesen.io/git-commit-sign-nix-home-manager-ssh/
+    home.file.".ssh/allowed_signers".text = "* ${builtins.readFile /home/${user}/.ssh/id_ed25519.pub}";
+
     programs.git = {
       enable = true;
 
@@ -60,6 +64,11 @@ in
           "ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
           "ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";
         };
+
+        # Sign all commits using ssh key
+        commit.gpgsign = true;
+        gpg.format = "ssh";
+        user.signingkey = "~/.ssh/id_ed25519.pub";
       };
     };
   };
