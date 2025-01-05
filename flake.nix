@@ -5,7 +5,7 @@
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Contains certain nixos hardware settings, specifically for surface laptops
+    # Contains certain nixos hardware settings, notably for surface laptops
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Manages dotfiles in nix
