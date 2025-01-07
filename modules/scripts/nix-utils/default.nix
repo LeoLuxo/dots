@@ -84,7 +84,6 @@ in
       # Add some post-build actions
       nx.rebuild.postRebuildActions = ''
         # Save current dconf settings (for nx-dconf-diff)
-        echo HI
         mkdir --parents "$(dirname "$NX_DCONF_DIFF")" && touch "$NX_DCONF_DIFF"
         dconf dump / >"$NX_DCONF_DIFF"
       '';
