@@ -13,7 +13,7 @@ in
 
 {
   options.desktop.gnome = {
-    enable = mkBoolDefaultTrue;
+    enable = mkBoolDefaultFalse;
 
     power = mkSubmodule {
       button-action = options.mkOption {
