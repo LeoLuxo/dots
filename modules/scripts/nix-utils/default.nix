@@ -50,7 +50,7 @@ in
     NX_SECRETS = secretsRepoPath;
 
     # Set the location of the file used for dconf-diff
-    DCONF_DIFF = "${userHome}/.dconf_activation";
+    NX_DCONF_DIFF = "${userHome}/.nx/dconf_diff";
 
     # Set the location of the todo doc
     NX_TODO = "/stuff/Obsidian/Notes/NixOS Todo.md";
