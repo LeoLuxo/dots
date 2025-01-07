@@ -3,6 +3,7 @@
   nix-index-database,
   constants,
   extra-libs,
+  config,
   ...
 }:
 
@@ -13,7 +14,13 @@ let
     dotsRepoPath
     secretsRepoPath
     ;
-  inherit (extra-libs) mkGlobalKeybind mkShellHistoryAlias writeScriptWithDeps;
+  inherit (extra-libs)
+    mkGlobalKeybind
+    mkShellHistoryAlias
+    writeScriptWithDeps
+    mkSubmodule
+    mkLines
+    ;
 in
 
 {
@@ -38,84 +45,106 @@ in
     })
   ];
 
-  # Install comma via nix-index so that it's wrapped correctly
-  # Comma can run non-installed packages by prepending the command with a ','
-  programs.nix-index-database.comma.enable = true;
-  # But disable nix-index hook into command-not-found because I don't like its delay
-  programs.nix-index.enable = false;
-
-  environment.variables = {
-    # Set the location of the dots and secrets repos
-    NX_DOTS = dotsRepoPath;
-    NX_SECRETS = secretsRepoPath;
-
-    # Set the location of the file used for dconf-diff
-    NX_DCONF_DIFF = "${userHome}/.nx/dconf_diff";
-
-    # Set the location of the todo doc
-    NX_TODO = "/stuff/Obsidian/Notes/NixOS Todo.md";
-  };
-
-  home-manager.users.${user} = {
-    # Add scripts from the nx directory and other packages
-    home.packages = with pkgs; [
-      # Nix helper utilities
-      nh
-      nurl
-      nix-init
-
-      (writeScriptWithDeps {
-        name = "nx-code";
-        file = ./scripts/nx-code.sh;
-      })
-
-      (writeScriptWithDeps {
-        name = "nx-todo";
-        file = ./scripts/nx-todo.sh;
-      })
-
-      (writeScriptWithDeps {
-        name = "nx-template";
-        file = ./scripts/nx-template.sh;
-      })
-
-      (writeScriptWithDeps {
-        name = "nx-cleanup";
-        file = ./scripts/nx-cleanup.sh;
-        deps = [ nh ];
-      })
-
-      (writeScriptWithDeps {
-        name = "nx-dconf-diff";
-        file = ./scripts/nx-dconf-diff.sh;
-        deps = [
-          dconf
-          difftastic
-        ];
-      })
-
-      (writeScriptWithDeps {
-        name = "nx-rebuild";
-        file = ./scripts/nx-rebuild.sh;
-        deps = [
-          dconf
-          git
-          nixfmt-rfc-style
-          nh
-        ];
-      })
-    ];
-
-    # Add aliases
-    home.shellAliases = {
-      nx-cd = "cd $NX_DOTS";
-      nxcd = "nx-cd";
-
-      nxr = "nx-rebuild";
-
-      nx-edit = "nx-code";
-      nx-search = "nh search --limit 4";
+  options.nx = {
+    rebuild = mkSubmodule {
+      preRebuildActions = mkLines;
+      postRebuildActions = mkLines;
     };
   };
+
+  config =
+    let
+      cfg = config.nx;
+      variables = {
+        # Set the location of the dots and secrets repos
+        NX_DOTS = dotsRepoPath;
+        NX_SECRETS = secretsRepoPath;
+
+        # Set the location of the file used for dconf-diff
+        NX_DCONF_DIFF = "${userHome}/.nx/dconf_diff";
+
+        # Set the location of the todo doc
+        NX_TODO = "/stuff/Obsidian/Notes/NixOS Todo.md";
+      };
+    in
+    {
+
+      # Set environment variables
+      environment.variables = variables;
+
+      # Install comma via nix-index so that it's wrapped correctly
+      # Comma can run non-installed packages by prepending the command with a ','
+      programs.nix-index-database.comma.enable = true;
+      # But disable nix-index hook into command-not-found because I don't like its delay
+      programs.nix-index.enable = false;
+
+      home-manager.users.${user} = {
+        # Add nx scripts and other packages
+        home.packages = with pkgs; [
+          # Nix helper utilities
+          nh
+          nurl
+          nix-init
+
+          (writeScriptWithDeps {
+            name = "nx-code";
+            file = ./scripts/nx-code.sh;
+            replaceVariables = variables;
+          })
+
+          (writeScriptWithDeps {
+            name = "nx-todo";
+            file = ./scripts/nx-todo.sh;
+            replaceVariables = variables;
+          })
+
+          (writeScriptWithDeps {
+            name = "nx-template";
+            file = ./scripts/nx-template.sh;
+            replaceVariables = variables;
+          })
+
+          (writeScriptWithDeps {
+            name = "nx-cleanup";
+            file = ./scripts/nx-cleanup.sh;
+            deps = [ nh ];
+            replaceVariables = variables;
+          })
+
+          (writeScriptWithDeps {
+            name = "nx-dconf-diff";
+            file = ./scripts/nx-dconf-diff.sh;
+            deps = [
+              dconf
+              difftastic
+            ];
+            replaceVariables = variables;
+          })
+
+          (writeScriptWithDeps {
+            name = "nx-rebuild";
+            file = ./scripts/nx-rebuild.sh;
+            deps = [
+              dconf
+              git
+              nixfmt-rfc-style
+              nh
+            ];
+            replaceVariables = variables;
+          })
+        ];
+
+        # Add aliases
+        home.shellAliases = {
+          nx-cd = "cd $NX_DOTS";
+          nxcd = "nx-cd";
+
+          nxr = "nx-rebuild";
+
+          nx-edit = "nx-code";
+          nx-search = "nh search --limit 4";
+        };
+      };
+    };
 
 }

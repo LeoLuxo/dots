@@ -27,7 +27,7 @@ rebuild() {
 	# Autoformat nix files
 	nixfmt --quiet . ||
 		(
-			nixfmt --check .
+			nixfmt --check . || true
 			echo -e "${ERROR}Formatting failed!"
 			return 1
 		)

@@ -12,6 +12,8 @@ let
     attrsets
     filesystem
     throwIf
+    traceValSeq
+    lists
     ;
   pkgs = nixpkgs.legacyPackages.${system};
 in
@@ -51,9 +53,19 @@ rec {
       text ? builtins.readFile file,
       deps ? [ ],
       shell ? false,
+      replaceVariables ? { },
     }:
     let
-      scriptText = throwIf (text == null) "script needs text" text;
+      scriptTextPreVars = throwIf (text == null) "script needs text" text;
+
+      varNames1 = lists.map (x: "$${x}") (attrsets.attrNames replaceVariables);
+      varNames2 = lists.map (x: ''''${${x}}'') (attrsets.attrNames replaceVariables);
+      varValues = attrsets.attrValues replaceVariables;
+
+      scriptText = traceValSeq (
+        strings.replaceStrings (varNames1 ++ varNames2) (varValues ++ varValues) scriptTextPreVars
+      );
+
       builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
     in
     pkgs.writeShellScriptBin name ''
@@ -425,6 +437,11 @@ rec {
   # Options shortcut for a string option
   mkString = lib.options.mkOption {
     type = lib.types.str;
+  };
+
+  # Options shortcut for a lines option
+  mkLines = lib.options.mkOption {
+    type = lib.types.lines;
   };
 
   # Options shortcut for a boolean option with default of false
