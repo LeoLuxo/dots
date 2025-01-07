@@ -63,12 +63,15 @@ in
         # Set the location of the file used for dconf-diff
         NX_DCONF_DIFF = "${userHome}/.nx/dconf_diff";
 
+        # Set the location of the files used for nx-rebuild
+        NX_PRE_REBUILD = "${userHome}/.nx/pre_rebuild.sh";
+        NX_POST_REBUILD = "${userHome}/.nx/post_rebuild.sh";
+
         # Set the location of the todo doc
         NX_TODO = "/stuff/Obsidian/Notes/NixOS Todo.md";
       };
     in
     {
-
       # Set environment variables
       environment.variables = variables;
 
@@ -78,7 +81,18 @@ in
       # But disable nix-index hook into command-not-found because I don't like its delay
       programs.nix-index.enable = false;
 
+      # Add some post-build actions
+      nx.rebuild.postRebuildActions = ''
+        # Save current dconf settings (for nx-dconf-diff)
+        mkdir --parents "$(dirname "$NX_DCONF_DIFF")" && touch "$NX_DCONF_DIFF"
+        dconf dump / >"$NX_DCONF_DIFF"
+      '';
+
       home-manager.users.${user} = {
+        # Set up pre- and post actions for nx-rebuild
+        home.file.".nx/pre_rebuild.sh".text = cfg.rebuild.preRebuildActions;
+        home.file.".nx/post_rebuild.sh".text = cfg.rebuild.postRebuildActions;
+
         # Add nx scripts and other packages
         home.packages = with pkgs; [
           # Nix helper utilities
