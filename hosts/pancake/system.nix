@@ -14,15 +14,15 @@
     enable = true;
 
     power = {
-      button-action = "suspend";
-      confirm-shutdown = true;
+      buttonAction = "suspend";
+      confirmShutdown = true;
 
-      screen-idle = {
+      screenIdle = {
         enable = true;
         delay = 150;
       };
 
-      suspend-idle = {
+      suspendIdle = {
         enable = true;
         delay = 300;
       };

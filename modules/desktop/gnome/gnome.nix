@@ -16,7 +16,7 @@ in
     enable = mkBoolDefaultFalse;
 
     power = mkSubmodule {
-      button-action = options.mkOption {
+      buttonAction = options.mkOption {
         type = types.enum [
           "power off"
           "suspend"
@@ -26,9 +26,9 @@ in
         default = "power off";
       };
 
-      confirm-shutdown = mkBoolDefaultTrue;
+      confirmShutdown = mkBoolDefaultTrue;
 
-      screen-idle = mkSubmodule {
+      screenIdle = mkSubmodule {
         enable = mkBoolDefaultTrue;
 
         delay = options.mkOption {
@@ -37,7 +37,7 @@ in
         };
       };
 
-      suspend-idle = mkSubmodule {
+      suspendIdle = mkSubmodule {
         enable = mkBoolDefaultFalse;
 
         delay = options.mkOption {
