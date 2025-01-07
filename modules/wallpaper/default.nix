@@ -7,9 +7,10 @@
 }:
 
 let
-  inherit (extra-libs) sanitizePath mkQuickPatch;
+  inherit (extra-libs) sanitizePath mkQuickPatch mkBoolDefaultTrue;
   inherit (lib)
     options
+    filesystem
     types
     strings
     modules
@@ -39,7 +40,7 @@ in
     };
 
     image = options.mkOption {
-      type = types.nullOr types.path;
+      type = with types; nullOr (either path package);
       default = null;
     };
 
@@ -58,7 +59,7 @@ in
 
     isHeic = options.mkOption {
       type = types.bool;
-      default = strings.hasSuffix ".heic" cfg.image;
+      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".heic" cfg.image);
     };
 
     isTimed = options.mkOption {
@@ -66,10 +67,7 @@ in
       default = cfg.isHeic || (builtins.pathExists "${cfg.image}/wallpaper.stw");
     };
 
-    refreshOnUnlock = options.mkOption {
-      type = types.bool;
-      default = true;
-    };
+    refreshOnUnlock = mkBoolDefaultTrue;
   };
 
   config =
@@ -163,5 +161,6 @@ in
         };
         wantedBy = [ "graphical-session.target" ];
       };
+
     };
 }
