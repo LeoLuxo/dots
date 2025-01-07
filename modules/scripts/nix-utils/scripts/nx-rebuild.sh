@@ -29,13 +29,6 @@ nixfmt --quiet . ||
 		echo "formatting failed!" && exit 1
 	)
 
-# Early return if no changes were detected
-# if git diff --quiet .; then
-# 	echo "No changes detected, exiting."
-# 	popd &>/dev/null
-# 	exit 0
-# fi
-
 # For some reason nix can't see non-git added files
 git add .
 
@@ -72,6 +65,14 @@ dconf dump / >"$DCONF_DIFF"
 
 # RE-add any auto-generated files
 git add ./config
+
+# Early return if no changes were detected
+if git diff --quiet .; then
+	echo "No changes detected, not committing."
+	popd &>/dev/null
+	echo -e "${SUCCESS}DONE!${RESET}"
+	exit 0
+fi
 
 # Shows NEW changes
 changes=$(

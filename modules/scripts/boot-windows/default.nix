@@ -29,7 +29,7 @@ in
       name = "boot-windows";
       desktopName = "Boot into Windows";
       exec = "${package}";
-      icon = "${directories.images.syncthing}";
+      icon = "${directories.images.windows7}";
     })
   ];
 
