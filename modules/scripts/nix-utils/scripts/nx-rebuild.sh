@@ -56,9 +56,6 @@ rebuild() {
 	echo -e "${INFO}Running post-rebuild actions...${RESET}"
 	source $NX_POST_REBUILD
 
-	# Reload the wallpaper to avoid having to logout
-	# systemctl --user restart wallutils-timed.service || systemctl --user restart wallutils-static.service || true
-
 	# Get current generation metadata
 	current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
 	echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
