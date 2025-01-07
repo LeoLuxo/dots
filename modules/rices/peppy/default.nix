@@ -2,15 +2,13 @@
   directories,
   lib,
   config,
-  constants,
   extra-libs,
-  pkgs,
   ...
 }:
 
 let
   inherit (lib) mkDefault options types;
-  inherit (extra-libs) mkBoolDefaultTrue;
+  inherit (extra-libs) mkBoolDefaultFalse;
 in
 
 {
@@ -27,7 +25,7 @@ in
   ];
 
   options.rice.peppy = {
-    enable = mkBoolDefaultTrue;
+    enable = mkBoolDefaultFalse;
 
     theme = {
       flavor = options.mkOption {

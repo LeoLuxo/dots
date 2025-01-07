@@ -18,6 +18,7 @@ in
   options.rice.peppy = {
     blur = {
       enable = mkBoolDefaultTrue;
+
       app-blur = mkSubmodule {
         enable = mkBoolDefaultFalse;
       };

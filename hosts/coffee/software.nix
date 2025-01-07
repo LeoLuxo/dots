@@ -60,9 +60,12 @@ in
   shell.default = "fish";
 
   rice.peppy = {
+    enable = true;
+
     cursor.size = 16;
 
     blur = {
+      enable = true;
       # Enable blur for all applications
       # app-blur.enable = true;
 
