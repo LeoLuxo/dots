@@ -162,5 +162,23 @@ in
         wantedBy = [ "graphical-session.target" ];
       };
 
+      nx.rebuild.postRebuildActions =
+        if cfg.isTimed then
+          ''
+            # Reload the wallpaper to avoid having to logout
+            echo "Reloading dynamic wallpaper"
+            systemctl --user restart wallutils-timed.service
+          ''
+        else
+          ''
+            # Stop any timed services that might still be running
+            systemctl --user stop wallutils-timed.service >/dev/null 2>&1 || true
+            systemctl --user stop wallutils-refresh.service >/dev/null 2>&1 || true
+
+            # Reload the wallpaper to avoid having to logout
+            echo "Reloading static wallpaper"
+            systemctl --user restart wallutils-static.service
+          '';
+
     };
 }
