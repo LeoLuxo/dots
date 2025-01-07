@@ -28,25 +28,25 @@ in
       dconf.settings = {
         # Power settings
         "org/gnome/settings-daemon/plugins/power" = {
-          power-button-action =
+          power-buttonAction =
             {
               "power off" = "interactive";
               "suspend" = "suspend";
               "hibernate" = "hibernate";
               "nothing" = "nothing";
             }
-            .${cfg.power.button-action};
+            .${cfg.power.buttonAction};
 
-          sleep-inactive-ac-type = if cfg.power.suspend-idle.enable then "suspend" else "nothing";
-          sleep-inactive-ac-timeout = cfg.power.suspend-idle.delay;
+          sleep-inactive-ac-type = if cfg.power.suspendIdle.enable then "suspend" else "nothing";
+          sleep-inactive-ac-timeout = cfg.power.suspendIdle.delay;
         };
 
         "org/gnome/gnome-session" = {
-          logout-prompt = cfg.power.confirm-shutdown;
+          logout-prompt = cfg.power.confirmShutdown;
         };
 
         "org/gnome/desktop/session" = {
-          idle-delay = mkUint32 (if cfg.power.screen-idle.enable then cfg.power.screen-idle.delay else 0);
+          idle-delay = mkUint32 (if cfg.power.screenIdle.enable then cfg.power.screenIdle.delay else 0);
         };
 
         # System shortcuts

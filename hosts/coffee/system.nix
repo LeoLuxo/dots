@@ -16,15 +16,15 @@
     enable = true;
 
     power = {
-      button-action = "power off";
-      confirm-shutdown = false;
+      buttonAction = "power off";
+      confirmShutdown = false;
 
-      screen-idle = {
+      screenIdle = {
         enable = true;
         delay = 600;
       };
 
-      suspend-idle.enable = false;
+      suspendIdle.enable = false;
     };
   };
 
