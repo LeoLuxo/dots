@@ -90,11 +90,11 @@ rebuild() {
 rebuild
 status=$?
 
+# Revert staging in case an error happened
+git restore --staged --quiet . || true
+
 # Back to where we were
 popd 1>/dev/null
-
-# Revert staging in case an error happened
-git restore --staged .
 
 # Notify all OK!
 if [[ $status -eq 0 ]]; then
