@@ -20,6 +20,7 @@ let
     writeScriptWithDeps
     mkSubmodule
     mkLines
+    replaceScriptVariables
     ;
 in
 
@@ -82,11 +83,12 @@ in
       programs.nix-index.enable = false;
 
       # Add some post-build actions
-      nx.rebuild.postRebuildActions = ''
+      nx.rebuild.postRebuildActions = replaceScriptVariables ''
         # Save current dconf settings (for nx-dconf-diff)
+        echo "Dumping dconf"
         mkdir --parents "$(dirname "$NX_DCONF_DIFF")" && touch "$NX_DCONF_DIFF"
         dconf dump / >"$NX_DCONF_DIFF"
-      '';
+      '' variables;
 
       home-manager.users.${user} = {
         # Set up pre- and post actions for nx-rebuild
