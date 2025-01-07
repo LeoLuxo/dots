@@ -12,16 +12,20 @@
     fsType = "ntfs";
   };
 
-  desktop.gnome.power = {
-    button-action = "power off";
-    confirm-shutdown = false;
+  desktop.gnome = {
+    enable = true;
 
-    screen-idle = {
-      enable = true;
-      delay = 600;
+    power = {
+      button-action = "power off";
+      confirm-shutdown = false;
+
+      screen-idle = {
+        enable = true;
+        delay = 600;
+      };
+
+      suspend-idle.enable = false;
     };
-
-    suspend-idle.enable = false;
   };
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229

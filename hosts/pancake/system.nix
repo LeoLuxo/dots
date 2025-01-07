@@ -10,18 +10,22 @@
     nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
-  desktop.gnome.power = {
-    button-action = "suspend";
-    confirm-shutdown = true;
+  desktop.gnome = {
+    enable = true;
 
-    screen-idle = {
-      enable = true;
-      delay = 150;
-    };
+    power = {
+      button-action = "suspend";
+      confirm-shutdown = true;
 
-    suspend-idle = {
-      enable = true;
-      delay = 300;
+      screen-idle = {
+        enable = true;
+        delay = 150;
+      };
+
+      suspend-idle = {
+        enable = true;
+        delay = 300;
+      };
     };
   };
 

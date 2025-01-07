@@ -16,6 +16,7 @@ in
 {
   options.gnome.blur-my-shell = {
     enable = mkBoolDefaultTrue;
+
     app-blur = mkSubmodule {
       enable = mkBoolDefaultFalse;
     };
