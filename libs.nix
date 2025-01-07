@@ -58,12 +58,14 @@ rec {
     let
       scriptTextPreVars = throwIf (text == null) "script needs text" text;
 
-      varNames1 = lists.map (x: "$${x}") (attrsets.attrNames replaceVariables);
-      varNames2 = lists.map (x: ''''${${x}}'') (attrsets.attrNames replaceVariables);
+      varNames1 = lists.map (x: "$" + x) (attrsets.attrNames replaceVariables);
+      varNames2 = lists.map (x: "\${" + x + "}") (attrsets.attrNames replaceVariables);
       varValues = attrsets.attrValues replaceVariables;
 
       scriptText = traceValSeq (
-        strings.replaceStrings (varNames1 ++ varNames2) (varValues ++ varValues) scriptTextPreVars
+        strings.replaceStrings (traceValSeq (varNames1 ++ varNames2)) (
+          varValues ++ varValues
+        ) scriptTextPreVars
       );
 
       builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
