@@ -54,7 +54,7 @@ in
   };
 
   # wallpaper.image = directories.wallpapers.dynamic."Outset Island";
-  wallpaper.image = directories.wallpapers.static."Seaside-Kingdom-desktop-4k";
+  wallpaper.image = directories.wallpapers.static."Mountain Village";
 
   # Set default shell
   shell.default = "fish";
