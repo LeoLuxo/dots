@@ -61,7 +61,8 @@ rebuild() {
 	echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
 
 	# Save current dconf settings (for nx-dconf-diff)
-	dconf dump / >"$DCONF_DIFF"
+	mkdir --parents "$(dirname "$NX_DCONF_DIFF")" && touch "$NX_DCONF_DIFF"
+	dconf dump / >"$NX_DCONF_DIFF"
 
 	# RE-add any auto-generated files
 	git add ./config
@@ -96,10 +97,8 @@ git restore --staged --quiet . || true
 # Back to where we were
 popd 1>/dev/null
 
-# Notify all OK!
 if [[ $status -eq 0 ]]; then
 	echo -e "${SUCCESS}DONE!${RESET}"
 else
 	echo -e "${ERROR}Rebuild cancelled${RESET}"
 fi
-# notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
