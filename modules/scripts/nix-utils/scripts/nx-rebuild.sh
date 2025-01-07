@@ -14,6 +14,7 @@ set -e
 # Some color
 INFO='\033[1;94m'
 SUCCESS='\033[1;92m'
+ERROR='\033[1;91m'
 RESET='\033[0m'
 
 # Force sudo early and cache it so I don't have to enter password later in the script
@@ -22,75 +23,83 @@ sudo echo -e "${INFO}Running as superuser${RESET}"
 # cd to our config dir
 pushd $NX_DOTS 1>/dev/null
 
-# Autoformat nix files
-nixfmt --quiet . ||
-	(
-		nixfmt --check .
-		echo "formatting failed!" && exit 1
+rebuild() {
+	# Autoformat nix files
+	nixfmt --quiet . ||
+		(
+			nixfmt --check .
+			echo -e "${ERROR}Formatting failed!"
+			return 1
+		)
+
+	# Nix can't see non-git added files
+	git add .
+
+	# Shows changes
+	changes=$(
+		git --no-pager diff --staged --name-status .
 	)
+	echo -e "${INFO}Files changed:${RESET}\n${changes}"
 
-# For some reason nix can't see non-git added files
-git add .
+	echo -e "${INFO}NixOS Rebuilding...${RESET}"
 
-# Shows changes
-changes=$(
-	git --no-pager diff --staged --name-status .
-)
-echo -e "${INFO}Files changed:${RESET}\n${changes}"
+	# Rebuild, and if errors occur make sure to exit
+	# tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
+	# warn dirty disables the goddamn git dirty tree message
+	nh os switch . --no-nom \
+		-- --impure \
+		--option tarball-ttl 0 \
+		--option warn-dirty false \
+		"$@" ||
+		return 1
 
-echo -e "${INFO}NixOS Rebuilding...${RESET}"
+	# Reload the wallpaper to avoid having to logout
+	systemctl --user restart wallutils-timed.service || systemctl --user restart wallutils-static.service || true
 
-# Rebuild, and if errors occur make sure to exit
-# tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
-# warn dirty disables the goddamn git dirty tree message
-nh os switch . --no-nom \
-	-- --impure \
-	--option tarball-ttl 0 \
-	--option warn-dirty false \
-	"$@" ||
-	(
-		git restore --staged .
-		exit 1
+	# Get current generation metadata
+	current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
+	echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
+
+	# Save current dconf settings (for nx-dconf-diff)
+	dconf dump / >"$DCONF_DIFF"
+
+	# RE-add any auto-generated files
+	git add ./config
+
+	# Early return if no changes are detected
+	if git diff --staged --quiet .; then
+		echo -e "${INFO}No changes detected, not committing."
+		return 0
+	fi
+
+	# Shows NEW changes
+	changes=$(
+		git --no-pager diff --staged --name-status .
 	)
+	echo -e "${INFO}New files changed:${RESET}\n${changes}"
 
-# Reload the wallpaper to avoid having to logout
-systemctl --user restart wallutils-timed.service || systemctl --user restart wallutils-static.service || true
+	# Commit all changes with the generation metadata
+	echo -e "${INFO}Committing...${RESET}"
+	git commit -m "$current_gen" -m "$changes" 1>/dev/null
 
-# Get current generation metadata
-current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
-echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
+	echo -e "${INFO}Pushing...${RESET}"
+	# Git push is stoopid and writes everything to stderr
+	git push &>/dev/null
+}
 
-# Save current dconf settings (for nx-dconf-diff)
-dconf dump / >"$DCONF_DIFF"
-
-# RE-add any auto-generated files
-git add ./config
-
-# Early return if no changes were detected
-if git diff --quiet .; then
-	echo "No changes detected, not committing."
-	popd &>/dev/null
-	echo -e "${SUCCESS}DONE!${RESET}"
-	exit 0
-fi
-
-# Shows NEW changes
-changes=$(
-	git --no-pager diff --staged --name-status .
-)
-echo -e "${INFO}New files changed:${RESET}\n${changes}"
-
-# Commit all changes with the generation metadata
-echo -e "${INFO}Committing...${RESET}"
-git commit -m "$current_gen" -m "$changes" 1>/dev/null
-
-echo -e "${INFO}Pushing...${RESET}"
-# Git push is stoopid and writes everything to stderr
-git push &>/dev/null
+rebuild
+status=$?
 
 # Back to where we were
 popd 1>/dev/null
 
+# Revert staging in case an error happened
+git restore --staged .
+
 # Notify all OK!
-echo -e "${SUCCESS}DONE!${RESET}"
+if [[ $status -eq 0 ]]; then
+	echo -e "${SUCCESS}DONE!${RESET}"
+else
+	echo -e "${ERROR}Rebuild cancelled${RESET}"
+fi
 # notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
