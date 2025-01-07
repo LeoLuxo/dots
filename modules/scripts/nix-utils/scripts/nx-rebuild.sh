@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# This shebang runs nix-shell which then interpret the rest:
-# it pulls in the packages bash, git and nixfmt
-# and set bash as the interpreter
-# https://stackoverflow.com/a/64599687
-
 # Based on the script by 0atman / No boilerplate
 # https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5
 
