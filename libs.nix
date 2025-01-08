@@ -377,9 +377,9 @@ rec {
 
   mkDesktopItem =
     {
-      name,
-      desktopName ? toPascalCaseWithSpaces name,
       package ? null,
+      name ? package.name or package.pname,
+      desktopName ? toPascalCaseWithSpaces name,
       exec ? "${package}/bin/${name}",
       icon ? null,
       keywords ? [ name ],
