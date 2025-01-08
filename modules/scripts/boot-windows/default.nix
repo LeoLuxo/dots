@@ -26,10 +26,11 @@ in
 {
   imports = [
     (mkDesktopItem {
-      inherit package;
+      name = "boot-windows";
       desktopName = "Boot into Windows";
       icon = "${directories.images.windows7}";
       elevate = true;
+      inherit package;
     })
   ];
 
