@@ -27,17 +27,12 @@ in
 {
   imports = [
     (mkDesktopItem {
-      # inherit package;
-
       name = "boot-windows";
       desktopName = "Boot into Windows";
-      exec = lib.traceValSeq "${package}";
+
+      # Pkexec here will launch the GUI elevator
+      exec = "${package}/bin/boot-windows";
       icon = "${directories.images.windows7}";
-      # categories = [
-      #   "Network"
-      #   "FileTransfer"
-      #   "P2P"
-      # ];
     })
   ];
 
