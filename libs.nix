@@ -391,10 +391,12 @@ rec {
       wrappedExec =
         if elevate then
           # Need to create an entire wrapped script because gnome complain about $ in the Exec field
-          writeScriptWithDeps {
-            name = "${name}-desktop-icon-wrapper";
-            text = ''pkexec env XAUTHORITY=$XAUTHORITY DISPLAY=$DISPLAY WAYLAND_DISPLAY=$WAYLAND_DISPLAY PATH=$PATH ${exec}'';
-          }
+          "${
+            (writeScriptWithDeps {
+              name = "${name}-desktop-icon-wrapper";
+              text = ''pkexec env XAUTHORITY=$XAUTHORITY DISPLAY=$DISPLAY WAYLAND_DISPLAY=$WAYLAND_DISPLAY PATH=$PATH ${exec}'';
+            })
+          }/bin/${name}-desktop-icon-wrapper"
         else
           exec;
 
