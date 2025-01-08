@@ -49,7 +49,6 @@ in
       guitarix
       r2modman
       gnome-2048
-      muzika
     ];
   };
 
