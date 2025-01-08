@@ -26,11 +26,11 @@ in
 {
   imports = [
     (mkDesktopItem {
-      inherit package;
+      # inherit package;
 
       name = "boot-windows";
-      # desktopName = "Windows";
-      # exec = "firefox";
+      desktopName = "Boot into Windows";
+      exec = "firefox";
       icon = "${directories.images.syncthing}";
       # categories = [
       #   "Network"
