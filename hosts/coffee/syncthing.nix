@@ -11,6 +11,17 @@ in
 
 let
   syncthingFolder = "${userHome}/.config/syncthing";
+
+  versioning = {
+    type = "simple";
+    params = {
+      cleanoutDays = "100";
+      keep = "5";
+    };
+    cleanupIntervalS = 3600;
+    fsPath = "";
+    fsType = "basic";
+  };
 in
 {
   imports = with directories.modules; [
@@ -54,6 +65,7 @@ in
             "pancake"
             "celestia"
           ];
+          inherit versioning;
         };
 
         "Important Docs" = {
@@ -63,6 +75,7 @@ in
             "strobery"
             "pancake"
           ];
+          inherit versioning;
         };
 
         "Share" = {
@@ -72,6 +85,7 @@ in
             "strobery"
             "pancake"
           ];
+          inherit versioning;
         };
 
         "Uni Courses" = {
@@ -81,6 +95,7 @@ in
             "strobery"
             "pancake"
           ];
+          inherit versioning;
         };
 
         "Vault" = {
@@ -90,6 +105,7 @@ in
             "strobery"
             "pancake"
           ];
+          inherit versioning;
         };
       };
     };
