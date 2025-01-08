@@ -73,7 +73,7 @@ in
       l = "ls -Fhsla";
 
       "." = "q";
-      "qq" = "cd $Q_LAST_DIR";
+      "qq" = "cd $(cat /tmp/Q_LAST_DIR)";
 
       ".." = "cd ..";
       "..." = "cd ../..";
