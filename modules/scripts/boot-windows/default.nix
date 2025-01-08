@@ -3,6 +3,7 @@
   constants,
   extra-libs,
   directories,
+  lib,
   ...
 }:
 
@@ -30,7 +31,7 @@ in
 
       name = "boot-windows";
       desktopName = "Boot into Windows";
-      exec = "boot-windows";
+      exec = lib.traceValSeq "${package}";
       icon = "${directories.images.windows7}";
       # categories = [
       #   "Network"
