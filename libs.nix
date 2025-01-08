@@ -63,19 +63,27 @@ rec {
       deps ? [ ],
       shell ? false,
       replaceVariables ? { },
+      elevate ? false,
     }:
     let
       scriptTextPreVars = throwIf (text == null) "script needs text" text;
       scriptText = replaceScriptVariables scriptTextPreVars replaceVariables;
 
       builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
+
+      # Using pkexec to elevate the script using the GUI-sudo-thing
+      elevation =
+        if elevate then
+          ''pkexec env XAUTHORITY=$XAUTHORITY DISPLAY=$DISPLAY WAYLAND_DISPLAY=$WAYLAND_DISPLAY PATH=$PATH''
+        else
+          "";
     in
     pkgs.writeShellScriptBin name ''
       for i in ${strings.concatStringsSep " " deps}; do
         export PATH="$i/bin:$PATH"
       done
 
-      exec ${builder "${name}-no-deps" scriptText}/bin/${name}-no-deps $@
+      exec ${elevation} ${builder "${name}-no-deps" scriptText}/bin/${name}-no-deps $@
     '';
 
   # Sanitize a path so that it doesn't cause problems in the nix store

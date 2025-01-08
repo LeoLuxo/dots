@@ -21,6 +21,7 @@ let
         # To query and change the boot order 
         pkgs.efibootmgr
       ];
+      elevate = true;
     }
   );
 in
@@ -29,8 +30,6 @@ in
     (mkDesktopItem {
       name = "boot-windows";
       desktopName = "Boot into Windows";
-
-      # Pkexec here will launch the GUI elevator
       exec = "${package}/bin/boot-windows";
       icon = "${directories.images.windows7}";
     })
