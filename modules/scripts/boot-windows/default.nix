@@ -26,15 +26,16 @@ in
 {
   imports = [
     (mkDesktopItem {
-      name = "boot-windows";
+      inherit package;
+
       desktopName = "Boot into Windows";
-      exec = "${package}";
+      # exec = "${package}";
       icon = "${directories.images.windows7}";
-      categories = [
-        "Network"
-        "FileTransfer"
-        "P2P"
-      ];
+      # categories = [
+      #   "Network"
+      #   "FileTransfer"
+      #   "P2P"
+      # ];
     })
   ];
 
