@@ -30,7 +30,7 @@ in
 
       name = "boot-windows";
       desktopName = "Boot into Windows";
-      exec = "firefox";
+      exec = "boot-windows";
       icon = "${directories.images.windows7}";
       # categories = [
       #   "Network"
