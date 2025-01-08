@@ -71,12 +71,8 @@ rec {
 
       builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
 
-      # Using pkexec to elevate the script using the GUI-sudo-thing
-      elevation =
-        if elevate then
-          ''pkexec env XAUTHORITY=$XAUTHORITY DISPLAY=$DISPLAY WAYLAND_DISPLAY=$WAYLAND_DISPLAY PATH=$PATH''
-        else
-          "";
+      # Using sudo to elevate the script
+      elevation = if elevate then ''sudo'' else "";
     in
     pkgs.writeShellScriptBin name ''
       for i in ${strings.concatStringsSep " " deps}; do
@@ -384,12 +380,24 @@ rec {
       package ? null,
       name ? package.name or package.pname,
       desktopName ? toPascalCaseWithSpaces name,
-      exec ? package,
+      exec ? "${package}/bin/${name}",
       icon ? null,
       keywords ? [ name ],
       categories ? [ ],
+      elevate ? false,
     }:
     let
+      # Using pkexec to elevate the script using the GUI-sudo-thing
+      wrappedExec =
+        if elevate then
+          # Need to create an entire wrapped script because gnome complain about $ in the Exec field
+          writeScriptWithDeps {
+            name = "${name}-desktop-icon-wrapper";
+            text = ''pkexec env XAUTHORITY=$XAUTHORITY DISPLAY=$DISPLAY WAYLAND_DISPLAY=$WAYLAND_DISPLAY PATH=$PATH ${exec}'';
+          }
+        else
+          exec;
+
       desktopItemPackage =
         {
           stdenv,
@@ -407,11 +415,11 @@ rec {
               inherit
                 name
                 desktopName
-                exec
                 icon
                 keywords
                 categories
                 ;
+              exec = wrappedExec;
             }
           );
         });

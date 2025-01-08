@@ -3,7 +3,6 @@
   constants,
   extra-libs,
   directories,
-  lib,
   ...
 }:
 
@@ -21,17 +20,16 @@ let
         # To query and change the boot order 
         pkgs.efibootmgr
       ];
-      elevate = true;
     }
   );
 in
 {
   imports = [
     (mkDesktopItem {
-      name = "boot-windows";
+      inherit package;
       desktopName = "Boot into Windows";
-      exec = "${package}/bin/boot-windows";
       icon = "${directories.images.windows7}";
+      elevate = true;
     })
   ];
 
