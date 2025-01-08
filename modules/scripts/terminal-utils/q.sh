@@ -28,7 +28,7 @@ checkfile() {
 	fi
 
 	# Set last dir for qq alias
-	Q_LAST_DIR=$(dirname $(realpath "$1"))
+	echo $(dirname $(realpath "$1")) >/tmp/Q_LAST_DIR
 }
 
 checkdir() {
@@ -38,7 +38,7 @@ checkdir() {
 	tree -a -L $depth --dirsfirst -h -v "$1" -C
 
 	# Set last dir for qq alias
-	Q_LAST_DIR=$(realpath "$1")
+	echo $(realpath "$1") >/tmp/Q_LAST_DIR
 }
 
 checkpath() {
