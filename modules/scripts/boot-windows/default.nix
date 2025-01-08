@@ -31,7 +31,7 @@ in
       name = "boot-windows";
       desktopName = "Boot into Windows";
       exec = "firefox";
-      icon = "${directories.images.syncthing}";
+      icon = "${directories.images.windows7}";
       # categories = [
       #   "Network"
       #   "FileTransfer"
