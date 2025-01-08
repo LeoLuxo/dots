@@ -15,19 +15,30 @@ checkfile() {
 	mime="$(file "$1" --mime)"
 
 	if echo $mime | grep -q "charset=binary"; then
+		# IS binary file, show file info
 		file "$1"
 
 		if echo $mime | grep -q "image"; then
+			# If image, additionally show preview
 			viu --height 20 "$1"
 		fi
 	else
+		# Is text, show contents
 		highlight -O ansi --force "$1"
 	fi
+
+	# Set last dir for qq alias
+	Q_LAST_DIR=$(dirname $(realpath "$1"))
 }
 
 checkdir() {
 	echo -e "${DIR}Directory ${INFO}$(realpath "$1")${RESET}"
+
+	# Show directory tree
 	tree -a -L $depth --dirsfirst -h -v "$1" -C
+
+	# Set last dir for qq alias
+	Q_LAST_DIR=$(realpath "$1")
 }
 
 checkpath() {
