@@ -1,6 +1,14 @@
 { config, ... }:
 
 {
+  # Fix eduroam certificate
+  age.secrets."wifi/eduroam-ca.pem" = {
+    # Required by NetworkManager
+    owner = "root";
+    group = "root";
+    mode = "755";
+  };
+
   networking.networkmanager = {
     # Enable networking with NetworkManager
     enable = true;
@@ -11,7 +19,6 @@
       ];
 
       profiles = {
-
         # Home network
         "Celeste Mountain" = {
           connection = {

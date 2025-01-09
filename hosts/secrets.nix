@@ -14,7 +14,6 @@ let
   # (note to self: the url MUST use git+ssh otherwise it won't properly authenticate and have access to the repo)
   secrets = (builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets").secrets;
 in
-# secrets = (builtins.getFlake "github:LeoLuxo/nix-secrets").secrets;
 {
 
   imports = [
