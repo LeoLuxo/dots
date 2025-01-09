@@ -84,7 +84,7 @@ rebuild() {
 	git push &>/dev/null
 }
 
-rebuild
+rebuild $@
 status=$?
 
 # Revert staging in case an error happened
