@@ -72,7 +72,6 @@
             hostKeyPublic = "${hostKeyPrivate}.pub";
 
             dotsRepoPath = (nixosPath + "/dots");
-            secretsRepoPath = (nixosPath + "/secrets");
           };
 
           const = {
