@@ -2,7 +2,6 @@
   pkgs,
   constants,
   extra-libs,
-  directories,
   ...
 }:
 
@@ -27,7 +26,7 @@ in
   imports = [
     (mkDesktopItem {
       desktopName = "Boot into Windows";
-      icon = "${directories.images.windows7}";
+      icon = "${./windows7.png}";
       elevate = true;
 
       inherit package;

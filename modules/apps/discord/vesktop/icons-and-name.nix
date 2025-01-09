@@ -1,4 +1,4 @@
-{ directories, ... }:
+{ ... }:
 {
 
   # Overlay to override app icons
@@ -34,13 +34,13 @@
           preBuild =
             (oldAttrs.preBuild or "")
             + ''
-              cp -f "${directories.images.discord-logo-white}" build/Icon.png
+              cp -f "${./assets/discord.png}" build/Icon.png
 
-              cp -f "${directories.images.discord-logo-white}" static/icon.png
-              cp -f "${directories.icons.discord}" static/icon.ico
+              cp -f "${./assets/discord.png}" static/icon.png
+              cp -f "${./assets/discord.ico}" static/icon.ico
 
               # Dancing anime gif
-              cp -f "${directories.images.bongo-cat}" static/shiggy.gif
+              cp -f "${./assets/bongo-cat.gif}" static/shiggy.gif
             '';
 
           # Add a preinstall action to overwrite the desktop icon
@@ -48,7 +48,7 @@
             (oldAttrs.preInstall or "")
             + ''
               rm build/icon_*x32.png
-              cp "${directories.images.discord-logo-white}" build/icon_512x512x32.png
+              cp "${./assets/discord.png}" build/icon_512x512x32.png
             '';
         }
       );

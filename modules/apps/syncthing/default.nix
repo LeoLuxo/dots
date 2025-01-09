@@ -1,5 +1,4 @@
 {
-  directories,
   extra-libs,
   ...
 }:
@@ -13,7 +12,7 @@ in
     (mkDesktopItem {
       name = "syncthing";
       exec = "firefox \"http://127.0.0.1:8384/\"";
-      icon = "${directories.images.syncthing}";
+      icon = "${./syncthing.png}";
       categories = [
         "Network"
         "FileTransfer"
