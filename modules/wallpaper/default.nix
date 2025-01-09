@@ -21,6 +21,10 @@ let
   cfg = config.wallpaper;
 
   heicConverter = file: pkgs.callPackage ./heic-converter.nix { inherit file; };
+
+  hasExtension =
+    extension: fileName:
+    (builtins.elemAt (builtins.match ".*\\.([a-zA-Z0-9]+)" fileName) 0) == extension;
 in
 {
   imports = [
@@ -59,12 +63,15 @@ in
 
     isHeic = options.mkOption {
       type = types.bool;
-      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".heic" cfg.image);
+      default =
+        (filesystem.pathIsRegularFile cfg.image)
+        && (hasExtension ".heic" (lib.traceValSeq (builtins.toString cfg.image)));
     };
 
     isStw = options.mkOption {
       type = types.bool;
-      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".stw" cfg.image);
+      default =
+        (filesystem.pathIsRegularFile cfg.image) && (hasExtension ".stw" (builtins.toString cfg.image));
     };
 
     isTimed = options.mkOption {
