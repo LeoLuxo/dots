@@ -6,17 +6,26 @@
 }:
 
 let
-  inherit (constants) userHome system secretsRepoPath;
+  inherit (constants)
+    system
+    secretsRepoPath
+    userKeyPrivate
+    hostKeyPrivate
+    ;
   inherit (lib) attrsets strings;
 in
 
 let
-  # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
+  # Fetch secrets from private repo
+  # Secrets are SUPPOSED to be fully indepent from the dots in my opinion, thus this (intentionally) makes my dots impure
   secretsPath = builtins.fetchGit {
     # url = "ssh://git@github.com/LeoLuxo/nix-secrets";
     url = secretsRepoPath;
   };
+
+  # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
   secretsFile = "${secretsPath}/secrets.nix";
+
   extractedSecrets =
     if builtins.pathExists secretsFile then
       attrsets.mapAttrs' (
@@ -43,8 +52,8 @@ in
   age = {
     # Use the host key OR user key
     identityPaths = [
-      "/etc/ssh/ssh_host_ed25519_key"
-      "${userHome}/.ssh/id_ed25519"
+      hostKeyPrivate
+      userKeyPrivate
     ];
 
     # Add automatically extracted secrets to agenix config

@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (constants) user;
+  inherit (constants) user userKeyPublic;
 in
 
 {
@@ -24,7 +24,7 @@ in
 
     # Needed for signing with ssh key
     # ref: https://jeppesen.io/git-commit-sign-nix-home-manager-ssh/
-    home.file.".ssh/allowed_signers".text = "* ${builtins.readFile /home/${user}/.ssh/id_ed25519.pub}";
+    home.file.".ssh/allowed_signers".text = "* ${builtins.readFile userKeyPublic}";
 
     programs.git = {
       enable = true;
@@ -67,7 +67,7 @@ in
 
         # Sign all commits using ssh key
         commit.gpgsign = true;
-        user.signingkey = "~/.ssh/id_ed25519.pub";
+        user.signingkey = "${userKeyPublic}";
         gpg = {
           format = "ssh";
           ssh.allowedSignersFile = "~/.ssh/allowed_signers";
