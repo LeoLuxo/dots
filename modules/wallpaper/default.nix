@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (extra-libs) sanitizePath mkQuickPatch mkBoolDefaultTrue;
+  inherit (extra-libs) mkQuickPatch mkBoolDefaultTrue;
   inherit (lib)
     options
     filesystem
@@ -21,10 +21,6 @@ let
   cfg = config.wallpaper;
 
   heicConverter = file: pkgs.callPackage ./heic-converter.nix { inherit file; };
-
-  hasExtension =
-    extension: fileName:
-    (builtins.elemAt (builtins.match ".*\\.([a-zA-Z0-9]+)" fileName) 0) == extension;
 in
 {
   imports = [
