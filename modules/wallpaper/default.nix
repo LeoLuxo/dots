@@ -79,7 +79,7 @@ in
     let
       sanitizedImage = sanitizePath (lib.traceValSeq cfg.image);
 
-      wallpaper = if cfg.isHeic then "${heicConverter cfg.image}/wallpaper.stw" else cfg.image;
+      wallpaper = if cfg.isHeic then "${heicConverter sanitizedImage}/wallpaper.stw" else sanitizedImage;
     in
     modules.mkIf cfg.enable {
       assertions = [
