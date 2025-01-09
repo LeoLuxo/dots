@@ -62,9 +62,14 @@ in
       default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".heic" cfg.image);
     };
 
+    isStw = options.mkOption {
+      type = types.bool;
+      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".stw" cfg.image);
+    };
+
     isTimed = options.mkOption {
       type = types.bool;
-      default = cfg.isHeic || (builtins.pathExists "${cfg.image}/wallpaper.stw");
+      default = cfg.isHeic || cfg.isStw;
     };
 
     refreshOnUnlock = mkBoolDefaultTrue;
@@ -72,13 +77,9 @@ in
 
   config =
     let
-      image = sanitizePath cfg.image;
+      sanitizedImage = sanitizePath (lib.traceValSeq cfg.image);
 
-      wallpaper =
-        if cfg.isTimed then
-          "${if cfg.isHeic then (heicConverter image) else image}/wallpaper.stw"
-        else
-          image;
+      wallpaper = if cfg.isHeic then "${heicConverter cfg.image}/wallpaper.stw" else cfg.image;
     in
     modules.mkIf cfg.enable {
       assertions = [

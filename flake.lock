@@ -392,6 +392,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_4": {
+      "locked": {
+        "lastModified": 1736344531,
+        "narHash": "sha256-8YVQ9ZbSfuUk2bUf2KRj60NRraLPKPS0Q4QFTbc+c2c=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "bffc22eb12172e6db3c5dde9e3e5628f8e3e7912",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -402,7 +418,8 @@
         "nix-vscode-extensions": "nix-vscode-extensions",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "wallpapers": "wallpapers"
       }
     },
     "stylix": {
@@ -529,6 +546,24 @@
         "owner": "tinted-theming",
         "repo": "tinted-tmux",
         "type": "github"
+      }
+    },
+    "wallpapers": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "lastModified": 1736453618,
+        "narHash": "sha256-sjhFsYgkS2tbxKvHh7rixxSXmccqj5mhqvt+yMJfPyg=",
+        "ref": "refs/heads/main",
+        "rev": "90931d9a954ed85042e3ec04ed26ae180ffd10b6",
+        "revCount": 17,
+        "type": "git",
+        "url": "ssh://git@github.com/LeoLuxo/dots-wallpapers"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/LeoLuxo/dots-wallpapers"
       }
     }
   },
