@@ -1,42 +1,20 @@
 {
-  lib,
   agenix,
   constants,
   ...
 }:
 
 let
-  inherit (constants)
-    system
-    secretsRepoPath
-    userKeyPrivate
-    hostKeyPrivate
-    ;
-  inherit (lib) attrsets strings;
+  inherit (constants) system userKeyPrivate hostKeyPrivate;
 in
 
 let
   # Fetch secrets from private repo
   # Secrets are SUPPOSED to be fully indepent from the dots in my opinion, thus this (intentionally) makes my dots impure
-  secretsPath = builtins.fetchGit {
-    # url = "ssh://git@github.com/LeoLuxo/nix-secrets";
-    url = secretsRepoPath;
-  };
-
-  # Extract all secrets from secrets.nix (used by agenix) and automatically add them to the agenix module config
-  secretsFile = "${secretsPath}/secrets.nix";
-
-  extractedSecrets =
-    if builtins.pathExists secretsFile then
-      attrsets.mapAttrs' (
-        n: _:
-        attrsets.nameValuePair (strings.removeSuffix ".age" n) {
-          file = "${secretsPath}/${n}";
-        }
-      ) (import secretsFile)
-    else
-      { };
+  # (note to self: the url MUST use git+ssh otherwise it won't properly authenticate and have access to the repo)
+  secrets = (builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets").secrets;
 in
+# secrets = (builtins.getFlake "github:LeoLuxo/nix-secrets").secrets;
 {
 
   imports = [
@@ -56,16 +34,8 @@ in
       userKeyPrivate
     ];
 
-    # Add automatically extracted secrets to agenix config
-    # And edit some fields where needed by recursive-updating the sets
-    secrets = attrsets.recursiveUpdate extractedSecrets {
-      "wifi/eduroam-ca.pem" = {
-        # Required by NetworkManager
-        owner = "root";
-        group = "root";
-        mode = "755";
-      };
-    };
+    # Add secrets from the flake to agenix config
+    inherit secrets;
   };
 
 }
