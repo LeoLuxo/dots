@@ -2,6 +2,7 @@
   pkgs,
   directories,
   constants,
+  wallpapers,
   ...
 }:
 
@@ -34,7 +35,7 @@ in
     apps.steam
   ];
 
-  # wallpaper.image = directories.wallpapers.dynamic."Tree and shore";
+  wallpaper.image = wallpapers.dynamic."Tree and shore";
 
   rice.peppy = {
     enable = true;
