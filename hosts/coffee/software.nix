@@ -54,7 +54,7 @@ in
     ];
   };
 
-  # wallpaper.image = wallpapers.dynamic."Outset Island";
+  wallpaper.image = wallpapers.dynamic."Outset Island";
   # wallpaper.image = lib.traceValSeq wallpapers.static."Mountain Village";
 
   # Set default shell
