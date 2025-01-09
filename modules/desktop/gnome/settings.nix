@@ -28,7 +28,7 @@ in
       dconf.settings = {
         # Power settings
         "org/gnome/settings-daemon/plugins/power" = {
-          power-buttonAction =
+          power-button-action =
             {
               "power off" = "interactive";
               "suspend" = "suspend";
