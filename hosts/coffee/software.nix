@@ -1,7 +1,9 @@
 {
   pkgs,
   directories,
+  lib,
   constants,
+  wallpapers,
   ...
 }:
 
@@ -52,8 +54,8 @@ in
     ];
   };
 
-  # wallpaper.image = directories.wallpapers.dynamic."Outset Island";
-  # wallpaper.image = directories.wallpapers.static."Mountain Village";
+  # wallpaper.image = wallpapers.dynamic."Outset Island";
+  # wallpaper.image = lib.traceValSeq wallpapers.static."Mountain Village";
 
   # Set default shell
   shell.default = "fish";

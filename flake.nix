@@ -3,12 +3,21 @@
 
   inputs = {
     # Using nixpkgs unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
 
     # Manages dotfiles in nix
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # My wallpapers
+    # Is an external flake to make sure this repo stays small if the wallpapers aren't used
+    # (The url MUST use git+ssh otherwise it won't properly authenticate and have access to the private repo)
+    wallpapers = {
+      url = "git+ssh://git@github.com/LeoLuxo/dots-wallpapers";
     };
 
     # Contains certain nixos hardware settings, notably useful for surface laptops
