@@ -77,7 +77,7 @@ in
 
   config =
     let
-      sanitizedImage = sanitizePath (lib.traceValSeq cfg.image);
+      sanitizedImage = lib.traceValSeq (sanitizePath (lib.traceValSeq cfg.image));
 
       wallpaper = if cfg.isHeic then "${heicConverter sanitizedImage}/wallpaper.stw" else sanitizedImage;
     in
