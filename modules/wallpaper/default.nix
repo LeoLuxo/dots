@@ -63,15 +63,12 @@ in
 
     isHeic = options.mkOption {
       type = types.bool;
-      default =
-        (filesystem.pathIsRegularFile cfg.image)
-        && (hasExtension ".heic" (lib.traceValSeq (builtins.toString cfg.image)));
+      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".heic" cfg.image);
     };
 
     isStw = options.mkOption {
       type = types.bool;
-      default =
-        (filesystem.pathIsRegularFile cfg.image) && (hasExtension ".stw" (builtins.toString cfg.image));
+      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".stw" cfg.image);
     };
 
     isTimed = options.mkOption {
@@ -84,9 +81,7 @@ in
 
   config =
     let
-      sanitizedImage = lib.traceValSeq (sanitizePath (lib.traceValSeq cfg.image));
-
-      wallpaper = if cfg.isHeic then "${heicConverter sanitizedImage}/wallpaper.stw" else sanitizedImage;
+      wallpaper = if cfg.isHeic then "${heicConverter cfg.image}/wallpaper.stw" else cfg.image;
     in
     modules.mkIf cfg.enable {
       assertions = [
