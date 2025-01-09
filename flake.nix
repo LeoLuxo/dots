@@ -2,17 +2,17 @@
   description = "My NixOS configuration :)";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
+    # Using nixpkgs unstable
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # Contains certain nixos hardware settings, notably for surface laptops
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Manages dotfiles in nix
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Contains certain nixos hardware settings, notably useful for surface laptops
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Encryption thingie, used for secrets in nix
     agenix = {
@@ -65,6 +65,12 @@
           defaultConstants = rec {
             userHome = "/home/${user}";
             nixosPath = "/etc/nixos";
+
+            userKeyPrivate = "${userHome}/.ssh/id_ed25519";
+            userKeyPublic = "${userKeyPrivate}.pub";
+            hostKeyPrivate = "/etc/ssh/ssh_host_ed25519_key";
+            hostKeyPublic = "${hostKeyPrivate}.pub";
+
             dotsRepoPath = (nixosPath + "/dots");
             secretsRepoPath = (nixosPath + "/secrets");
           };
