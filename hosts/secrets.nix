@@ -12,7 +12,7 @@ let
   # Fetch secrets from private repo
   # Secrets are SUPPOSED to be fully indepent from the dots in my opinion, thus this (intentionally) makes my dots impure
   # (note to self: the url MUST use git+ssh otherwise it won't properly authenticate and have access to the repo)
-  secrets = (builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets").secrets;
+  flake = builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets";
 in
 {
 
@@ -34,7 +34,7 @@ in
     ];
 
     # Add secrets from the flake to agenix config
-    inherit secrets;
+    secrets = flake.ageSecrets;
   };
 
 }
