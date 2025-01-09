@@ -53,9 +53,7 @@ in
     ];
   };
 
-  # wallpaper.image = wallpapers.dynamic."Outset Island";
-  # wallpaper.image = wallpapers.static."Mountain Village";
-  wallpaper.image = wallpapers.dynamic."Tree and shore";
+  wallpaper.image = wallpapers.static."Mountain Village";
 
   # Set default shell
   shell.default = "fish";
