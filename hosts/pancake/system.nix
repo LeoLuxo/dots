@@ -29,14 +29,6 @@
     };
   };
 
-  # Fix eduroam
-  age.secrets."wifi/eduroam-ca.pem" = {
-    # Required by NetworkManager
-    owner = "root";
-    group = "root";
-    mode = "755";
-  };
-
   # SD Card
   fileSystems."/stuff" = {
     device = "/dev/disk/by-label/stuff";
