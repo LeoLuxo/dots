@@ -34,7 +34,7 @@ in
     apps.steam
   ];
 
-  wallpaper.image = directories.wallpapers.dynamic."Tree and shore";
+  # wallpaper.image = directories.wallpapers.dynamic."Tree and shore";
 
   rice.peppy = {
     enable = true;

@@ -53,7 +53,7 @@ in
   };
 
   # wallpaper.image = directories.wallpapers.dynamic."Outset Island";
-  wallpaper.image = directories.wallpapers.static."Mountain Village";
+  # wallpaper.image = directories.wallpapers.static."Mountain Village";
 
   # Set default shell
   shell.default = "fish";
