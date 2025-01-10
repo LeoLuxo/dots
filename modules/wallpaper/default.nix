@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (extraLib) mkQuickPatch mkBoolDefaultTrue;
+  inherit (extraLib) mkQuickPatch mkBoolDefaultTrue sanitizePath;
   inherit (lib)
     options
     filesystem
@@ -18,9 +18,9 @@ let
 in
 
 let
-  cfg = config.wallpaper;
-
   heicConverter = file: pkgs.callPackage ./heic-converter.nix { inherit file; };
+  cfg = config.wallpaper;
+  sanitizedImage = sanitizePath cfg.image;
 in
 {
   imports = [
@@ -59,17 +59,26 @@ in
 
     isHeic = options.mkOption {
       type = types.bool;
-      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".heic" cfg.image);
+      default =
+        (filesystem.pathIsRegularFile sanitizedImage) && (strings.hasSuffix ".heic" sanitizedImage);
     };
 
     isStw = options.mkOption {
       type = types.bool;
-      default = (filesystem.pathIsRegularFile cfg.image) && (strings.hasSuffix ".stw" cfg.image);
+      default =
+        (filesystem.pathIsRegularFile sanitizedImage) && (strings.hasSuffix ".stw" sanitizedImage);
+    };
+
+    isStwDir = options.mkOption {
+      type = types.bool;
+      default =
+        (filesystem.pathIsDirectory sanitizedImage)
+        && (builtins.pathExists "${sanitizedImage}/wallpaper.stw");
     };
 
     isTimed = options.mkOption {
       type = types.bool;
-      default = cfg.isHeic || cfg.isStw;
+      default = cfg.isHeic || cfg.isStw || cfg.isStwDir;
     };
 
     refreshOnUnlock = mkBoolDefaultTrue;
@@ -77,7 +86,9 @@ in
 
   config =
     let
-      wallpaper = if cfg.isHeic then "${heicConverter cfg.image}/wallpaper.stw" else cfg.image;
+      convertedImage = if cfg.isHeic then heicConverter sanitizedImage else sanitizedImage;
+      finalImage =
+        if cfg.isHeic || cfg.isStwDir then "${convertedImage}/wallpaper.stw" else convertedImage;
     in
     modules.mkIf cfg.enable {
       assertions = [
@@ -99,13 +110,13 @@ in
         serviceConfig = {
           Type = "oneshot";
           ExecStart = ''
-            ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${wallpaper}
+            ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${finalImage}
           '';
         };
         restartIfChanged = true;
         restartTriggers = [
           cfg.mode
-          wallpaper
+          finalImage
         ];
         wantedBy = [ "graphical-session.target" ];
       };
@@ -124,15 +135,15 @@ in
           Type = "simple";
           ExecStart = (
             pkgs.writeShellScript "wallutils-timed" ''
-              pushd "${builtins.dirOf wallpaper}"
-              ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${wallpaper}"
+              pushd "${builtins.dirOf finalImage}"
+              ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${finalImage}"
             ''
           );
         };
         restartIfChanged = true;
         restartTriggers = [
           cfg.mode
-          wallpaper
+          finalImage
         ];
         wantedBy = [ "graphical-session.target" ];
       };
