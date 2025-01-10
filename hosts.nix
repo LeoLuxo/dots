@@ -5,9 +5,11 @@ mkHost: {
     mkHost
       [
         ./hosts/coffee
+
         ./hosts/base.nix
         ./hosts/secrets.nix
         ./hosts/keybinds.nix
+        ./hosts/xdgDirs.nix
       ]
       {
         user = "lili";
@@ -20,9 +22,11 @@ mkHost: {
     mkHost
       [
         ./hosts/pancake
+
         ./hosts/base.nix
         ./hosts/secrets.nix
         ./hosts/keybinds.nix
+        ./hosts/xdgDirs.nix
       ]
       {
         user = "lili";
