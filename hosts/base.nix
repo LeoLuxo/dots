@@ -70,8 +70,6 @@ in
   environment.systemPackages = with pkgs; [
     nano
     wget
-
-    # Still include git globally even if home-manager takes care of its config
     git
   ];
 
