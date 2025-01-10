@@ -1,6 +1,6 @@
 {
   lib,
-  directories,
+  nixosModules,
   extra-libs,
   config,
   ...
@@ -48,7 +48,7 @@ in
     };
   };
 
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     # Triple buffering fork thing
     ./triple-buffering.nix
 

@@ -1,7 +1,7 @@
-{ directories, ... }:
+{ nixosModules, ... }:
 
 {
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     desktop.gnome.extensions.ddterm
   ];
 }
