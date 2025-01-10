@@ -405,7 +405,6 @@ rec {
           stdenv,
           makeDesktopItem,
           copyDesktopItems,
-          directories,
         }:
         stdenv.mkDerivation (finalAttrs: {
           pname = "${name}-desktop-icon";
@@ -429,13 +428,12 @@ rec {
     {
       pkgs,
       constants,
-      directories,
       ...
     }:
     {
       home-manager.users.${constants.user} = {
         home.packages = [
-          (pkgs.callPackage desktopItemPackage { inherit directories; })
+          (pkgs.callPackage desktopItemPackage { })
         ];
       };
     };

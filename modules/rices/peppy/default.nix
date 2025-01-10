@@ -1,8 +1,9 @@
 {
-  directories,
+  nixosModules,
   lib,
   config,
   extra-libs,
+  wallpapers,
   ...
 }:
 
@@ -12,7 +13,7 @@ let
 in
 
 {
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     wallpaper
     fonts
 
@@ -66,10 +67,10 @@ in
       accent = config.rice.peppy.theme.accent;
     in
     {
-      # wallpaper = {
-      # enable = mkDefault true;
-      # image = mkDefault directories.wallpapers.static."nixos-catppuccin";
-      # };
+      wallpaper = {
+        enable = mkDefault true;
+        image = mkDefault wallpapers.static."NixOS Catppuccin";
+      };
 
       # Apply catppuccin to certain apps
       syncedFiles.overrides = {

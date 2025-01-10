@@ -1,7 +1,7 @@
 {
   config,
   extra-libs,
-  directories,
+  nixosModules,
   ...
 }:
 let
@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-    directories.modules.defaults
+    nixosModules.defaults
 
     (mkGlobalKeybind {
       name = "Open terminal";

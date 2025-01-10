@@ -63,7 +63,7 @@
     let
       # Function to create a nixos host config
       mkHost =
-        modules:
+        hostModules:
         {
           user,
           hostName,
@@ -83,24 +83,25 @@
             dotsRepoPath = (nixosPath + "/dots");
           };
 
-          const = {
-            constants = defaultConstants // hostConstants;
+          constants = defaultConstants // hostConstants;
+
+          extra-libs = import ./libs.nix (inputs // { inherit constants; });
+
+          nixosModules = extra-libs.findFiles {
+            dir = ./modules;
+            extensions = [ "nix" ];
+            defaultFiles = [ "default.nix" ];
           };
 
-          libs = {
-            extra-libs = import ./libs.nix (inputs // const);
-          };
-
-          dirs = {
-            directories = import ./dirs.nix (inputs // libs // const);
-          };
         in
         nixpkgs.lib.nixosSystem {
           inherit (hostConstants) system;
-          inherit modules;
+          modules = hostModules;
 
           # Additional args passed to the module
-          specialArgs = inputs // libs // dirs // const;
+          specialArgs = inputs // {
+            inherit extra-libs nixosModules constants;
+          };
         };
 
     in

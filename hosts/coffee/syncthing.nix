@@ -1,6 +1,6 @@
 {
   config,
-  directories,
+  nixosModules,
   constants,
   ...
 }:
@@ -24,7 +24,7 @@ let
   };
 in
 {
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     apps.syncthing
   ];
 

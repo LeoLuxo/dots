@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  directories,
+  nixosModules,
   constants,
   ...
 }:
@@ -11,7 +11,7 @@ let
 in
 
 {
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     # Require fonts
     fonts
   ];

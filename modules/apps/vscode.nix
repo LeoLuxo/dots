@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  directories,
+  nixosModules,
   constants,
   extra-libs,
   ...
@@ -13,7 +13,7 @@ let
 in
 
 {
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     # Require fonts for vscode
     fonts
 

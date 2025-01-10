@@ -4,7 +4,7 @@
   catppuccin,
   constants,
   extra-libs,
-  directories,
+  nixosModules,
   ...
 }:
 
@@ -34,7 +34,7 @@ in
     };
   };
 
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     catppuccin.nixosModules.catppuccin
 
     desktop.gnome.gnome

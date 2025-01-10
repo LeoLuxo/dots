@@ -1,6 +1,6 @@
 {
   pkgs,
-  directories,
+  nixosModules,
   constants,
   wallpapers,
   ...
@@ -12,7 +12,7 @@ in
 
 {
   # Include global modules
-  imports = with directories.modules; [
+  imports = with nixosModules; [
     rices.peppy
 
     shell.bash
