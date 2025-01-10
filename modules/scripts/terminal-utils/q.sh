@@ -11,11 +11,11 @@ RESET='\033[0m'
 depth=${DEPTH:-1}
 
 checkfile() {
-	echo -e "${FILE}File ${INFO}$(realpath "$1")${RESET}"
 	mime="$(file "$1" --mime)"
 
 	if echo $mime | grep -q "charset=binary"; then
 		# IS binary file, show file info
+		echo -e "${FILE}Binary file ${INFO}$(realpath "$1")${RESET}"
 		file "$1"
 
 		if echo $mime | grep -q "image"; then
@@ -24,6 +24,7 @@ checkfile() {
 		fi
 	else
 		# Is text, show contents
+		echo -e "${FILE}Text file ${INFO}$(realpath "$1")${RESET}"
 		highlight -O ansi --force "$1"
 	fi
 
