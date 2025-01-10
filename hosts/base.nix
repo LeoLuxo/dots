@@ -3,7 +3,7 @@
   pkgs,
   home-manager,
   constants,
-  directories,
+  nixosModules,
   ...
 }:
 
@@ -16,7 +16,7 @@ in
     # Include home manager module
     home-manager.nixosModules.home-manager
 
-    directories.modules.defaults
+    nixosModules.defaults
   ];
 
   # Allow unfree packages
