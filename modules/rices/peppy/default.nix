@@ -2,14 +2,14 @@
   nixosModules,
   lib,
   config,
-  extra-libs,
+  extraLib,
   wallpapers,
   ...
 }:
 
 let
   inherit (lib) mkDefault options types;
-  inherit (extra-libs) mkBoolDefaultFalse;
+  inherit (extraLib) mkBoolDefaultFalse;
 in
 
 {

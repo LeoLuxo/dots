@@ -2,14 +2,14 @@
   pkgs,
   nix-index-database,
   constants,
-  extra-libs,
+  extraLib,
   config,
   ...
 }:
 
 let
   inherit (constants) user userHome dotsRepoPath;
-  inherit (extra-libs)
+  inherit (extraLib)
     mkGlobalKeybind
     mkShellHistoryAlias
     writeScriptWithDeps

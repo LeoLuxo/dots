@@ -1,13 +1,13 @@
 {
   pkgs,
   constants,
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkDesktopItem writeScriptWithDeps;
+  inherit (extraLib) mkDesktopItem writeScriptWithDeps;
 in
 
 let

@@ -85,9 +85,9 @@
 
           constants = defaultConstants // hostConstants;
 
-          extra-libs = import ./libs.nix (inputs // { inherit constants; });
+          extraLib = import ./libs.nix (inputs // { inherit constants; });
 
-          nixosModules = extra-libs.findFiles {
+          nixosModules = extraLib.findFiles {
             dir = ./modules;
             extensions = [ "nix" ];
             defaultFiles = [ "default.nix" ];
@@ -100,7 +100,7 @@
 
           # Additional args passed to the module
           specialArgs = inputs // {
-            inherit extra-libs nixosModules constants;
+            inherit extraLib nixosModules constants;
           };
         };
 

@@ -3,13 +3,13 @@
   pkgs,
   nixosModules,
   constants,
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkSyncedMergedJSON mkSyncedPath;
+  inherit (extraLib) mkSyncedMergedJSON mkSyncedPath;
 in
 
 {

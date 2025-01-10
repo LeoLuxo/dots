@@ -3,13 +3,13 @@
   pkgs,
   constants,
   lib,
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkBoolDefaultTrue mkSubmodule mkBoolDefaultFalse;
+  inherit (extraLib) mkBoolDefaultTrue mkSubmodule mkBoolDefaultFalse;
   inherit (lib) options types;
 in
 
