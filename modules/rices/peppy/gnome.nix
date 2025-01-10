@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  catppuccin,
   constants,
   extraLib,
   nixosModules,
@@ -35,8 +34,6 @@ in
   };
 
   imports = with nixosModules; [
-    catppuccin.nixosModules.catppuccin
-
     desktop.gnome.gnome
     desktop.gnome.extensions.blur-my-shell
     desktop.gnome.extensions.clipboard-indicator
@@ -54,20 +51,7 @@ in
       cfg = config.rice.peppy;
     in
     {
-      catppuccin = {
-        # Enable the theme for all compatible apps
-        enable = true;
-
-        # Choose flavor
-        flavor = cfg.theme.flavor;
-        accent = cfg.theme.accent;
-      };
-
       home-manager.users.${user} = {
-        imports = [
-          catppuccin.homeManagerModules.catppuccin
-        ];
-
         # Enable catppuccin for gtk
         gtk = {
           enable = true;
@@ -80,8 +64,6 @@ in
           };
         };
       };
-
-      boot.plymouth.catppuccin.enable = false;
 
       gnome.blur-my-shell = cfg.blur;
     };
