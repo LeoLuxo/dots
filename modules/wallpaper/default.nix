@@ -2,12 +2,12 @@
   pkgs,
   config,
   lib,
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
-  inherit (extra-libs) mkQuickPatch mkBoolDefaultTrue;
+  inherit (extraLib) mkQuickPatch mkBoolDefaultTrue;
   inherit (lib)
     options
     filesystem

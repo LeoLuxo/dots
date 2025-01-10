@@ -1,13 +1,13 @@
 {
   pkgs,
   constants,
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkShellHistoryAlias writeScriptWithDeps;
+  inherit (extraLib) mkShellHistoryAlias writeScriptWithDeps;
 in
 
 {

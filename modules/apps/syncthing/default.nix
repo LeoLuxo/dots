@@ -1,10 +1,10 @@
 {
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
-  inherit (extra-libs) mkDesktopItem;
+  inherit (extraLib) mkDesktopItem;
 in
 
 {

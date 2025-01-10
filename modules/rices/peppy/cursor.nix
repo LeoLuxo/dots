@@ -3,14 +3,14 @@
   lib,
   pkgs,
   constants,
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
   inherit (lib) options types;
   inherit (constants) user;
-  inherit (extra-libs) toPascalCase;
+  inherit (extraLib) toPascalCase;
 in
 
 {

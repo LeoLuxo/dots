@@ -1,9 +1,9 @@
 {
-  extra-libs,
+  extraLib,
   ...
 }:
 let
-  inherit (extra-libs) mkGlobalKeybind;
+  inherit (extraLib) mkGlobalKeybind;
 in
 {
   imports = [

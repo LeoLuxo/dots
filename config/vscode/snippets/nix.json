@@ -31,7 +31,7 @@
 	"NixOS module": {
 		"prefix": "nixos-module",
 		"body": [
-			"{ pkgs, nixosModules, constants, extra-libs, ... }: let inherit (constants) user; inherit (extra-libs); in { imports = with nixosModules; []; home-manager.users.\\${user} = { home.packages = with pkgs; [ ]; }; home-manager.users.\\${user}.xdg.configFile.\"path/to/file\".text = ''''; }"
+			"{ pkgs, nixosModules, constants, extraLib, ... }: let inherit (constants) user; inherit (extraLib); in { imports = with nixosModules; []; home-manager.users.\\${user} = { home.packages = with pkgs; [ ]; }; home-manager.users.\\${user}.xdg.configFile.\"path/to/file\".text = ''''; }"
 		]
 	},
 	"mkGlobalKeybind": {

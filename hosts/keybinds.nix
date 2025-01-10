@@ -1,11 +1,11 @@
 {
   config,
-  extra-libs,
+  extraLib,
   nixosModules,
   ...
 }:
 let
-  inherit (extra-libs) mkGlobalKeybind;
+  inherit (extraLib) mkGlobalKeybind;
 in
 {
   imports = [

@@ -1,12 +1,12 @@
 {
   pkgs,
   constants,
-  extra-libs,
+  extraLib,
   ...
 }:
 let
   inherit (constants) user;
-  inherit (extra-libs) mkSyncedMergedJSON;
+  inherit (extraLib) mkSyncedMergedJSON;
 in
 {
   home-manager.users.${user} = {

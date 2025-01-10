@@ -1,9 +1,9 @@
 {
-  extra-libs,
+  extraLib,
   ...
 }:
 let
-  inherit (extra-libs) mkString;
+  inherit (extraLib) mkString;
 in
 {
   options.defaults = {
