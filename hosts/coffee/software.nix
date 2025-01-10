@@ -54,7 +54,10 @@ in
   };
 
   # wallpaper.image = wallpapers.static."Mountain Village";
-  wallpaper.image = wallpapers.dynamic."Tree and shore";
+  wallpaper.image = builtins.fetchurl {
+    url = "https://upload.wikimedia.org/wikipedia/commons/f/f1/Pillars_of_Creation_%28NIRCam_Image%29.jpg";
+    name = "pillars";
+  };
 
   # Set default shell
   shell.default = "fish";
