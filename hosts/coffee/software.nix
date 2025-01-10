@@ -53,7 +53,8 @@ in
     ];
   };
 
-  wallpaper.image = wallpapers.static."Mountain Village";
+  # wallpaper.image = wallpapers.static."Mountain Village";
+  wallpaper.image = wallpapers.dynamic."Tree and shore";
 
   # Set default shell
   shell.default = "fish";
