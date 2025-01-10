@@ -1,13 +1,13 @@
 {
   pkgs,
   constants,
-  extra-libs,
+  extraLib,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extra-libs) mkGlobalKeybind;
+  inherit (extraLib) mkGlobalKeybind;
 in
 
 {

@@ -3,7 +3,7 @@
   lib,
   catppuccin,
   constants,
-  extra-libs,
+  extraLib,
   nixosModules,
   ...
 }:
@@ -11,7 +11,7 @@
 let
   inherit (lib) options types;
   inherit (constants) user;
-  inherit (extra-libs) mkBoolDefaultTrue mkBoolDefaultFalse mkSubmodule;
+  inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse mkSubmodule;
 in
 
 {
