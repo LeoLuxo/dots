@@ -4,16 +4,21 @@
   config,
   extraLib,
   wallpapers,
+  catppuccin,
+  constants,
   ...
 }:
 
 let
   inherit (lib) mkDefault options types;
   inherit (extraLib) mkBoolDefaultFalse;
+  inherit (constants) user;
 in
 
 {
   imports = with nixosModules; [
+    catppuccin.nixosModules.catppuccin
+
     wallpaper
     fonts
 
@@ -67,9 +72,26 @@ in
       accent = config.rice.peppy.theme.accent;
     in
     {
+      home-manager.users.${user} = {
+        imports = [
+          catppuccin.homeManagerModules.catppuccin
+        ];
+      };
+
+      # Disable catppuccin for the bootloader
+      boot.plymouth.catppuccin.enable = false;
+
       wallpaper = {
         enable = mkDefault true;
         image = mkDefault wallpapers.static."NixOS Catppuccin";
+      };
+
+      catppuccin = {
+        # Enable the theme for all compatible apps
+        enable = true;
+
+        # Choose flavor
+        inherit flavor accent;
       };
 
       # Apply catppuccin to certain apps
