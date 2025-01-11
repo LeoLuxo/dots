@@ -41,7 +41,6 @@ rebuild() {
 	source $NX_PRE_REBUILD
 
 	echo -e "${INFO}NixOS Rebuilding...${RESET}"
-
 	# Rebuild, and if errors occur make sure to exit
 	# tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
 	# warn dirty disables the goddamn git dirty tree message
