@@ -53,7 +53,7 @@ in
     ];
   };
 
-  wallpaper.image = wallpapers.static."RainyDay";
+  # wallpaper.image = wallpapers.static."RainyDay";
 
   # Set default shell
   shell.default = "fish";
