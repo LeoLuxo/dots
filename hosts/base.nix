@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  home-manager,
+  inputs,
   constants,
   nixosModules,
   ...
@@ -14,7 +14,7 @@ in
 {
   imports = [
     # Include home manager module
-    home-manager.nixosModules.home-manager
+    inputs.home-manager.nixosModules.home-manager
 
     nixosModules.defaults
   ];

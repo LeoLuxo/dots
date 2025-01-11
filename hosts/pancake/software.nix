@@ -2,7 +2,7 @@
   pkgs,
   nixosModules,
   constants,
-  wallpapers,
+  inputs,
   ...
 }:
 
@@ -35,7 +35,7 @@ in
     apps.steam
   ];
 
-  wallpaper.image = wallpapers.dynamic."Tree and shore";
+  wallpaper.image = inputs.wallpapers.dynamic."Tree and shore";
 
   rice.peppy = {
     enable = true;

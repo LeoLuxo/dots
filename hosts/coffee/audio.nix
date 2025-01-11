@@ -1,6 +1,6 @@
 {
   pkgs,
-  musnix,
+  inputs,
   constants,
   extraLib,
   ...
@@ -16,7 +16,7 @@ let
 in
 {
   imports = [
-    musnix.nixosModules.musnix
+    inputs.musnix.nixosModules.musnix
 
     # https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/
     (mkGlobalKeybind {

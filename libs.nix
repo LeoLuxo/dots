@@ -1,12 +1,12 @@
 {
-  nixpkgs,
+  inputs,
   constants,
   ...
 }:
 
 let
   inherit (constants) dotsRepoPath system;
-  inherit (nixpkgs) lib;
+  inherit (inputs.nixpkgs) lib;
   inherit (lib)
     strings
     attrsets
@@ -14,7 +14,7 @@ let
     throwIf
     lists
     ;
-  pkgs = nixpkgs.legacyPackages.${system};
+  pkgs = inputs.nixpkgs.legacyPackages.${system};
 in
 
 rec {

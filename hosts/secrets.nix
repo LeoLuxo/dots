@@ -1,5 +1,5 @@
 {
-  agenix,
+  inputs,
   constants,
   ...
 }:
@@ -18,12 +18,12 @@ in
 
   imports = [
     # Include agenix module
-    agenix.nixosModules.default
+    inputs.agenix.nixosModules.default
   ];
 
   environment.systemPackages = [
     # Install agenix CLI
-    agenix.packages.${system}.default
+    inputs.agenix.packages.${system}.default
   ];
 
   age = {

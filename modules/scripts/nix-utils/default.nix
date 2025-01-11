@@ -1,6 +1,6 @@
 {
   pkgs,
-  nix-index-database,
+  inputs,
   constants,
   extraLib,
   config,
@@ -21,7 +21,7 @@ in
 
 {
   imports = [
-    nix-index-database.nixosModules.nix-index
+    inputs.nix-index-database.nixosModules.nix-index
 
     (mkGlobalKeybind {
       name = "Open nx-code";
