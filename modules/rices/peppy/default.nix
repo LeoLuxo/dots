@@ -3,7 +3,6 @@
   lib,
   config,
   extraLib,
-  wallpapers,
   catppuccin,
   constants,
   ...
@@ -83,7 +82,7 @@ in
 
       wallpaper = {
         enable = mkDefault true;
-        image = mkDefault wallpapers.static."NixOS Catppuccin";
+        image = mkDefault ./assets/NixOSCatppuccin;
       };
 
       catppuccin = {
