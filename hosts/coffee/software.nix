@@ -2,7 +2,7 @@
   pkgs,
   nixosModules,
   constants,
-  wallpapers,
+  inputs,
   ...
 }:
 
@@ -53,7 +53,7 @@ in
     ];
   };
 
-  wallpaper.image = wallpapers.static."RainyDay";
+  wallpaper.image = inputs.wallpapers.static."RainyDay";
 
   # Set default shell
   shell.default = "fish";

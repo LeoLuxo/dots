@@ -21,7 +21,9 @@
     };
 
     # Contains certain nixos hardware settings, notably useful for surface laptops
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware/master";
+    };
 
     # Encryption thingie, used for secrets in nix
     agenix = {
@@ -38,7 +40,9 @@
     };
 
     # Catppuccin themes
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+    };
 
     # Pre-built database for nix-index, which is an index of which files are provided by which packages
     nix-index-database = {
@@ -85,7 +89,9 @@
 
           constants = defaultConstants // hostConstants;
 
-          extraLib = import ./libs.nix (inputs // { inherit constants; });
+          extraLib = import ./libs.nix {
+            inherit inputs constants;
+          };
 
           nixosModules = extraLib.findFiles {
             dir = ./modules;
@@ -99,8 +105,13 @@
           modules = hostModules;
 
           # Additional args passed to the module
-          specialArgs = inputs // {
-            inherit extraLib nixosModules constants;
+          specialArgs = {
+            inherit
+              inputs
+              extraLib
+              nixosModules
+              constants
+              ;
           };
         };
 

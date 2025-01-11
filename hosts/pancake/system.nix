@@ -1,13 +1,13 @@
 {
   pkgs,
-  nixos-hardware,
+  inputs,
   ...
 }:
 
 {
   imports = [
     # Include hardware stuff and kernel patches for surface pro 7
-    nixos-hardware.nixosModules.microsoft-surface-pro-intel
+    inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
   ];
 
   desktop.gnome = {
