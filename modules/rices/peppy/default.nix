@@ -82,7 +82,7 @@ in
 
       wallpaper = {
         enable = mkDefault true;
-        image = mkDefault ./assets/NixOSCatppuccin;
+        image = mkDefault ./assets/NixOSCatppuccin.svg;
       };
 
       catppuccin = {
