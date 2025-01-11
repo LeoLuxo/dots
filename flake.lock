@@ -553,11 +553,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1736513169,
-        "narHash": "sha256-tNuydm41BQlm2Pffvv5dmZjbH9if4T5kDcyifkCdKh0=",
+        "lastModified": 1736580623,
+        "narHash": "sha256-nD0TaajopG9Jw6N2uTNl7o+lPtqdf3NiiP7vEXYykD4=",
         "ref": "refs/heads/main",
-        "rev": "ea5ea390f02783109feabf6b0d841d04cc503c13",
-        "revCount": 20,
+        "rev": "ebd9d32175750da03353341cb70b764e7db4acbb",
+        "revCount": 21,
         "type": "git",
         "url": "ssh://git@github.com/LeoLuxo/dots-wallpapers"
       },

@@ -72,4 +72,9 @@ in
       hacks-level = "no artifact";
     };
   };
+
+  # Auto-update wallpaper repo
+  nx.rebuild.preRebuildActions = ''
+    nix flake lock --update-input wallpapers
+  '';
 }
