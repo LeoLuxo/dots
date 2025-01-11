@@ -3,7 +3,7 @@
   lib,
   config,
   extraLib,
-  catppuccin,
+  inputs,
   constants,
   ...
 }:
@@ -16,7 +16,7 @@ in
 
 {
   imports = with nixosModules; [
-    catppuccin.nixosModules.catppuccin
+    inputs.catppuccin.nixosModules.catppuccin
 
     wallpaper
     fonts
@@ -73,7 +73,7 @@ in
     {
       home-manager.users.${user} = {
         imports = [
-          catppuccin.homeManagerModules.catppuccin
+          inputs.catppuccin.homeManagerModules.catppuccin
         ];
       };
 
