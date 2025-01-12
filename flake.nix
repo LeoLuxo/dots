@@ -78,6 +78,7 @@
           defaultConstants = rec {
             userHome = "/home/${user}";
             nixosPath = "/etc/nixos";
+            secretsPath = "${userHome}/misc/secrets";
 
             userKeyPrivate = "${userHome}/.ssh/id_ed25519";
             userKeyPublic = "${userKeyPrivate}.pub";
