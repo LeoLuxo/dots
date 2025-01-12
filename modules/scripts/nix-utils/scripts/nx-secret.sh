@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-EDITOR=nano agenix --edit $@
+pushd ${NX_SECRETS}/secrets
+
+EDITOR=nano
+RULES="${NX_SECRETS}/secrets.nix"
+agenix --edit $@
+
+popd
