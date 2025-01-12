@@ -8,7 +8,12 @@
 }:
 
 let
-  inherit (constants) user userHome dotsRepoPath;
+  inherit (constants)
+    user
+    userHome
+    dotsRepoPath
+    secretsPath
+    ;
   inherit (extraLib)
     mkGlobalKeybind
     mkShellHistoryAlias
@@ -54,6 +59,7 @@ in
       variables = {
         # Set the location of the dots and secrets repos
         NX_DOTS = dotsRepoPath;
+        NX_SECRETS = secretsPath;
 
         # Set the location of the file used for dconf-diff
         NX_DCONF_DIFF = "${userHome}/.nx/dconf_diff";
