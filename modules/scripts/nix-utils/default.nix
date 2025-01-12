@@ -109,6 +109,13 @@ in
           })
 
           (writeScriptWithDeps {
+            name = "nx-secret";
+            file = ./scripts/nx-secret.sh;
+            deps = [ nano ];
+            replaceVariables = variables;
+          })
+
+          (writeScriptWithDeps {
             name = "nx-template";
             file = ./scripts/nx-template.sh;
             replaceVariables = variables;
