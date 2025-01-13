@@ -2,8 +2,8 @@
 
 pushd ${NX_SECRETS}/secrets
 
-EDITOR=nano
-RULES="${NX_SECRETS}/secrets.nix"
+export EDITOR=nano
+export RULES="${NX_SECRETS}/secrets.nix"
 agenix --edit $@
 
 popd
