@@ -6,20 +6,20 @@
 }:
 
 let
-  inherit (constants) user;
+  inherit (constants) user hostName;
 in
 
 {
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      ssh
       sshpass
       restic
     ];
   };
 
   environment.variables = {
-    STORAGE_BOX_ADDR_FILE = config.age.secrets."storage-box-address".path;
-    STORAGE_BOX_PWD_FILE = config.age.secrets."storage-box-pwd".path;
+    RESTIC_PWD_FILE = config.age.secrets."restic/${hostName}-pwd".path;
+    RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
+    RESTIC_STORAGE_BOX_PWD_FILE = config.age.secrets."restic/storage-box-pwd".path;
   };
 }
