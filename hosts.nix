@@ -10,6 +10,7 @@ mkHost: {
         ./hosts/secrets.nix
         ./hosts/keybinds.nix
         ./hosts/xdgDirs.nix
+        ./hosts/restic.nix
       ]
       {
         user = "lili";
@@ -27,6 +28,7 @@ mkHost: {
         ./hosts/secrets.nix
         ./hosts/keybinds.nix
         ./hosts/xdgDirs.nix
+        ./hosts/restic.nix
       ]
       {
         user = "lili";
