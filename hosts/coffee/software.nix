@@ -34,6 +34,8 @@ in
     apps.steam
     apps.qmk
     apps.bitwarden
+
+    apps.distrobox
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
