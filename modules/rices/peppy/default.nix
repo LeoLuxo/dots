@@ -105,11 +105,11 @@ in
           ];
         };
 
-        # "vscode/settings.json" = {
-        #   "workbench.colorTheme" = "Catppuccin Frappé";
-        #   "catppuccin.accentColor" = "lavender";
-        #   "workbench.iconTheme" = "material-icon-theme";
-        # };
+        "vscode/settings.json" = {
+          "workbench.colorTheme" = "Catppuccin Frappé";
+          "catppuccin.accentColor" = "lavender";
+          "workbench.iconTheme" = "material-icon-theme";
+        };
       };
 
       # Install catppuccin extensions to vscode
