@@ -29,7 +29,7 @@ in
     apps.obsidian
     apps.firefox
     apps.discord
-    # apps.vscode
+    apps.vscode
     apps.git
     apps.steam
     apps.qmk
