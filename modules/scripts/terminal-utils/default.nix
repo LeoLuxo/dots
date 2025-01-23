@@ -72,6 +72,8 @@ in
 
       l = "ls -Fhsla";
 
+      c = "$EDITOR .";
+
       "." = "q";
       "qq" = "cd $(cat /tmp/Q_LAST_DIR)";
 
