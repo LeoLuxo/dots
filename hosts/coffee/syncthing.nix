@@ -124,6 +124,7 @@ in
     cat >/stuff/UniCourses/.stignore <<-EOF
       **/target/
       Bachelor*/
+      **/.direnv/
     EOF
   '';
 }
