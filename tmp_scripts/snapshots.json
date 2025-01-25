@@ -2,265 +2,309 @@
   [
     {
       "tags": [
-        "important-docs"
+        "uni-courses"
       ]
     },
     [
       {
-        "time": "2024-08-28T15:50:20.082591500+02:00",
+        "time": "2024-08-28T15:50:27.014816300+02:00",
         "program_version": "restic 0.17.0",
-        "parent": "742d86e9c98aac12294a8002f9e0877aa7acc7e16f35419fb32293a836e6fd97",
-        "tree": "126ed5aaf612eb77c1c97dbf29462c4f9d973aea3f2baa89049a85080f025de8",
+        "parent": "76162ffce28e4c5ba468fb644a0a52b58e7be7f52745742f4336ae5fbb328ed1",
+        "tree": "73cb2d1ed5bfda357d07c63aad899a3b0297c39a3bc73f14b18f131cdd924bf9",
         "paths": [
-          "G:\\Important Docs"
+          "G:\\Uni Courses"
         ],
         "hostname": "neon",
         "username": "NEON\\neon",
         "uid": 0,
         "gid": 0,
         "tags": [
-          "important-docs"
+          "uni-courses"
         ],
-        "original": "9049df17c3aa1905f0ad538645d499303889f7f5cc093eef3838bc56ad6e720c",
+        "original": "82d4d7705788d2424b16deb0b61a81df7de74b8c9992ff33c67fa87f4e501989",
         "summary": {
-          "files_new": 7,
+          "files_new": 13,
           "files_changed": 0,
-          "files_unmodified": 474,
-          "total_files_processed": 481,
-          "total_bytes_processed": 242349218,
-          "dirs_new": 2,
-          "dirs_changed": 5,
-          "dirs_unmodified": 82,
+          "files_unmodified": 22967,
+          "total_files_processed": 22980,
+          "total_bytes_processed": 26521492248,
+          "dirs_new": 3,
+          "dirs_changed": 2,
+          "dirs_unmodified": 4857,
           "total_dirs_processed": 0,
           "total_dirsize_processed": 0,
-          "data_blobs": 0,
-          "tree_blobs": 8,
-          "data_added": 24998,
-          "data_added_packed": 6596,
+          "data_blobs": 11,
+          "tree_blobs": 6,
+          "data_added": 37854,
+          "data_added_packed": 11942,
           "data_added_files": 0,
           "data_added_files_packed": 0,
           "data_added_trees": 0,
           "data_added_trees_packed": 0,
           "command": "",
-          "backup_start": "2024-08-28T15:50:20.082591500+02:00",
-          "backup_end": "2024-08-28T15:50:21.517933100+02:00",
+          "backup_start": "2024-08-28T15:50:27.014816300+02:00",
+          "backup_end": "2024-08-28T15:50:30.779596+02:00",
           "backup_duration": 0.0,
           "total_duration": 0.0
         },
-        "id": "9049df17c3aa1905f0ad538645d499303889f7f5cc093eef3838bc56ad6e720c"
+        "id": "82d4d7705788d2424b16deb0b61a81df7de74b8c9992ff33c67fa87f4e501989"
       },
       {
-        "time": "2024-10-21T14:24:50.743528400+02:00",
+        "time": "2024-08-26T21:13:46.531144600+02:00",
         "program_version": "restic 0.17.0",
-        "parent": "d3e799514e3ad2fa972eb2b3c8465e63df0d81ed4fc272d28572ce924540484b",
-        "tree": "419d66fa0c3722b578e8256dd5d95a55186d55e566ee84e204eb2a71da1c32e3",
+        "tree": "6c074819594089b6a1389063d9671de786c226a7f043e162ba2555204b99cafb",
         "paths": [
-          "G:\\Important Docs"
+          "G:\\Uni Courses"
         ],
         "hostname": "neon",
         "username": "NEON\\neon",
         "uid": 0,
         "gid": 0,
         "tags": [
-          "important-docs"
+          "uni-courses"
         ],
-        "original": "9134427570bed798edb7bf364ad9b2b5e77574af36c905e5a108121ef2142d97",
+        "original": "76162ffce28e4c5ba468fb644a0a52b58e7be7f52745742f4336ae5fbb328ed1",
         "summary": {
-          "files_new": 0,
-          "files_changed": 0,
-          "files_unmodified": 481,
-          "total_files_processed": 481,
-          "total_bytes_processed": 242349218,
-          "dirs_new": 0,
-          "dirs_changed": 1,
-          "dirs_unmodified": 88,
-          "total_dirs_processed": 0,
-          "total_dirsize_processed": 0,
-          "data_blobs": 0,
-          "tree_blobs": 1,
-          "data_added": 296,
-          "data_added_packed": 254,
-          "data_added_files": 0,
-          "data_added_files_packed": 0,
-          "data_added_trees": 0,
-          "data_added_trees_packed": 0,
-          "command": "",
-          "backup_start": "2024-10-21T14:24:50.743528400+02:00",
-          "backup_end": "2024-10-21T14:24:51.833355100+02:00",
-          "backup_duration": 0.0,
-          "total_duration": 0.0
-        },
-        "id": "9134427570bed798edb7bf364ad9b2b5e77574af36c905e5a108121ef2142d97"
-      },
-      {
-        "time": "2024-09-13T19:22:55.309775900+02:00",
-        "program_version": "restic 0.17.0",
-        "parent": "9049df17c3aa1905f0ad538645d499303889f7f5cc093eef3838bc56ad6e720c",
-        "tree": "280731400d9a3b2dc160bd2e3630ac14cc082aa1fefa0ace256dcefa4dc72aa1",
-        "paths": [
-          "G:\\Important Docs"
-        ],
-        "hostname": "neon",
-        "username": "NEON\\neon",
-        "uid": 0,
-        "gid": 0,
-        "tags": [
-          "important-docs"
-        ],
-        "original": "822024dedb4b43d9b09f87d380a27af68f81c6a177f3a37372e29de5fe1782e1",
-        "summary": {
-          "files_new": 0,
-          "files_changed": 0,
-          "files_unmodified": 481,
-          "total_files_processed": 481,
-          "total_bytes_processed": 242349218,
-          "dirs_new": 0,
-          "dirs_changed": 1,
-          "dirs_unmodified": 88,
-          "total_dirs_processed": 0,
-          "total_dirsize_processed": 0,
-          "data_blobs": 0,
-          "tree_blobs": 1,
-          "data_added": 293,
-          "data_added_packed": 254,
-          "data_added_files": 0,
-          "data_added_files_packed": 0,
-          "data_added_trees": 0,
-          "data_added_trees_packed": 0,
-          "command": "",
-          "backup_start": "2024-09-13T19:22:55.309775900+02:00",
-          "backup_end": "2024-09-13T19:22:56.622200300+02:00",
-          "backup_duration": 0.0,
-          "total_duration": 0.0
-        },
-        "id": "822024dedb4b43d9b09f87d380a27af68f81c6a177f3a37372e29de5fe1782e1"
-      },
-      {
-        "time": "2024-09-21T08:35:24.316836+02:00",
-        "program_version": "restic 0.17.0",
-        "parent": "822024dedb4b43d9b09f87d380a27af68f81c6a177f3a37372e29de5fe1782e1",
-        "tree": "ace956b528bcfc20cd61bbd22da8a5678c815b077d1928d5fe7ed22c9e7f395f",
-        "paths": [
-          "G:\\Important Docs"
-        ],
-        "hostname": "neon",
-        "username": "NEON\\neon",
-        "uid": 0,
-        "gid": 0,
-        "tags": [
-          "important-docs"
-        ],
-        "original": "d3e799514e3ad2fa972eb2b3c8465e63df0d81ed4fc272d28572ce924540484b",
-        "summary": {
-          "files_new": 0,
-          "files_changed": 0,
-          "files_unmodified": 481,
-          "total_files_processed": 481,
-          "total_bytes_processed": 242349218,
-          "dirs_new": 0,
-          "dirs_changed": 1,
-          "dirs_unmodified": 88,
-          "total_dirs_processed": 0,
-          "total_dirsize_processed": 0,
-          "data_blobs": 0,
-          "tree_blobs": 1,
-          "data_added": 296,
-          "data_added_packed": 254,
-          "data_added_files": 0,
-          "data_added_files_packed": 0,
-          "data_added_trees": 0,
-          "data_added_trees_packed": 0,
-          "command": "",
-          "backup_start": "2024-09-21T08:35:24.316836+02:00",
-          "backup_end": "2024-09-21T08:35:25.464902800+02:00",
-          "backup_duration": 0.0,
-          "total_duration": 0.0
-        },
-        "id": "d3e799514e3ad2fa972eb2b3c8465e63df0d81ed4fc272d28572ce924540484b"
-      },
-      {
-        "time": "2024-08-26T21:13:35.142948+02:00",
-        "program_version": "restic 0.17.0",
-        "tree": "efbd78a79ccfe3943b87e2d8c350b07e8df7057ddae66c80b2d1b32d0af94e6f",
-        "paths": [
-          "G:\\Important Docs"
-        ],
-        "hostname": "neon",
-        "username": "NEON\\neon",
-        "uid": 0,
-        "gid": 0,
-        "tags": [
-          "important-docs"
-        ],
-        "original": "742d86e9c98aac12294a8002f9e0877aa7acc7e16f35419fb32293a836e6fd97",
-        "summary": {
-          "files_new": 474,
+          "files_new": 22967,
           "files_changed": 0,
           "files_unmodified": 0,
-          "total_files_processed": 474,
-          "total_bytes_processed": 235849562,
-          "dirs_new": 87,
+          "total_files_processed": 22967,
+          "total_bytes_processed": 26521468605,
+          "dirs_new": 4859,
           "dirs_changed": 0,
           "dirs_unmodified": 0,
           "total_dirs_processed": 0,
           "total_dirsize_processed": 0,
-          "data_blobs": 33,
-          "tree_blobs": 88,
-          "data_added": 11209430,
-          "data_added_packed": 10276203,
+          "data_blobs": 40942,
+          "tree_blobs": 4664,
+          "data_added": 21216046413,
+          "data_added_packed": 12586356641,
           "data_added_files": 0,
           "data_added_files_packed": 0,
           "data_added_trees": 0,
           "data_added_trees_packed": 0,
           "command": "",
-          "backup_start": "2024-08-26T21:13:35.142948+02:00",
-          "backup_end": "2024-08-26T21:13:39.419897400+02:00",
+          "backup_start": "2024-08-26T21:13:46.531144600+02:00",
+          "backup_end": "2024-08-26T21:17:17.085865100+02:00",
           "backup_duration": 0.0,
           "total_duration": 0.0
         },
-        "id": "742d86e9c98aac12294a8002f9e0877aa7acc7e16f35419fb32293a836e6fd97"
+        "id": "76162ffce28e4c5ba468fb644a0a52b58e7be7f52745742f4336ae5fbb328ed1"
       },
       {
-        "time": "2023-08-01T09:14:00+02:00",
+        "time": "2024-09-21T08:35:29.872784300+02:00",
         "program_version": "restic 0.17.0",
-        "tree": "5e11c8ae9603c5bca73db66478b598de8740af13629253219b370ec6cbedd380",
+        "parent": "3170eef8fda1b4ccc137e8197004c4a14637e11f06b17abe4ae0520c64f2c761",
+        "tree": "b2f5ac3b1360cf2ae27bdc3b838e36a3a72ae0bf5f7cfe4a71ac32d9bbc8f9e1",
         "paths": [
-          "D:\\Backups\\Important Docs"
+          "G:\\Uni Courses"
         ],
         "hostname": "neon",
         "username": "NEON\\neon",
         "uid": 0,
         "gid": 0,
         "tags": [
-          "important-docs"
+          "uni-courses"
         ],
-        "original": "679a29763c617e7cb4a3f1184c94f202b9b49abf32d6984ae8b8a460555e5715",
+        "original": "d8cf91173d0d05e0f586b5851de8c2c491d556b16beaa2a3be83c95d025310b6",
         "summary": {
-          "files_new": 994,
-          "files_changed": 0,
-          "files_unmodified": 0,
-          "total_files_processed": 994,
-          "total_bytes_processed": 562484455,
-          "dirs_new": 161,
-          "dirs_changed": 0,
-          "dirs_unmodified": 0,
+          "files_new": 1178,
+          "files_changed": 39,
+          "files_unmodified": 20843,
+          "total_files_processed": 22060,
+          "total_bytes_processed": 15239720196,
+          "dirs_new": 15,
+          "dirs_changed": 18,
+          "dirs_unmodified": 4823,
           "total_dirs_processed": 0,
           "total_dirsize_processed": 0,
-          "data_blobs": 453,
-          "tree_blobs": 162,
-          "data_added": 151367873,
-          "data_added_packed": 135795194,
+          "data_blobs": 16,
+          "tree_blobs": 34,
+          "data_added": 1409625,
+          "data_added_packed": 306099,
           "data_added_files": 0,
           "data_added_files_packed": 0,
           "data_added_trees": 0,
           "data_added_trees_packed": 0,
           "command": "",
-          "backup_start": "2024-08-26T20:42:22.393992500+02:00",
-          "backup_end": "2024-08-26T20:42:42.729650500+02:00",
+          "backup_start": "2024-09-21T08:35:29.872784300+02:00",
+          "backup_end": "2024-09-21T08:35:44.530094900+02:00",
           "backup_duration": 0.0,
           "total_duration": 0.0
         },
-        "id": "679a29763c617e7cb4a3f1184c94f202b9b49abf32d6984ae8b8a460555e5715"
+        "id": "d8cf91173d0d05e0f586b5851de8c2c491d556b16beaa2a3be83c95d025310b6"
+      },
+      {
+        "time": "2024-10-21T15:12:58.940293700+02:00",
+        "program_version": "restic 0.17.0",
+        "parent": "e90f1911a2d2fd83dcd1e475b58ebec96f86153d01519b2d62fa14dad1c39c54",
+        "tree": "e2dbd5181c9e0500a8583c94f257ede3eafdaa07a2c7220df18626ec04c65afa",
+        "paths": [
+          "G:\\Uni Courses"
+        ],
+        "hostname": "neon",
+        "username": "NEON\\neon",
+        "uid": 0,
+        "gid": 0,
+        "tags": [
+          "uni-courses"
+        ],
+        "original": "d171205dad6fca5afd3b92fd90054ad3986360fc84ceeb72cf5194af7eb52b78",
+        "summary": {
+          "files_new": 0,
+          "files_changed": 1,
+          "files_unmodified": 22059,
+          "total_files_processed": 22060,
+          "total_bytes_processed": 15239720196,
+          "dirs_new": 0,
+          "dirs_changed": 6,
+          "dirs_unmodified": 4850,
+          "total_dirs_processed": 0,
+          "total_dirsize_processed": 0,
+          "data_blobs": 0,
+          "tree_blobs": 7,
+          "data_added": 29020,
+          "data_added_packed": 5990,
+          "data_added_files": 0,
+          "data_added_files_packed": 0,
+          "data_added_trees": 0,
+          "data_added_trees_packed": 0,
+          "command": "",
+          "backup_start": "2024-10-21T15:12:58.940293700+02:00",
+          "backup_end": "2024-10-21T15:13:02.470645400+02:00",
+          "backup_duration": 0.0,
+          "total_duration": 0.0
+        },
+        "id": "d171205dad6fca5afd3b92fd90054ad3986360fc84ceeb72cf5194af7eb52b78"
+      },
+      {
+        "time": "2024-10-21T14:25:05.486641800+02:00",
+        "program_version": "restic 0.17.0",
+        "parent": "d8cf91173d0d05e0f586b5851de8c2c491d556b16beaa2a3be83c95d025310b6",
+        "tree": "c09c285c0863c572f18256c218c237962cdd9f50a02c3964d16b90adc62598f5",
+        "paths": [
+          "G:\\Uni Courses"
+        ],
+        "hostname": "neon",
+        "username": "NEON\\neon",
+        "uid": 0,
+        "gid": 0,
+        "tags": [
+          "uni-courses"
+        ],
+        "original": "e90f1911a2d2fd83dcd1e475b58ebec96f86153d01519b2d62fa14dad1c39c54",
+        "summary": {
+          "files_new": 0,
+          "files_changed": 0,
+          "files_unmodified": 22060,
+          "total_files_processed": 22060,
+          "total_bytes_processed": 15239720196,
+          "dirs_new": 0,
+          "dirs_changed": 654,
+          "dirs_unmodified": 4202,
+          "total_dirs_processed": 0,
+          "total_dirsize_processed": 0,
+          "data_blobs": 0,
+          "tree_blobs": 655,
+          "data_added": 2449261,
+          "data_added_packed": 566773,
+          "data_added_files": 0,
+          "data_added_files_packed": 0,
+          "data_added_trees": 0,
+          "data_added_trees_packed": 0,
+          "command": "",
+          "backup_start": "2024-10-21T14:25:05.486641800+02:00",
+          "backup_end": "2024-10-21T14:25:08.842012700+02:00",
+          "backup_duration": 0.0,
+          "total_duration": 0.0
+        },
+        "id": "e90f1911a2d2fd83dcd1e475b58ebec96f86153d01519b2d62fa14dad1c39c54"
+      },
+      {
+        "time": "2024-09-13T19:23:02.363049400+02:00",
+        "program_version": "restic 0.17.0",
+        "parent": "82d4d7705788d2424b16deb0b61a81df7de74b8c9992ff33c67fa87f4e501989",
+        "tree": "38197cb89fc9f90a5de67e66bae58a1090cde4524ad34890d4755567de6f4d84",
+        "paths": [
+          "G:\\Uni Courses"
+        ],
+        "hostname": "neon",
+        "username": "NEON\\neon",
+        "uid": 0,
+        "gid": 0,
+        "tags": [
+          "uni-courses"
+        ],
+        "original": "3170eef8fda1b4ccc137e8197004c4a14637e11f06b17abe4ae0520c64f2c761",
+        "summary": {
+          "files_new": 52,
+          "files_changed": 0,
+          "files_unmodified": 20830,
+          "total_files_processed": 20882,
+          "total_bytes_processed": 10350730393,
+          "dirs_new": 6,
+          "dirs_changed": 22,
+          "dirs_unmodified": 4813,
+          "total_dirs_processed": 0,
+          "total_dirsize_processed": 0,
+          "data_blobs": 55,
+          "tree_blobs": 29,
+          "data_added": 3881616,
+          "data_added_packed": 3632406,
+          "data_added_files": 0,
+          "data_added_files_packed": 0,
+          "data_added_trees": 0,
+          "data_added_trees_packed": 0,
+          "command": "",
+          "backup_start": "2024-09-13T19:23:02.363049400+02:00",
+          "backup_end": "2024-09-13T19:23:06.215249+02:00",
+          "backup_duration": 0.0,
+          "total_duration": 0.0
+        },
+        "id": "3170eef8fda1b4ccc137e8197004c4a14637e11f06b17abe4ae0520c64f2c761"
+      },
+      {
+        "time": "2024-10-24T20:02:57.199692100+02:00",
+        "program_version": "restic 0.17.0",
+        "parent": "d171205dad6fca5afd3b92fd90054ad3986360fc84ceeb72cf5194af7eb52b78",
+        "tree": "1b908aa2ff05399b32a226cd61d8574984588b1212ef1cd1c247f1eca48871f2",
+        "paths": [
+          "G:\\Uni Courses"
+        ],
+        "hostname": "neon",
+        "username": "NEON\\neon",
+        "uid": 0,
+        "gid": 0,
+        "tags": [
+          "uni-courses"
+        ],
+        "original": "fd668bca2344a3c0e6d040a05f920bbb523904ae9ca229b3b28cdb281fe6d65e",
+        "summary": {
+          "files_new": 0,
+          "files_changed": 3,
+          "files_unmodified": 22057,
+          "total_files_processed": 22060,
+          "total_bytes_processed": 15239720196,
+          "dirs_new": 0,
+          "dirs_changed": 6,
+          "dirs_unmodified": 4850,
+          "total_dirs_processed": 0,
+          "total_dirsize_processed": 0,
+          "data_blobs": 0,
+          "tree_blobs": 7,
+          "data_added": 29020,
+          "data_added_packed": 6020,
+          "data_added_files": 0,
+          "data_added_files_packed": 0,
+          "data_added_trees": 0,
+          "data_added_trees_packed": 0,
+          "command": "",
+          "backup_start": "2024-10-24T20:02:57.199692100+02:00",
+          "backup_end": "2024-10-24T20:03:00.644934400+02:00",
+          "backup_duration": 0.0,
+          "total_duration": 0.0
+        },
+        "id": "fd668bca2344a3c0e6d040a05f920bbb523904ae9ca229b3b28cdb281fe6d65e"
       }
     ]
   ]
