@@ -6,16 +6,18 @@ def main [
 ] {
 	open "processed.json"
 	| each { |snapshot| 
+		let $label = "Important Documents" | inspect
+		let $path = "ImportantDocs" | inspect
+	
 		let tmp = mktemp --directory --tmpdir
 		
-		let $dir = (if ($snapshot.paths.0 | str contains "minecraft_server") { $"($tmp)/minecraft_server/." } else { $"($tmp)/." }) | inspect
-		let $label = (if "dedede_v2" in $snapshot.tags { "Minecraft Server DEDEDE REBORN" } else { "Minecraft Server DEDEDE" }) | inspect
+		let $dir =  $"($tmp)/." | inspect
 		let $time = $snapshot.time | inspect
 		let $tags = $snapshot.tags | str join "," | inspect
 
 		RUSTIC_PASSWORD=$old_pwd rustic -r /backup/old/restic_repo restore $snapshot.id $tmp --no-ownership
 
-		RUSTIC_PASSWORD=$new_pwd rustic -r /stuff/Restic/repo backup $dir --time $time --tag $tags --label $label --as-path mc_server
+		RUSTIC_PASSWORD=$new_pwd rustic -r /stuff/Restic/repo backup $dir --time $time --tag $tags --label $label --as-path $path
 
 		rm --recursive $tmp
 		
