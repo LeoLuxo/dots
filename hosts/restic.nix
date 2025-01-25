@@ -22,5 +22,8 @@ in
     RESTIC_PWD_FILE = config.age.secrets."restic/${hostName}-pwd".path;
     RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
     RESTIC_STORAGE_BOX_PWD_FILE = config.age.secrets."restic/storage-box-pwd".path;
+
+    RESTIC_REPO_HOT = constants.resticRepoHot;
+    RESTIC_REPO_COLD = constants.resticRepoCold or "";
   };
 }
