@@ -19,8 +19,8 @@ def main [
 
 	open "processed.json"
 	| each { |snapshot| 
-		let $label = "University Courses" | inspect
-		let $path = "UniCourses" | inspect
+		let $label = "Minecraft instances" | inspect
+		let $path = "instances" | inspect
 	
 		let tmp = mktemp --directory --tmpdir
 		
