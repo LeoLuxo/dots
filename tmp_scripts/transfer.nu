@@ -1,13 +1,26 @@
 #!/usr/bin/env nu
 
+def process [] {
+	open snapshots.json
+	| each { |nested| 
+		let tags = $nested.0.tags
+		$nested.1 | each { |snapshot| $snapshot | update tags { $tags } }
+	}
+	| flatten
+	| to json
+	| save processed.json --force
+}
+
 def main [
 	old_pwd: string
 	new_pwd: string
 ] {
+	process
+
 	open "processed.json"
 	| each { |snapshot| 
-		let $label = "Important Documents" | inspect
-		let $path = "ImportantDocs" | inspect
+		let $label = "University Courses" | inspect
+		let $path = "UniCourses" | inspect
 	
 		let tmp = mktemp --directory --tmpdir
 		
