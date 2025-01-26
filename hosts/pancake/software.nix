@@ -60,4 +60,10 @@ in
     teams-for-linux
   ];
 
+  # Auto-update wallpaper repo
+  nx.rebuild.preRebuildActions = ''
+    echo Updating wallpaper flake
+    nix flake lock --update-input wallpapers --allow-dirty
+  '';
+
 }
