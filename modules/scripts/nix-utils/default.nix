@@ -19,7 +19,7 @@ let
     mkShellHistoryAlias
     writeScriptWithDeps
     mkSubmodule
-    mkLines
+    mkEmptyLines
     replaceScriptVariables
     ;
 in
@@ -48,8 +48,8 @@ in
 
   options.nx = {
     rebuild = mkSubmodule {
-      preRebuildActions = mkLines;
-      postRebuildActions = mkLines;
+      preRebuildActions = mkEmptyLines;
+      postRebuildActions = mkEmptyLines;
     };
   };
 
