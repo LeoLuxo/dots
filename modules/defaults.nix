@@ -3,17 +3,17 @@
   ...
 }:
 let
-  inherit (extraLib) mkString;
+  inherit (extraLib) mkEmptyString;
 in
 {
   options.defaults = {
     apps = {
-      browser = mkString;
-      notes = mkString;
-      communication = mkString;
-      codeEditor = mkString;
-      terminal = mkString;
-      backupTerminal = mkString;
+      browser = mkEmptyString;
+      notes = mkEmptyString;
+      communication = mkEmptyString;
+      codeEditor = mkEmptyString;
+      terminal = mkEmptyString;
+      backupTerminal = mkEmptyString;
     };
   };
 }

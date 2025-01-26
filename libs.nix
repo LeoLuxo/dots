@@ -453,13 +453,13 @@ rec {
     };
 
   # Options shortcut for a string option
-  mkString = lib.options.mkOption {
+  mkEmptyString = lib.options.mkOption {
     type = lib.types.str;
     default = "";
   };
 
   # Options shortcut for a lines option
-  mkLines = lib.options.mkOption {
+  mkEmptyLines = lib.options.mkOption {
     type = lib.types.lines;
     default = "";
   };
