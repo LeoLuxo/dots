@@ -25,11 +25,16 @@ in
         restic-hot = "RESTIC_PASSWORD=$(sudo cat $RESTIC_PWD_FILE) restic --repo ${constants.resticRepoHot}";
         rustic-hot = "RUSTIC_PASSWORD=$(sudo cat $RESTIC_PWD_FILE) rustic --repo ${constants.resticRepoHot}";
       }
-      // (modules.mkIf (constants ? resticRepoCold) {
+      // (
         # Add aliases for the cold repo (optionally)
-        restic-cold = "RESTIC_PASSWORD=$(sudo cat $RESTIC_PWD_FILE) restic --repo ${constants.resticRepoCold}";
-        rustic-cold = "RUSTIC_PASSWORD=$(sudo cat $RESTIC_PWD_FILE) rustic --repo ${constants.resticRepoCold}";
-      });
+        if constants ? resticRepoCold then
+          {
+            restic-cold = "RESTIC_PASSWORD=$(sudo cat $RESTIC_PWD_FILE) restic --repo ${constants.resticRepoCold}";
+            rustic-cold = "RUSTIC_PASSWORD=$(sudo cat $RESTIC_PWD_FILE) rustic --repo ${constants.resticRepoCold}";
+          }
+        else
+          { }
+      );
   };
 
   environment.variables = {
