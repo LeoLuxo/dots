@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   nixosModules,
   constants,
   inputs,
@@ -24,6 +25,8 @@ in
     scripts.terminal-utils
     scripts.clipboard
     scripts.boot-windows
+
+    apps.restic
 
     apps.youtube-music
     apps.obsidian
@@ -73,6 +76,12 @@ in
       # Set hacks to best looking
       hacks-level = "no artifact";
     };
+  };
+
+  restic = {
+    enable = true;
+    repo = "/stuff/Restic/repo";
+    passwordFile = config.age.secrets."restic/${constants.hostName}-pwd".path;
   };
 
   # Auto-update wallpaper repo
