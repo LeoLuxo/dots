@@ -3,7 +3,7 @@
   # Setup my auto backups
   restic = {
     enable = true;
-    repo = "/stuff/Restic/repo";
+    repo = "/stuff/restic/repo";
     passwordFile = config.age.secrets."restic/${constants.hostName}-pwd".path;
 
     backups = {
@@ -11,8 +11,7 @@
         timer = "*:0/15"; # every 15 minutes
 
         label = "Obsidian";
-        path = "/stuff/Obsidian";
-        displayPath = "Obsidian";
+        path = "/stuff/obsidian";
         tags = [ "obsidian" ];
       };
 
@@ -21,8 +20,7 @@
         randomDelay = "15m";
 
         label = "University Courses";
-        path = "/stuff/UniCourses";
-        displayPath = "UniCourses";
+        path = "/stuff/uniCourses";
         tags = [ "uni-courses" ];
       };
 
@@ -31,8 +29,7 @@
         randomDelay = "15m";
 
         label = "Important Documents";
-        path = "/stuff/ImportantDocs";
-        displayPath = "ImportantDocs";
+        path = "/stuff/importantDocs";
         tags = [ "important-docs" ];
       };
 
@@ -41,8 +38,7 @@
         randomDelay = "15m";
 
         label = "Minecraft Instances";
-        path = "/stuff/Games/Minecraft/instances";
-        displayPath = "instances";
+        path = "/stuff/games/minecraft/instances";
         tags = [ "minecraft-instances" ];
       };
     };
