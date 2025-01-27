@@ -61,7 +61,8 @@ rec {
       file ? null,
       text ? builtins.readFile file,
       deps ? [ ],
-      shell ? false,
+      bashShebang ? false,
+      binFolder ? true,
       replaceVariables ? { },
       elevate ? false,
     }:
@@ -69,17 +70,19 @@ rec {
       scriptTextPreVars = throwIf (text == null) "script needs text" text;
       scriptText = replaceScriptVariables scriptTextPreVars replaceVariables;
 
-      builder = if shell then pkgs.writeShellScriptBin else pkgs.writeScriptBin;
+      # https://nixos.org/manual/nixpkgs/unstable/#trivial-builder-text-writing
+      innerBuilder = if bashShebang then pkgs.writeShellScript else pkgs.writeScript;
+      outerBuilder = if binFolder then pkgs.writeShellScriptBin else pkgs.writeShellScript;
 
       # Using sudo to elevate the script
       elevation = if elevate then ''sudo'' else "";
     in
-    pkgs.writeShellScriptBin name ''
+    outerBuilder name ''
       for i in ${strings.concatStringsSep " " deps}; do
         export PATH="$i/bin:$PATH"
       done
 
-      exec ${elevation} ${builder "${name}-no-deps" scriptText}/bin/${name}-no-deps $@
+      exec ${elevation} ${innerBuilder "${name}-no-deps" scriptText} $@
     '';
 
   # Write a nushell script akin to writeScriptWithDeps
@@ -90,26 +93,25 @@ rec {
       text ? null,
       deps ? [ ],
       elevate ? false,
-    }:
-    let
-      scriptFile =
-        if file == null then
-          let
-            scriptText = throwIf (text == null) "script needs text" text;
-          in
-          pkgs.writeScriptBin "${name}-raw-nu" scriptText
-        else
-          file;
-
-      elevation = if elevate then ''sudo'' else "";
-    in
-    pkgs.writeShellScriptBin name ''
-      for i in ${strings.concatStringsSep " " deps}; do
-        export PATH="$i/bin:$PATH"
-      done
-
-      exec ${elevation} ${pkgs.nushell}/bin/nu ${scriptFile}
-    '';
+      binFolder ? true,
+    }@args:
+    writeScriptWithDeps (
+      args
+      // {
+        bashShebang = false;
+        text =
+          if file == null then
+            ''
+              #!${pkgs.nushell}/bin/nu
+              ${throwIf (text == null) "script needs text" text}
+            ''
+          else
+            ''
+              #!${pkgs.bash}/bin/bash
+              ${pkgs.nushell}/bin/nu ${file}
+            '';
+      }
+    );
 
   # Sanitize a path so that it doesn't cause problems in the nix store
   sanitizePath =
