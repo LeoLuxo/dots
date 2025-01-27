@@ -54,6 +54,7 @@ in
               pkgs.ludusavi
               pkgs.rustic
             ];
+            binFolder = false;
           };
         };
       };
