@@ -38,18 +38,19 @@ in
       systemd.services."restic-gamesaves" = {
         serviceConfig = {
           Type = "oneshot";
-          User = constants.user;
+          User = "root";
 
           ExecStart = writeNushellScript {
             name = "ludusavi-restic";
             text = ''
-              ludusavi backup --preview --api
+              # Running as user is required here as otherwise ludusavi can't find any games
+              sudo -H -u ${constants.user} ludusavi backup --preview --api
               | from json
               | get games
               | items {|game, info|
                 let paths = $info.files | columns
 
-              	sudo rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
+              	rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
                 $game
               }
