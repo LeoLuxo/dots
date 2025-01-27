@@ -39,6 +39,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           User = constants.user;
+
           ExecStart = writeNushellScript {
             name = "ludusavi-restic";
             text = ''
@@ -56,6 +57,7 @@ in
             deps = [
               pkgs.ludusavi
               pkgs.rustic
+              "/run/wrappers"
             ];
             binFolder = false;
           };
