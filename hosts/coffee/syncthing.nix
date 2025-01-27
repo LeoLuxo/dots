@@ -59,7 +59,7 @@ in
       folders = {
         "Obsidian" = {
           id = "zzaui-egygo";
-          path = "/stuff/Obsidian";
+          path = "/stuff/obsidian";
           devices = [
             "strobery"
             "pancake"
@@ -70,7 +70,7 @@ in
 
         "Important Docs" = {
           id = "ythpr-clgdt";
-          path = "/stuff/ImportantDocs";
+          path = "/stuff/importantDocs";
           devices = [
             "strobery"
             "pancake"
@@ -80,7 +80,7 @@ in
 
         "Share" = {
           id = "oguzw-svsqp";
-          path = "/stuff/Share";
+          path = "/stuff/share";
           devices = [
             "strobery"
             "pancake"
@@ -90,7 +90,7 @@ in
 
         "Uni Courses" = {
           id = "ddre2-cukd9";
-          path = "/stuff/UniCourses";
+          path = "/stuff/uniCourses";
           devices = [
             "strobery"
             "pancake"
@@ -100,7 +100,7 @@ in
 
         "Vault" = {
           id = "p2ror-eujtw";
-          path = "/stuff/Vault";
+          path = "/stuff/vault";
           devices = [
             "strobery"
             "pancake"
@@ -113,17 +113,17 @@ in
 
   # Manually setup ignore patterns
   systemd.services.syncthing-init.postStart = ''
-    mkdir --parents /stuff/UniCourses
-    mkdir --parents /stuff/Obsidian
+    mkdir --parents /stuff/uniCourses
+    mkdir --parents /stuff/obsidian
 
-    cat >/stuff/Obsidian/.stignore <<-EOF
+    cat >/stuff/obsidian/.stignore <<-EOF
       **/workspace*.json
       .obsidian/vault-stats.json
     EOF
 
-    cat >/stuff/UniCourses/.stignore <<-EOF
+    cat >/stuff/uniCourses/.stignore <<-EOF
       **/target/
-      Bachelor*/
+      bachelor*/
       **/.direnv/
     EOF
   '';
