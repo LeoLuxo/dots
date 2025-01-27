@@ -101,6 +101,8 @@ in
               rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
             '';
 
+          path = [ pkgs.rustic ];
+
           serviceConfig = {
             Type = "oneshot";
             User = "root";
