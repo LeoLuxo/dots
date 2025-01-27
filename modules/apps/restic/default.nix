@@ -98,7 +98,7 @@ in
             in
             ''
               # Running as root so we can read the password file directly
-              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
             '';
 
           serviceConfig = {
