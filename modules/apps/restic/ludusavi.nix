@@ -49,7 +49,7 @@ in
 
               	rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
-                echo $game
+                print $game
               }
             '';
             deps = [
