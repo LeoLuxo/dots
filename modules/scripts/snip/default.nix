@@ -28,7 +28,6 @@ in
           gnome-screenshot
           wl-clipboard
         ];
-        shell = true;
       })
     ];
   };
