@@ -3,6 +3,7 @@
   pkgs,
   lib,
   extraLib,
+  constants,
   ...
 }:
 
@@ -37,7 +38,7 @@ in
       systemd.services."restic-gamesaves" = {
         serviceConfig = {
           Type = "oneshot";
-          User = "root";
+          User = constants.user;
           ExecStart = writeNushellScript {
             name = "ludusavi-restic";
             text = ''
@@ -47,9 +48,9 @@ in
               | items {|game, info|
                 let paths = $info.files | columns
 
-              	rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
+              	sudo rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
-                print $game
+                $game
               }
             '';
             deps = [
