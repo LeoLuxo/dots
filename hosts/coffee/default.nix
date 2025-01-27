@@ -7,6 +7,7 @@
     ./system.nix
     ./syncthing.nix
 
+    ./backups.nix
     ./audio.nix
   ];
 }
