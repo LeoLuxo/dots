@@ -86,39 +86,49 @@ in
 
     backups = {
       "obsidian" = {
-        path = "/stuff/Obsidian";
         timer = "*:0/15"; # every 15 minutes
+
         label = "Obsidian";
+        path = "/stuff/Obsidian";
         displayPath = "Obsidian";
         tags = [ "obsidian" ];
       };
 
       "uni-courses" = {
-        path = "/stuff/UniCourses";
         timer = "hourly";
         randomDelay = "15m";
+
         label = "University Courses";
+        path = "/stuff/UniCourses";
         displayPath = "UniCourses";
         tags = [ "uni-courses" ];
       };
 
       "important-docs" = {
-        path = "/stuff/ImportantDocs";
         timer = "hourly";
         randomDelay = "15m";
+
         label = "Important Documents";
+        path = "/stuff/ImportantDocs";
         displayPath = "ImportantDocs";
         tags = [ "important-docs" ];
       };
 
       "minecraft-instances" = {
-        path = "/stuff/Games/Minecraft/instances";
         timer = "hourly";
         randomDelay = "15m";
+
         label = "Minecraft Instances";
+        path = "/stuff/Games/Minecraft/instances";
         displayPath = "instances";
         tags = [ "minecraft-instances" ];
       };
+    };
+
+    gameSavesBackup = {
+      enable = true;
+      timer = "hourly";
+      randomDelay = "60m";
     };
   };
 

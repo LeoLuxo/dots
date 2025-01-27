@@ -82,6 +82,35 @@ rec {
       exec ${elevation} ${builder "${name}-no-deps" scriptText}/bin/${name}-no-deps $@
     '';
 
+  # Write a nushell script akin to writeScriptWithDeps
+  writeNushellScript =
+    {
+      name,
+      file ? null,
+      text ? null,
+      deps ? [ ],
+      elevate ? false,
+    }:
+    let
+      scriptFile =
+        if file == null then
+          let
+            scriptText = throwIf (text == null) "script needs text" text;
+          in
+          pkgs.writeScriptBin "${name}-raw-nu" scriptText
+        else
+          file;
+
+      elevation = if elevate then ''sudo'' else "";
+    in
+    pkgs.writeShellScriptBin name ''
+      for i in ${strings.concatStringsSep " " deps}; do
+        export PATH="$i/bin:$PATH"
+      done
+
+      exec ${elevation} ${pkgs.nushell}/bin/nu ${scriptFile}
+    '';
+
   # Sanitize a path so that it doesn't cause problems in the nix store
   sanitizePath =
     path:
