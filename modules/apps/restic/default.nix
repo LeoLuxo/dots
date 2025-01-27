@@ -20,7 +20,10 @@ let
 in
 
 {
-  imports = [ ./cold.nix ];
+  imports = [
+    ./cold.nix
+    ./ludusavi.nix
+  ];
 
   options.restic = {
     enable = mkBoolDefaultFalse;
@@ -85,8 +88,8 @@ in
 
         home.shellAliases = {
           # Add aliases for the main repo
-          restic2 = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
-          rustic2 = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
+          restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
+          rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
         };
       };
 
