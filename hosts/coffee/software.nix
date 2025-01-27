@@ -87,7 +87,7 @@ in
     backups = {
       "obsidian" = {
         path = "/stuff/Obsidian";
-        timer = "*:0/15"; # https://unix.stackexchange.com/questions/126786/systemd-timer-every-15-minutes
+        timer = "*:0/2"; # https://unix.stackexchange.com/questions/126786/systemd-timer-every-15-minutes
         label = "Obsidian";
         displayPath = "Obsidian";
         tags = [ "obsidian" ];
