@@ -33,7 +33,7 @@ in
       type = types.path;
     };
 
-    simpleBackups = options.mkOption {
+    backups = options.mkOption {
       type = types.attrsOf (
         types.submodule {
           options = {
@@ -60,9 +60,6 @@ in
               default = null;
             };
 
-            # https://nixos.wiki/wiki/Systemd/Timers
-            # https://wiki.archlinux.org/title/Systemd/Timers
-            # https://unix.stackexchange.com/questions/126786/systemd-timer-every-15-minutes
           };
         }
       );
@@ -73,13 +70,6 @@ in
   config =
     let
       cfg = config.restic;
-
-      commands = {
-        # restic = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
-        # rustic = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
-        restic = "restic --password-file ${cfg.passwordFile} --repo ${cfg.repo}";
-        rustic = "rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo}";
-      };
     in
     modules.mkIf cfg.enable {
       home-manager.users.${user} = {
@@ -91,8 +81,8 @@ in
 
         home.shellAliases = {
           # Add aliases for the main repo
-          restic2 = commands.restic;
-          rustic2 = commands.rustic;
+          restic2 = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
+          rustic2 = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
         };
       };
 
@@ -102,12 +92,13 @@ in
           script =
             let
               tags =
-                if lists.length backup.tags > 0 then "--tag " + strings.concatStringsSep "," backup.tags else "";
-              displayPath = if backup.displayPath != null then "--as-path " + backup.displayPath else "";
-              label = if backup.label != null then "--label " + backup.label else "";
+                if lists.length backup.tags > 0 then ''--tag ${strings.concatStringsSep "," backup.tags}'' else "";
+              displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
+              label = if backup.label != null then ''--label "${backup.label}"'' else "";
             in
             ''
-              ${commands.rustic} backup ${backup.path} ${tags} ${displayPath} ${label}
+              # Running as root so we can read the password file directly
+              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
             '';
 
           serviceConfig = {
@@ -115,7 +106,7 @@ in
             User = "root";
           };
         }
-      ) cfg.simpleBackups;
+      ) cfg.backups;
 
       systemd.timers = lib.mapAttrs' (
         name: backup:
@@ -126,8 +117,11 @@ in
             Persistent = true;
             Unit = "restic-autobackup-${name}.service";
           };
+
+          # https://nixos.wiki/wiki/Systemd/Timers
+          # https://wiki.archlinux.org/title/Systemd/Timers
         }
-      ) cfg.simpleBackups;
+      ) cfg.backups;
 
       environment.variables = {
         # RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
