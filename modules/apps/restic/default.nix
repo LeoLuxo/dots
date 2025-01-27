@@ -45,6 +45,11 @@ in
               type = types.str;
             };
 
+            randomDelay = options.mkOption {
+              type = types.nullOr types.str;
+              default = null;
+            };
+
             tags = options.mkOption {
               type = types.listOf types.str;
               default = [ ];
@@ -59,7 +64,6 @@ in
               type = types.nullOr types.str;
               default = null;
             };
-
           };
         }
       );
@@ -98,7 +102,7 @@ in
             in
             ''
               # Running as root so we can read the password file directly
-              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
             '';
 
           path = [ pkgs.rustic ];
@@ -118,6 +122,7 @@ in
             OnCalendar = backup.timer;
             Persistent = true;
             Unit = "restic-autobackup-${name}.service";
+            RandomizedDelaySec = modules.mkIf (backup.randomDelay != null) backup.randomDelay;
           };
 
           # https://nixos.wiki/wiki/Systemd/Timers

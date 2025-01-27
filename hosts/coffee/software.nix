@@ -87,10 +87,37 @@ in
     backups = {
       "obsidian" = {
         path = "/stuff/Obsidian";
-        timer = "*:0/15"; # https://unix.stackexchange.com/questions/126786/systemd-timer-every-15-minutes
+        timer = "*:0/15"; # every 15 minutes
         label = "Obsidian";
         displayPath = "Obsidian";
         tags = [ "obsidian" ];
+      };
+
+      "uni-courses" = {
+        path = "/stuff/UniCourses";
+        timer = "hourly";
+        randomDelay = "15m";
+        label = "University Courses";
+        displayPath = "UniCourses";
+        tags = [ "uni-courses" ];
+      };
+
+      "important-docs" = {
+        path = "/stuff/ImportantDocs";
+        timer = "hourly";
+        randomDelay = "15m";
+        label = "Important Documents";
+        displayPath = "ImportantDocs";
+        tags = [ "important-docs" ];
+      };
+
+      "minecraft-instances" = {
+        path = "/stuff/Games/Minecraft/instances";
+        timer = "hourly";
+        randomDelay = "15m";
+        label = "Minecraft Instances";
+        displayPath = "instances";
+        tags = [ "minecraft-instances" ];
       };
     };
   };
