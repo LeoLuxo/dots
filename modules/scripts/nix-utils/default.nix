@@ -69,7 +69,7 @@ in
         NX_POST_REBUILD = "${userHome}/.nx/post_rebuild.sh";
 
         # Set the location of the todo doc
-        NX_TODO = "/stuff/Obsidian/Notes/NixOS Todo.md";
+        NX_TODO = "/stuff/obsidian/Notes/NixOS Todo.md";
       };
     in
     {
