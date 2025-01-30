@@ -1,47 +1,27 @@
 {
-  config,
   nixosModules,
-  constants,
   ...
 }:
 
-let
-  inherit (constants) user userHome;
-in
-
-let
-  syncthingFolder = "${userHome}/.config/syncthing";
-
-  versioning = {
-    type = "simple";
-    params = {
-      cleanoutDays = "100";
-      keep = "5";
-    };
-    cleanupIntervalS = 3600;
-    fsPath = "";
-    fsType = "basic";
-  };
-in
 {
   imports = with nixosModules; [
     apps.syncthing
   ];
 
-  services.syncthing = {
-    inherit user;
-    group = "users";
-
-    # The path where synchronised directories will exist.
-    # The path where the settings and keys will exist.
-    dataDir = syncthingFolder;
-    configDir = syncthingFolder;
-
-    # Together, the key and cert define the device id
-    key = config.age.secrets."syncthing/pancake/key.pem".path;
-    cert = config.age.secrets."syncthing/pancake/cert.pem".path;
-
-    settings = {
+  services.syncthing.settings =
+    let
+      versioning = {
+        type = "simple";
+        params = {
+          cleanoutDays = "100";
+          keep = "5";
+        };
+        cleanupIntervalS = 3600;
+        fsPath = "";
+        fsType = "basic";
+      };
+    in
+    {
       gui = {
         # Don't care that it's public in the nix store
         user = "qwe";
@@ -65,6 +45,10 @@ in
             "coffee"
             "celestia"
           ];
+          ignorePatterns = ''
+            **/workspace*.json
+            .obsidian/vault-stats.json
+          '';
           inherit versioning;
         };
 
@@ -95,6 +79,11 @@ in
             "strobery"
             "coffee"
           ];
+          ignorePatterns = ''
+            bachelor*/
+            **/target/
+            **/.direnv/
+          '';
           inherit versioning;
         };
 
@@ -109,22 +98,5 @@ in
         };
       };
     };
-  };
 
-  # Manually setup ignore patterns
-  systemd.services.syncthing-init.postStart = ''
-    mkdir --parents /stuff/uniCourses
-    mkdir --parents /stuff/obsidian
-
-    cat >/stuff/obsidian/.stignore <<-EOF
-      **/workspace*.json
-      .obsidian/vault-stats.json
-    EOF
-
-    cat >/stuff/uniCourses/.stignore <<-EOF
-      **/target/
-      bachelor*/
-      **/.direnv/
-    EOF
-  '';
 }
