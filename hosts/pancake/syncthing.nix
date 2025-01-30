@@ -58,6 +58,7 @@
           devices = [
             "strobery"
             "coffee"
+            "celestia"
           ];
           inherit versioning;
         };
