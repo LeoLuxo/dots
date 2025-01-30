@@ -1,10 +1,20 @@
 {
   extraLib,
+  constants,
+  config,
+  lib,
   ...
 }:
 
 let
-  inherit (extraLib) mkDesktopItem;
+  inherit (constants) userHome user hostName;
+  inherit (extraLib) mkDesktopItem mkEmptyLines;
+  inherit (lib) types options strings;
+
+  # TODO: Remove when I update nixpkgs
+  concatMapAttrsStringSep =
+    sep: f: attrs:
+    strings.concatStringsSep sep (lib.attrValues (lib.mapAttrs f attrs));
 in
 
 {
@@ -21,28 +31,75 @@ in
     })
   ];
 
-  # By default if syncthing.user is not set, a user named "syncthing" will be created whose home directory is dataDir, and it will run under a group "syncthing".
-  services.syncthing.group = "users";
-
-  services.syncthing = {
-    enable = true;
-
-    # Overrides any devices/folders added or deleted through the WebUI
-    overrideDevices = true;
-    overrideFolders = true;
-
-    # Open firewall ports
-    openDefaultPorts = true;
-
-    # Whether to auto-launch Syncthing as a system service.
-    # systemService = true;
-
-    settings.options = {
-      # Anonymous data usage
-      urAccepted = -1;
-
-      # Relay servers
-      relaysEnabled = true;
+  options = {
+    # Overriding the attsOf of the folders options is enough to let us add an extra option, the module system will take care of merging all the options
+    services.syncthing.settings.folders = options.mkOption {
+      type = types.attrsOf (
+        types.submodule (
+          { name, ... }:
+          {
+            options = {
+              ignorePatterns = mkEmptyLines;
+            };
+          }
+        )
+      );
     };
+  };
+
+  config = {
+    services.syncthing =
+      let
+        syncthingFolder = "${userHome}/.config/syncthing";
+      in
+      {
+        enable = true;
+
+        # By default if syncthing.user is not set, a user named "syncthing" will be created whose home directory is dataDir, and it will run under a group "syncthing".
+        inherit user;
+        group = "users";
+
+        # Together, the key and cert define the device id
+        key = config.age.secrets."syncthing/${hostName}/key.pem".path;
+        cert = config.age.secrets."syncthing/${hostName}/cert.pem".path;
+
+        # The path where default synchronised directories will be put.
+        dataDir = syncthingFolder;
+        # The path where the settings and keys will be checked for.
+        configDir = syncthingFolder;
+
+        # Overrides any devices/folders added or deleted through the WebUI
+        overrideDevices = true;
+        overrideFolders = true;
+
+        # Open firewall ports
+        openDefaultPorts = true;
+
+        # Whether to auto-launch Syncthing as a system service.
+        # systemService = true;
+
+        settings.options = {
+          # Anonymous data usage
+          # I would accept it but for some reason values 1 or 2 wouldn't work
+          urAccepted = -1;
+
+          # Relay servers
+          relaysEnabled = true;
+        };
+      };
+
+    # Setup ignore patterns
+    systemd.services.syncthing-init.postStart = concatMapAttrsStringSep "\n" (
+      name: value:
+      if (strings.stringLength value.ignorePatterns) > 0 then
+        ''
+          if [ -d ${value.path} ]; then
+            cat >${value.path}/.stignore <<-EOF
+            ${value.ignorePatterns}EOF
+          fi
+        ''
+      else
+        ""
+    ) config.services.syncthing.settings.folders;
   };
 }
