@@ -36,7 +36,7 @@ in
     apps.steam
     apps.qmk
     apps.bitwarden
-    apps.llm
+    # apps.llm
 
     apps.distrobox
   ];
