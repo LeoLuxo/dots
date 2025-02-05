@@ -33,6 +33,15 @@
         tags = [ "important-docs" ];
       };
 
+      "share" = {
+        timer = "hourly";
+        randomDelay = "15m";
+
+        label = "Share";
+        path = "/stuff/share";
+        tags = [ "share" ];
+      };
+
       "minecraft-instances" = {
         timer = "hourly";
         randomDelay = "15m";
