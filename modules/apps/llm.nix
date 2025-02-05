@@ -21,7 +21,7 @@
 
   services.open-webui = {
     enable = true;
-    port = 8888;
+    port = 11111;
     host = "127.0.0.1";
   };
 
