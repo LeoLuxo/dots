@@ -37,11 +37,12 @@ in
       cfgPath = "vscode/snippets";
     })
 
-    (mkSyncedPath {
-      xdgPath = "Code/User/profiles";
-      cfgPath = "vscode/profiles";
-      excludes = [ "globalStorage" ];
-    })
+    # They are a bit fucky
+    # (mkSyncedPath {
+    #   xdgPath = "Code/User/profiles";
+    #   cfgPath = "vscode/profiles";
+    #   excludes = [ "globalStorage" ];
+    # })
   ];
 
   defaults.apps.codeEditor = lib.mkDefault "code";
