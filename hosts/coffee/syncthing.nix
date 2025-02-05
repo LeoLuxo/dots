@@ -1,47 +1,27 @@
 {
-  config,
   nixosModules,
-  constants,
   ...
 }:
 
-let
-  inherit (constants) user userHome;
-in
-
-let
-  syncthingFolder = "${userHome}/.config/syncthing";
-
-  versioning = {
-    type = "simple";
-    params = {
-      cleanoutDays = "100";
-      keep = "5";
-    };
-    cleanupIntervalS = 3600;
-    fsPath = "";
-    fsType = "basic";
-  };
-in
 {
   imports = with nixosModules; [
     apps.syncthing
   ];
 
-  services.syncthing = {
-    inherit user;
-    group = "users";
-
-    # The path where synchronised directories will exist.
-    # The path where the settings and keys will exist.
-    dataDir = syncthingFolder;
-    configDir = syncthingFolder;
-
-    # Together, the key and cert define the device id
-    key = config.age.secrets."syncthing/coffee/key.pem".path;
-    cert = config.age.secrets."syncthing/coffee/cert.pem".path;
-
-    settings = {
+  services.syncthing.settings =
+    let
+      versioning = {
+        type = "simple";
+        params = {
+          cleanoutDays = "100";
+          keep = "5";
+        };
+        cleanupIntervalS = 3600;
+        fsPath = "";
+        fsType = "basic";
+      };
+    in
+    {
       gui = {
         # Don't care that it's public in the nix store
         user = "qwe";
@@ -52,7 +32,7 @@ in
       devices = {
         "strobery".id = "BH4QRX3-AXCRBBK-32KWW2A-33XYEMB-CKDONYH-4KLE4QA-NXE5LIX-QB4Q5AN";
         "pancake".id = "DS5FS25-BYJYFF2-TKBNJ4S-6RHZTEK-F4QS4EM-BNOPAPU-ULRHUA7-ORVTNA7";
-        "celestia".id = "FEEK44G-XI3OFWE-TTTSDUC-WCTTXRX-JYGVGKG-AJDLL5I-FWEEQR4-H6YQ7QX";
+        "celestia".id = "2DPZ3IR-YH4YGS3-SGEZMRY-PMJNDZ4-3PBAE4D-V3IT5CA-4R4KVB5-MFH2WAL";
       };
 
       # Folders
@@ -65,6 +45,10 @@ in
             "pancake"
             "celestia"
           ];
+          ignorePatterns = ''
+            **/workspace*.json
+            .obsidian/vault-stats.json
+          '';
           inherit versioning;
         };
 
@@ -95,6 +79,11 @@ in
             "strobery"
             "pancake"
           ];
+          ignorePatterns = ''
+            bachelor*/
+            **/target/
+            **/.direnv/
+          '';
           inherit versioning;
         };
 
@@ -109,22 +98,4 @@ in
         };
       };
     };
-  };
-
-  # Manually setup ignore patterns
-  systemd.services.syncthing-init.postStart = ''
-    mkdir --parents /stuff/uniCourses
-    mkdir --parents /stuff/obsidian
-
-    cat >/stuff/obsidian/.stignore <<-EOF
-      **/workspace*.json
-      .obsidian/vault-stats.json
-    EOF
-
-    cat >/stuff/uniCourses/.stignore <<-EOF
-      **/target/
-      bachelor*/
-      **/.direnv/
-    EOF
-  '';
 }
