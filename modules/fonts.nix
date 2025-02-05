@@ -23,17 +23,17 @@ in
       home.packages = with pkgs; [
         # FUTURE:
         # Install certain nerd fonts
-        # nerd-fonts.fantasque-sans-mono
-        # nerd-fonts.mononoki
-        # nerd-fonts.fira-code
+        nerd-fonts.fantasque-sans-mono
+        nerd-fonts.mononoki
+        nerd-fonts.fira-code
 
-        (nerdfonts.override {
-          fonts = [
-            "FantasqueSansMono"
-            "Mononoki"
-            "FiraCode"
-          ];
-        })
+        # (nerdfonts.override {
+        #   fonts = [
+        #     "FantasqueSansMono"
+        #     "Mononoki"
+        #     "FiraCode"
+        #   ];
+        # })
 
         # Install the Iosevka font
         # https://typeof.net/Iosevka/customizer

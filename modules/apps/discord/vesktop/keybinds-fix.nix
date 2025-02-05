@@ -29,7 +29,7 @@
               src
               patches
               ;
-            hash = "sha256-Y55CeMKXZALes7X8uwsnFI6QVExHU8AbvU/gxCvTLHs=";
+            hash = "sha256-IIR1iz/Un24/cv/kexRaV0lqFmnEAgXsIyQYOZUCVqI=";
           };
         }
       );
