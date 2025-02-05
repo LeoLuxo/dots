@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   services.ollama = {
@@ -19,30 +19,35 @@
     acceleration = "cuda";
   };
 
-  services.open-webui = {
-    enable = true;
-    port = 11111;
-    host = "127.0.0.1";
+  # services.open-webui = {
+  #   enable = true;
+  #   port = 11111;
+  #   host = "127.0.0.1";
 
-    environment = {
-      WEBUI_AUTH = "False";
-      OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
+  #   environment = {
+  #     WEBUI_AUTH = "False";
+  #     OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
 
-      ANONYMIZED_TELEMETRY = "False";
-      DO_NOT_TRACK = "True";
-      SCARF_NO_ANALYTICS = "True";
-    };
-  };
+  #     ANONYMIZED_TELEMETRY = "False";
+  #     DO_NOT_TRACK = "True";
+  #     SCARF_NO_ANALYTICS = "True";
+  #   };
+  # };
 
-  # environment.systemPackages = with pkgs; [
-  # oterm
-  # alpaca
-  # aichat
-  # aider-chat
+  environment.systemPackages = with pkgs; [
 
-  # tgpt
-  # smartcat
-  # nextjs-ollama-llm-ui
-  # open-webui
-  # ];
+    (pkgs.alpaca.override {
+      ollama = pkgs.ollama-cuda;
+    })
+
+    # oterm
+    # alpaca
+    # aichat
+    # aider-chat
+
+    # tgpt
+    # smartcat
+    # nextjs-ollama-llm-ui
+    # open-webui
+  ];
 }
