@@ -40,6 +40,11 @@
   # Enable networking with networkmanager
   networking.networkmanager.enable = true;
 
+  # Add strobery as a local host
+  networking.hosts = {
+    "192.168.0.37" = [ "strobery" ];
+  };
+
   # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
 
