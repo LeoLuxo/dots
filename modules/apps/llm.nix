@@ -23,6 +23,15 @@
     enable = true;
     port = 11111;
     host = "127.0.0.1";
+
+    environment = {
+      WEBUI_AUTH = "False";
+      OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
+
+      ANONYMIZED_TELEMETRY = "False";
+      DO_NOT_TRACK = "True";
+      SCARF_NO_ANALYTICS = "True";
+    };
   };
 
   # environment.systemPackages = with pkgs; [
