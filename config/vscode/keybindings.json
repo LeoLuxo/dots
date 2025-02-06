@@ -482,5 +482,14 @@
     {
         "key": "ctrl+w",
         "command": "workbench.action.closeActiveEditor"
+    },
+    {
+        "key": "alt+a",
+        "command": "-editor.action.accessibilityHelpConfigureAssignedKeybindings",
+        "when": "accessibilityHelpIsShown && accessibleViewHasAssignedKeybindings"
+    },
+    {
+        "key": "alt+a",
+        "command": "simple-alignment.align"
     }
 ]
