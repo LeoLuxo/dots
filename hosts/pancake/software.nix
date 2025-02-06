@@ -49,7 +49,7 @@ in
     teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
   ];
 
-  wallpaper.image = inputs.wallpapers.dynamic."Tree and shore";
+  wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
   rice.peppy = {
     enable = true;
