@@ -22,11 +22,18 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Enable the new nix cli tool and flakes
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    # Enable the new nix cli tool and flakes
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+
+    trusted-users = [
+      "root"
+      user
+    ];
+  };
 
   # Home-Manager config
   home-manager = {
