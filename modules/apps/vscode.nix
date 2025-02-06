@@ -9,7 +9,7 @@
 
 let
   inherit (constants) user;
-  inherit (extraLib) mkSyncedMergedJSON mkSyncedPath;
+  inherit (extraLib) mkSyncedPath mkJSONMerge;
 in
 
 {
@@ -19,11 +19,13 @@ in
 
     apps.direnv
 
-    (mkSyncedMergedJSON {
+    (mkSyncedPath {
       xdgPath = "Code/User/settings.json";
       cfgPath = "vscode/settings.json";
-      defaultOverrides = {
-        "workbench.colorTheme" = "";
+      merge = mkJSONMerge {
+        defaultOverrides = {
+          "workbench.colorTheme" = "";
+        };
       };
     })
 

@@ -240,144 +240,147 @@ rec {
       }
     );
 
-  # Add a path that is to be synced between its destination and here in the repo
+  # Synchronize files/directories between this dots repo and a system xdg path
+  # Destination changes take priority (when changed through a UI for example).
+  #
+  # Two modes of operation:
+  # 1. Basic sync (merge = null):
+  #    - Maintains identical copies at source and destination
+  #    - Works with both files and directories
+  #    - Changes at destination are copied back to repo
+  #
+  # 2. File merge (merge != null):
+  #    - Only works with individual files (not directories)
+  #    - Supports automatic merging of differences
+  #    - File format must be convertible to/from Nix
+  #    - The option syncedFiles.overrides.<path> can be used to add more merge overrides accross nixos modules
+  #
+  # Parameters:
+  #   cfgPath  - Path relative to repo's config directory
+  #   xdgPath  - Target path relative to XDG_CONFIG_HOME
+  #   merge    - Optional merge strategy for files
   mkSyncedPath =
     {
       xdgPath,
       cfgPath,
       excludes ? [ ],
+      merge ? null, # Optional merge config for single files
     }:
-    # Module to be imported
-    {
-      pkgs,
-      constants,
-      ...
-    }:
-    {
-      config.home-manager.users.${constants.user} =
-        { lib, config, ... }:
-        {
-          home.activation."sync-path-${builtins.toString xdgPath}" =
-
-            let
-              rsync = "${pkgs.rsync}/bin/rsync";
-
-              cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
-              xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
-              excludesArgs = lib.concatMapStrings (ex: ''--exclude="${ex}" '') excludes;
-            in
-
-            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              # Make sure both parent dirs exist
-              mkdir --parents "${builtins.dirOf cfgPathStr}"
-              mkdir --parents "${builtins.dirOf xdgPathStr}"
-
-              # Backup old dir/file
-              if [ -e "${xdgPathStr}" ]; then
-                cp "${xdgPathStr}" "${xdgPathStr}.bak" -r --force
-              fi
-
-              if [ -d "${xdgPathStr}" ]; then
-                # Is a dir, we need the trailing slash because rsync
-                
-                # Copy path to dots
-                ${rsync} --ignore-times -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
-                
-                # Copy merged path back to xdg
-                ${rsync} --ignore-times -r "${cfgPathStr}/" "${xdgPathStr}"
-              else
-                # Is a file
-                cp "${xdgPathStr}" "${cfgPathStr}" --force || true
-                cp "${cfgPathStr}" "${xdgPathStr}" --force
-              fi
-            '';
-        };
-    };
-
-  # Add a file that is to be synced between its destination and here in the repo
-  # This is so that whenever the file changes at the destionation (changed through the program ui for example),
-  # it gets copied to the nix config repo. But also if the file is missing from the destination, it automatically
-  # is added there.
-  # Any differences between the two files are merged automatically, with the destination file having priority.
-  # The file format needs to be convertible to- and from nix, to be able to merge the files properly.
-  mkSyncedMergedFile =
-    {
-      toNix,
-      fromNix,
-      fallback ? "",
-    }:
-    {
-      xdgPath,
-      cfgPath,
-      defaultOverrides ? { },
-    }:
-
-    let
-      readOrDefault =
-        file: if filesystem.pathIsRegularFile file then builtins.readFile file else fallback;
-    in
     # Module to be imported
     {
       lib,
-      config,
       pkgs,
+      config,
       constants,
       ...
     }:
-    let
-      overrides = config.syncedFiles.overrides.${cfgPath};
-    in
     {
-      options.syncedFiles.overrides.${cfgPath} = lib.mkOption { default = { }; };
+      options =
+        if merge != null then
+          {
+            syncedFiles.overrides.${cfgPath} = lib.mkOption { default = { }; };
+          }
+        else
+          { };
 
       config.home-manager.users.${constants.user} =
+        let
+          outerConfig = config;
+        in
         { lib, config, ... }:
         {
-          home.activation."sync-file-${builtins.toString xdgPath}" =
-
+          config =
             let
               cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
-              src = toNix (readOrDefault cfgPathStr);
-              xdg = toNix (readOrDefault xdgPathStr);
-              merged = src // xdg // defaultOverrides;
-              finalSrc = fromNix merged;
-              finalXdg = fromNix (merged // overrides);
             in
+            {
+              # assertions = [
+              #   {
+              #     assertion = filesystem.pathIsDirectory xdgPathStr -> merge == null;
+              #     message = "Directories cannot be merged to and from Nix";
+              #   }
+              #   {
+              #     assertion = excludes == [ ] || filesystem.pathIsDirectory xdgPathStr;
+              #     message = "Exclusion patterns can only be applied on a directory";
+              #   }
+              # ];
 
-            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              # Make sure both dirs exist
-              mkdir --parents "${builtins.dirOf cfgPathStr}"
-              mkdir --parents "${builtins.dirOf xdgPathStr}"
+              home.activation."sync-path-${cfgPath}" = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+                ''
+                  # Make sure both parent dirs exist
+                  mkdir --parents "${builtins.dirOf cfgPathStr}" 
+                  mkdir --parents "${builtins.dirOf xdgPathStr}"
 
-              # Save new merged content to dots
-              cat >"${cfgPathStr}" <<'EOL'
-              ${finalSrc}
-              EOL
+                  # Backup old dir/file
+                  if [ -e "${xdgPathStr}" ]; then
+                    cp "${xdgPathStr}" "${xdgPathStr}.bak" -r --force
+                  fi
 
-              # Backup old file
-              if [ -f "${xdgPathStr}" ]; then
-                cp "${xdgPathStr}" "${xdgPathStr}.bak" --force
-              fi
+                ''
+                + (
+                  if merge != null then
+                    # For merged files
+                    let
+                      overrides = outerConfig.syncedFiles.overrides.${cfgPath};
+                      readOrDefault =
+                        file: if filesystem.pathIsRegularFile file then builtins.readFile file else merge.fallback;
 
-              # Save merged content to xdg file
-              cat >"${xdgPathStr}" <<'EOL'
-              ${finalXdg}
-              EOL
-            '';
+                      src = merge.toNix (readOrDefault cfgPathStr);
+                      xdg = merge.toNix (readOrDefault xdgPathStr);
+                      merged = src // xdg // merge.defaultOverrides;
+                      finalSrc = merge.fromNix merged;
+                      finalXdg = merge.fromNix (merged // overrides);
+                    in
+                    ''
+                      # Save new merged content to dots
+                      cat >"${cfgPathStr}" <<'EOL'
+                      ${finalSrc}
+                      EOL
+
+                      # Save merged content to xdg file  
+                      cat >"${xdgPathStr}" <<'EOL'
+                      ${finalXdg}
+                      EOL
+                    ''
+                  else
+                    # For raw files/dirs
+                    let
+                      rsync = "${pkgs.rsync}/bin/rsync";
+                      excludesArgs = lib.concatMapStrings (ex: ''--exclude="${ex}" '') excludes;
+                    in
+                    ''
+                      if [ -d "${xdgPathStr}" ]; then
+                        # Is a dir, we need the trailing slash because rsync
+                        
+                        # Copy path to dots
+                        ${rsync} --ignore-times -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
+                        
+                        # Copy merged path back to xdg
+                        ${rsync} --ignore-times -r "${cfgPathStr}/" "${xdgPathStr}"
+                      else
+                        # Is a file
+                        cp "${xdgPathStr}" "${cfgPathStr}" --force || true
+                        cp "${cfgPathStr}" "${xdgPathStr}" --force
+                      fi
+                    ''
+                )
+              );
+            };
         };
+
     };
 
-  # Specialized version of mkSyncedMergedFile for JSON
-  mkSyncedMergedJSON =
-    # let
-    #   # Custom pretty json instead of builtins.toJSON
-    #   toPrettyJSON = attrs: builtins.readFile ((pkgs.formats.json { }).generate "prettyJSON" attrs);
-    # in
-    mkSyncedMergedFile {
+  # Helper function to create a merge config for JSON files
+  mkJSONMerge =
+    {
+      defaultOverrides ? { },
+    }:
+    {
       toNix = builtins.fromJSON;
       fromNix = builtins.toJSON;
       fallback = "{}";
+      inherit defaultOverrides;
     };
 
   # Create a shell alias that is shell-agnostic but still capable of looking up past commands
