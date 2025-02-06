@@ -47,6 +47,8 @@ in
     warp # A fast, secure file transfer utility for moving files efficiently between systems.
     gnome-2048 # A GNOME-native implementation of the popular 2048 puzzle game.
     teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
+    eyedropper # A simple color picker tool that allows you to select a color from anywhere on the screen.
+    fonts # GNOME font viewer
   ];
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
