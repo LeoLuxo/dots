@@ -37,7 +37,7 @@ in
       cfgPath = "vscode/snippets";
     })
 
-    # They are a bit fucky
+    # Profiles are a bit fucky
     # (mkSyncedPath {
     #   xdgPath = "Code/User/profiles";
     #   cfgPath = "vscode/profiles";
