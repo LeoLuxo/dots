@@ -27,7 +27,7 @@
     # gnome-characters
     # gnome-clocks
     # gnome-contacts
-    gnome-font-viewer
+    # gnome-font-viewer
     gnome-logs
     gnome-maps
     gnome-music
