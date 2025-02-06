@@ -6,7 +6,7 @@
 }:
 let
   inherit (constants) user;
-  inherit (extraLib) mkSyncedMergedJSON;
+  inherit (extraLib) mkSyncedPath mkJSONMerge;
 in
 {
   home-manager.users.${user} = {
@@ -16,11 +16,13 @@ in
   };
 
   imports = [
-    (mkSyncedMergedJSON {
+    (mkSyncedPath {
       xdgPath = "YouTube Music/config.json";
       cfgPath = "youtube-music/config.json";
-      defaultOverrides = {
-        options.themes = [ ];
+      merge = mkJSONMerge {
+        defaultOverrides = {
+          options.themes = [ ];
+        };
       };
     })
   ];

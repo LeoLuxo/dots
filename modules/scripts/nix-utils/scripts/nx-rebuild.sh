@@ -24,14 +24,6 @@ if [[ $1 == "--pull" ]]; then
 fi
 
 rebuild() {
-	# Autoformat nix files
-	nixfmt --quiet . ||
-		(
-			nixfmt --check . || true
-			echo -e "${ERROR}Formatting failed!"
-			return 1
-		)
-
 	# Nix can't see non-git added files
 	git add .
 
