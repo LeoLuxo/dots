@@ -128,7 +128,7 @@ in
         };
 
         "org/gnome/desktop/app-folders" = {
-          # Clear out all default folders in the app drawer 
+          # Clear out all default folders in the app drawer
           folder-children = [ ];
         };
 

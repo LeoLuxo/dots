@@ -52,7 +52,7 @@ in
     # Triple buffering fork thing
     ./triple-buffering.nix
 
-    # Default gnome apps 
+    # Default gnome apps
     ./default-apps.nix
 
     # All the dconf settings
