@@ -8,9 +8,9 @@ in
 {
   home-manager.users.${user} = {
     programs.git.ignores = [
-      # 
+      #
       # LINUX
-      # 
+      #
 
       "*~"
 
@@ -26,9 +26,9 @@ in
       # .nfs files are created when an open file is removed but is still being accessed
       ".nfs*"
 
-      # 
+      #
       # WINDOWS
-      # 
+      #
 
       # Windows thumbnail cache files
       "Thumbs.db"
@@ -55,9 +55,9 @@ in
       # Windows shortcuts
       "*.lnk"
 
-      # 
+      #
       # MACOS
-      # 
+      #
 
       # General
       ".DS_Store"
@@ -86,9 +86,9 @@ in
       "Temporary Items"
       ".apdisk"
 
-      # 
+      #
       # VSCODE
-      # 
+      #
 
       # Boom
       ".vscode"
@@ -105,9 +105,9 @@ in
       # Built Visual Studio Code Extensions
       "*.vsix"
 
-      # 
+      #
       # JETBRAINS
-      # 
+      #
 
       # Nuclear go boom
       ".idea"

@@ -48,7 +48,7 @@
   time.timeZone = "Europe/Copenhagen";
 
   # Select internationalisation properties.
-  # Use english (Ireland); see: 
+  # Use english (Ireland); see:
   # https://unix.stackexchange.com/questions/62316/why-is-there-no-euro-english-locale
   i18n.defaultLocale = "en_IE.UTF-8";
   i18n.extraLocaleSettings = {

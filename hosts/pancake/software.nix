@@ -34,6 +34,7 @@ in
     apps.git
     apps.steam
     apps.bitwarden
+    apps.upscaler
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
@@ -44,7 +45,6 @@ in
     switcheroo # A tool for converting and manipulating images (for example, resizing or reformatting them).
     video-trimmer # A simple app designed to quickly trim and edit video clips.
     warp # A fast, secure file transfer utility for moving files efficiently between systems.
-    upscaler # An application that enhances image resolution by upscaling photos using advanced processing (designed in the GNOME spirit).
     gnome-2048 # A GNOME-native implementation of the popular 2048 puzzle game.
     teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
   ];

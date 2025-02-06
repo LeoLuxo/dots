@@ -50,7 +50,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Real-time audio in NixOS 
+    # Real-time audio in NixOS
     musnix = {
       url = "github:musnix/musnix";
     };

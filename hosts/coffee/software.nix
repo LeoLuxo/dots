@@ -37,6 +37,7 @@ in
     apps.qmk
     apps.bitwarden
     apps.llm
+    apps.upscaler
 
     apps.distrobox
   ];

@@ -16,7 +16,7 @@ let
       name = "boot-windows";
       file = ./boot-windows.sh;
       deps = [
-        # To query and change the boot order 
+        # To query and change the boot order
         pkgs.efibootmgr
       ];
     }
