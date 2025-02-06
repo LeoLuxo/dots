@@ -42,21 +42,20 @@ in
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      textpieces
-      hieroglyphic
-      impression
-      switcheroo
-      video-trimmer
-      warp
+  home-manager.users.${user}.home.packages = with pkgs; [
+    textpieces # A developer’s scratchpad that lets you quickly experiment with and transform text.
+    hieroglyphic # An application that helps you locate and select LaTeX symbols by drawing or sketching them.
+    impression # A utility for creating bootable USB drives from disk images.
+    switcheroo # A tool for converting and manipulating images (for example, resizing or reformatting them).
+    video-trimmer # A simple app designed to quickly trim and edit video clips.
+    warp # A fast, secure file transfer utility for moving files efficiently between systems.
+    upscaler # An application that enhances image resolution by upscaling photos using advanced processing (designed in the GNOME spirit).
+    gnome-2048 # A GNOME-native implementation of the popular 2048 puzzle game.
+    teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
 
-      teams-for-linux
-      guitarix
-      r2modman
-      gnome-2048
-    ];
-  };
+    guitarix # A virtual guitar amplifier for use with Linux.
+    r2modman # A mod manager for Risk of Rain 2 and other Unity games.
+  ];
 
   wallpaper.image = inputs.wallpapers.static."RainyDay";
 
