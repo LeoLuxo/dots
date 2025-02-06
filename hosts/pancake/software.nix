@@ -63,6 +63,6 @@ in
   # Auto-update wallpaper repo
   nx.rebuild.preRebuildActions = ''
     echo Updating wallpaper flake
-    nix flake lock --update-input wallpapers --allow-dirty
+    nix flake update wallpapers --allow-dirty
   '';
 }
