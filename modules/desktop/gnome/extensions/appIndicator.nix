@@ -11,20 +11,26 @@ let
 in
 
 {
-  config = modules.mkIf (cfg.enable && lists.elem "wallhub" cfg.extensions) {
+  config = modules.mkIf (cfg.enable && lists.elem "appIndicator" cfg.extensions) {
     programs.dconf.enable = true;
 
     home-manager.users.${constants.user} =
       { lib, ... }:
       {
         home.packages = with pkgs; [
-          gnomeExtensions.wallhub
+          gnomeExtensions.appindicator
         ];
 
         dconf.settings = {
           "org/gnome/shell" = {
-            enabled-extensions = [ "wallhub@sakithb.github.io" ];
+            enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" ];
           };
+
+          "org/gnome/shell/extensions/appindicator" = {
+            icon-size = 0;
+            tray-pos = "left";
+          };
+
         };
       };
   };

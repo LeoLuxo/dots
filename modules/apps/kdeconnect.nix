@@ -1,33 +1,42 @@
 {
+  cfg,
+  lib,
+  extraLib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  home-manager.users.${constants.user} = {
-    services.kdeconnect = {
-      enable = true;
-      indicator = true;
-    };
+  options = {
+    enable = mkEnable;
   };
 
-  networking.firewall = {
-    enable = true;
-    allowedTCPPortRanges = [
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ];
-    allowedUDPPortRanges = [
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ];
+  config = modules.mkIf cfg.enable {
+    home-manager.users.${constants.user} = {
+      services.kdeconnect = {
+        enable = true;
+        indicator = true;
+      };
+    };
+
+    networking.firewall = {
+      enable = true;
+      allowedTCPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+    };
   };
 }

@@ -1,4 +1,6 @@
 {
+  cfg,
+  options,
   extraLib,
   constants,
   config,
@@ -9,7 +11,7 @@
 let
   inherit (constants) userHome user hostName;
   inherit (extraLib) mkDesktopItem mkEmptyLines;
-  inherit (lib) types options strings;
+  inherit (lib) types strings modules;
 
   # TODO: Remove when I update nixpkgs
   concatMapAttrsStringSep =
@@ -18,9 +20,10 @@ let
 in
 
 {
-  options = {
+  # Copy over the options of the nixos module
+  options = options.services.syncthing // {
     # Overriding the attsOf of the folders options is enough to let us add an extra option, the module system will take care of merging all the options
-    services.syncthing.settings.folders = options.mkOption {
+    settings.folders = lib.options.mkOption {
       type = types.attrsOf (
         types.submodule (
           { name, ... }:
@@ -34,8 +37,7 @@ in
     };
   };
 
-  config = {
-
+  config = modules.mkIf cfg.enable {
     home-manager.users.${constants.user}.home.packages = [
       (mkDesktopItem {
         name = "syncthing";
@@ -87,7 +89,9 @@ in
           # Relay servers
           relaysEnabled = true;
         };
-      };
+      }
+      # Override config with whatever was setup in the options
+      // cfg;
 
     # Setup ignore patterns
     systemd.services.syncthing-init.postStart = concatMapAttrsStringSep "\n" (
@@ -101,6 +105,6 @@ in
         ''
       else
         ""
-    ) config.services.syncthing.settings.folders;
+    ) cfg.settings.folders;
   };
 }
