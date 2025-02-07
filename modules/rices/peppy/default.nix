@@ -10,7 +10,7 @@
 
 let
   inherit (lib) mkDefault options types;
-  inherit (extraLib) mkBoolDefaultFalse;
+  inherit (extraLib) mkEnable;
   inherit (constants) user;
 in
 
@@ -30,7 +30,7 @@ in
   ];
 
   options.rice.peppy = {
-    enable = mkBoolDefaultFalse;
+    enable = mkEnable;
 
     theme = {
       flavor = options.mkOption {

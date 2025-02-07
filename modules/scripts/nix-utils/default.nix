@@ -15,8 +15,6 @@ let
     secretsPath
     ;
   inherit (extraLib)
-    mkGlobalKeybind
-    mkShellHistoryAlias
     writeScriptWithDeps
     mkSubmodule
     mkEmptyLines
@@ -27,23 +25,6 @@ in
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
-
-    (mkGlobalKeybind {
-      name = "Open nx-code";
-      binding = "<Super>F9";
-      command = "nx-code";
-    })
-
-    (mkGlobalKeybind {
-      name = "Open nx-todo";
-      binding = "<Super>F10";
-      command = "nx-todo";
-    })
-
-    (mkShellHistoryAlias {
-      name = ",,";
-      command = { lastCommand }: '', ${lastCommand}'';
-    })
   ];
 
   options.nx = {
@@ -73,6 +54,34 @@ in
       };
     in
     {
+      desktop.keybinds = {
+        "Open nx-code" = {
+          binding = "<Super>F9";
+          command = "nx-code";
+        };
+
+        "Open nx-todo" = {
+          binding = "<Super>F10";
+          command = "nx-todo";
+        };
+      };
+
+      shell = {
+        aliases = {
+          nx-cd = "cd $NX_DOTS";
+          nxcd = "nx-cd";
+
+          nxr = "nx-rebuild";
+
+          nx-edit = "nx-code";
+          nx-search = "nh search --limit 4";
+        };
+
+        aliasesWithHistory = {
+          ",," = { lastCommand }: '', ${lastCommand}'';
+        };
+      };
+
       # Set environment variables
       environment.variables = variables;
 
@@ -156,17 +165,6 @@ in
             replaceVariables = variables;
           })
         ];
-
-        # Add aliases
-        home.shellAliases = {
-          nx-cd = "cd $NX_DOTS";
-          nxcd = "nx-cd";
-
-          nxr = "nx-rebuild";
-
-          nx-edit = "nx-code";
-          nx-search = "nh search --limit 4";
-        };
       };
     };
 

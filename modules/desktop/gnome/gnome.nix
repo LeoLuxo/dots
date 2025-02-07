@@ -13,7 +13,7 @@ in
 
 {
   options.desktop.gnome = {
-    enable = mkBoolDefaultFalse;
+    enable = mkEnable;
 
     power = mkSubmodule {
       buttonAction = options.mkOption {
@@ -38,7 +38,7 @@ in
       };
 
       suspendIdle = mkSubmodule {
-        enable = mkBoolDefaultFalse;
+        enable = mkEnable;
 
         delay = options.mkOption {
           type = types.ints.unsigned;

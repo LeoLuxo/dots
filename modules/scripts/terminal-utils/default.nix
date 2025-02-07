@@ -7,85 +7,85 @@
 
 let
   inherit (constants) user;
-  inherit (extraLib) mkShellHistoryAlias writeScriptWithDeps;
+  inherit (extraLib) writeScriptWithDeps;
 in
 
 {
-  imports = [
-    (mkShellHistoryAlias {
-      name = "please";
-      command = { lastCommand }: ''sudo ${lastCommand}'';
-    })
-  ];
+  config = {
+    shell = {
+      aliases = {
+        pls = "please";
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      # To query the filetype of files
-      file
+        l = "ls -Fhsla";
 
-      (writeScriptWithDeps {
-        name = "size";
-        file = ./size.sh;
-      })
+        c = "$EDITOR .";
 
-      (writeScriptWithDeps {
-        name = "cheat";
-        file = ./cheat.sh;
-        deps = [ curl ];
-      })
+        "." = "q";
+        "qq" = "cd $(cat /tmp/Q_LAST_DIR)";
 
-      (writeScriptWithDeps {
-        name = "extract";
-        file = ./extract.sh;
-        # All the archive extractors used in the script
-        deps = [
-          gnutar
-          rar
-          unzip
-          p7zip
-          gzip
-        ];
-      })
+        ".." = "cd ..";
+        "..." = "cd ../..";
+        "...." = "cd ../../..";
+        "....." = "cd ../../../..";
+        "......" = "cd ../../../../..";
+        "......." = "cd ../../../../../..";
+        "........" = "cd ../../../../../../..";
+        "........." = "cd ../../../../../../../..";
+        ".........." = "cd ../../../../../../../../..";
+      };
 
-      (writeScriptWithDeps {
-        name = "q";
-        file = ./q.sh;
-        deps = [
-          # To highlight source code
-          highlight
+      aliasesWithHistory = {
+        "please" = { lastCommand }: ''sudo ${lastCommand}'';
+      };
+    };
 
-          # To query the filetype of files
-          file
+    home-manager.users.${user} = {
+      home.packages = with pkgs; [
+        # To query the filetype of files
+        file
 
-          # To visualize images directly in the terminal
-          viu
+        (writeScriptWithDeps {
+          name = "size";
+          file = ./size.sh;
+        })
 
-          # To visualize folders nicely
-          tree
-        ];
-      })
-    ];
+        (writeScriptWithDeps {
+          name = "cheat";
+          file = ./cheat.sh;
+          deps = [ curl ];
+        })
 
-    # Add aliases
-    home.shellAliases = {
-      pls = "please";
+        (writeScriptWithDeps {
+          name = "extract";
+          file = ./extract.sh;
+          # All the archive extractors used in the script
+          deps = [
+            gnutar
+            rar
+            unzip
+            p7zip
+            gzip
+          ];
+        })
 
-      l = "ls -Fhsla";
+        (writeScriptWithDeps {
+          name = "q";
+          file = ./q.sh;
+          deps = [
+            # To highlight source code
+            highlight
 
-      c = "$EDITOR .";
+            # To query the filetype of files
+            file
 
-      "." = "q";
-      "qq" = "cd $(cat /tmp/Q_LAST_DIR)";
+            # To visualize images directly in the terminal
+            viu
 
-      ".." = "cd ..";
-      "..." = "cd ../..";
-      "...." = "cd ../../..";
-      "....." = "cd ../../../..";
-      "......" = "cd ../../../../..";
-      "......." = "cd ../../../../../..";
-      "........" = "cd ../../../../../../..";
-      "........." = "cd ../../../../../../../..";
-      ".........." = "cd ../../../../../../../../..";
+            # To visualize folders nicely
+            tree
+          ];
+        })
+      ];
     };
   };
 
