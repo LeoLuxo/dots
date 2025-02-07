@@ -11,66 +11,67 @@ in
 {
   imports = [ ./gitignore.nix ];
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      # Gnome circles commit editor
-      commit
-    ];
-
-    # Add aliases
-    home.shellAliases = {
+  config = {
+    shell.aliases = {
       gs = "git status";
     };
 
-    # Needed for signing with ssh key
-    # ref: https://jeppesen.io/git-commit-sign-nix-home-manager-ssh/
-    home.file.".ssh/allowed_signers".text = "* ${builtins.readFile userKeyPublic}";
+    home-manager.users.${user} = {
+      home.packages = with pkgs; [
+        # Gnome circles commit editor
+        commit
+      ];
 
-    programs.git = {
-      enable = true;
+      # Needed for signing with ssh key
+      # ref: https://jeppesen.io/git-commit-sign-nix-home-manager-ssh/
+      home.file.".ssh/allowed_signers".text = "* ${builtins.readFile userKeyPublic}";
 
-      userEmail = "contact@me.leoluxo.eu";
-      userName = "LeoLuxo";
+      programs.git = {
+        enable = true;
 
-      extraConfig = {
-        init.defaultBranch = "main";
+        userEmail = "contact@me.leoluxo.eu";
+        userName = "LeoLuxo";
 
-        # Disable safe directory checks
-        safe.directory = "*";
+        extraConfig = {
+          init.defaultBranch = "main";
 
-        # Some options transferred from my old windows config, no idea if they're relevant here :shrug:
-        core = {
-          # Don't hide the .git directory on windows
-          hideDotFiles = false;
+          # Disable safe directory checks
+          safe.directory = "*";
 
-          # Disable the CRLF warning (but still auto convert)
-          safecrlf = false;
+          # Some options transferred from my old windows config, no idea if they're relevant here :shrug:
+          core = {
+            # Don't hide the .git directory on windows
+            hideDotFiles = false;
 
-          # Set the commit editor to gnome commit
-          editor = "re.sonny.Commit";
-        };
+            # Disable the CRLF warning (but still auto convert)
+            safecrlf = false;
 
-        # Automatically setup remote when pushing on a repo that was cloned (iirc?)
-        push.autoSetupRemote = true;
+            # Set the commit editor to gnome commit
+            editor = "re.sonny.Commit";
+          };
 
-        # Force using the CMD credentials prompt instead of a window
-        credential.modalprompt = false;
+          # Automatically setup remote when pushing on a repo that was cloned (iirc?)
+          push.autoSetupRemote = true;
 
-        pull.rebase = false;
+          # Force using the CMD credentials prompt instead of a window
+          credential.modalprompt = false;
 
-        # Enforce SSH
-        url = {
-          "ssh://git@github.com/".insteadOf = "https://github.com/";
-          "ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
-          "ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";
-        };
+          pull.rebase = false;
 
-        # Sign all commits using ssh key
-        commit.gpgsign = true;
-        user.signingkey = "${userKeyPublic}";
-        gpg = {
-          format = "ssh";
-          ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+          # Enforce SSH
+          url = {
+            "ssh://git@github.com/".insteadOf = "https://github.com/";
+            "ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
+            "ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";
+          };
+
+          # Sign all commits using ssh key
+          commit.gpgsign = true;
+          user.signingkey = "${userKeyPublic}";
+          gpg = {
+            format = "ssh";
+            ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+          };
         };
       };
     };

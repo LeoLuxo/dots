@@ -77,6 +77,7 @@ in
   environment.systemPackages = with pkgs; [
     nano
     wget
+    curl
     git
   ];
 

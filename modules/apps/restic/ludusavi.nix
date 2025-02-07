@@ -18,7 +18,7 @@ in
 
 {
   options.restic.gameSavesBackup = {
-    enable = mkBoolDefaultFalse;
+    enable = mkEnable;
 
     timer = options.mkOption {
       type = types.str;

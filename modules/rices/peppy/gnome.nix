@@ -10,7 +10,7 @@
 let
   inherit (lib) options types;
   inherit (constants) user;
-  inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse mkSubmodule;
+  inherit (extraLib) mkBoolDefaultTrue mkEnable mkSubmodule;
 in
 
 {
@@ -19,7 +19,7 @@ in
       enable = mkBoolDefaultTrue;
 
       app-blur = mkSubmodule {
-        enable = mkBoolDefaultFalse;
+        enable = mkEnable;
       };
 
       hacks-level = options.mkOption {

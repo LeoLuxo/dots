@@ -1,13 +1,13 @@
 {
+  cfg,
   pkgs,
-  config,
   lib,
   extraLib,
   ...
 }:
 
 let
-  inherit (extraLib) mkQuickPatch mkBoolDefaultTrue sanitizePath;
+  inherit (extraLib) mkBoolDefaultTrue sanitizePath;
   inherit (lib)
     options
     filesystem
@@ -19,21 +19,10 @@ in
 
 let
   heicConverter = file: pkgs.callPackage ./heic-converter.nix { inherit file; };
-  cfg = config.wallpaper;
   sanitizedImage = sanitizePath cfg.image;
 in
 {
-  imports = [
-    # Patch to fix the bug where settimed doesn't work for the dark theme of gnome
-    # https://github.com/xyproto/wallutils/issues/44
-    # TODO: Remove when the issue gets fixed
-    (mkQuickPatch {
-      package = "wallutils";
-      patches = [ ./fix-dark-mode.patch ];
-    })
-  ];
-
-  options.wallpaper = {
+  options = {
     enable = options.mkOption {
       type = types.bool;
       default = cfg.image != null;
@@ -97,6 +86,11 @@ in
           message = "Wallpaper image must be set!";
         }
       ];
+
+      # Patch to fix the bug where settimed doesn't work for the dark theme of gnome
+      # https://github.com/xyproto/wallutils/issues/44
+      # TODO: Remove when the issue gets fixed
+      quickPatches."wallutils" = [ ./fix-dark-mode.patch ];
 
       # Handle static wallpapers
       systemd.user.services."wallutils-static" = modules.mkIf (!cfg.isTimed) {

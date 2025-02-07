@@ -1,20 +1,17 @@
 {
-  inputs,
-  constants,
-  ...
+  lib,
+  pkgs,
 }:
 
 let
-  inherit (constants) dotsRepoPath system;
-  inherit (inputs.nixpkgs) lib;
   inherit (lib)
     strings
     attrsets
     filesystem
     throwIf
     lists
+    debug
     ;
-  pkgs = inputs.nixpkgs.legacyPackages.${system};
 in
 
 rec {
@@ -113,302 +110,6 @@ rec {
       }
     );
 
-  # Sanitize a path so that it doesn't cause problems in the nix store
-  sanitizePath =
-    path:
-    builtins.path {
-      inherit path;
-      name = strings.sanitizeDerivationName (builtins.baseNameOf path);
-    };
-
-  # Recursively find modules in a given directory and map them to a logical set:
-  # dir/a/b/file.ext         => .a.b.file
-  # dir/a/b/file/default.nix => .a.b.file
-  findFiles =
-    {
-      dir,
-      extensions,
-      defaultFiles ? [ ],
-    }:
-    let
-      extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
-      ignore = name: {
-        name = "";
-        value = null;
-      };
-
-      findFilesRecursive =
-        dir:
-        attrsets.filterAttrs
-          # filter out ignored files/dirs
-          (n: v: v != null)
-          (
-            attrsets.mapAttrs' (
-              fileName: type:
-              let
-                extMatch = builtins.match "(.*)\\.${extRegex}" fileName;
-                filePath = dir + "/${fileName}";
-              in
-              # If regular file, then add it to the file list only if the extension regex matches
-              if type == "regular" then
-                if extMatch == null then
-                  ignore fileName
-                else
-                  {
-                    # Filename without the extension
-                    name = builtins.elemAt extMatch 0;
-                    value = filePath;
-                  }
-              # If directory, ...
-              else if type == "directory" then
-                let
-                  # ... then search for a default file (ie. default.nix, ...)
-                  files = builtins.readDir filePath;
-                  hasDefault = builtins.any (defaultFile: files ? ${defaultFile}) defaultFiles; # builtins.any returns false given an empty list
-                in
-                # if a default file exists, add the directory to our file list
-                if hasDefault then
-                  {
-                    name = fileName;
-                    value = filePath;
-                  }
-                else
-                  # otherwise search recursively in the directory,
-                  # and map the results to a nested set with the name of the folder as top key.
-                  # Also add the base directory path under the _dir key
-                  {
-                    name = fileName;
-                    value = findFilesRecursive filePath // {
-                      _dir = filePath;
-                    };
-                  }
-              else
-                # any other file types we ignore (i.e. symlink and unknown)
-                ignore fileName
-            ) (builtins.readDir dir)
-          );
-    in
-    findFilesRecursive (sanitizePath dir);
-
-  # Utility to easily create a new global keybind.
-  # Currently only implemented for Gnome
-  mkGlobalKeybind =
-    {
-      name,
-      binding,
-      command,
-    }:
-    (
-      let
-        id = strings.toLower (strings.sanitizeDerivationName name);
-        scriptName = "keybind-${id}";
-      in
-      # Module to be imported
-      {
-        config,
-        pkgs,
-        constants,
-        ...
-      }:
-      {
-        programs.dconf.enable = true;
-
-        home-manager.users.${constants.user} = {
-          # Create an extra script for the keybind, this avoids a bunch of weird issues
-          home.packages = [
-            (pkgs.writeShellScriptBin scriptName command)
-          ];
-
-          # Add the keybind to dconf
-          dconf.settings =
-            if config.desktop.gnome.enable then
-              {
-                "org/gnome/settings-daemon/plugins/media-keys" = {
-                  custom-keybindings = [
-                    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
-                  ];
-                };
-
-                "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
-                  inherit binding name;
-                  command = scriptName;
-                };
-              }
-            else
-              (builtins.abort "gnome disabled, cannot create keybind!");
-        };
-      }
-    );
-
-  # Synchronize files/directories between this dots repo and a system xdg path
-  # Destination changes take priority (when changed through a UI for example).
-  #
-  # Two modes of operation:
-  # 1. Basic sync (merge = null):
-  #    - Maintains identical copies at source and destination
-  #    - Works with both files and directories
-  #    - Changes at destination are copied back to repo
-  #
-  # 2. File merge (merge != null):
-  #    - Only works with individual files (not directories)
-  #    - Supports automatic merging of differences
-  #    - File format must be convertible to/from Nix
-  #    - The option syncedFiles.overrides.<path> can be used to add more merge overrides accross nixos modules
-  #
-  # Parameters:
-  #   cfgPath  - Path relative to repo's config directory
-  #   xdgPath  - Target path relative to XDG_CONFIG_HOME
-  #   merge    - Optional merge strategy for files
-  mkSyncedPath =
-    {
-      xdgPath,
-      cfgPath,
-      excludes ? [ ],
-      merge ? null, # Optional merge config for single files
-    }:
-    # Module to be imported
-    {
-      lib,
-      pkgs,
-      config,
-      constants,
-      ...
-    }:
-    {
-      options =
-        if merge != null then
-          {
-            syncedFiles.overrides.${cfgPath} = lib.mkOption { default = { }; };
-          }
-        else
-          { };
-
-      config.home-manager.users.${constants.user} =
-        let
-          outerConfig = config;
-        in
-        { lib, config, ... }:
-        {
-          config =
-            let
-              cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
-              xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
-            in
-            {
-              # assertions = [
-              #   {
-              #     assertion = filesystem.pathIsDirectory xdgPathStr -> merge == null;
-              #     message = "Directories cannot be merged to and from Nix";
-              #   }
-              #   {
-              #     assertion = excludes == [ ] || filesystem.pathIsDirectory xdgPathStr;
-              #     message = "Exclusion patterns can only be applied on a directory";
-              #   }
-              # ];
-
-              home.activation."sync-path-${cfgPath}" = lib.hm.dag.entryAfter [ "writeBoundary" ] (
-                ''
-                  # Make sure both parent dirs exist
-                  mkdir --parents "${builtins.dirOf cfgPathStr}" 
-                  mkdir --parents "${builtins.dirOf xdgPathStr}"
-
-                  # Backup old dir/file
-                  if [ -e "${xdgPathStr}" ]; then
-                    cp "${xdgPathStr}" "${xdgPathStr}.bak" -r --force
-                  fi
-
-                ''
-                + (
-                  if merge != null then
-                    # For merged files
-                    let
-                      overrides = outerConfig.syncedFiles.overrides.${cfgPath};
-                      readOrDefault =
-                        file: if filesystem.pathIsRegularFile file then builtins.readFile file else merge.fallback;
-
-                      src = merge.toNix (readOrDefault cfgPathStr);
-                      xdg = merge.toNix (readOrDefault xdgPathStr);
-                      merged = src // xdg // merge.defaultOverrides;
-                      finalSrc = merge.fromNix merged;
-                      finalXdg = merge.fromNix (merged // overrides);
-                    in
-                    ''
-                      # Save new merged content to dots
-                      cat >"${cfgPathStr}" <<'EOL'
-                      ${finalSrc}
-                      EOL
-
-                      # Save merged content to xdg file  
-                      cat >"${xdgPathStr}" <<'EOL'
-                      ${finalXdg}
-                      EOL
-                    ''
-                  else
-                    # For raw files/dirs
-                    let
-                      rsync = "${pkgs.rsync}/bin/rsync";
-                      excludesArgs = lib.concatMapStrings (ex: ''--exclude="${ex}" '') excludes;
-                    in
-                    ''
-                      if [ -d "${xdgPathStr}" ]; then
-                        # Is a dir, we need the trailing slash because rsync
-                        
-                        # Copy path to dots
-                        ${rsync} --ignore-times -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
-                        
-                        # Copy merged path back to xdg
-                        ${rsync} --ignore-times -r "${cfgPathStr}/" "${xdgPathStr}"
-                      else
-                        # Is a file
-                        cp "${xdgPathStr}" "${cfgPathStr}" --force || true
-                        cp "${cfgPathStr}" "${xdgPathStr}" --force
-                      fi
-                    ''
-                )
-              );
-            };
-        };
-
-    };
-
-  # Helper function to create a merge config for JSON files
-  mkJSONMerge =
-    {
-      defaultOverrides ? { },
-    }:
-    {
-      toNix = builtins.fromJSON;
-      fromNix = builtins.toJSON;
-      fallback = "{}";
-      inherit defaultOverrides;
-    };
-
-  # Create a shell alias that is shell-agnostic but still capable of looking up past commands
-  mkShellHistoryAlias =
-    {
-      name,
-      command,
-    }:
-    let
-      historyCommands = {
-        fish = ''$history[1]'';
-        bash = ''$(fc -ln -1)'';
-        zsh = ''''${history[@][1]}'';
-      };
-
-      mappedCommands = builtins.mapAttrs (
-        _: lastCommand: command { inherit lastCommand; }
-      ) historyCommands;
-    in
-    { constants, ... }:
-    {
-      home-manager.users.${constants.user} = {
-        programs.bash.shellAliases.${name} = mappedCommands.bash;
-        programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
-        programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
-      };
-    };
-
   mkDesktopItem =
     {
       package ? null,
@@ -459,55 +160,112 @@ rec {
           );
         });
     in
+    (pkgs.callPackage desktopItemPackage { });
+
+  # Sanitize a path so that it doesn't cause problems in the nix store
+  sanitizePath =
+    path:
+    builtins.path {
+      inherit path;
+      name = strings.sanitizeDerivationName (builtins.baseNameOf path);
+    };
+
+  importModules =
     {
-      pkgs,
-      constants,
-      ...
+      dir,
+      namespace ? [ ],
     }:
-    {
-      home-manager.users.${constants.user} = {
-        home.packages = [
-          (pkgs.callPackage desktopItemPackage { })
-        ];
-      };
+    # Returns a nixos module that imports all of the sub-modules
+    moduleInputs: {
+      imports = debug.traceValSeq (
+        lists.flatten (
+          # Recursively go through the files and directories from the given dir
+          attrsets.mapAttrsToList (
+            fileName: type:
+            let
+              path = dir + "/${fileName}";
+            in
+
+            if type == "directory" then
+              # Recursively descend into the dir
+              importModules {
+                # Make sure to append the dir name to the path
+                dir = path;
+                # And add it to the namespace
+                namespace = namespace ++ [ fileName ];
+              }
+
+            else if type == "regular" then
+              let
+                # Inputs for the module, which also includes:
+                # - namespace
+                # - cfg, which is a shorcut for `config.n1.n2.(...).ni` for each `n` in namespace
+                inputs = moduleInputs // {
+                  inherit namespace;
+                  cfg = lib.lists.foldl (cfg: name: cfg.${name}) moduleInputs.config namespace;
+                };
+
+                # Import the module and provide the inputs
+                importedModule = (import path) (debug.traceValSeq inputs);
+
+                # Copy over imports and config, but modify options
+                modifiedModule = (
+                  debug.traceValSeq {
+                    imports = importedModule.imports or [ ];
+                    config = importedModule.config or { };
+
+                    # Modify the options field of the module to prefix it with the namespace:
+                    # so `options.myOption = mkOption {...}` => `options.n1.n2.(...).ni.myOption = mkOption {...}` for each `n` in namespace
+                    options = lib.lists.foldr (name: opt: { ${name} = opt; }) (importedModule.options or { }) namespace;
+                  }
+                );
+              in
+              modifiedModule
+
+            else
+              # Ignore incompatible files, but emit a warning
+              lib.warn "Found bad file '${fileName}' of type '${type}' while loading modules" [ ]
+
+          ) (builtins.readDir dir)
+        )
+      );
     };
 
-  # Apply one or more patches to a package without having to create an entire overlay for it
-  mkQuickPatch =
-    { package, patches }:
-    { ... }:
-    {
-      nixpkgs.overlays = [
-        (final: prev: {
-          ${package} = prev.${package}.overrideAttrs (
-            finalAttrs: oldAttrs: { patches = (prev.patches or [ ]) ++ patches; }
-          );
-        })
-      ];
-    };
+  # mkNullOr =
+  #   type:
+  #   lib.options.mkOption {
+  #     type = lib.types.nullOr type;
+  #     default = null;
+  #   };
 
-  # Options shortcut for a string option
-  mkEmptyString = lib.options.mkOption {
-    type = lib.types.str;
-    default = "";
-  };
+  # # Options shortcut for a string option
+  # mkEmptyString = lib.options.mkOption {
+  #   type = lib.types.str;
+  #   default = "";
+  # };
 
-  # Options shortcut for a lines option
-  mkEmptyLines = lib.options.mkOption {
-    type = lib.types.lines;
-    default = "";
-  };
+  # # Options shortcut for a lines option
+  # mkEmptyLines = lib.options.mkOption {
+  #   type = lib.types.lines;
+  #   default = "";
+  # };
 
-  # Options shortcut for a boolean option with default of false
-  mkBoolDefaultFalse = lib.options.mkOption {
+  # # Options shortcut for a boolean option with default of false
+  # mkBoolDefaultFalse = lib.options.mkOption {
+  #   type = lib.types.bool;
+  #   default = false;
+  # };
+
+  # # Options shortcut for a boolean option with default of true
+  # mkBoolDefaultTrue = lib.options.mkOption {
+  #   type = lib.types.bool;
+  #   default = true;
+  # };
+
+  mkEnable = lib.options.mkOption {
     type = lib.types.bool;
     default = false;
-  };
-
-  # Options shortcut for a boolean option with default of true
-  mkBoolDefaultTrue = lib.options.mkOption {
-    type = lib.types.bool;
-    default = true;
+    example = true;
   };
 
   # Options shortcut for a submodule
@@ -517,6 +275,17 @@ rec {
       type = lib.types.submodule {
         inherit options;
       };
+      default = { };
+    };
+
+  mkAttrsOfSubmodule =
+    options:
+    lib.options.mkOption {
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          inherit options;
+        }
+      );
       default = { };
     };
 
