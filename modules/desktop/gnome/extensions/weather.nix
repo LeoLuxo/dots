@@ -16,7 +16,7 @@ in
   services.geoclue2.enable = true;
   location.provider = "geoclue2";
 
-  home-manager.users.${user} =
+  home-manager.users.${constants.user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkTuple mkUint32;

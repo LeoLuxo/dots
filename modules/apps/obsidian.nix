@@ -18,7 +18,7 @@ in
 
   defaults.apps.notes = lib.mkDefault "obsidian";
 
-  home-manager.users.${user} = {
+  home-manager.users.${constants.user} = {
     home.packages = with pkgs; [
       obsidian
     ];

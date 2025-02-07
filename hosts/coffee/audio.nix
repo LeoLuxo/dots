@@ -45,7 +45,7 @@ in
 
     users.users.${user}.extraGroups = [ "audio" ];
 
-    home-manager.users.${user} = {
+    home-manager.users.${constants.user} = {
       services = {
         playerctld.enable = true;
         # easyeffects = {

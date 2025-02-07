@@ -35,7 +35,6 @@ rec {
     path
     : The filesystem path to be sanitized
   */
-  # Sanitize a path so that it doesn't cause problems in the nix store
   sanitizePath =
     path:
     builtins.path {
@@ -189,7 +188,7 @@ rec {
                   namespace = namespace ++ [ fileName ];
                 }
 
-              else if type == "regular" then
+              else if type == "regular" && strings.hasSuffix ".nix" fileName then
                 importModuleFile {
                   file = path;
                   namespace = namespace ++ [ fileName ];

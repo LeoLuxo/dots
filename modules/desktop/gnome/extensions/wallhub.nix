@@ -11,7 +11,7 @@ in
 {
   programs.dconf.enable = true;
 
-  home-manager.users.${user} =
+  home-manager.users.${constants.user} =
     { lib, ... }:
     {
       home.packages = with pkgs; [

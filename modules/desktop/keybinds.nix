@@ -13,19 +13,17 @@ let
   inherit (extraLib) mkAttrsOfSubmodule;
 in
 {
-  options = {
-    keybinds = mkAttrsOfSubmodule {
-      binding = options.mkOption {
-        type = types.str;
-      };
+  options = mkAttrsOfSubmodule {
+    binding = options.mkOption {
+      type = types.str;
+    };
 
-      command = options.mkOption {
-        type = types.oneOf [
-          types.str
-          types.path
-          types.package
-        ];
-      };
+    command = options.mkOption {
+      type = types.oneOf [
+        types.str
+        types.path
+        types.package
+      ];
     };
   };
 
@@ -64,5 +62,5 @@ in
             lib.warn "No compatible desktop to create keybind for was found!" { };
       };
     }
-  ) cfg.keybinds;
+  ) cfg;
 }

@@ -8,12 +8,12 @@ let
 in
 
 {
-  # mkNullOr =
-  #   type:
-  #   options.mkOption {
-  #     type = types.nullOr type;
-  #     default = null;
-  #   };
+  mkNullOr =
+    type:
+    options.mkOption {
+      type = types.nullOr type;
+      default = null;
+    };
 
   # # Options shortcut for a string option
   # mkEmptyString = options.mkOption {

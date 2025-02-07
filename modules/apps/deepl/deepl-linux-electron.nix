@@ -67,7 +67,7 @@ in
   ];
 
   # Add dark mode css
-  home-manager.users.${user}.xdg.configFile."Deepl-Linux-Electron/user_theme.css".text = ''
+  home-manager.users.${constants.user}.xdg.configFile."Deepl-Linux-Electron/user_theme.css".text = ''
     html {
       filter: invert(90%) hue-rotate(180deg) brightness(110%) contrast(110%);
       background: white;

@@ -49,7 +49,7 @@ in
       EDITOR = "code";
     };
 
-    home-manager.users.${user} = {
+    home-manager.users.${constants.user} = {
       programs.vscode = {
         enable = true;
         # FHS is vscode but repackaged to run in a FHS environment to make plugin compatibility better

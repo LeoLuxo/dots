@@ -1,23 +1,28 @@
 {
+  cfg,
+  lib,
   pkgs,
-  constants,
   extraLib,
+  constants,
   ...
 }:
 
 let
-  inherit (constants) user;
-  inherit (extraLib) writeScriptWithDeps;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  config = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
     desktop.keybinds."Instant screenshot" = {
       binding = "<Super>s";
       command = "snip";
     };
 
-    home-manager.users.${user} = {
+    home-manager.users.${constants.user} = {
       home.packages = with pkgs; [
         (writeScriptWithDeps {
           name = "snip";

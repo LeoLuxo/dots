@@ -11,7 +11,7 @@ in
 {
   programs.dconf.enable = true;
 
-  home-manager.users.${user} =
+  home-manager.users.${constants.user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkUint32;
