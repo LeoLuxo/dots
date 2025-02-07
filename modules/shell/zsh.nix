@@ -1,32 +1,39 @@
 {
-  pkgs,
+  cfg,
   lib,
+  extraLib,
+  pkgs,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
 {
-  imports = [ ./module.nix ];
+  options = {
+    enable = mkEnable;
+  };
 
-  shell.default = lib.mkDefault "zsh";
+  config = modules.mkIf cfg.enable {
+    shell.defaultShell = lib.mkDefault "zsh";
 
-  programs.zsh.enable = true;
-  environment.shells = [ pkgs.zsh ];
+    programs.zsh.enable = true;
+    environment.shells = [ pkgs.zsh ];
 
-  home-manager.users.${user} = {
-    programs.zsh = {
-      enable = true;
+    home-manager.users.${constants.user} = {
+      programs.zsh = {
+        enable = true;
 
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
+        enableCompletion = true;
+        autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
 
-      history = {
-        size = 10000;
-        ignoreAllDups = true;
+        history = {
+          size = 10000;
+          ignoreAllDups = true;
+        };
       };
     };
   };

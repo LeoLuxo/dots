@@ -6,7 +6,7 @@ let
   inherit (constants) user;
 in
 {
-  home-manager.users.${user} = {
+  home-manager.users.${constants.user} = {
     programs.git.ignores = [
       #
       # LINUX

@@ -78,7 +78,7 @@ in
         rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
       };
 
-      home-manager.users.${user} = {
+      home-manager.users.${constants.user} = {
         home.packages = with pkgs; [
           sshpass
           restic

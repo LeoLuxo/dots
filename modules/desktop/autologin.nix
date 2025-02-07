@@ -11,15 +11,11 @@ let
   inherit (extraLib) mkEnable;
 in
 {
-  options.autoLogin = {
+  options = {
     enable = mkEnable;
   };
 
-  config = modules.mkIf cfg.autoLogin.enable {
-    customs = {
-
-    };
-
+  config = modules.mkIf cfg.enable {
     # Enable automatic login for the user.
     services.displayManager.autoLogin = {
       enable = true;

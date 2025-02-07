@@ -1,12 +1,23 @@
 {
+  cfg,
+  lib,
   pkgs,
+  extraLib,
   constants,
   ...
 }:
 
-# wl-clipboard only works under wayland, dunno how to make this config work under X11
+let
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
+in
 {
-  config = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
+    # wl-clipboard only works under wayland, dunno how to make this config work under X11
     shell.aliases = {
       "copy" = "wl-copy";
       "paste" = "wl-paste";

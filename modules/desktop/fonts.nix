@@ -9,17 +9,16 @@
 
 let
   inherit (lib) modules;
-  inherit (constants) user;
   inherit (extraLib) mkEnable;
 in
 
 {
-  options.fonts = {
+  options = {
     enable = mkEnable;
   };
 
-  config = modules.mkIf cfg.fonts.enable {
-    home-manager.users.${user} = {
+  config = modules.mkIf cfg.enable {
+    home-manager.users.${constants.user} = {
       home.packages = with pkgs; [
         # Install certain nerd fonts
         nerd-fonts.fantasque-sans-mono

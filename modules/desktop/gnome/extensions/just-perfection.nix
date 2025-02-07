@@ -16,7 +16,7 @@ in
     gnomeExtensions.just-perfection
   ];
 
-  home-manager.users.${user} =
+  home-manager.users.${constants.user} =
     { lib, ... }:
 
     {

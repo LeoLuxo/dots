@@ -4,17 +4,17 @@
   pkgs,
   constants,
   extraLib,
+  cfg,
   ...
 }:
 
 let
-  inherit (lib) options types;
-  inherit (constants) user;
+  inherit (lib) options types modules;
   inherit (extraLib) toPascalCase;
 in
 
 {
-  options.rice.peppy.cursor = {
+  options.cursor = {
     size = options.mkOption {
       type = types.ints.unsigned;
       default = 32;
@@ -56,16 +56,15 @@ in
 
   config =
     let
-      cfg = config.rice.peppy.cursor;
-      name = "catppuccin-${cfg.flavor}-${cfg.accent}-cursors";
-      package = pkgs.catppuccin-cursors."${cfg.flavor}${toPascalCase cfg.accent}";
+      name = "catppuccin-${cfg.cursor.flavor}-${cfg.cursor.accent}-cursors";
+      package = pkgs.catppuccin-cursors."${cfg.cursor.flavor}${toPascalCase cfg.cursor.accent}";
     in
-    {
-      home-manager.users.${user} = {
+    modules.mkIf cfg.enable {
+      home-manager.users.${constants.user} = {
         home.pointerCursor = {
           inherit name package;
 
-          size = cfg.size;
+          size = cfg.cursor.size;
           gtk.enable = true;
           x11.enable = true;
         };
@@ -76,7 +75,7 @@ in
       };
 
       environment.variables = {
-        XCURSOR_SIZE = cfg.size;
+        XCURSOR_SIZE = cfg.cursor.size;
       };
     };
 }

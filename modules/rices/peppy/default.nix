@@ -1,5 +1,4 @@
 {
-  nixosModules,
   lib,
   config,
   extraLib,
@@ -11,25 +10,18 @@
 let
   inherit (lib) mkDefault options types;
   inherit (extraLib) mkEnable;
-  inherit (constants) user;
 in
 
 {
-  imports = with nixosModules; [
+  imports = [
     inputs.catppuccin.nixosModules.catppuccin
-
-    wallpaper
-    fonts
 
     ./gnome.nix
     ./cursor.nix
     ./bootscreen.nix
-
-    terminal.ddterm
-    shell.prompt.starship
   ];
 
-  options.rice.peppy = {
+  options = {
     enable = mkEnable;
 
     theme = {
@@ -71,7 +63,7 @@ in
       accent = config.rice.peppy.theme.accent;
     in
     {
-      home-manager.users.${user} = {
+      home-manager.users.${constants.user} = {
         imports = [
           inputs.catppuccin.homeManagerModules.catppuccin
         ];
@@ -85,6 +77,10 @@ in
         image = mkDefault ./assets/NixOSCatppuccin.svg;
       };
 
+      fonts.enable = true;
+      terminal.ddterm.enable = true;
+      shell.prompt.starship.enable = true;
+
       catppuccin = {
         # Enable the theme for all compatible apps
         enable = true;
@@ -94,18 +90,18 @@ in
       };
 
       # Apply catppuccin to certain apps
-      syncedFiles.overrides = {
-        "youtube-music/config.json" = {
+      syncedFiles = {
+        "youtube-music/config.json".overrides = {
           options.themes = [ "${./assets/yt-music.css}" ];
         };
 
-        "vesktop/vencord.json" = {
+        "vesktop/vencord.json".overrides = {
           themeLinks = [
             "https://catppuccin.github.io/discord/dist/catppuccin-${flavor}-${accent}.theme.css"
           ];
         };
 
-        "vscode/settings.json" = {
+        "vscode/settings.json".overrides = {
           "workbench.colorTheme" = "Catppuccin Frappé";
           "catppuccin.accentColor" = "lavender";
           "workbench.iconTheme" = "material-icon-theme";

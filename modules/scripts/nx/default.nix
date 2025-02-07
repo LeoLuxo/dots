@@ -1,15 +1,15 @@
 {
   pkgs,
+  lib,
   inputs,
   constants,
   extraLib,
-  config,
+  cfg,
   ...
 }:
 
 let
   inherit (constants)
-    user
     userHome
     dotsRepoPath
     secretsPath
@@ -19,7 +19,9 @@ let
     mkSubmodule
     mkEmptyLines
     replaceScriptVariables
+    mkEnable
     ;
+  inherit (lib) modules;
 in
 
 {
@@ -27,7 +29,9 @@ in
     inputs.nix-index-database.nixosModules.nix-index
   ];
 
-  options.nx = {
+  options = {
+    enable = mkEnable;
+
     rebuild = mkSubmodule {
       preRebuildActions = mkEmptyLines;
       postRebuildActions = mkEmptyLines;
@@ -36,7 +40,6 @@ in
 
   config =
     let
-      cfg = config.nx;
       variables = {
         # Set the location of the dots and secrets repos
         NX_DOTS = dotsRepoPath;
@@ -53,7 +56,7 @@ in
         NX_TODO = "/stuff/obsidian/Notes/NixOS Todo.md";
       };
     in
-    {
+    modules.mkIf cfg.enable {
       desktop.keybinds = {
         "Open nx-code" = {
           binding = "<Super>F9";
@@ -99,7 +102,7 @@ in
         dconf dump / >"$NX_DCONF_DIFF"
       '' variables;
 
-      home-manager.users.${user} = {
+      home-manager.users.${constants.user} = {
         # Set up pre- and post actions for nx-rebuild
         home.file.".nx/pre_rebuild.sh".text = cfg.rebuild.preRebuildActions;
         home.file.".nx/post_rebuild.sh".text = cfg.rebuild.postRebuildActions;

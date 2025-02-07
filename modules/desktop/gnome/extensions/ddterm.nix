@@ -14,7 +14,7 @@ in
 
   defaults.apps.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
 
-  home-manager.users.${user} =
+  home-manager.users.${constants.user} =
     { lib, ... }:
     {
       home.packages = with pkgs; [

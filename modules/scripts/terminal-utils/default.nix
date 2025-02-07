@@ -1,17 +1,23 @@
 {
+  cfg,
+  lib,
   pkgs,
-  constants,
   extraLib,
+  constants,
   ...
 }:
 
 let
-  inherit (constants) user;
-  inherit (extraLib) writeScriptWithDeps;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable writeScriptWithDeps;
 in
-
 {
-  config = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
+
     shell = {
       aliases = {
         pls = "please";
@@ -39,7 +45,7 @@ in
       };
     };
 
-    home-manager.users.${user} = {
+    home-manager.users.${constants.user} = {
       home.packages = with pkgs; [
         # To query the filetype of files
         file
@@ -88,5 +94,4 @@ in
       ];
     };
   };
-
 }

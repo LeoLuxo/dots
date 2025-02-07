@@ -8,7 +8,7 @@ let
 in
 
 {
-  home-manager.users.${user} = {
+  home-manager.users.${constants.user} = {
     services.kdeconnect = {
       enable = true;
       indicator = true;

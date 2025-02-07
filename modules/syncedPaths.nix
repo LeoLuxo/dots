@@ -12,47 +12,44 @@ let
   inherit (extraLib) mkAttrsOfSubmodule;
 in
 {
-  options = {
-    # Synchronize files/directories between this dots repo and a system xdg path
-    # Destination changes take priority (when changed through a UI for example).
-    #
-    # Two modes of operation:
-    # 1. Basic sync (type = null):
-    #    - Maintains identical copies at source and destination
-    #    - Works with both files and directories
-    #    - Changes at destination are copied back to repo
-    #
-    # 2. File merge (type != null):
-    #    - Only works with individual files (not directories)
-    #    - Supports automatic merging of differences
-    #    - File format must be convertible to/from Nix
-    #    - The option <path>.overrides can be used to add merge overrides accross nixos modules
+  # Synchronize files/directories between this dots repo and a system xdg path
+  # Destination changes take priority (when changed through a UI for example).
+  #
+  # Two modes of operation:
+  # 1. Basic sync (type = null):
+  #    - Maintains identical copies at source and destination
+  #    - Works with both files and directories
+  #    - Changes at destination are copied back to repo
+  #
+  # 2. File merge (type != null):
+  #    - Only works with individual files (not directories)
+  #    - Supports automatic merging of differences
+  #    - File format must be convertible to/from Nix
+  #    - The option <path>.overrides can be used to add merge overrides accross nixos modules
+  options = mkAttrsOfSubmodule {
+    # <path> = Path relative to repo's config directory
 
-    syncedPaths = mkAttrsOfSubmodule {
-      # <path> = Path relative to repo's config directory
+    # Target path relative to XDG_CONFIG_HOME
+    xdgPath = options.mkOption {
+      type = types.str;
+    };
 
-      # Target path relative to XDG_CONFIG_HOME
-      xdgPath = options.mkOption {
-        type = types.str;
-      };
+    # Optional merge strategy for files
+    type = options.mkOption {
+      type = types.nullOr (types.enum [ "json" ]);
+      default = null;
+    };
 
-      # Optional merge strategy for files
-      type = options.mkOption {
-        type = types.nullOr (types.enum [ "json" ]);
-        default = null;
-      };
+    # Overrides to apply to the file after merging
+    overrides = options.mkOption {
+      type = types.attrs;
+      default = { };
+    };
 
-      # Overrides to apply to the file after merging
-      overrides = options.mkOption {
-        type = types.attrs;
-        default = { };
-      };
-
-      # Files to exclude when copying a directory
-      excludes = options.mkOption {
-        type = types.listOf types.str;
-        default = [ ];
-      };
+    # Files to exclude when copying a directory
+    excludes = options.mkOption {
+      type = types.listOf types.str;
+      default = [ ];
     };
   };
 
@@ -142,5 +139,5 @@ in
             };
         };
     }
-  ) cfg.syncedPaths;
+  ) cfg;
 }

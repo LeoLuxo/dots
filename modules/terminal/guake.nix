@@ -1,19 +1,28 @@
 {
-  pkgs,
+  cfg,
+  lib,
+  extraLib,
   constants,
+  pkgs,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      guake
-    ];
+  options = {
+    enable = mkEnable;
   };
 
-  # Needs to start on boot
+  config = modules.mkIf cfg.enable {
+    home-manager.users.${constants.user} = {
+      home.packages = with pkgs; [
+        guake
+      ];
+    };
+
+    # Needs to start on boot
+  };
 }

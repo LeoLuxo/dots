@@ -15,7 +15,7 @@ in
   hardware.keyboard.qmk.enable = true;
 
   # QMK CLI
-  home-manager.users.${user} = {
+  home-manager.users.${constants.user} = {
     home.packages = with pkgs; [
       qmk
     ];

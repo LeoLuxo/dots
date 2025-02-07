@@ -1,16 +1,9 @@
 {
-  config,
+  cfg,
   constants,
   ...
 }:
 
-let
-  inherit (constants) user;
-in
-
-let
-  cfg = config.desktop.gnome;
-in
 {
   config = {
     shell.aliases = {
@@ -19,7 +12,7 @@ in
 
     programs.dconf.enable = true;
 
-    home-manager.users.${user} =
+    home-manager.users.${constants.user} =
       { lib, ... }:
       let
         inherit (lib.hm.gvariant) mkUint32;

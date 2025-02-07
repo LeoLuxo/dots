@@ -8,11 +8,9 @@ let
   inherit (lib) options types;
 in
 {
-  options = {
-    # Apply one or more patches to a package without having to create an entire overlay for it
-    quickPatches = options.mkOption {
-      type = types.attrsOf (types.listOf types.path);
-    };
+  # Apply one or more patches to a package without having to create an entire overlay for it
+  options = options.mkOption {
+    type = types.attrsOf (types.listOf types.path);
   };
 
   config = lib.mapAttrs' (package: quickPatch: {
@@ -23,5 +21,5 @@ in
         );
       })
     ];
-  }) cfg.quickPatches;
+  }) cfg;
 }
