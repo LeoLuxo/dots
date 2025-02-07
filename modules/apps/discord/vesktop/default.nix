@@ -61,7 +61,7 @@ in
 
     defaults.apps.communication = lib.mkDefault "vesktop";
 
-    home-manager.users.${user} = {
+    home-manager.users.${constants.user} = {
       home.packages = with pkgs; [
         # (vesktop.override {
         #   withSystemVencord = true;

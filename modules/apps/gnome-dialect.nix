@@ -15,7 +15,7 @@ in
       command = "dialect --selection";
     };
 
-    home-manager.users.${user} = {
+    home-manager.users.${constants.user} = {
       home.packages = with pkgs; [
         # Gnome circles translator app
         dialect

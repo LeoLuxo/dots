@@ -19,7 +19,7 @@ in
     # })
   ];
 
-  home-manager.users.${user} = {
+  home-manager.users.${constants.user} = {
     home.packages = with pkgs; [
       deepl-linux-electron
     ];

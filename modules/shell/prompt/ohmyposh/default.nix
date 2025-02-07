@@ -1,22 +1,31 @@
 {
+  cfg,
+  lib,
+  extraLib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  home-manager.users.${user} = {
-    programs.oh-my-posh = {
-      enable = true;
-      settings = import ./theme.nix;
+  options = {
+    enable = mkEnable;
+  };
 
-      enableBashIntegration = true;
-      enableZshIntegration = true;
-      enableNushellIntegration = true;
-      enableFishIntegration = true;
+  config = modules.mkIf cfg.enable {
+    home-manager.users.${constants.user} = {
+      programs.oh-my-posh = {
+        enable = true;
+        settings = import ./theme.nix;
+
+        enableBashIntegration = true;
+        enableZshIntegration = true;
+        enableNushellIntegration = true;
+        enableFishIntegration = true;
+      };
     };
   };
 }

@@ -16,7 +16,7 @@ in
       gs = "git status";
     };
 
-    home-manager.users.${user} = {
+    home-manager.users.${constants.user} = {
       home.packages = with pkgs; [
         # Gnome circles commit editor
         commit

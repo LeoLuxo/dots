@@ -1,20 +1,18 @@
 {
-  config,
   lib,
   constants,
   extraLib,
-  nixosModules,
+  cfg,
   ...
 }:
 
 let
-  inherit (lib) options types;
-  inherit (constants) user;
+  inherit (lib) options types modules;
   inherit (extraLib) mkBoolDefaultTrue mkEnable mkSubmodule;
 in
 
 {
-  options.rice.peppy = {
+  options = {
     blur = {
       enable = mkBoolDefaultTrue;
 
@@ -33,39 +31,39 @@ in
     };
   };
 
-  imports = with nixosModules; [
-    desktop.gnome.gnome
-    desktop.gnome.extensions.blur-my-shell
-    desktop.gnome.extensions.clipboard-indicator
-    desktop.gnome.extensions.gsconnect
-    desktop.gnome.extensions.rounded-corners
-    desktop.gnome.extensions.system-monitor
-    desktop.gnome.extensions.media-controls
-    desktop.gnome.extensions.burn-my-windows
-    # desktop.gnome.extensions.emojis
-    # desktop.gnome.extensions.weather
-    # desktop.gnome.extensions.net-speed-simplified
-  ];
-
-  config =
-    let
-      cfg = config.rice.peppy;
-    in
-    {
-      home-manager.users.${user} = {
-        # Enable catppuccin for gtk
-        gtk = {
+  config = modules.mkIf cfg.enable {
+    home-manager.users.${constants.user} = {
+      # Enable catppuccin for gtk
+      gtk = {
+        enable = true;
+        catppuccin = {
           enable = true;
-          catppuccin = {
-            enable = true;
-            flavor = cfg.theme.flavor;
-            accent = cfg.theme.accent;
-            size = "standard";
-            tweaks = [ "normal" ];
-          };
+          flavor = cfg.theme.flavor;
+          accent = cfg.theme.accent;
+          size = "standard";
+          tweaks = [ "normal" ];
         };
       };
-
-      gnome.blur-my-shell = cfg.blur;
     };
+
+    desktop.gnome = {
+      enable = true;
+
+      blur-my-shell = cfg.blur;
+
+      extensions = [
+        "blur-my-shell"
+        "clipboard-indicator"
+        "gsconnect"
+        "rounded-corners"
+        "system-monitor"
+        "media-controls"
+        "burn-my-windows"
+        # "emojis"
+        # "weather"
+        # "net-speed-simplified"
+      ];
+    };
+
+  };
 }

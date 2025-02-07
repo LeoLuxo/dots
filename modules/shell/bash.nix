@@ -1,25 +1,31 @@
 {
-  pkgs,
+  cfg,
   lib,
+  extraLib,
+  pkgs,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  imports = [ ./module.nix ];
+  options = {
+    enable = mkEnable;
+  };
 
-  shell.default = lib.mkDefault "bash";
+  config = modules.mkIf cfg.enable {
+    shell.defaultShell = lib.mkDefault "bash";
 
-  environment.shells = [ pkgs.bash ];
+    environment.shells = [ pkgs.bash ];
 
-  home-manager.users.${user} = {
-    # Let home manager manage bash; needed to set sessionVariables
-    programs.bash = {
-      enable = true;
+    home-manager.users.${constants.user} = {
+      # Let home manager manage bash; needed to set sessionVariables
+      programs.bash = {
+        enable = true;
+      };
     };
   };
 }
