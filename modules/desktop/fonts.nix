@@ -1,5 +1,5 @@
 {
-  config,
+  cfg,
   pkgs,
   lib,
   constants,
@@ -10,15 +10,15 @@
 let
   inherit (lib) modules;
   inherit (constants) user;
-  inherit (extraLib) mkBoolDefaultTrue;
+  inherit (extraLib) mkEnable;
 in
 
 {
   options.fonts = {
-    enable = mkBoolDefaultTrue;
+    enable = mkEnable;
   };
 
-  config = modules.mkIf config.fonts.enable {
+  config = modules.mkIf cfg.fonts.enable {
     home-manager.users.${user} = {
       home.packages = with pkgs; [
         # Install certain nerd fonts

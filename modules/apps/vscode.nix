@@ -3,13 +3,11 @@
   pkgs,
   nixosModules,
   constants,
-  extraLib,
   ...
 }:
 
 let
   inherit (constants) user;
-  inherit (extraLib) mkSyncedPath mkJSONMerge;
 in
 
 {
@@ -18,59 +16,58 @@ in
     fonts
 
     apps.direnv
+  ];
 
-    (mkSyncedPath {
-      xdgPath = "Code/User/settings.json";
-      cfgPath = "vscode/settings.json";
-      merge = mkJSONMerge {
-        defaultOverrides = {
+  config = {
+    syncedPaths = {
+      "vscode/settings.json" = {
+        xdgPath = "Code/User/settings.json";
+        type = "json";
+        overrides = {
           "workbench.colorTheme" = "";
         };
       };
-    })
 
-    (mkSyncedPath {
-      xdgPath = "Code/User/keybindings.json";
-      cfgPath = "vscode/keybindings.json";
-    })
+      "vscode/keybindings.json" = {
+        xdgPath = "Code/User/keybindings.json";
+      };
 
-    (mkSyncedPath {
-      xdgPath = "Code/User/snippets";
-      cfgPath = "vscode/snippets";
-    })
+      "vscode/snippets" = {
+        xdgPath = "Code/User/snippets";
+      };
 
-    # Profiles are a bit fucky
-    # (mkSyncedPath {
-    #   xdgPath = "Code/User/profiles";
-    #   cfgPath = "vscode/profiles";
-    #   excludes = [ "globalStorage" ];
-    # })
-  ];
+      # Profiles are a bit fucky
+      # "vscode/profiles" = {
+      #   xdgPath = "Code/User/profiles";
+      #   excludes = [ "globalStorage" ];
+      # };
+    };
 
-  defaults.apps.codeEditor = lib.mkDefault "code";
+    defaults.apps.codeEditor = lib.mkDefault "code";
 
-  environment.variables = {
-    EDITOR = "code";
-  };
+    environment.variables = {
+      EDITOR = "code";
+    };
 
-  home-manager.users.${user} = {
-    programs.vscode = {
-      enable = true;
-      # FHS is vscode but repackaged to run in a FHS environment to make plugin compatibility better
-      # package = pkgs.vscode.fhs;
-      package = pkgs.vscode.fhsWithPackages (
-        # Add required dependecies
-        ps: with ps; [
-          # nix formatter
-          nixfmt-rfc-style
+    home-manager.users.${user} = {
+      programs.vscode = {
+        enable = true;
+        # FHS is vscode but repackaged to run in a FHS environment to make plugin compatibility better
+        # package = pkgs.vscode.fhs;
+        package = pkgs.vscode.fhsWithPackages (
+          # Add required dependecies
+          ps: with ps; [
+            # nix formatter
+            nixfmt-rfc-style
 
-          # Nix Language Server
-          nil
+            # Nix Language Server
+            nil
 
-          # sh formatter
-          shfmt
-        ]
-      );
+            # sh formatter
+            shfmt
+          ]
+        );
+      };
     };
   };
 }

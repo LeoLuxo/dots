@@ -18,7 +18,7 @@ in
     enable = mkBoolDefaultTrue;
 
     app-blur = mkSubmodule {
-      enable = mkBoolDefaultFalse;
+      enable = mkEnable;
     };
 
     hacks-level = options.mkOption {

@@ -1,20 +1,18 @@
 {
   config,
-  constants,
   lib,
   extraLib,
   ...
 }:
 
 let
-  inherit (extraLib) mkBoolDefaultFalse;
-  inherit (constants) user;
+  inherit (extraLib) mkEnable;
   inherit (lib) options types modules;
 in
 
 {
   options.restic.coldBackup = {
-    enable = mkBoolDefaultFalse;
+    enable = mkEnable;
 
     repo = options.mkOption {
       type = types.path;
@@ -30,12 +28,10 @@ in
       cfg = config.restic.coldBackup;
     in
     modules.mkIf cfg.enable {
-      home-manager.users.${user} = {
-        home.shellAliases = {
-          # Add aliases for the cold repo
-          restic3 = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
-          rustic3 = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
-        };
+      shell.aliases = {
+        # Add aliases for the cold repo
+        restic-cold = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
+        rustic-cold = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
       };
     };
 }

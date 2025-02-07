@@ -67,53 +67,44 @@
     let
       # Function to create a nixos host config
       mkHost =
-        hostModules:
+        modules:
         {
+          # Required constants
           user,
           hostName,
           system,
+
+          # Default constants
+          userHome ? "/home/${user}",
+          nixosPath ? "/etc/nixos",
+          dotsRepoPath ? nixosPath + "/dots",
+          secretsPath ? "${userHome}/misc/secrets",
+
+          userKeyPrivate ? "${userHome}/.ssh/id_ed25519",
+          userKeyPublic ? "${userKeyPrivate}.pub",
+          hostKeyPrivate ? "/etc/ssh/ssh_host_ed25519_key",
+          hostKeyPublic ? "${hostKeyPrivate}.pub",
           ...
-        }@hostConstants:
+        }@constants:
         let
-          defaultConstants = rec {
-            userHome = "/home/${user}";
-            nixosPath = "/etc/nixos";
-            secretsPath = "${userHome}/misc/secrets";
-
-            userKeyPrivate = "${userHome}/.ssh/id_ed25519";
-            userKeyPublic = "${userKeyPrivate}.pub";
-            hostKeyPrivate = "/etc/ssh/ssh_host_ed25519_key";
-            hostKeyPublic = "${hostKeyPrivate}.pub";
-
-            dotsRepoPath = (nixosPath + "/dots");
-          };
-
-          constants = defaultConstants // hostConstants;
-
           extraLib = import ./libs.nix {
-            inherit inputs constants;
+            inherit (inputs.nixpkgs) lib;
+            pkgs = inputs.nixpkgs.legacyPackages.${system};
           };
 
-          nixosModules = extraLib.findFiles {
-            dir = ./modules;
-            extensions = [ "nix" ];
-            defaultFiles = [ "default.nix" ];
-          };
-
+          defaultModules = [
+            (extraLib.importModules {
+              dir = ./modules;
+              # namespace = [ "mySettings" ];
+            })
+          ];
         in
         nixpkgs.lib.nixosSystem {
-          inherit (hostConstants) system;
-          modules = hostModules;
+          inherit (constants) system;
+          modules = modules ++ defaultModules;
 
           # Additional args passed to the module
-          specialArgs = {
-            inherit
-              inputs
-              extraLib
-              nixosModules
-              constants
-              ;
-          };
+          specialArgs = { inherit inputs extraLib constants; };
         };
 
     in

@@ -7,28 +7,27 @@
 
 let
   inherit (constants) user;
-  inherit (extraLib) mkGlobalKeybind writeScriptWithDeps;
+  inherit (extraLib) writeScriptWithDeps;
 in
 
 {
-  imports = [
-    (mkGlobalKeybind {
-      name = "Instant screenshot";
+  config = {
+    desktop.keybinds."Instant screenshot" = {
       binding = "<Super>s";
       command = "snip";
-    })
-  ];
+    };
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      (writeScriptWithDeps {
-        name = "snip";
-        file = ./snip.sh;
-        deps = [
-          gnome-screenshot
-          wl-clipboard
-        ];
-      })
-    ];
+    home-manager.users.${user} = {
+      home.packages = with pkgs; [
+        (writeScriptWithDeps {
+          name = "snip";
+          file = ./snip.sh;
+          deps = [
+            gnome-screenshot
+            wl-clipboard
+          ];
+        })
+      ];
+    };
   };
 }

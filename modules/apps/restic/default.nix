@@ -8,7 +8,7 @@
 }:
 
 let
-  inherit (extraLib) mkBoolDefaultFalse;
+  inherit (extraLib) mkEnable mkAttrsOfSubmodule;
   inherit (constants) user;
   inherit (lib)
     options
@@ -26,7 +26,7 @@ in
   ];
 
   options.restic = {
-    enable = mkBoolDefaultFalse;
+    enable = mkEnable;
 
     repo = options.mkOption {
       type = types.path;
@@ -36,41 +36,34 @@ in
       type = types.path;
     };
 
-    backups = options.mkOption {
-      type = types.attrsOf (
-        types.submodule {
-          options = {
-            path = options.mkOption {
-              type = types.path;
-            };
+    backups = mkAttrsOfSubmodule {
+      path = options.mkOption {
+        type = types.path;
+      };
 
-            timer = options.mkOption {
-              type = types.str;
-            };
+      timer = options.mkOption {
+        type = types.str;
+      };
 
-            randomDelay = options.mkOption {
-              type = types.nullOr types.str;
-              default = null;
-            };
+      randomDelay = options.mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
 
-            tags = options.mkOption {
-              type = types.listOf types.str;
-              default = [ ];
-            };
+      tags = options.mkOption {
+        type = types.listOf types.str;
+        default = [ ];
+      };
 
-            displayPath = options.mkOption {
-              type = types.nullOr types.str;
-              default = null;
-            };
+      displayPath = options.mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
 
-            label = options.mkOption {
-              type = types.nullOr types.str;
-              default = null;
-            };
-          };
-        }
-      );
-      default = { };
+      label = options.mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
     };
   };
 
@@ -79,18 +72,18 @@ in
       cfg = config.restic;
     in
     modules.mkIf cfg.enable {
+      shell.aliases = {
+        # Add aliases for the main repo
+        restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
+        rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
+      };
+
       home-manager.users.${user} = {
         home.packages = with pkgs; [
           sshpass
           restic
           rustic
         ];
-
-        home.shellAliases = {
-          # Add aliases for the main repo
-          restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
-          rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
-        };
       };
 
       systemd.services = lib.mapAttrs' (
