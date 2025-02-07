@@ -1,24 +1,28 @@
 {
+  cfg,
   lib,
   pkgs,
-  nixosModules,
+  extraLib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  imports = with nixosModules; [
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
+
     # Require fonts for vscode
-    fonts
+    desktop.fonts.enable = true;
 
-    apps.direnv
-  ];
+    apps.direnv.enable = true;
 
-  config = {
     syncedPaths = {
       "vscode/settings.json" = {
         xdgPath = "Code/User/settings.json";

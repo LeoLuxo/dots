@@ -1,13 +1,8 @@
 {
   lib,
   pkgs,
-  constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   # Package for https://github.com/kumakichi/Deepl-linux-electron
@@ -65,12 +60,4 @@ in
       }
     )
   ];
-
-  # Add dark mode css
-  home-manager.users.${constants.user}.xdg.configFile."Deepl-Linux-Electron/user_theme.css".text = ''
-    html {
-      filter: invert(90%) hue-rotate(180deg) brightness(110%) contrast(110%);
-      background: white;
-    }
-  '';
 }

@@ -17,7 +17,7 @@ in
     inputs.musnix.nixosModules.musnix
   ];
 
-  config = {
+  config = modules.mkIf cfg.enable {
 
     desktop.keybinds = {
       # https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/

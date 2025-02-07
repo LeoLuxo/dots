@@ -1,194 +1,200 @@
 {
+  cfg,
+  lib,
   constants,
   ...
 }:
+
 let
-  inherit (constants) user;
+  inherit (lib) modules;
 in
 {
-  home-manager.users.${constants.user} = {
-    programs.git.ignores = [
-      #
-      # LINUX
-      #
 
-      "*~"
+  config = modules.mkIf cfg.enable {
+    home-manager.users.${constants.user} = {
+      programs.git.ignores = [
+        #
+        # LINUX
+        #
 
-      # temporary files which can be created if a process still has a handle open of a deleted file
-      ".fuse_hidden*"
+        "*~"
 
-      # KDE directory preferences
-      ".directory"
+        # temporary files which can be created if a process still has a handle open of a deleted file
+        ".fuse_hidden*"
 
-      # Linux trash folder which might appear on any partition or disk
-      ".Trash-*"
+        # KDE directory preferences
+        ".directory"
 
-      # .nfs files are created when an open file is removed but is still being accessed
-      ".nfs*"
+        # Linux trash folder which might appear on any partition or disk
+        ".Trash-*"
 
-      #
-      # WINDOWS
-      #
+        # .nfs files are created when an open file is removed but is still being accessed
+        ".nfs*"
 
-      # Windows thumbnail cache files
-      "Thumbs.db"
-      "Thumbs.db:encryptable"
-      "ehthumbs.db"
-      "ehthumbs_vista.db"
+        #
+        # WINDOWS
+        #
 
-      # Dump file
-      "*.stackdump"
+        # Windows thumbnail cache files
+        "Thumbs.db"
+        "Thumbs.db:encryptable"
+        "ehthumbs.db"
+        "ehthumbs_vista.db"
 
-      # Folder config file
-      "[Dd]esktop.ini"
+        # Dump file
+        "*.stackdump"
 
-      # Recycle Bin used on file shares
-      "$RECYCLE.BIN/"
+        # Folder config file
+        "[Dd]esktop.ini"
 
-      # Windows Installer files
-      "*.cab"
-      "*.msi"
-      "*.msix"
-      "*.msm"
-      "*.msp"
+        # Recycle Bin used on file shares
+        "$RECYCLE.BIN/"
 
-      # Windows shortcuts
-      "*.lnk"
+        # Windows Installer files
+        "*.cab"
+        "*.msi"
+        "*.msix"
+        "*.msm"
+        "*.msp"
 
-      #
-      # MACOS
-      #
+        # Windows shortcuts
+        "*.lnk"
 
-      # General
-      ".DS_Store"
-      ".AppleDouble"
-      ".LSOverride"
+        #
+        # MACOS
+        #
 
-      # Icon must end with two \r
-      "Icon"
+        # General
+        ".DS_Store"
+        ".AppleDouble"
+        ".LSOverride"
 
-      # Thumbnails
-      "._*"
+        # Icon must end with two \r
+        "Icon"
 
-      # Files that might appear in the root of a volume
-      ".DocumentRevisions-V100"
-      ".fseventsd"
-      ".Spotlight-V100"
-      ".TemporaryItems"
-      ".Trashes"
-      ".VolumeIcon.icns"
-      ".com.apple.timemachine.donotpresent"
+        # Thumbnails
+        "._*"
 
-      # Directories potentially created on remote AFP share
-      ".AppleDB"
-      ".AppleDesktop"
-      "Network Trash Folder"
-      "Temporary Items"
-      ".apdisk"
+        # Files that might appear in the root of a volume
+        ".DocumentRevisions-V100"
+        ".fseventsd"
+        ".Spotlight-V100"
+        ".TemporaryItems"
+        ".Trashes"
+        ".VolumeIcon.icns"
+        ".com.apple.timemachine.donotpresent"
 
-      #
-      # VSCODE
-      #
+        # Directories potentially created on remote AFP share
+        ".AppleDB"
+        ".AppleDesktop"
+        "Network Trash Folder"
+        "Temporary Items"
+        ".apdisk"
 
-      # Boom
-      ".vscode"
+        #
+        # VSCODE
+        #
 
-      # ".vscode/*"
-      # "!.vscode/settings.json"
-      # "!.vscode/tasks.json"
-      # "!.vscode/launch.json"
-      # "!.vscode/extensions.json"
-      # "!.vscode/*.code-snippets"
+        # Boom
+        ".vscode"
 
-      # Local History for Visual Studio Code
-      ".history/"
-      # Built Visual Studio Code Extensions
-      "*.vsix"
+        # ".vscode/*"
+        # "!.vscode/settings.json"
+        # "!.vscode/tasks.json"
+        # "!.vscode/launch.json"
+        # "!.vscode/extensions.json"
+        # "!.vscode/*.code-snippets"
 
-      #
-      # JETBRAINS
-      #
+        # Local History for Visual Studio Code
+        ".history/"
+        # Built Visual Studio Code Extensions
+        "*.vsix"
 
-      # Nuclear go boom
-      ".idea"
+        #
+        # JETBRAINS
+        #
 
-      # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
-      # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+        # Nuclear go boom
+        ".idea"
 
-      # User-specific stuff
-      ".idea/**/workspace.xml"
-      ".idea/**/tasks.xml"
-      ".idea/**/usage.statistics.xml"
-      ".idea/**/dictionaries"
-      ".idea/**/shelf"
+        # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+        # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-      # AWS User-specific
-      ".idea/**/aws.xml"
+        # User-specific stuff
+        ".idea/**/workspace.xml"
+        ".idea/**/tasks.xml"
+        ".idea/**/usage.statistics.xml"
+        ".idea/**/dictionaries"
+        ".idea/**/shelf"
 
-      # Generated files
-      ".idea/**/contentModel.xml"
+        # AWS User-specific
+        ".idea/**/aws.xml"
 
-      # Sensitive or high-churn files
-      ".idea/**/dataSources/"
-      ".idea/**/dataSources.ids"
-      ".idea/**/dataSources.local.xml"
-      ".idea/**/sqlDataSources.xml"
-      ".idea/**/dynamic.xml"
-      ".idea/**/uiDesigner.xml"
-      ".idea/**/dbnavigator.xml"
+        # Generated files
+        ".idea/**/contentModel.xml"
 
-      # Gradle
-      ".idea/**/gradle.xml"
-      ".idea/**/libraries"
+        # Sensitive or high-churn files
+        ".idea/**/dataSources/"
+        ".idea/**/dataSources.ids"
+        ".idea/**/dataSources.local.xml"
+        ".idea/**/sqlDataSources.xml"
+        ".idea/**/dynamic.xml"
+        ".idea/**/uiDesigner.xml"
+        ".idea/**/dbnavigator.xml"
 
-      # Gradle and Maven with auto-import
-      # When using Gradle or Maven with auto-import, you should exclude module files,
-      # since they will be recreated, and may cause churn.  Uncomment if using
-      # auto-import.
-      # ".idea/artifacts"
-      # ".idea/compiler.xml"
-      # ".idea/jarRepositories.xml"
-      # ".idea/modules.xml"
-      # ".idea/*.iml"
-      # ".idea/modules"
-      # "*.iml"
-      # "*.ipr"
+        # Gradle
+        ".idea/**/gradle.xml"
+        ".idea/**/libraries"
 
-      # CMake
-      "cmake-build-*/"
+        # Gradle and Maven with auto-import
+        # When using Gradle or Maven with auto-import, you should exclude module files,
+        # since they will be recreated, and may cause churn.  Uncomment if using
+        # auto-import.
+        # ".idea/artifacts"
+        # ".idea/compiler.xml"
+        # ".idea/jarRepositories.xml"
+        # ".idea/modules.xml"
+        # ".idea/*.iml"
+        # ".idea/modules"
+        # "*.iml"
+        # "*.ipr"
 
-      # Mongo Explorer plugin
-      ".idea/**/mongoSettings.xml"
+        # CMake
+        "cmake-build-*/"
 
-      # File-based project format
-      "*.iws"
+        # Mongo Explorer plugin
+        ".idea/**/mongoSettings.xml"
 
-      # IntelliJ
-      "out/"
+        # File-based project format
+        "*.iws"
 
-      # mpeltonen/sbt-idea plugin
-      ".idea_modules/"
+        # IntelliJ
+        "out/"
 
-      # JIRA plugin
-      "atlassian-ide-plugin.xml"
+        # mpeltonen/sbt-idea plugin
+        ".idea_modules/"
 
-      # Cursive Clojure plugin
-      ".idea/replstate.xml"
+        # JIRA plugin
+        "atlassian-ide-plugin.xml"
 
-      # SonarLint plugin
-      ".idea/sonarlint/"
+        # Cursive Clojure plugin
+        ".idea/replstate.xml"
 
-      # Crashlytics plugin (for Android Studio and IntelliJ)
-      "com_crashlytics_export_strings.xml"
-      "crashlytics.properties"
-      "crashlytics-build.properties"
-      "fabric.properties"
+        # SonarLint plugin
+        ".idea/sonarlint/"
 
-      # Editor-based Rest Client
-      ".idea/httpRequests"
+        # Crashlytics plugin (for Android Studio and IntelliJ)
+        "com_crashlytics_export_strings.xml"
+        "crashlytics.properties"
+        "crashlytics-build.properties"
+        "fabric.properties"
 
-      # Android studio 3.1+ serialized cache file
-      ".idea/caches/build_file_checksums.ser"
-    ];
+        # Editor-based Rest Client
+        ".idea/httpRequests"
+
+        # Android studio 3.1+ serialized cache file
+        ".idea/caches/build_file_checksums.ser"
+      ];
+    };
   };
 }

@@ -1,17 +1,25 @@
 {
+  cfg,
+  lib,
+  extraLib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  virtualisation.docker.enable = true;
+  options = {
+    enable = mkEnable;
+  };
 
-  users.users.${user}.extraGroups = [
-    "docker"
-  ];
+  config = modules.mkIf cfg.enable {
+    virtualisation.docker.enable = true;
 
+    users.users.${constants.user}.extraGroups = [
+      "docker"
+    ];
+  };
 }

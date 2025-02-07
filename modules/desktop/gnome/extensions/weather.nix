@@ -1,59 +1,63 @@
 {
   pkgs,
   constants,
+  cfg,
+  lib,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules lists;
 in
 
 {
-  programs.dconf.enable = true;
+  config = modules.mkIf (cfg.enable && lists.elem "weather" cfg.extensions) {
+    programs.dconf.enable = true;
 
-  # Enable the automatic location provider on the system
-  # (doesn't seem to be working tho :/)
-  services.geoclue2.enable = true;
-  location.provider = "geoclue2";
+    # Enable the automatic location provider on the system
+    # (doesn't seem to be working tho :/)
+    services.geoclue2.enable = true;
+    location.provider = "geoclue2";
 
-  home-manager.users.${constants.user} =
-    { lib, ... }:
-    let
-      inherit (lib.hm.gvariant) mkTuple mkUint32;
-    in
-    {
-      home.packages = with pkgs; [
-        gnomeExtensions.openweather-refined
-      ];
+    home-manager.users.${constants.user} =
+      { lib, ... }:
+      let
+        inherit (lib.hm.gvariant) mkTuple mkUint32;
+      in
+      {
+        home.packages = with pkgs; [
+          gnomeExtensions.openweather-refined
+        ];
 
-      dconf.settings = {
-        "org/gnome/shell" = {
-          enabled-extensions = [ "openweather-extension@penguin-teal.github.io" ];
-        };
+        dconf.settings = {
+          "org/gnome/shell" = {
+            enabled-extensions = [ "openweather-extension@penguin-teal.github.io" ];
+          };
 
-        # Enable automatic location services (in privacy tab)
-        "org/gnome/system/location" = {
-          enabled = true;
-        };
+          # Enable automatic location services (in privacy tab)
+          "org/gnome/system/location" = {
+            enabled = true;
+          };
 
-        "org/gnome/shell/extensions/openweatherrefined" = {
-          actual-city = 1;
-          has-run = true;
-          locs = [
-            (mkTuple [
-              (mkUint32 1)
-              ""
-              (mkUint32 1)
-              ""
-            ])
-          ];
-          my-loc-prov = "geoclue";
-          position-in-panel = "center";
-          position-index = 1;
-          show-comment-in-panel = false;
-          show-sunsetrise-in-panel = false;
-          show-text-in-panel = true;
+          "org/gnome/shell/extensions/openweatherrefined" = {
+            actual-city = 1;
+            has-run = true;
+            locs = [
+              (mkTuple [
+                (mkUint32 1)
+                ""
+                (mkUint32 1)
+                ""
+              ])
+            ];
+            my-loc-prov = "geoclue";
+            position-in-panel = "center";
+            position-index = 1;
+            show-comment-in-panel = false;
+            show-sunsetrise-in-panel = false;
+            show-text-in-panel = true;
+          };
         };
       };
-    };
+  };
 }

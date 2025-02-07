@@ -1,5 +1,5 @@
 {
-  config,
+  cfg,
   pkgs,
   constants,
   lib,
@@ -9,7 +9,6 @@
 
 let
   inherit (extraLib) mkEnable mkAttrsOfSubmodule;
-  inherit (constants) user;
   inherit (lib)
     options
     types
@@ -25,7 +24,7 @@ in
     ./ludusavi.nix
   ];
 
-  options.restic = {
+  options = {
     enable = mkEnable;
 
     repo = options.mkOption {
@@ -67,71 +66,67 @@ in
     };
   };
 
-  config =
-    let
-      cfg = config.restic;
-    in
-    modules.mkIf cfg.enable {
-      shell.aliases = {
-        # Add aliases for the main repo
-        restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
-        rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
-      };
-
-      home-manager.users.${constants.user} = {
-        home.packages = with pkgs; [
-          sshpass
-          restic
-          rustic
-        ];
-      };
-
-      systemd.services = lib.mapAttrs' (
-        name: backup:
-        lib.nameValuePair "restic-autobackup-${name}" {
-          script =
-            let
-              tags =
-                if lists.length backup.tags > 0 then ''--tag ${strings.concatStringsSep "," backup.tags}'' else "";
-              displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
-              label = if backup.label != null then ''--label "${backup.label}"'' else "";
-            in
-            ''
-              # Running as root so we can read the password file directly
-              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
-            '';
-
-          path = [ pkgs.rustic ];
-
-          serviceConfig = {
-            Type = "oneshot";
-            User = "root";
-          };
-        }
-      ) cfg.backups;
-
-      systemd.timers = lib.mapAttrs' (
-        name: backup:
-        lib.nameValuePair "restic-autobackup-${name}" {
-          wantedBy = [ "timers.target" ];
-          timerConfig = {
-            OnCalendar = backup.timer;
-            Persistent = true;
-            Unit = "restic-autobackup-${name}.service";
-            RandomizedDelaySec = modules.mkIf (backup.randomDelay != null) backup.randomDelay;
-          };
-
-          # https://nixos.wiki/wiki/Systemd/Timers
-          # https://wiki.archlinux.org/title/Systemd/Timers
-        }
-      ) cfg.backups;
-
-      environment.variables = {
-        # RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
-        # RESTIC_STORAGE_BOX_PWD_FILE = config.age.secrets."restic/storage-box-pwd".path;
-
-        # RESTIC_REPO_HOT = constants.resticRepoHot;
-        # RESTIC_REPO_COLD = constants.resticRepoCold or "";
-      };
+  config = modules.mkIf cfg.enable {
+    shell.aliases = {
+      # Add aliases for the main repo
+      restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
+      rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
     };
+
+    home-manager.users.${constants.user} = {
+      home.packages = with pkgs; [
+        sshpass
+        restic
+        rustic
+      ];
+    };
+
+    systemd.services = lib.mapAttrs' (
+      name: backup:
+      lib.nameValuePair "restic-autobackup-${name}" {
+        script =
+          let
+            tags =
+              if lists.length backup.tags > 0 then ''--tag ${strings.concatStringsSep "," backup.tags}'' else "";
+            displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
+            label = if backup.label != null then ''--label "${backup.label}"'' else "";
+          in
+          ''
+            # Running as root so we can read the password file directly
+            rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+          '';
+
+        path = [ pkgs.rustic ];
+
+        serviceConfig = {
+          Type = "oneshot";
+          User = "root";
+        };
+      }
+    ) cfg.backups;
+
+    systemd.timers = lib.mapAttrs' (
+      name: backup:
+      lib.nameValuePair "restic-autobackup-${name}" {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = backup.timer;
+          Persistent = true;
+          Unit = "restic-autobackup-${name}.service";
+          RandomizedDelaySec = modules.mkIf (backup.randomDelay != null) backup.randomDelay;
+        };
+
+        # https://nixos.wiki/wiki/Systemd/Timers
+        # https://wiki.archlinux.org/title/Systemd/Timers
+      }
+    ) cfg.backups;
+
+    environment.variables = {
+      # RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
+      # RESTIC_STORAGE_BOX_PWD_FILE = config.age.secrets."restic/storage-box-pwd".path;
+
+      # RESTIC_REPO_HOT = constants.resticRepoHot;
+      # RESTIC_REPO_COLD = constants.resticRepoCold or "";
+    };
+  };
 }

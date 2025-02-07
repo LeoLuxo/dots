@@ -24,7 +24,7 @@ in
     description = "Which shell to set as default";
   };
 
-  config = {
+  config = modules.mkIf cfg.enable {
     users.users.${user}.shell = pkgs.${config.shell.default};
   };
 }

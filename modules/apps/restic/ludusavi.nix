@@ -1,5 +1,5 @@
 {
-  config,
+  cfg,
   pkgs,
   lib,
   extraLib,
@@ -8,7 +8,7 @@
 }:
 
 let
-  inherit (extraLib) mkBoolDefaultFalse writeNushellScript;
+  inherit (extraLib) mkEnable writeNushellScript;
   inherit (lib)
     options
     types
@@ -17,7 +17,7 @@ let
 in
 
 {
-  options.restic.gameSavesBackup = {
+  options.gameSavesBackup = {
     enable = mkEnable;
 
     timer = options.mkOption {
@@ -32,9 +32,9 @@ in
 
   config =
     let
-      cfg = config.restic.gameSavesBackup;
+      localCfg = cfg.gameSavesBackup;
     in
-    modules.mkIf cfg.enable {
+    modules.mkIf localCfg.enable {
       systemd.services."restic-gamesaves" = {
         serviceConfig = {
           Type = "oneshot";
@@ -50,7 +50,7 @@ in
               | items {|game, info|
                 let paths = $info.files | columns
 
-              	rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
+              	rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
                 $game
               }
@@ -71,7 +71,7 @@ in
           OnCalendar = cfg.timer;
           Persistent = true;
           Unit = "restic-gamesaves.service";
-          RandomizedDelaySec = modules.mkIf (cfg.randomDelay != null) cfg.randomDelay;
+          RandomizedDelaySec = modules.mkIf (localCfg.randomDelay != null) localCfg.randomDelay;
         };
       };
     };

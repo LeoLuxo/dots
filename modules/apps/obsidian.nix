@@ -1,26 +1,33 @@
 {
+  cfg,
   lib,
   pkgs,
-  nixosModules,
+  extraLib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  imports = with nixosModules; [
-    # Require fonts
-    fonts
-  ];
+  options = {
+    enable = mkEnable;
+  };
 
-  defaults.apps.notes = lib.mkDefault "obsidian";
+  config = modules.mkIf cfg.enable {
+    desktop = {
+      # Require fonts
+      fonts.enable = true;
 
-  home-manager.users.${constants.user} = {
-    home.packages = with pkgs; [
-      obsidian
-    ];
+      defaultsApps.notes = lib.mkDefault "obsidian";
+    };
+
+    home-manager.users.${constants.user} = {
+      home.packages = with pkgs; [
+        obsidian
+      ];
+    };
   };
 }
