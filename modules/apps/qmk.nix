@@ -1,23 +1,32 @@
 {
+  cfg,
+  lib,
   pkgs,
+  extraLib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  # https://nixos.wiki/wiki/Qmk
+  options = {
+    enable = mkEnable;
+  };
 
-  # Gives access to the keyboard as non-root user
-  hardware.keyboard.qmk.enable = true;
+  config = modules.mkIf cfg.enable {
+    # https://nixos.wiki/wiki/Qmk
 
-  # QMK CLI
-  home-manager.users.${constants.user} = {
-    home.packages = with pkgs; [
-      qmk
-    ];
+    # Gives access to the keyboard as non-root user
+    hardware.keyboard.qmk.enable = true;
+
+    # QMK CLI
+    home-manager.users.${constants.user} = {
+      home.packages = with pkgs; [
+        qmk
+      ];
+    };
   };
 }

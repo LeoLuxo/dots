@@ -1,31 +1,43 @@
 {
+  cfg,
   lib,
+  extraLib,
   ...
 }:
 
+let
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
+in
 {
-  defaults.apps.browser = lib.mkDefault "firefox";
+  options = {
+    enable = mkEnable;
+  };
 
-  programs = {
-    # Setup firefox.
-    firefox = {
-      enable = true;
-      policies =
-        let
-          lock-false = {
-            Value = false;
-            Status = "locked";
+  config = modules.mkIf cfg.enable {
+    desktop.defaultsApps.browser = lib.mkDefault "firefox";
+
+    programs = {
+      # Setup firefox.
+      firefox = {
+        enable = true;
+        policies =
+          let
+            lock-false = {
+              Value = false;
+              Status = "locked";
+            };
+          in
+          # lock-true = {
+          #   Value = true;
+          #   Status = "locked";
+          # };
+          {
+            Preferences = {
+              "middlemouse.paste" = lock-false;
+            };
           };
-        in
-        # lock-true = {
-        #   Value = true;
-        #   Status = "locked";
-        # };
-        {
-          Preferences = {
-            "middlemouse.paste" = lock-false;
-          };
-        };
+      };
     };
   };
 }

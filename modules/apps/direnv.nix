@@ -1,6 +1,20 @@
-{ ... }:
 {
-  config = {
+  cfg,
+  lib,
+  extraLib,
+  ...
+}:
+
+let
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
+in
+{
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
     programs.direnv = {
       enable = true;
 

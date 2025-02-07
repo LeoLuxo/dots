@@ -1,17 +1,26 @@
 {
+  cfg,
   pkgs,
   constants,
+  extraLib,
+  lib,
   ...
 }:
 
 let
-  inherit (constants) user userKeyPublic;
+  inherit (constants) userKeyPublic;
+  inherit (extraLib) mkEnable;
+  inherit (lib) modules;
 in
 
 {
   imports = [ ./gitignore.nix ];
 
-  config = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
     shell.aliases = {
       gs = "git status";
     };

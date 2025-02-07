@@ -1,14 +1,23 @@
 {
+  cfg,
+  lib,
   pkgs,
+  extraLib,
   constants,
   ...
 }:
+
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
 {
-  config = {
-    syncedPaths."youtube-music/config.json" = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
+    syncedPaths."youtubeMusic/config.json" = {
       xdgPath = "YouTube Music/config.json";
       type = "json";
       overrides = {

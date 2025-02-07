@@ -1,13 +1,24 @@
 {
+  cfg,
+  lib,
+  extraLib,
   pkgs,
   constants,
   ...
 }:
+
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
 {
-  home-manager.users.${constants.user} = {
-    home.packages = with pkgs; [ bitwarden-desktop ];
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
+    home-manager.users.${constants.user} = {
+      home.packages = with pkgs; [ bitwarden-desktop ];
+    };
   };
 }

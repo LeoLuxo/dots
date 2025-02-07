@@ -11,20 +11,23 @@ let
 in
 
 {
-  config = modules.mkIf (cfg.enable && lists.elem "wallhub" cfg.extensions) {
+  config = modules.mkIf (cfg.enable && lists.elem "netSpeedSimplified" cfg.extensions) {
     programs.dconf.enable = true;
 
     home-manager.users.${constants.user} =
       { lib, ... }:
       {
         home.packages = with pkgs; [
-          gnomeExtensions.wallhub
+          gnomeExtensions.net-speed-simplified
         ];
 
         dconf.settings = {
           "org/gnome/shell" = {
-            enabled-extensions = [ "wallhub@sakithb.github.io" ];
+            enabled-extensions = [ "netspeedsimplified@prateekmedia.extension" ];
           };
+
+          # "org/gnome/shell/extensions/netspeedsimplified" = {
+          # };
         };
       };
   };

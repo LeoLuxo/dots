@@ -1,5 +1,5 @@
 {
-  config,
+  cfg,
   lib,
   extraLib,
   ...
@@ -11,7 +11,7 @@ let
 in
 
 {
-  options.restic.coldBackup = {
+  options.coldBackup = {
     enable = mkEnable;
 
     repo = options.mkOption {
@@ -25,9 +25,9 @@ in
 
   config =
     let
-      cfg = config.restic.coldBackup;
+      localCfg = cfg.coldBackup;
     in
-    modules.mkIf cfg.enable {
+    modules.mkIf localCfg.enable {
       shell.aliases = {
         # Add aliases for the cold repo
         restic-cold = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";

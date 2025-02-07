@@ -1,8 +1,20 @@
 {
+  cfg,
+  lib,
+  extraLib,
   ...
 }:
+
+let
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
+in
 {
-  config = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
     desktop.keybinds."Goldwarden" = {
       binding = "<Super>u";
       command = "dbus-send --type=method_call --dest=com.quexten.Goldwarden.autofill /com/quexten/Goldwarden com.quexten.Goldwarden.Autofill.autofill";

@@ -1,12 +1,15 @@
 {
+  cfg,
   lib,
   pkgs,
   constants,
+  extraLibs,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (extraLibs) mkEnable;
+  inherit (lib) modules;
 in
 
 {
@@ -15,7 +18,11 @@ in
     ./keybinds-fix.nix
   ];
 
-  config = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
     quickPatches = {
       "vencord" = [
         ./vencord-disable-update-check.patch

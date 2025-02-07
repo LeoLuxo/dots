@@ -1,11 +1,15 @@
 {
   cfg,
+  lib,
   constants,
   ...
 }:
+let
+  inherit (lib) modules;
+in
 
 {
-  config = {
+  config = modules.mkIf cfg.enable {
     shell.aliases = {
       "find-shortcut" = "gsettings list-recursively | grep -i";
     };

@@ -1,15 +1,22 @@
 {
+  cfg,
+  lib,
   pkgs,
+  extraLib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+  inherit (lib) modules;
+  inherit (extraLib) mkEnable;
 in
-
 {
-  config = {
+  options = {
+    enable = mkEnable;
+  };
+
+  config = modules.mkIf cfg.enable {
     desktop.keybinds."Instant translate" = {
       binding = "<Super>d";
       command = "dialect --selection";
