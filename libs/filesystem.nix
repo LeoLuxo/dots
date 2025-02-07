@@ -13,6 +13,28 @@ let
 in
 
 rec {
+  /**
+    This function sanitizes a file system path to make it compatible with the Nix store
+
+    # Example
+
+    ```nix
+    sanitizePath "/path/with spaces and special-chars!"
+    =>
+    /nix/store/hash-path-with-spaces-and-special-chars
+    ```
+
+    # Type
+
+    ```
+    sanitizePath :: Path -> Path
+    ```
+
+    # Arguments
+
+    path
+    : The filesystem path to be sanitized
+  */
   # Sanitize a path so that it doesn't cause problems in the nix store
   sanitizePath =
     path:
@@ -21,6 +43,54 @@ rec {
       name = strings.sanitizeDerivationName (builtins.baseNameOf path);
     };
 
+  /**
+    A function that imports and processes NixOS modules with namespace support and optional recursive import processing.
+
+    # Example
+
+    ```nix
+    importModuleFile {
+      file = ./my-module.nix;
+      namespace = [ "myapp" "feature" ];
+      processImports = true;
+    }
+    =>
+    A module with its options namespaced under config.myapp.feature
+    ```
+
+    # Type
+
+    ```
+    importModuleFile :: {
+      file :: Path,
+      namespace :: [String],
+      processImports :: Bool
+    } -> ModuleInputs -> Module
+    ```
+
+    # Arguments
+
+    file
+    : Path to the NixOS module file to import
+
+    namespace
+    : Optional list of strings that will be used to nest the module's options under a namespace path.
+      Empty list by default.
+
+    processImports
+    : Whether to recursively process imports in the target module.
+      If true, will wrap imported paths with the same namespace.
+      Defaults to false.
+
+    # Notes
+
+    - Provides the imported module with additional inputs:
+      - namespace: The current namespace path
+      - cfg: Shortcut to access the namespaced config
+    - Processes imports recursively when processImports is true
+    - Wraps all options under the specified namespace path
+    - Preserves the original module's config and non-path imports
+  */
   importModuleFile =
     {
       file,
