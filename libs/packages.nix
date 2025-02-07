@@ -14,7 +14,38 @@ let
 in
 rec {
 
-  # Replace variables in place in the script text
+  /**
+    Replaces variables in a script text with their corresponding values
+
+    # Example
+
+    ```nix
+    replaceScriptVariables "Hello $name" { name = "World"; }
+    =>
+    "Hello World"
+    ```
+
+    # Type
+
+    ```
+    replaceScriptVariables :: String -> AttrSet -> String
+    ```
+
+    # Arguments
+
+    script
+    : The text containing variables to be replaced
+
+    variables
+    : An attribute set where keys are variable names and values are their replacements.
+      Variables can be referenced in the script using either $name or ${name} syntax
+
+    # Notes
+
+    - Supports both $variable and ${variable} syntax
+    - All occurrences of variables will be replaced
+    - Variable names in the attribute set should not include the $ or ${} syntax
+  */
   replaceScriptVariables =
     script: variables:
     let
@@ -24,8 +55,63 @@ rec {
     in
     strings.replaceStrings (varNames1 ++ varNames2) (varValues ++ varValues) script;
 
-  # Write a script just like pkgs.writeShellScriptBin and pkgs.writeScriptBin, but optionally add some dependencies.
-  # Is automatically wrapped in another script with the deps on the PATH.
+  /**
+    Creates a script with optional dependencies in PATH, variable replacements, and privilege elevation.
+
+    # Example
+
+    ```nix
+    writeScriptWithDeps {
+      name = "my-script";
+      text = "echo Hello World";
+      deps = [ pkgs.curl pkgs.jq ];
+      bashShebang = true;
+    }
+    =>
+    /nix/store/...-my-script # Executable with curl and jq in PATH
+    ```
+
+    # Type
+
+    ```
+    writeScriptWithDeps :: {
+      name :: String,
+      file :: Path | Null,
+      text :: String | Null,
+      deps :: [Package],
+      bashShebang :: Bool,
+      binFolder :: Bool,
+      replaceVariables :: AttrSet,
+      elevate :: Bool
+    } -> Package
+    ```
+
+    # Arguments
+
+    name
+    : Name of the generated script
+
+    file
+    : Optional path to script file to read from
+
+    text
+    : Script content as string. If file is provided, reads from file instead
+
+    deps
+    : List of package dependencies to add to PATH
+
+    bashShebang
+    : Whether to add a bash shebang or not
+
+    binFolder
+    : Whether to create a /bin folder with the script. If false, creates standalone script
+
+    replaceVariables
+    : Attribute set of variables to replace in script text
+
+    elevate
+    : Whether to run script with sudo
+  */
   writeScriptWithDeps =
     {
       name,
@@ -56,7 +142,52 @@ rec {
       exec ${elevation} ${innerBuilder "${name}-no-deps" scriptText} $@
     '';
 
-  # Write a nushell script akin to writeScriptWithDeps
+  /**
+    Creates a Nushell script with optional dependencies and execution settings.
+
+    # Example
+
+    ```nix
+    writeNushellScript {
+      name = "my-script";
+      text = "echo 'Hello World'";
+      deps = [ pkgs.curl ];
+      elevate = true;
+    }
+    ```
+
+    # Type
+
+    ```
+    writeNushellScript :: AttrSet -> Derivation
+    ```
+
+    # Arguments
+
+    name
+    : The name of the script to create
+
+    file
+    : Optional path to a Nushell script file. Mutually exclusive with `text`
+
+    text
+    : Optional string containing the script content. Mutually exclusive with `file`
+
+    deps
+    : List of package dependencies required by the script. Defaults to empty list
+
+    elevate
+    : Whether the script should be run with elevated privileges. Defaults to false
+
+    binFolder
+    : Whether to create a bin folder for the script. Defaults to true
+
+    # Notes
+
+    - Either `file` or `text` must be provided, but not both
+    - Uses `writeScriptWithDeps` internally with Nushell-specific configuration
+    - Will automatically include Nushell as a dependency
+  */
   writeNushellScript =
     {
       name,
@@ -84,6 +215,58 @@ rec {
       }
     );
 
+  /**
+    Creates a desktop entry (`.desktop` file) with optional privilege elevation support
+
+    # Example
+
+    ```nix
+    mkDesktopItem {
+      package = pkgs.firefox;
+      categories = [ "Network" "WebBrowser" ];
+      icon = "firefox";
+      elevate = false;
+    }
+    ```
+
+    # Type
+
+    ```
+    mkDesktopItem :: AttrSet -> Derivation
+    ```
+
+    # Arguments
+
+    package
+    : The package containing the executable (optional)
+
+    name
+    : The name of the desktop entry, defaults to package name/pname
+
+    desktopName
+    : The display name shown in the menu, defaults to PascalCase with spaces of name
+
+    exec
+    : The command to execute, defaults to "${package}/bin/${name}"
+
+    icon
+    : The icon name or path (optional)
+
+    keywords
+    : List of search keywords, defaults to [name]
+
+    categories
+    : List of menu categories where entry should appear
+
+    elevate
+    : Whether to run the command with elevated privileges using pkexec, defaults to false
+
+    # Notes
+
+    - When `elevate` is true, creates a wrapper script to handle environment variables with pkexec
+    - Automatically handles desktop file generation and installation
+    - Uses standard XDG desktop entry specification
+  */
   mkDesktopItem =
     {
       package ? null,

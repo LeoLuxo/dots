@@ -7,7 +7,32 @@ let
   inherit (lib) strings;
 in
 rec {
-  # Capitalize first letter
+  /**
+    Converts the first letter of a string to uppercase, keeping the rest unchanged
+
+    # Example
+
+    ```nix
+    toUpperCaseFirstLetter "hello"
+    =>
+    "Hello"
+    ```
+
+    # Type
+
+    ```
+    toUpperCaseFirstLetter :: String -> String
+    ```
+
+    # Arguments
+
+    string
+    : The input string to transform
+
+    # Note
+
+    Returns empty string if input is empty. Function assumes input is a valid string.
+  */
   toUpperCaseFirstLetter =
     string:
     let
@@ -16,7 +41,28 @@ rec {
     in
     head + tail;
 
-  # Split words around space, dash - and underscore _
+  /**
+    Splits a string into words by space, dash and underscore delimiters
+
+    # Example
+
+    ```nix
+    splitWords "hello-world_test string"
+    =>
+    [ "hello" "world" "test" "string" ]
+    ```
+
+    # Type
+
+    ```
+    splitWords :: String -> [String]
+    ```
+
+    # Arguments
+
+    string
+    : The input string to be split into words
+  */
   splitWords =
     string:
     # builtins.split returns non-matches (as string) interleaved with the matches (as list), so we filter by string
@@ -25,10 +71,52 @@ rec {
       builtins.split "[ _-]" string
     );
 
-  # Convert a string to PascalCase
+  /**
+    Converts a string to PascalCase format by capitalizing the first letter of each word
+
+    # Example
+
+    ```nix
+    toPascalCase "hello world"
+    =>
+    "HelloWorld"
+    ```
+
+    # Type
+
+    ```
+    toPascalCase :: String -> String
+    ```
+
+    # Arguments
+
+    string
+    : The input string to convert to PascalCase
+  */
   toPascalCase = string: strings.concatMapStrings toUpperCaseFirstLetter (splitWords string);
 
-  # Convert a string to PascalCase with spaces in between words
+  /**
+    Converts a string to pascal case with spaces between words
+
+    # Example
+
+    ```nix
+    toPascalCaseWithSpaces "hello-world_example"
+    =>
+    "Hello World Example"
+    ```
+
+    # Type
+
+    ```
+    toPascalCaseWithSpaces :: String -> String
+    ```
+
+    # Arguments
+
+    string
+    : The input string to convert to pascal case with spaces
+  */
   toPascalCaseWithSpaces =
     string: strings.concatMapStringsSep " " toUpperCaseFirstLetter (splitWords string);
 }
