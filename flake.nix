@@ -1,5 +1,9 @@
+# https://github.com/IogaMaster/snowfall-starter
+
+# https://github.com/jakehamilton/config
+
 {
-  description = "My NixOS configuration :)";
+  description = "My Campfire NixOS configuration :)";
 
   inputs = {
     # Using nixpkgs unstable
@@ -7,7 +11,15 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    # Manages dotfiles in nix
+    # Snowfall Lib is a library that makes it easy to manage your Nix flake by imposing an opinionated file structure.
+    # The name "snowfall-lib" is required due to how Snowfall Lib processes your
+    # flake's inputs.
+    snowfall-lib = {
+      url = "github:snowfallorg/lib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Manages dotfiles and home/user config in nix
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,66 +74,33 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    inputs:
+    inputs.snowfall-lib.mkFlake {
+      inherit inputs;
+      src = ./.;
 
-    let
-      # Function to create a nixos host config
-      mkHost =
-        hostModules:
-        {
-          user,
-          hostName,
-          system,
-          ...
-        }@hostConstants:
-        let
-          defaultConstants = rec {
-            userHome = "/home/${user}";
-            nixosPath = "/etc/nixos";
-            secretsPath = "${userHome}/misc/secrets";
+      channels-config = {
+        allowUnfree = true;
+      };
 
-            userKeyPrivate = "${userHome}/.ssh/id_ed25519";
-            userKeyPublic = "${userKeyPrivate}.pub";
-            hostKeyPrivate = "/etc/ssh/ssh_host_ed25519_key";
-            hostKeyPublic = "${hostKeyPrivate}.pub";
+      snowfall.namespace = "campfire";
 
-            dotsRepoPath = (nixosPath + "/dots");
-          };
+      # NixOS modules for all hosts
+      systems.modules.nixos = with inputs; [
+        home-manager.nixosModules.home-manager
+        agenix.nixosModules.default
+        musnix.nixosModules.musnix
+      ];
 
-          constants = defaultConstants // hostConstants;
+      # NixOS modules for specific hosts
+      systems.hosts = {
+        pancake.modules = with inputs; [
+          # Include hardware stuff and kernel patches for surface pro 7
+          nixos-hardware.nixosModules.microsoft-surface-pro-intel
+        ];
+      };
 
-          extraLib = import ./libs.nix {
-            inherit inputs constants;
-          };
-
-          nixosModules = extraLib.findFiles {
-            dir = ./modules;
-            extensions = [ "nix" ];
-            defaultFiles = [ "default.nix" ];
-          };
-
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit (hostConstants) system;
-          modules = hostModules;
-
-          # Additional args passed to the module
-          specialArgs = {
-            inherit
-              inputs
-              extraLib
-              nixosModules
-              constants
-              ;
-          };
-        };
-
-    in
-    {
-      # Define nixos configs
-      nixosConfigurations = import ./hosts.nix mkHost;
-
-      # Define templates
       templates = import ./templates;
+
     };
 }
