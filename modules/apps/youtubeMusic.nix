@@ -1,8 +1,8 @@
 {
-  cfg,
+  config,
   lib,
   pkgs,
-  extraLib,
+
   constants,
   ...
 }:
@@ -27,7 +27,7 @@ in
 
     home-manager.users.${constants.user} = {
       home.packages = with pkgs; [
-        youtube-music
+        youtubeMusic
       ];
     };
   };

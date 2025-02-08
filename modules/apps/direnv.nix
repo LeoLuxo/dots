@@ -1,7 +1,7 @@
 {
-  cfg,
+  config,
   lib,
-  extraLib,
+
   ...
 }:
 

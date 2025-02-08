@@ -3,8 +3,8 @@
   lib,
   pkgs,
   constants,
-  extraLib,
-  cfg,
+
+  config,
   ...
 }:
 
