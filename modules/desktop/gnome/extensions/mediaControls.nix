@@ -1,7 +1,7 @@
 {
   pkgs,
   constants,
-  cfg,
+  config,
   lib,
   ...
 }:

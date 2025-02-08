@@ -1,8 +1,8 @@
 {
   lib,
   constants,
-  extraLib,
-  cfg,
+
+  config,
   ...
 }:
 
@@ -20,7 +20,7 @@ in
         enable = mkEnable;
       };
 
-      hacks-level = options.mkOption {
+      hacksLevel = options.mkOption {
         type = types.enum [
           "high performance"
           "default"

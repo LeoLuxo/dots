@@ -1,8 +1,8 @@
 {
-  cfg,
+  config,
   pkgs,
   constants,
-  extraLib,
+
   lib,
   ...
 }:

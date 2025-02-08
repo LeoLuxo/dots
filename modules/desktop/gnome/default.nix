@@ -1,7 +1,7 @@
 {
   lib,
-  extraLib,
-  cfg,
+
+  config,
   ...
 }:
 
@@ -10,7 +10,7 @@ let
     mkSubmodule
     mkBoolDefaultTrue
     mkEnable
-    importModuleDir
+    importModules
     ;
   inherit (lib) options types modules;
 in
@@ -27,7 +27,7 @@ in
     ./settings.nix
 
     # Import extensions
-    (importModuleDir { dir = ./extensions; })
+    (importModules ./extensions)
   ];
 
   options.desktop.gnome = {

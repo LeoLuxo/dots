@@ -31,7 +31,7 @@
 	"NixOS module": {
 		"prefix": "module",
 		"body": [
-			"{ cfg, lib, extraLib, pkgs, constants, ... }:\n\nlet\n  inherit (lib) modules options types;\n  inherit (extraLib) mkEnable;\nin\n{\n  options = {\n    enable = mkEnable;\n  };\n\n  config = modules.mkIf cfg.enable {\n    $0\n  };\n}\n"
+			"{ config, lib,  pkgs, constants, ... }:\n\nlet\n  inherit (lib) modules options types;\n  inherit (extraLib) mkEnable;\nin\n{\n  options = {\n    enable = mkEnable;\n  };\n\n  config = modules.mkIf cfg.enable {\n    $0\n  };\n}\n"
 		]
 	},
 	"NullOr option": {

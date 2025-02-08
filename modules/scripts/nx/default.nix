@@ -3,8 +3,8 @@
   lib,
   inputs,
   constants,
-  extraLib,
-  cfg,
+
+  config,
   ...
 }:
 
