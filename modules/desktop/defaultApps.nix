@@ -1,6 +1,6 @@
 {
   lib,
-  extraLib,
+
   ...
 }:
 let

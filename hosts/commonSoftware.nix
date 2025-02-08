@@ -36,7 +36,7 @@
   };
 
   apps = {
-    youtube-music.enable = true;
+    youtubeMusic.enable = true;
     obsidian.enable = true;
     firefox.enable = true;
     discord.enable = true;
@@ -67,7 +67,7 @@
       # app-blur.enable = true;
 
       # Set hacks to best looking
-      hacks-level = "no artifact";
+      hacksLevel = "no artifact";
     };
   };
 

@@ -1,7 +1,7 @@
 {
   lib,
   config,
-  extraLib,
+
   inputs,
   constants,
   ...
@@ -91,7 +91,7 @@ in
 
       # Apply catppuccin to certain apps
       syncedFiles = {
-        "youtube-music/config.json".overrides = {
+        "youtubeMusic/config.json".overrides = {
           options.themes = [ "${./assets/yt-music.css}" ];
         };
 

@@ -67,7 +67,7 @@
     let
       # Function to create a nixos host config
       mkHost =
-        modules:
+        hostModules:
         {
           # Required constants
           user,
@@ -93,15 +93,12 @@
           };
 
           defaultModules = [
-            (extraLib.importModules {
-              dir = ./modules;
-              # namespace = [ "mySettings" ];
-            })
+            (extraLib.importModules ./modules)
           ];
         in
         nixpkgs.lib.nixosSystem {
           inherit (constants) system;
-          modules = modules ++ defaultModules;
+          modules = hostModules ++ defaultModules;
 
           # Additional args passed to the module
           specialArgs = { inherit inputs extraLib constants; };
