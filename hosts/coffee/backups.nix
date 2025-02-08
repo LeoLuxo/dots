@@ -1,7 +1,7 @@
 { config, constants, ... }:
 {
   # Setup my auto backups
-  restic = {
+  apps.restic = {
     enable = true;
     repo = "/stuff/restic/repo";
     passwordFile = config.age.secrets."restic/${constants.hostName}-pwd".path;
