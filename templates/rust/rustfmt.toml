@@ -1,0 +1,9 @@
+hard_tabs = true
+
+max_width = 120
+
+overflow_delimited_expr = true
+
+comment_width               = 80
+format_code_in_doc_comments = true
+wrap_comments               = true
