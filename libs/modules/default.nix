@@ -1,111 +1,182 @@
-{ lib, ... }:
+{
+  lib,
+  namespace,
+  ...
+}:
+with lib;
+with lib.${namespace};
 
-let
-  inherit (lib)
-    strings
-    attrsets
-    lists
-    debug
-    types
-    options
-    ;
-in
+{
+  /**
+    Creates an option with specified type and default value
 
-rec {
+    # Type
+    ```
+    mkOpt :: Type -> a -> Option
+    ```
 
-  mkNullOr =
-    type:
-    options.mkOption {
-      type = types.nullOr type;
-      default = null;
-    };
+    # Arguments
+    type
+    : The type of the option
 
-  # # Options shortcut for a string option
-  # mkEmptyString = options.mkOption {
-  #   type = types.str;
-  #   default = "";
-  # };
+    default
+    : The default value
 
-  # # Options shortcut for a lines option
-  # mkEmptyLines = options.mkOption {
-  #   type = types.lines;
-  #   default = "";
-  # };
+    # Example
+    ```nix
+    mkOpt types.str "hello"
+    =>
+    Option of type string with default "hello"
+    ```
+  */
+  mkOpt = type: default: mkOption { inherit type default; };
 
-  # # Options shortcut for a boolean option with default of false
-  # mkBoolDefaultFalse = options.mkOption {
-  #   type = types.bool;
-  #   default = false;
-  # };
+  /**
+    Creates an option with specified type but no default value
 
-  # # Options shortcut for a boolean option with default of true
-  # mkBoolDefaultTrue = options.mkOption {
-  #   type = types.bool;
-  #   default = true;
-  # };
+    # Type
+    ```
+    mkOpt' :: Type -> Option
+    ```
 
-  mkEnable = options.mkOption {
+    # Arguments
+    type
+    : The type of the option
+
+    # Example
+    ```nix
+    mkOpt' types.str
+    =>
+    Option of type string with no default
+    ```
+  */
+  mkOpt' = type: mkOption { inherit type; };
+
+  /**
+    Creates a nullable option with a default value of null
+
+    # Type
+    ```
+    mkNullOr :: Type -> Option
+    ```
+
+    # Arguments
+    type
+    : The type to make nullable
+
+    # Example
+    ```nix
+    mkNullOr types.str
+    =>
+    Option of type `null | string` with default null
+    ```
+  */
+  mkNullOr = type: mkOpt (types.nullOr type) null;
+
+  /**
+    Creates a boolean enable option defaulting to false
+
+    # Type
+    ```
+    mkEnable :: Option
+    ```
+
+    # Example
+    ```nix
+    mkEnable
+    =>
+    Option of type bool with default false
+    ```
+  */
+  mkEnable = mkOption {
     type = types.bool;
     default = false;
     example = true;
   };
 
-  # Options shortcut for a submodule
+  /**
+    Shorthand for enable = true
+
+    # Example
+    ```nix
+    enabled
+    =>
+    { enable = true; }
+    ```
+  */
+  enabled = {
+    enable = true;
+  };
+
+  /**
+    Shorthand for enable = false
+
+    # Example
+    ```nix
+    disabled
+    =>
+    { enable = false; }
+    ```
+  */
+  disabled = {
+    enable = false;
+  };
+
+  /**
+    Creates a submodule option with specified options
+
+    # Type
+    ```
+    mkSubmodule :: AttrSet -> Option
+    ```
+
+    # Arguments
+    opts
+    : The options to include in the submodule
+
+    # Example
+    ```nix
+    mkSubmodule { foo = mkOpt types.str "bar"; }
+    =>
+    Option of type submodule with specified options
+    ```
+  */
   mkSubmodule =
     opts:
-    opts.mkOption {
+    mkOption {
       type = types.submodule {
-        inherit options;
+        inherit opts;
       };
       default = { };
     };
 
-  mkAttrsOfSubmodule =
+  /**
+    Creates an attribute set of submodules with specified options
+
+    # Type
+    ```
+    mkAttrsSub :: AttrSet -> Option
+    ```
+
+    # Arguments
+    opts
+    : The options to include in each submodule
+
+    # Example
+    ```nix
+    mkAttrsSub { foo = mkOpt types.str "bar"; }
+    =>
+    Option of type attrsOf(submodule) with specified options
+    ```
+  */
+  mkAttrsSub =
     opts:
-    opts.mkOption {
+    mkOption {
       type = types.attrsOf (
         types.submodule {
-          inherit options;
+          inherit opts;
         }
       );
       default = { };
-    };
-
-  importModules =
-    dir:
-    # Returns a nixos module that imports all of the sub-modules
-    moduleInputs: {
-      imports = lists.flatten (
-        let
-          defaultFile = "${dir}/default.nix";
-        in
-        if builtins.pathExists defaultFile then
-          # If there's a default.nix file present, import that directly and don't process further files in the dir
-          [ (debug.traceValFn (x: "default file: ${builtins.toString x}") defaultFile) ]
-        else
-          # Otherwise, recursively go through the files and directories from the given dir
-          attrsets.mapAttrsToList (
-            fileName: type:
-            let
-              path = dir + "/${fileName}";
-            in
-
-            if type == "directory" then
-              # Recursively descend into the dir
-              importModules {
-                # Make sure to append the dir name to the path
-                dir = debug.traceValFn (x: "directory: ${builtins.toString x}") path;
-              }
-
-            else if type == "regular" && strings.hasSuffix ".nix" fileName then
-              # Add nix files
-              (debug.traceValFn (x: "file: ${builtins.toString x}") path)
-
-            else
-              # Ignore incompatible files
-              [ ]
-
-          ) (builtins.readDir dir)
-      );
     };
 }
