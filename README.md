@@ -1,7 +1,7 @@
 <h1 align="center">
 	<img src="./.github/assets/nixos-logo.png" width="100px"/>
 	<br>
-	Campfire
+	LeoLuxo's dots
 	<br>
 	<div align="center">
 		<a = href="https://nixos.org">
