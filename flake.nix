@@ -3,7 +3,7 @@
 # https://github.com/jakehamilton/config
 
 {
-  description = "My Campfire NixOS configuration :)";
+  description = "My NixOS configuration :)";
 
   inputs = {
     # Using nixpkgs unstable
@@ -82,8 +82,6 @@
       channels-config = {
         allowUnfree = true;
       };
-
-      snowfall.namespace = "campfire";
 
       # NixOS modules for all hosts
       systems.modules.nixos = with inputs; [
