@@ -13,17 +13,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # A modular Nix flake framework for simplifying flake definitions.
+    flakelight.url = "github:nix-community/flakelight";
+
     # My wallpapers
     # Is an external flake to make sure this repo stays small if the wallpapers aren't used
     # (The url MUST use git+ssh otherwise it won't properly authenticate and have access to the private repo)
-    wallpapers = {
-      url = "git+ssh://git@github.com/LeoLuxo/dots-wallpapers";
-    };
+    wallpapers.url = "git+ssh://git@github.com/LeoLuxo/dots-wallpapers";
 
     # Contains certain nixos hardware settings, notably useful for surface laptops
-    nixos-hardware = {
-      url = "github:nixos/nixos-hardware/master";
-    };
+    nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Encryption thingie, used for secrets in nix
     agenix = {
@@ -40,9 +39,7 @@
     };
 
     # Catppuccin themes
-    catppuccin = {
-      url = "github:catppuccin/nix";
-    };
+    catppuccin.url = "github:catppuccin/nix";
 
     # Pre-built database for nix-index, which is an index of which files are provided by which packages
     nix-index-database = {
@@ -51,77 +48,32 @@
     };
 
     # Real-time audio in NixOS
-    musnix = {
-      url = "github:musnix/musnix";
-    };
+    musnix.url = "github:musnix/musnix";
 
     # VSCode extensions repository
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-    };
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    { flakelight, ... }@inputs:
+    flakelight ./. (
+      { lib, ... }:
+      {
+        inherit inputs;
 
-    let
-      # Function to create a nixos host config
-      mkHost =
-        hostModules:
-        {
-          user,
-          hostName,
-          system,
-          ...
-        }@hostConstants:
-        let
-          defaultConstants = rec {
-            userHome = "/home/${user}";
-            nixosPath = "/etc/nixos";
-            secretsPath = "${userHome}/misc/secrets";
+        systems = [ "x86_64-linux" ];
 
-            userKeyPrivate = "${userHome}/.ssh/id_ed25519";
-            userKeyPublic = "${userKeyPrivate}.pub";
-            hostKeyPrivate = "/etc/ssh/ssh_host_ed25519_key";
-            hostKeyPublic = "${hostKeyPrivate}.pub";
+        # nixosConfigurations.coffee = {
+        #   system = "x86_64-linux";
+        #   modules = [ { system.stateVersion = "24.05"; } ];
+        # };
 
-            dotsRepoPath = (nixosPath + "/dots");
-          };
+        # nixosConfigurations.pancake = {
+        #   system = "x86_64-linux";
+        #   modules = [ { system.stateVersion = "24.05"; } ];
+        # };
+      }
+    );
 
-          constants = defaultConstants // hostConstants;
-
-          extraLib = import ./libs.nix {
-            inherit inputs constants;
-          };
-
-          nixosModules = extraLib.findFiles {
-            dir = ./modules;
-            extensions = [ "nix" ];
-            defaultFiles = [ "default.nix" ];
-          };
-
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit (hostConstants) system;
-          modules = hostModules;
-
-          # Additional args passed to the module
-          specialArgs = {
-            inherit
-              inputs
-              extraLib
-              nixosModules
-              constants
-              ;
-          };
-        };
-
-    in
-    {
-      # Define nixos configs
-      nixosConfigurations = import ./hosts.nix mkHost;
-
-      # Define templates
-      templates = import ./templates;
-    };
 }
