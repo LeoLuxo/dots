@@ -12,10 +12,10 @@
     };
 
     # Snowfall Lib is a library that makes it easy to manage your Nix flake by imposing an opinionated file structure.
-    # The name "snowfall-lib" is required due to how Snowfall Lib processes your
-    # flake's inputs.
+    # The name "snowfall-lib" is required due to how Snowfall Lib processes your flake's inputs.
     snowfall-lib = {
-      url = "github:snowfallorg/lib";
+      # Using a fork until this PR gets merged https://github.com/snowfallorg/lib/pull/131
+      url = "github:elliott-farrall/lib";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -75,6 +75,36 @@
 
   outputs =
     inputs:
+    # [Snowfall Lib](https://snowfall.org/guides/lib/quickstart/) is a library that standardizes the creation of flake outputs.
+    #
+    # Snowfall Lib automatically maps these directories to flake outputs:
+    # Root Directory: ./
+    # ├── homes/
+    # │   └── <arch>-<format>/         -> e.g. x86_64-linux, aarch64-darwin
+    # │       └── <name>/default.nix   -> home configuration
+    # │
+    # ├── systems/
+    # │   └── <arch>-<format>/         -> e.g. x86_64-linux, aarch64-darwin
+    # │       └── <name>/default.nix   -> system configuration
+    # │
+    # ├── lib/
+    # │   └── <name>/default.nix       -> lib.${namespace}.<name>
+    # │
+    # ├── modules/
+    # │   ├── home/                    -> homes.modules.<name>
+    # │   └── nixos/                   -> nixosModules.<name>
+    # │
+    # ├── overlays/                    -> overlays.<name>
+    # │   └── <name>/default.nix
+    # │
+    # ├── packages/
+    # │   └── <name>/                  -> packages.<system>.<name>
+    # │
+    # ├── checks/                      -> checks.<system>.<name>
+    # │   └── <name>/
+    # │
+    # └── shells/
+    #     └── <name>/                  -> devShells.<system>.<name>
     inputs.snowfall-lib.mkFlake {
       inherit inputs;
       src = ./.;
