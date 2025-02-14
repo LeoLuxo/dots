@@ -14,6 +14,7 @@
     };
 
     # A modular Nix flake framework for simplifying flake definitions.
+    # https://github.com/nix-community/flakelight/blob/master/API_GUIDE.md
     flakelight.url = "github:nix-community/flakelight";
 
     # My wallpapers
@@ -57,23 +58,34 @@
 
   outputs =
     { flakelight, ... }@inputs:
-    flakelight ./. (
-      { lib, ... }:
-      {
-        inherit inputs;
+    flakelight ./. {
+      inherit inputs;
 
-        systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" ];
 
-        # nixosConfigurations.coffee = {
-        #   system = "x86_64-linux";
-        #   modules = [ { system.stateVersion = "24.05"; } ];
-        # };
+      # nixosConfigurations = {
+      #   "coffee" = {
+      #     system = "x86_64-linux";
+      #     modules = [ { system.stateVersion = "24.05"; } ];
+      #   };
 
-        # nixosConfigurations.pancake = {
-        #   system = "x86_64-linux";
-        #   modules = [ { system.stateVersion = "24.05"; } ];
-        # };
-      }
-    );
+      #   "pancake" = {
+      #     system = "x86_64-linux";
+      #     modules = [ { system.stateVersion = "24.05"; } ];
+      #   };
+      # };
+
+      # templates = {
+      #   "rust" = {
+      #     path = ./rust;
+      #     description = "Rust/Cargo project";
+      #   };
+
+      #   "typst" = {
+      #     path = ./typst;
+      #     description = "Typst writing project";
+      #   };
+      # };
+    };
 
 }
