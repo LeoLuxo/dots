@@ -12,6 +12,8 @@
     fsType = "ntfs";
   };
 
+  programs.gamescope.enable = true;
+
   desktop.gnome = {
     enable = true;
 
