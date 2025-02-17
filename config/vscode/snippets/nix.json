@@ -29,70 +29,15 @@
 		]
 	},
 	"NixOS module": {
-		"prefix": "nixos-module",
+		"prefix": "module",
 		"body": [
-			"{ pkgs, directories, constants, extra-libs, ... }: let inherit (constants) user; inherit (extra-libs); in { imports = with directories.modules; []; home-manager.users.\\${user} = { home.packages = with pkgs; [ ]; }; home-manager.users.\\${user}.xdg.configFile.\"path/to/file\".text = ''''; }"
+			"{ cfg, lib, extraLib, pkgs, constants, ... }:\n\nlet\n  inherit (lib) modules options types;\n  inherit (extraLib) mkEnable;\nin\n{\n  options = {\n    enable = mkEnable;\n  };\n\n  config = modules.mkIf cfg.enable {\n    $0\n  };\n}\n"
 		]
 	},
-	"mkGlobalKeybind": {
-		"prefix": "mkGlobalKeybind",
+	"NullOr option": {
+		"prefix": "nullOr",
 		"body": [
-			"(mkGlobalKeybind {",
-			"name = \"$1\";",
-			"binding = \"$2\";",
-			"command = \"$3\";",
-			"})",
+			"options.mkOption { type = types.nullOr types.$1; default = null; };"
 		]
 	},
-	"quickPatch": {
-		"prefix": "quickPatch",
-		"body": [
-			"(quickPatch {",
-			"package = \"$1\";",
-			"patches = [ ./$2 ];",
-			"})",
-		]
-	},
-	"nixpkgs overlay": {
-		"prefix": "overlay",
-		"body": [
-			"nixpkgs.overlays = [",
-			"  (final: prev: {",
-			"    $1 = prev.$1.overrideAttrs (",
-			"      finalAttrs: oldAttrs: {",
-			"        $0",
-			"      }",
-			"    );",
-			"  })",
-			"];",
-		]
-	},
-	"nixos module options": {
-		"prefix": "module options",
-		"body": [
-			"options.$1 = with lib; {",
-			"  enable = mkOption {",
-			"    type = types.bool;",
-			"    default = false;",
-			"  };",
-			"  mode = mkOption {",
-			"    type = types.enum [",
-			"      \"option\"",
-			"    ];",
-			"    default = \"option\";",
-			"    description = \"mode\";",
-			"  };",
-			"  path = mkOption {",
-			"    type = types.path;",
-			"  };",
-			"  suboption = mkOption {",
-			"    type = types.submodule {",
-			"      options = {};",
-			"    };",
-			"  };",
-			"};",
-			"config = with lib; let cfg = config.$1; in mkIf cfg.enable {",
-			"};",
-		]
-	}
 }
