@@ -1,67 +1,214 @@
 {
   lib,
+  ...
 }:
-
-let
-  inherit (lib) types options;
-in
+with lib;
 
 {
-  mkNullOr =
-    type:
-    options.mkOption {
-      type = types.nullOr type;
-      default = null;
-    };
+  /**
+    Creates a Nix option with specified type, default value and description.
+    A convenience wrapper around mkOption to reduce boilerplate.
 
-  # # Options shortcut for a string option
-  # mkEmptyString = options.mkOption {
-  #   type = types.str;
-  #   default = "";
-  # };
+    # Example
 
-  # # Options shortcut for a lines option
-  # mkEmptyLines = options.mkOption {
-  #   type = types.lines;
-  #   default = "";
-  # };
+    ```nix
+    mkOpt types.str "hello" "A greeting message"
+    =>
+    {
+      type = types.str;
+      default = "hello";
+      description = "A greeting message";
+    }
+    ```
 
-  # # Options shortcut for a boolean option with default of false
-  # mkBoolDefaultFalse = options.mkOption {
-  #   type = types.bool;
-  #   default = false;
-  # };
+    # Type
 
-  # # Options shortcut for a boolean option with default of true
-  # mkBoolDefaultTrue = options.mkOption {
-  #   type = types.bool;
-  #   default = true;
-  # };
+    ```
+    mkOpt :: Type -> a -> String -> Option
+    ```
 
-  mkEnable = options.mkOption {
-    type = types.bool;
-    default = false;
-    example = true;
+    # Arguments
+
+    type
+    : The type for the option (e.g. types.str, types.int)
+
+    default
+    : The default value for the option
+
+    description
+    : A string describing the purpose of the option
+  */
+  mkOpt =
+    type: default: description:
+    mkOption { inherit type default description; };
+
+  /**
+    Creates a Nix option with specified type and description.
+    A convenience wrapper around mkOption to reduce boilerplate.
+
+    # Example
+
+    ```nix
+    mkOpt' types.str "The greeting message"
+    =>
+    { type = types.str; description = "The greeting message"; }
+    ```
+
+    # Type
+
+    ```
+    mkOpt' :: Type -> String -> Option
+    ```
+
+    # Arguments
+
+    type
+    : The type for the option (e.g. types.str, types.int)
+
+    description
+    : A string describing the purpose of the option
+  */
+  mkOpt' = type: description: mkOption { inherit type description; };
+
+  /**
+    Creates an option type that can be either null or a specified type.
+    Defaults to null.
+
+    # Example
+
+    ```nix
+    mkNullOr types.str "An optional string"
+    =>
+    Option<string | null>
+    ```
+
+    # Type
+
+    ```
+    mkNullOr :: Type -> String -> Option
+    ```
+
+    # Arguments
+
+    type
+    : The Nix type to make nullable
+
+    description
+    : Documentation string for the option
+  */
+  mkNullOr = type: description: mkOpt (types.nullOr type) null description;
+
+  /**
+    Shorthand for enabling an option.
+
+    # Example
+
+    ```nix
+    enabled
+    =>
+    { enable = true; }
+    ```
+
+    # Type
+
+    ```
+    enabled :: { enable: Bool }
+    ```
+  */
+  enabled = {
+    enable = true;
   };
 
-  # Options shortcut for a submodule
+  /**
+    Shorthand for disabling an option.
+
+    # Example
+
+    ```nix
+    disabled
+    =>
+    { enable = false; }
+    ```
+
+    # Type
+
+    ```
+    disabled :: { enable: Bool }
+    ```
+  */
+  disabled = {
+    enable = false;
+  };
+
+  /**
+    Creates a submodule option with specified options.
+
+    # Example
+
+    ```nix
+    mkSubmodule "A submodule" { foo = mkOpt types.str "bar"; }
+    =>
+    Option of type submodule with specified options
+    ```
+
+    # Type
+
+    ```
+    mkSubmodule :: String -> AttrSet -> Option
+    ```
+
+    # Arguments
+
+    description
+    : Documentation string for the submodule option
+
+    opts
+    : The options to include in the submodule
+  */
   mkSubmodule =
-    opts:
-    opts.mkOption {
+    description: opts:
+    mkOption {
       type = types.submodule {
-        inherit options;
+        inherit opts;
       };
       default = { };
+      inherit description;
     };
 
-  mkAttrsOfSubmodule =
-    opts:
-    opts.mkOption {
+  /**
+    Creates an attribute set of submodules with specified options.
+
+    # Example
+
+    ```nix
+    mkAttrsSub "A set of submodules" { foo = mkOpt types.str "bar"; }
+    =>
+    Option of type attrsOf(submodule) with specified options
+    ```
+
+    # Type
+
+    ```
+    mkAttrsSub :: String -> AttrSet -> Option
+    ```
+
+    # Arguments
+
+    description
+    : Documentation string for the submodules attribute set
+
+    opts
+    : The options to include in each submodule
+  */
+  mkAttrsSub =
+    description: opts:
+    mkOption {
       type = types.attrsOf (
         types.submodule {
-          inherit options;
+          inherit opts;
         }
       );
       default = { };
+      inherit description;
     };
 }
