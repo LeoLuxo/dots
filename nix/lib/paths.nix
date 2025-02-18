@@ -72,6 +72,7 @@ rec {
     path:
     lib.genAttrs
       (lib.pipe (builtins.readDir path) [
+        lib.traceVal
         lib.attrNames
         (lib.filter (s: s != "default.nix"))
         (lib.filter (s: (lib.hasSuffix ".nix" s) || lib.pathExists (path + "/${s}/default.nix")))
@@ -87,13 +88,17 @@ rec {
           defaultFile = dir + "/default.nix";
         in
         if lib.pathExists file then
-          import file
+          # import file
+          { }
         else if lib.pathExists underscoreFile then
-          import underscoreFile
+          # import underscoreFile
+          { }
         else if lib.pathExists defaultFile then
-          import dir
+          # import dir
+          { }
         else
-          recursivelyImportDir dir
+          # recursivelyImportDir dir
+          { }
       );
 
   /**
