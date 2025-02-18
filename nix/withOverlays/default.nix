@@ -1,7 +1,10 @@
 final: prev:
 
-with final.lib;
-with final.outputs.lib;
+let
+  inherit (final) lib;
+  lib2 = final.outputs.lib;
+in
+
 rec {
   /**
     Creates a script with optional dependencies in PATH, variable replacements, and privilege elevation.
@@ -72,8 +75,8 @@ rec {
       elevate ? false,
     }:
     let
-      scriptTextPreVars = throwIf (text == null) "script needs text" text;
-      scriptText = replaceScriptVariables scriptTextPreVars replaceVariables;
+      scriptTextPreVars = lib.throwIf (text == null) "script needs text" text;
+      scriptText = lib2.replaceScriptVariables scriptTextPreVars replaceVariables;
 
       # https://nixos.org/manual/nixpkgs/unstable/#trivial-builder-text-writing
       innerBuilder = if bashShebang then final.writeShellScript else final.writeScript;
@@ -83,7 +86,7 @@ rec {
       elevation = if elevate then ''sudo'' else "";
     in
     outerBuilder name ''
-      for i in ${strings.concatStringsSep " " deps}; do
+      for i in ${lib.concatStringsSep " " deps}; do
         export PATH="$i/bin:$PATH"
       done
 
@@ -152,13 +155,13 @@ rec {
         text =
           if file == null then
             ''
-              #!${pkgs.nushell}/bin/nu
-              ${throwIf (text == null) "script needs text" text}
+              #!${final.nushell}/bin/nu
+              ${lib.throwIf (text == null) "script needs text" text}
             ''
           else
             ''
-              #!${pkgs.bash}/bin/bash
-              ${pkgs.nushell}/bin/nu ${file}
+              #!${final.bash}/bin/bash
+              ${final.nushell}/bin/nu ${file}
             '';
       }
     );
@@ -219,7 +222,7 @@ rec {
     {
       package ? null,
       name ? package.name or package.pname,
-      desktopName ? toPascalCaseWithSpaces name,
+      desktopName ? lib2.toPascalCaseWithSpaces name,
       exec ? "${package}/bin/${name}",
       icon ? null,
       keywords ? [ name ],
@@ -265,5 +268,5 @@ rec {
           );
         });
     in
-    (pkgs.callPackage desktopItemPackage { });
+    (final.callPackage desktopItemPackage { });
 }

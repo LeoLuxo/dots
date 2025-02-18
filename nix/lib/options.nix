@@ -1,12 +1,12 @@
 {
   lib,
-  outputs,
   ...
 }:
-with lib;
-with outputs.lib;
+let
+  inherit (lib) types;
+in
 
-{
+rec {
   /**
     Creates a Nix option with specified type, default value and description.
     A convenience wrapper around mkOption to reduce boilerplate.
@@ -42,7 +42,7 @@ with outputs.lib;
   */
   mkOpt =
     type: default: description:
-    mkOption { inherit type default description; };
+    lib.mkOption { inherit type default description; };
 
   /**
     Creates a Nix option with specified type and description.
@@ -70,7 +70,7 @@ with outputs.lib;
     description
     : A string describing the purpose of the option
   */
-  mkOpt' = type: description: mkOption { inherit type description; };
+  mkOpt' = type: description: lib.mkOption { inherit type description; };
 
   /**
     Creates an option type that can be either null or a specified type.
@@ -169,7 +169,7 @@ with outputs.lib;
   */
   mkSubmodule =
     description: opts:
-    mkOption {
+    lib.mkOption {
       type = types.submodule {
         inherit opts;
       };
@@ -204,7 +204,7 @@ with outputs.lib;
   */
   mkAttrsSub =
     description: opts:
-    mkOption {
+    lib.mkOption {
       type = types.attrsOf (
         types.submodule {
           inherit opts;

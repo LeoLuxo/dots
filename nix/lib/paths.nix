@@ -1,12 +1,9 @@
 {
   lib,
-  outputs,
   ...
 }:
-with lib;
-with outputs.lib;
 
-{
+rec {
   /**
     This function sanitizes a file system path to make it compatible with the Nix store
 
@@ -33,7 +30,7 @@ with outputs.lib;
     path:
     builtins.path {
       inherit path;
-      name = strings.sanitizeDerivationName (builtins.baseNameOf path);
+      name = lib.strings.sanitizeDerivationName (builtins.baseNameOf path);
     };
 
   /**
@@ -73,13 +70,13 @@ with outputs.lib;
   */
   recursivelyImportDir =
     path:
-    genAttrs
-      (pipe (readDir path) [
-        attrNames
-        (filter (s: s != "default.nix"))
-        (filter (s: (hasSuffix ".nix" s) || pathExists (path + "/${s}/default.nix")))
-        (map (removeSuffix ".nix"))
-        (map (removePrefix "_"))
+    lib.genAttrs
+      (lib.pipe (builtins.readDir path) [
+        lib.attrNames
+        (lib.filter (s: s != "default.nix"))
+        (lib.filter (s: (lib.hasSuffix ".nix" s) || lib.pathExists (path + "/${s}/default.nix")))
+        (map (lib.removeSuffix ".nix"))
+        (map (lib.removePrefix "_"))
       ])
       (
         p:
@@ -89,11 +86,11 @@ with outputs.lib;
           dir = path + "/${p}";
           defaultFile = dir + "/default.nix";
         in
-        if pathExists file then
+        if lib.pathExists file then
           import file
-        else if pathExists underscoreFile then
+        else if lib.pathExists underscoreFile then
           import underscoreFile
-        else if pathExists defaultFile then
+        else if lib.pathExists defaultFile then
           import dir
         else
           recursivelyImportDir dir
@@ -123,7 +120,7 @@ with outputs.lib;
     : The directory path to recursively import from
 
     # Details
-    
+
     - Skips files named "default.nix"
     - For directories, if they contain default.nix, imports that file
     - For directories without default.nix, recursively imports their contents
@@ -131,22 +128,25 @@ with outputs.lib;
     - Flattens the resulting nested lists into a single list
   */
   recursivelyImportDirToList =
-    path:
+    dirPath:
     let
       importPath =
         name: type:
+        let
+          path = dirPath + "/${name}";
+        in
         if name == "default.nix" then
           [ ]
         else if type == "directory" then
-          if pathExists (path + "/${name}/default.nix") then
-            [ (import (path + "/${name}")) ]
+          if lib.pathExists (path + "/default.nix") then
+            [ (import path) ]
           else
-            recursivelyImportDirToList (path + "/${name}")
-        else if type == "regular" && hasSuffix ".nix" name then
-          [ (import file) ]
+            recursivelyImportDirToList path
+        else if type == "regular" && lib.hasSuffix ".nix" name then
+          [ (import path) ]
         else
           [ ];
     in
-    lists.flatten (mapAttrsToList importPath (readDir path));
+    lib.flatten (lib.mapAttrsToList importPath (builtins.readDir dirPath));
 
 }
