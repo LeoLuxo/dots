@@ -1,7 +1,4 @@
-final: prev:
-let
-  inherit (final) lib;
-in
+{ lib, ... }:
 
 rec {
   /**
