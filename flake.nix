@@ -60,6 +60,8 @@
     flakelight ./. {
       inherit inputs;
 
+      # nixDir = ./nix;
+
       systems = [ "x86_64-linux" ];
 
       # nixosConfigurations = {
