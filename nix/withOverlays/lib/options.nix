@@ -1,8 +1,6 @@
-{
-  lib,
-  ...
-}:
+final: prev:
 let
+  inherit (final) lib;
   inherit (lib) types;
 in
 
