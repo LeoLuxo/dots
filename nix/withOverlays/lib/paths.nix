@@ -1,7 +1,7 @@
-{
-  lib,
-  ...
-}:
+final: prev:
+let
+  inherit (final) lib;
+in
 
 rec {
   /**
@@ -70,8 +70,9 @@ rec {
   */
   recursivelyImportDir =
     path:
+    # (lib.traceVal path);
     lib.genAttrs
-      (lib.pipe (builtins.readDir path) [
+      (lib.pipe (builtins.readDir (lib.traceVal path)) [
         lib.traceVal
         lib.attrNames
         (lib.filter (s: s != "default.nix"))

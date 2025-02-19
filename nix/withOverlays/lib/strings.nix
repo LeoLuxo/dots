@@ -1,10 +1,7 @@
-{
-  lib,
-  outputs,
-  ...
-}:
-with lib;
-with outputs.lib;
+final: prev:
+let
+  inherit (final) lib;
+in
 
 rec {
   /**
@@ -36,8 +33,8 @@ rec {
   toUpperCaseFirstLetter =
     string:
     let
-      head = strings.toUpper (strings.substring 0 1 string);
-      tail = strings.substring 1 (-1) string;
+      head = lib.strings.toUpper (lib.strings.substring 0 1 string);
+      tail = lib.strings.substring 1 (-1) string;
     in
     head + tail;
 
@@ -93,7 +90,7 @@ rec {
     string
     : The input string to convert to PascalCase
   */
-  toPascalCase = string: strings.concatMapStrings toUpperCaseFirstLetter (splitWords string);
+  toPascalCase = string: lib.strings.concatMapStrings toUpperCaseFirstLetter (splitWords string);
 
   /**
     Converts a string to pascal case with spaces between words
@@ -118,7 +115,7 @@ rec {
     : The input string to convert to pascal case with spaces
   */
   toPascalCaseWithSpaces =
-    string: strings.concatMapStringsSep " " toUpperCaseFirstLetter (splitWords string);
+    string: lib.strings.concatMapStringsSep " " toUpperCaseFirstLetter (splitWords string);
 
   /**
     Replaces variables in a script text with their corresponding values
@@ -155,9 +152,9 @@ rec {
   replaceScriptVariables =
     script: variables:
     let
-      varNames1 = map (x: "$" + x) (attrNames variables);
-      varNames2 = map (x: "\${" + x + "}") (attrNames variables);
-      varValues = attrValues variables;
+      varNames1 = map (x: "$" + x) (lib.attrNames variables);
+      varNames2 = map (x: "\${" + x + "}") (lib.attrNames variables);
+      varValues = lib.attrValues variables;
     in
-    replaceStrings (varNames1 ++ varNames2) (varValues ++ varValues) script;
+    lib.replaceStrings (varNames1 ++ varNames2) (varValues ++ varValues) script;
 }
