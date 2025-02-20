@@ -6,7 +6,7 @@
   ...
 }:
 let
-  lib2 = inputs.lib;
+  lib2 = inputs.self.lib;
   inherit (lib) types;
   cfg = config.ext.secrets;
 in
@@ -16,7 +16,7 @@ in
   ];
 
   options.ext.secrets = with lib2.options; {
-    enable = mkEnableOpt "secrets management using agenix";
+    enable = lib.mkEnableOption "secrets management using agenix";
 
     keys = mkOpt "keys to use for decryption" (types.listOf types.path) (
       if config.ext.keys.enable then
