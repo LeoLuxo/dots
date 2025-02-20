@@ -62,7 +62,12 @@
     flakelight.url = "github:nix-community/flakelight";
 
     # Encryption library, used for secrets in nix
-    agenix.url = "github:ryantm/agenix";
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      # optionally choose not to download darwin deps (saves some resources on Linux)
+      inputs.darwin.follows = "";
+    };
 
     # ----- hardware --------------------------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops

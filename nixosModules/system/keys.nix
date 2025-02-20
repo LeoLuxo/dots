@@ -6,7 +6,7 @@
 }:
 
 let
-  lib2 = inputs.lib;
+  lib2 = inputs.self.lib;
   inherit (lib) types;
 
   cfg = config.ext.keys;
@@ -17,7 +17,7 @@ in
   ];
 
   options.ext.keys = with lib2.options; {
-    enable = mkEnableOpt "key management";
+    enable = lib.mkEnableOption "key management";
 
     keys =
       mkAttrsSub "keys accessible to the config"

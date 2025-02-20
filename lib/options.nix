@@ -12,8 +12,6 @@ rec {
     enable = false;
   };
 
-  mkEnableOpt = lib.modules.mkEnableOption;
-
   mkOpt =
     description: type: default:
     lib.mkOption { inherit type default description; };
