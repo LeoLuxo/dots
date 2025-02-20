@@ -7,7 +7,7 @@
 
 let
   cfg = config.ext.user;
-  lib2 = inputs.lib;
+  lib2 = inputs.self.lib;
 
   inherit (lib) types;
 in
