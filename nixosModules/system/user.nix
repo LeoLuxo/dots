@@ -66,6 +66,22 @@ in
 
         # Let Home Manager install and manage itself.
         programs.home-manager.enable = true;
+
+        # Customize default directories
+        xdg.userDirs = {
+          enable = true;
+          createDirectories = true;
+
+          download = "${cfg.home}/downloads";
+
+          music = "${cfg.home}/media";
+          pictures = "${cfg.home}/media";
+          videos = "${cfg.home}/media";
+
+          desktop = "${cfg.home}/misc";
+          documents = "${cfg.home}/misc";
+          publicShare = "${cfg.home}/misc";
+        };
       };
     };
   };
