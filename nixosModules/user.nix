@@ -18,15 +18,15 @@ in
 
   options.ext.user =
     with lib2.options;
-    mkSubmoduleNull "The options when setting up a single-user machine" {
-      name = mkOpt' types.str "The name of the default user";
+    mkSubmoduleNull "the options when setting up a single-user machine" (rec {
+      name = mkOpt' "the name of the default user" types.str;
 
-      home = mkOpt types.path "/home/${cfg.name}" "The home folder";
+      home = mkOpt "the home folder" types.path "/home/${cfg.name}";
 
-      passwordFile = mkOpt (types.nullOr types.path) (
-        if config.secrets.enable then config.age.secrets."userpwds/${hostName}".path else null
-      ) "The hashed password file";
-    };
+      passwordFile = mkOpt "the hashed password file" (types.nullOr types.path) (
+        if config.secrets.enable then config.age.secrets."userpwds/${home}".path else null
+      );
+    });
 
   config = lib.mkIf (cfg != null) {
     # Define default user account.
