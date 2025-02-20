@@ -1,6 +1,6 @@
 { lib, ... }:
 
-rec {
+{
   /**
     This function sanitizes a file system path to make it compatible with the Nix store
 
@@ -98,58 +98,4 @@ rec {
           # recursivelyImportDir dir
           { }
       );
-
-  /**
-    Recursively imports all Nix files from a directory into a flat list,
-    excluding default.nix files.
-
-    # Example
-
-    ```nix
-    recursivelyImportDirToList ./modules
-    =>
-    [ moduleA moduleB moduleC.submodule1 moduleC.submodule2 ]
-    ```
-
-    # Type
-
-    ```
-    recursivelyImportDirToList :: Path -> [Any]
-    ```
-
-    # Arguments
-
-    path
-    : The directory path to recursively import from
-
-    # Details
-
-    - Skips files named "default.nix"
-    - For directories, if they contain default.nix, imports that file
-    - For directories without default.nix, recursively imports their contents
-    - For .nix files, imports them directly
-    - Flattens the resulting nested lists into a single list
-  */
-  recursivelyImportDirToList =
-    dirPath:
-    let
-      importPath =
-        name: type:
-        let
-          path = dirPath + "/${name}";
-        in
-        if name == "default.nix" then
-          [ ]
-        else if type == "directory" then
-          if lib.pathExists (path + "/default.nix") then
-            [ (import path) ]
-          else
-            recursivelyImportDirToList path
-        else if type == "regular" && lib.hasSuffix ".nix" name then
-          [ (import path) ]
-        else
-          [ ];
-    in
-    lib.flatten (lib.mapAttrsToList importPath (builtins.readDir dirPath));
-
 }
