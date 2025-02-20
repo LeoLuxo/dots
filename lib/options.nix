@@ -4,6 +4,9 @@ let
 in
 
 rec {
+
+  mkEnableOpt = lib.modules.mkEnableOption;
+
   /**
     Creates a Nix option with specified type, default value and description.
     A convenience wrapper around mkOption to reduce boilerplate.
@@ -171,6 +174,18 @@ rec {
         inherit opts;
       };
       default = { };
+      inherit description;
+    };
+
+  mkSubmoduleNull =
+    description: opts:
+    lib.mkOption {
+      type = types.nullOr (
+        types.submodule {
+          inherit opts;
+        }
+      );
+      default = null;
       inherit description;
     };
 
