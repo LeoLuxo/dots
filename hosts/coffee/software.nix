@@ -59,7 +59,7 @@ in
     r2modman # A mod manager for Risk of Rain 2 and other Unity games.
   ];
 
-  wallpaper.image = inputs.wallpapers.static."flowers";
+  wallpaper.image = inputs.wallpapers.static."lofiJapan";
 
   # Set default shell
   shell.default = "fish";
@@ -83,5 +83,6 @@ in
   nx.rebuild.preRebuildActions = ''
     echo Updating wallpaper flake
     nix flake update wallpapers --allow-dirty
+    git add flake.lock
   '';
 }
