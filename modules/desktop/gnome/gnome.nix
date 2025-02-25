@@ -94,5 +94,7 @@ in
 
       defaults.apps.backupTerminal = lib.mkDefault "kgx";
       defaults.apps.terminal = lib.mkOverride 1050 "kgx";
+
+      environment.sessionVariables.NIXOS_OZONE_WL = "1";
     };
 }
