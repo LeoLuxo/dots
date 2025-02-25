@@ -3,6 +3,7 @@
   nixosModules,
   extraLib,
   config,
+  pkgs,
   ...
 }:
 
@@ -80,7 +81,15 @@ in
           # UNder wayland
           wayland = true;
         };
-        desktopManager.gnome.enable = true;
+        desktopManager.gnome = {
+          enable = true;
+
+          # extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
+          extraGSettingsOverrides = ''
+            [org.gnome.mutter]
+            experimental-features=['variable-refresh-rate', 'scale-monitor-framebuffer']
+          '';
+        };
       };
 
       defaults.apps.backupTerminal = lib.mkDefault "kgx";
