@@ -75,6 +75,11 @@ in
       services.xserver = {
         enable = true;
 
+        # Option         "TripleBuffer" "on"
+        screenSection = ''
+          Option         "NVreg_EnableGpuFirmware" "0"
+        '';
+
         # Enable the GNOME Desktop Environment.
         displayManager.gdm = {
           enable = true;
