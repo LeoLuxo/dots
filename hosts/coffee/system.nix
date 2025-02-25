@@ -72,7 +72,25 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+
+    # screenSection = ''
+    #   Option         "TripleBuffer" "on"
+    #   Option         "NVreg_EnableGpuFirmware" "0"
+    # '';
+  };
+
+  boot.kernelParams = [
+    # "cgroup_no_v1=all"
+    # "cgroup_enable=memory"
+    # "cgroup_enable=cpuset"
+    # "systemd.unified_cgroup_hierarchy=1"
+
+    # "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "nvidia.NVreg_EnableGpuFirmware=0"
+    # "nvidia.WLR_RENDERER=vulkan"
+  ];
 
   hardware.nvidia = {
     # Modesetting is required.
