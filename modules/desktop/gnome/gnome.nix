@@ -51,7 +51,7 @@ in
 
   imports = with nixosModules; [
     # Triple buffering fork thing
-    # ./triple-buffering.nix
+    ./triple-buffering.nix
 
     # Default gnome apps
     ./default-apps.nix
