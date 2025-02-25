@@ -51,7 +51,7 @@ in
 
   imports = with nixosModules; [
     # Triple buffering fork thing
-    ./triple-buffering.nix
+    # ./triple-buffering.nix
 
     # Default gnome apps
     ./default-apps.nix
@@ -78,13 +78,13 @@ in
         # Enable the GNOME Desktop Environment.
         displayManager.gdm = {
           enable = true;
-          # UNder wayland
           wayland = true;
         };
+
         desktopManager.gnome = {
           enable = true;
 
-          # extraGSettingsOverridePackages = [ pkgs.gnome.mutter ];
+          extraGSettingsOverridePackages = [ pkgs.mutter ];
           extraGSettingsOverrides = ''
             [org.gnome.mutter]
             experimental-features=['variable-refresh-rate', 'scale-monitor-framebuffer']
@@ -95,6 +95,6 @@ in
       defaults.apps.backupTerminal = lib.mkDefault "kgx";
       defaults.apps.terminal = lib.mkOverride 1050 "kgx";
 
-#      environment.sessionVariables.NIXOS_OZONE_WL = "1";
+      #      environment.sessionVariables.NIXOS_OZONE_WL = "1";
     };
 }
