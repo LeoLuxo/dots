@@ -51,7 +51,7 @@ in
 
   imports = with nixosModules; [
     # Triple buffering fork thing
-    ./triple-buffering.nix
+    # ./triple-buffering.nix
 
     # Default gnome apps
     ./default-apps.nix
@@ -87,7 +87,7 @@ in
           extraGSettingsOverridePackages = [ pkgs.mutter ];
           extraGSettingsOverrides = ''
             [org.gnome.mutter]
-            experimental-features=['variable-refresh-rate', 'scale-monitor-framebuffer']
+            experimental-features=['variable-refresh-rate']
           '';
         };
       };
