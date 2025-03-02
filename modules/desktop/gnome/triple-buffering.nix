@@ -21,6 +21,7 @@ in
 {
   nixpkgs.overlays = [
     # GNOME 47: triple-buffering-v4-47
+    # this freezes everything on boot :(
     (final: prev: {
       mutter = prev.mutter.overrideAttrs (old: {
         src = mutterTripleBuffering;
