@@ -49,6 +49,10 @@ in
           idle-delay = mkUint32 (if cfg.power.screenIdle.enable then cfg.power.screenIdle.delay else 0);
         };
 
+        "org/gnome/desktop/peripherals/mouse" = {
+          speed = -0.2;
+        };
+
         # System shortcuts
         "org/gnome/desktop/wm/keybindings" = {
           # The default is Alt-tab to switch "apps" instead of individual "windows"
