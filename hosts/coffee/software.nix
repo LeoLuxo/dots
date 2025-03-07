@@ -57,7 +57,16 @@ in
 
     guitarix # A virtual guitar amplifier for use with Linux.
     r2modman # A mod manager for Risk of Rain 2 and other Unity games.
-    prismlauncher
+
+    (pkgs.symlinkJoin {
+      name = "prismlauncher";
+      paths = [ pkgs.prismlauncher ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/prismlauncher \
+          --set QT_SCALE_FACTOR 1.5
+      '';
+    })
   ];
 
   wallpaper.image = inputs.wallpapers.static."lofiJapan";
