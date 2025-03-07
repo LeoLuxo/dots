@@ -57,6 +57,7 @@ in
 
     guitarix # A virtual guitar amplifier for use with Linux.
     r2modman # A mod manager for Risk of Rain 2 and other Unity games.
+    prismlauncher
   ];
 
   wallpaper.image = inputs.wallpapers.static."lofiJapan";
