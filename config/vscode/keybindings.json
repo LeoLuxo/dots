@@ -501,5 +501,33 @@
         "key": "ctrl+enter",
         "command": "-github.copilot.generate",
         "when": "editorTextFocus && github.copilot.activated && !commentEditorFocused && !inInteractiveInput && !interactiveEditorFocused"
+    },
+    {
+        "key": "ctrl+shift+space",
+        "command": "github.copilot.generate"
+    },
+    {
+        "key": "alt+-",
+        "command": "extension.coq.reset"
+    },
+    {
+        "key": "alt+.",
+        "command": "coq-lsp.sentenceNext",
+        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
+    },
+    {
+        "key": "alt+n",
+        "command": "-coq-lsp.sentenceNext",
+        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
+    },
+    {
+        "key": "alt+,",
+        "command": "coq-lsp.sentencePrevious",
+        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
+    },
+    {
+        "key": "alt+p",
+        "command": "-coq-lsp.sentencePrevious",
+        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
     }
 ]
