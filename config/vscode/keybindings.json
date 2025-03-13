@@ -509,25 +509,5 @@
     {
         "key": "alt+-",
         "command": "extension.coq.reset"
-    },
-    {
-        "key": "alt+.",
-        "command": "coq-lsp.sentenceNext",
-        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
-    },
-    {
-        "key": "alt+n",
-        "command": "-coq-lsp.sentenceNext",
-        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
-    },
-    {
-        "key": "alt+,",
-        "command": "coq-lsp.sentencePrevious",
-        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
-    },
-    {
-        "key": "alt+p",
-        "command": "-coq-lsp.sentencePrevious",
-        "when": "editorTextFocus && editorLangId == 'coq' || editorTextFocus && editorLangId == 'markdown'"
     }
 ]
