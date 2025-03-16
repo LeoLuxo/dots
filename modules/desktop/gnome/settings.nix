@@ -114,7 +114,7 @@ in
         # Desktop settings
         "org/gnome/desktop/interface" = {
           enable-hot-corners = false;
-          text-scaling-factor = 1.50;
+          text-scaling-factor = 1.5;
         };
 
         "org/gnome/mutter" = {
