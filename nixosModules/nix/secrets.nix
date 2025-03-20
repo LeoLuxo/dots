@@ -8,18 +8,18 @@
 let
   lib2 = inputs.self.lib;
   inherit (lib) types;
-  cfg = config.ext.secrets;
+  cfg = config.ext.nix.secrets;
 in
 {
   imports = [
     inputs.agenix.nixosModules.default
   ];
 
-  options.ext.secrets = with lib2.options; {
+  options.ext.nix.secrets = with lib2.options; {
     enable = lib.mkEnableOption "secrets management using agenix";
 
     keys = mkOpt "keys to use for decryption" (types.listOf types.path) (
-      if config.ext.keys.enable then
+      if config.ext.system.keys.enable then
         (lib.mapAttrsToList (_: keyFiles: keyFiles.private) config.ext.keys.keys)
       else
         [ ]
