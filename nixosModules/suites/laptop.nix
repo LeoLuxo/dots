@@ -14,11 +14,15 @@ let
 in
 {
   options.ext.suites.laptop = with lib2.options; {
-    enable = lib.mkEnableOption "the laptop suite";
+    enable = lib.mkEnableOption "the laptop computer suite";
   };
 
   config = lib.mkIf cfg.enable {
     ext = {
+      suites = {
+        pc = enabled;
+      };
+
       wifi = {
         enable = true;
         enabledNetworks = [
