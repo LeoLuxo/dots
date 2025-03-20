@@ -1,19 +1,14 @@
 {
   lib,
   config,
-  inputs,
   ...
 }:
 
 let
-  lib2 = inputs.self.lib;
-  inherit (lib2) enabled;
-  inherit (lib) types;
-
   cfg = config.ext.system.printing;
 in
 {
-  options.ext.system.printing = with lib2.options; {
+  options.ext.system.printing = {
     enable = lib.mkEnableOption "printing";
   };
 

@@ -1,19 +1,14 @@
 {
   lib,
   config,
-  inputs,
   ...
 }:
 
 let
-  lib2 = inputs.self.lib;
-  inherit (lib2) enabled;
-  inherit (lib) types;
-
   cfg = config.ext.system.hosts;
 in
 {
-  options.ext.system.hosts = with lib2.options; {
+  options.ext.system.hosts = {
     enable = lib.mkEnableOption "local hosts";
   };
 
