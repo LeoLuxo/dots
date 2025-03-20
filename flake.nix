@@ -36,7 +36,7 @@
     };
 
   inputs = rec {
-    # ----- nixpkgs ---------------------------------------------------------------------------------------------------
+    # ----- nixpkgs -------------------------------------------------------------------------------
     nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-24-05.url = "github:nixos/nixpkgs/nixos-24.05";
 
@@ -44,13 +44,13 @@
     nixpkgs-stable = nixpkgs-24-11;
     nixpkgs = nixpkgs-stable;
 
-    # ----- personal stuff --------------------------------------------------------------------------------------------
+    # ----- personal stuff ------------------------------------------------------------------------
     # My wallpapers
     # Is an external flake to make sure this repo stays small if the wallpapers aren't used
     # (The url MUST use git+ssh otherwise it won't properly authenticate and have access to the private repo)
     wallpapers.url = "git+ssh://git@github.com/LeoLuxo/dots-wallpapers";
 
-    # ----- flake and config ------------------------------------------------------------------------------------------
+    # ----- flake and config ---------------------------------------------------------------------
     # Manages dotfiles in nix
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -69,14 +69,14 @@
       inputs.darwin.follows = "";
     };
 
-    # ----- hardware --------------------------------------------------------------------------------------------------
+    # ----- hardware ------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
 
     # Real-time audio in NixOS
     musnix.url = "github:musnix/musnix";
 
-    # ----- other -----------------------------------------------------------------------------------------------------
+    # ----- other ---------------------------------------------------------------------------------
     # Catppuccin themes
     catppuccin.url = "github:catppuccin/nix";
 

@@ -9,6 +9,7 @@
     ./hardwareConfiguration.nix
 
     inputs.self.nixosModules.default
+
     { system.stateVersion = "24.05"; }
   ];
 }
