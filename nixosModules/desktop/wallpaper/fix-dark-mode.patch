@@ -1,0 +1,59 @@
+From 5783ab6c048f345c9085605b7e439d8a425a4f20 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alexander=20F=2E=20R=C3=B8dseth?= <rodseth@gmail.com>
+Date: Tue, 29 Oct 2024 16:01:45 +0100
+Subject: [PATCH] Also run picture-uri-dark, ref #44
+
+---
+ cinnamon.go | 6 ++++--
+ deepin.go   | 6 ++++--
+ gnome3.go   | 6 ++++--
+ 3 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/cinnamon.go b/cinnamon.go
+index a496c02..0917a60 100644
+--- a/cinnamon.go
++++ b/cinnamon.go
+@@ -101,7 +101,9 @@ func (c *Cinnamon) SetWallpaper(imageFilename string) error {
+ 		}
+ 	}
+ 
+-	// Set the desktop wallpaper (also set it if it is already set, in case
+-	// the contents have changed)
++	// Set the dark desktop wallpaper (also set it if it is already set)
++	_ = g.Set("picture-uri-dark", "file://"+imageFilename)
++
++	// Set the desktop wallpaper (also set it if it is already set)
+ 	return g.Set("picture-uri", "file://"+imageFilename)
+ }
+diff --git a/deepin.go b/deepin.go
+index 422a659..0cc5118 100644
+--- a/deepin.go
++++ b/deepin.go
+@@ -103,7 +103,9 @@ func (d *Deepin) SetWallpaper(imageFilename string) error {
+ 		}
+ 	}
+ 
+-	// Set the desktop wallpaper (also set it if it is already set, in case
+-	// the contents have changed)
++	// Set the dark desktop wallpaper (also set it if it is already set)
++	_ = g.Set("picture-uri-dark", "file://"+imageFilename)
++
++	// Set the desktop wallpaper (also set it if it is already set)
+ 	return g.Set("picture-uri", "file://"+imageFilename)
+ }
+diff --git a/gnome3.go b/gnome3.go
+index 3c80048..d217d2d 100644
+--- a/gnome3.go
++++ b/gnome3.go
+@@ -103,7 +103,9 @@ func (g3 *Gnome3) SetWallpaper(imageFilename string) error {
+ 		}
+ 	}
+ 
+-	// Set the desktop wallpaper (also set it if it is already set, in case
+-	// the contents have changed)
++	// Set the dark desktop wallpaper (also set it if it is already set)
++	_ = g.Set("picture-uri-dark", "file://"+imageFilename)
++
++	// Set the desktop wallpaper (also set it if it is already set)
+ 	return g.Set("picture-uri", "file://"+imageFilename)
+ }
