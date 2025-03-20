@@ -1,20 +1,15 @@
 {
   lib,
   config,
-  inputs,
   pkgs,
   ...
 }:
 
 let
-  lib2 = inputs.self.lib;
-  inherit (lib2) enabled;
-  inherit (lib) types;
-
   cfg = config.ext.system.touchscreen;
 in
 {
-  options.ext.system.touchscreen = with lib2.options; {
+  options.ext.system.touchscreen = {
     enable = lib.mkEnableOption "touchscreen support";
   };
 
