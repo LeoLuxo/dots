@@ -10,10 +10,10 @@ let
   inherit (lib2) enabled;
   inherit (lib) types;
 
-  cfg = config.ext.hosts;
+  cfg = config.ext.system.hosts;
 in
 {
-  options.ext.hosts = with lib2.options; {
+  options.ext.system.hosts = with lib2.options; {
     enable = lib.mkEnableOption "local hosts";
   };
 

@@ -10,10 +10,10 @@ let
   inherit (lib2) enabled;
   inherit (lib) types;
 
-  cfg = config.ext.wifi;
+  cfg = config.ext.system.wifi;
 in
 {
-  options.ext.wifi = with lib2.options; {
+  options.ext.system.wifi = with lib2.options; {
     enable = lib.mkEnableOption "wifi networks";
     enabledNetworks = mkOpt "enabled networks" (types.listOf types.string) [ ];
   };

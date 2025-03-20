@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config.ext.user;
+  cfg = config.ext.system.user;
   lib2 = inputs.self.lib;
 
   inherit (lib) types;
@@ -16,7 +16,7 @@ in
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  options.ext.user =
+  options.ext.system.user =
     with lib2.options;
     mkSubmoduleNull "the options when setting up a single-user machine" (rec {
       name = mkOpt' "the name of the default user" types.str;
@@ -44,44 +44,6 @@ in
           "networkmanager"
           "wheel"
         ];
-      };
-    };
-
-    # Home-Manager config
-    home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
-
-      # On activation move existing files by appending the given file extension rather than exiting with an error.
-      # Applies to home.file and also xdg.*File
-      backupFileExtension = "bak";
-
-      users.${cfg.user} = {
-        # Do not change
-        home.stateVersion = "24.05";
-
-        # Home Manager needs a bit of information about you and the paths it should manage.
-        home.username = cfg.user;
-        home.homeDirectory = cfg.home;
-
-        # Let Home Manager install and manage itself.
-        programs.home-manager.enable = true;
-
-        # Customize default directories
-        xdg.userDirs = {
-          enable = true;
-          createDirectories = true;
-
-          download = "${cfg.home}/downloads";
-
-          music = "${cfg.home}/media";
-          pictures = "${cfg.home}/media";
-          videos = "${cfg.home}/media";
-
-          desktop = "${cfg.home}/misc";
-          documents = "${cfg.home}/misc";
-          publicShare = "${cfg.home}/misc";
-        };
       };
     };
   };

@@ -20,13 +20,14 @@ in
 
   config = lib.mkIf cfg.enable {
     ext = {
-      user.name = specialArgs.user;
-
-      base = enabled;
-      boot = enabled;
-      hosts = enabled;
-      keys = enabled;
-      locale = enabled;
+      system = {
+        user.name = specialArgs.user;
+        boot = enabled;
+        hosts = enabled;
+        keys = enabled;
+        locale = enabled;
+        printing = enabled;
+      };
     };
   };
 }

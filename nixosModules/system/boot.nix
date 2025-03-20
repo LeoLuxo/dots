@@ -5,14 +5,10 @@
 }:
 
 let
-  cfg = config.ext.boot;
+  cfg = config.ext.system.boot;
 in
 {
-  imports = [
-
-  ];
-
-  options.ext.boot = {
+  options.ext.system.boot = {
     enable = lib.mkEnableOption "bootloading";
   };
 

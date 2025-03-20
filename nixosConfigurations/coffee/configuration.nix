@@ -8,5 +8,11 @@ let
   inherit (lib2) enabled;
 in
 {
-  ext.suites.desktop = enabled;
+  ext = {
+    suites.desktop = enabled;
+    keyboard = {
+      layout = "us";
+      variant = "altgr-intl";
+    };
+  };
 }
