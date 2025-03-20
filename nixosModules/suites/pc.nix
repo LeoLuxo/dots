@@ -9,12 +9,11 @@
 let
   lib2 = inputs.self.lib;
   inherit (lib2) enabled;
-  inherit (lib) types;
 
   cfg = config.ext.suites.pc;
 in
 {
-  options.ext.suites.pc = with lib2.options; {
+  options.ext.suites.pc = {
     enable = lib.mkEnableOption "the personal computer suite";
   };
 
@@ -28,6 +27,8 @@ in
         locale = enabled;
         printing = enabled;
       };
+
+      desktop.defaultAppsShortcuts = enabled;
     };
   };
 }

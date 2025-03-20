@@ -35,7 +35,7 @@ in
     in
     {
       # Install agenix CLI
-      environment.systemPackages = [
+      ext.packages = [
         inputs'.agenix.packages.default
       ];
 

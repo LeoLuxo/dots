@@ -7,7 +7,6 @@
 
 let
   lib2 = inputs.self.lib;
-  inherit (lib2) enabled;
   inherit (lib) types;
 
   cfg = config.ext.system.keyboard;

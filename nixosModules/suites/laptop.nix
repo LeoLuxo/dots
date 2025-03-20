@@ -8,12 +8,11 @@
 let
   lib2 = inputs.self.lib;
   inherit (lib2) enabled;
-  inherit (lib) types;
 
   cfg = config.ext.suites.laptop;
 in
 {
-  options.ext.suites.laptop = with lib2.options; {
+  options.ext.suites.laptop = {
     enable = lib.mkEnableOption "the laptop computer suite";
   };
 

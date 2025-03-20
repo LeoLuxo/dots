@@ -8,7 +8,6 @@
 
 let
   lib2 = inputs.self.lib;
-  inherit (lib2) enabled;
   inherit (lib) types;
 
   cfg = config.ext.desktop.keybinds;
@@ -38,7 +37,7 @@ in
     in
     {
       # Create an extra script for the keybind, this avoids a bunch of weird issues
-      ext.hm.home.packages = [
+      ext.packages = [
         (pkgs.writeShellScriptBin scriptName keybind.command)
       ];
     }
