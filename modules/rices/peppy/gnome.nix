@@ -42,6 +42,7 @@ in
     desktop.gnome.extensions.system-monitor
     desktop.gnome.extensions.media-controls
     desktop.gnome.extensions.burn-my-windows
+    desktop.gnome.extensions.touchpad-gesture-customization
     # desktop.gnome.extensions.emojis
     # desktop.gnome.extensions.weather
     # desktop.gnome.extensions.net-speed-simplified
