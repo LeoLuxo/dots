@@ -9,14 +9,10 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.keys;
+  cfg = config.ext.system.keys;
 in
 {
-  imports = [
-
-  ];
-
-  options.ext.keys = with lib2.options; {
+  options.ext.system.keys = with lib2.options; {
     enable = lib.mkEnableOption "key management";
 
     keys =
@@ -26,9 +22,9 @@ in
           private = mkOpt' "the private key path" types.path;
         }
         {
-          user = lib.mkIf (config.ext.user != null) {
-            private = "${config.ext.user.home}/.ssh/id_ed25519";
-            public = "${config.ext.user.home}/.ssh/id_ed25519.pub";
+          user = lib.mkIf (config.ext.system.user != null) {
+            private = "${config.ext.system.user.home}/.ssh/id_ed25519";
+            public = "${config.ext.system.user.home}/.ssh/id_ed25519.pub";
           };
 
           host = {
@@ -38,7 +34,8 @@ in
         };
   };
 
-  config = lib.mkIf cfg.enable {
-
-  };
+  config =
+    lib.mkIf cfg.enable
+      {
+      };
 }

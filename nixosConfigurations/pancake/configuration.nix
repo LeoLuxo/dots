@@ -8,7 +8,15 @@ let
   inherit (lib2) enabled;
 in
 {
-  ext.suites.laptop = enabled;
+  ext = {
+    suites.laptop = enabled;
+    touchscreen = enabled;
+
+    keyboard = {
+      layout = "us";
+      variant = "altgr-intl";
+    };
+  };
 
   # SD Card
   fileSystems."/stuff" = {
