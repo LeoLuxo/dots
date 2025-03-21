@@ -8,22 +8,23 @@
 let
   lib2 = inputs.self.lib;
   inherit (lib2) enabled;
+  inherit (lib) types;
 
   cfg = config.ext.suites.laptop;
 in
 {
-  options.ext.suites.laptop = {
+  options.ext.suites.laptop = with lib2.options; {
     enable = lib.mkEnableOption "the laptop computer suite";
+    username = mkOpt' "The username of the single user of the system." types.str;
   };
 
   config = lib.mkIf cfg.enable {
     ext = {
-      suites = {
-        pc = enabled;
+      suites.pc = enabled // {
+        username = cfg.username;
       };
 
-      wifi = {
-        enable = true;
+      wifi = enabled // {
         enabledNetworks = [
           "Home"
           "Isabella"
