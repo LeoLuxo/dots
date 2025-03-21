@@ -9,7 +9,10 @@ let
 in
 {
   ext = {
-    suites.laptop = enabled;
+    suites.laptop = {
+      enable = true;
+      username = "lili";
+    };
     touchscreen = enabled;
 
     keyboard = {

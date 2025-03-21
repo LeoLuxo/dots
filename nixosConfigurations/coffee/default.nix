@@ -2,8 +2,6 @@
 {
   system = "x86_64-linux";
 
-  specialArgs.user = "lili";
-
   modules = [
     ./configuration.nix
     ./hardwareConfiguration.nix

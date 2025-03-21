@@ -9,7 +9,10 @@ let
 in
 {
   ext = {
-    suites.desktop = enabled;
+    suites.desktop = {
+      enable = true;
+      username = "lili";
+    };
     keyboard = {
       layout = "us";
       variant = "altgr-intl";

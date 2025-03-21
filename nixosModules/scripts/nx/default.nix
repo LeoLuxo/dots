@@ -24,15 +24,15 @@ in
       # Set the location of the file used for dconf-diff
       NX_DCONF_DIFF =
         mkOpt "Location of the dconf-diff file" types.path
-          "${config.ext.user.home}/.nx/dconf_diff";
+          "${config.ext.system.user.home}/.nx/dconf_diff";
 
       # Set the location of the files used for nx-rebuild
       NX_PRE_REBUILD =
         mkOpt "Location of the pre-rebuild file" types.path
-          "${config.ext.user.home}/.nx/pre_rebuild.sh";
+          "${config.ext.system.user.home}/.nx/pre_rebuild.sh";
       NX_POST_REBUILD =
         mkOpt "Location of the post-rebuild file" types.path
-          "${config.ext.user.home}/.nx/post_rebuild.sh";
+          "${config.ext.system.user.home}/.nx/post_rebuild.sh";
 
       # Set the location of the todo doc
       NX_TODO = mkOpt "Location of the todo doc" types.path "/stuff/obsidian/Notes/NixOS Todo.md";

@@ -2,25 +2,26 @@
   lib,
   config,
   inputs,
-  specialArgs,
   ...
 }:
 
 let
   lib2 = inputs.self.lib;
   inherit (lib2) enabled;
+  inherit (lib) types;
 
   cfg = config.ext.suites.pc;
 in
 {
-  options.ext.suites.pc = {
+  options.ext.suites.pc = with lib2.options; {
     enable = lib.mkEnableOption "the personal computer suite";
+    username = mkOpt' "The username of the single user of the system." types.str;
   };
 
   config = lib.mkIf cfg.enable {
     ext = {
       system = {
-        user.name = specialArgs.user;
+        user.name = cfg.username;
         boot = enabled;
         hosts = enabled;
         keys = enabled;
