@@ -6,11 +6,11 @@
 }:
 
 let
-  cfg = config.ext.scripts.terminal-utils;
+  cfg = config.ext.scripts.terminalUtils;
 in
 {
-  options.ext.scripts.terminal-utils = {
-    enable = lib.mkEnableOption "terminal-utils scripts";
+  options.ext.scripts.terminalUtils = {
+    enable = lib.mkEnableOption "terminalUtils scripts";
   };
 
   config = lib.mkIf cfg.enable {
