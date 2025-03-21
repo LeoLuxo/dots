@@ -6,19 +6,19 @@
 }:
 
 let
-  cfg = config.ext.scripts.boot-windows;
+  cfg = config.ext.scripts.bootWindows;
 in
 {
-  options.ext.scripts.boot-windows = {
-    enable = lib.mkEnableOption "the boot-windows script";
+  options.ext.scripts.bootWindows = {
+    enable = lib.mkEnableOption "the bootWindows script";
   };
 
   config = lib.mkIf cfg.enable (
     let
       package = (
         pkgs.writeScriptWithDeps {
-          name = "boot-windows";
-          file = ./boot-windows.sh;
+          name = "bootWindows";
+          file = ./bootWindows.sh;
           deps = [
             # To query and change the boot order
             pkgs.efibootmgr
