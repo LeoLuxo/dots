@@ -162,6 +162,14 @@ in
           color-scheme = "prefer-dark";
           gtk-enable-primary-paste = false;
         };
+
+        # Trash settings
+        "org/gnome/desktop/privacy" = {
+          recent-files-max-age = 30;
+          old-files-age = mkUint32 30;
+          remove-old-temp-files = true;
+          remove-old-trash-files = true;
+        };
       };
     };
 }
