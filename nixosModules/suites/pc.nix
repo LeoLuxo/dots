@@ -29,6 +29,14 @@ in
       };
 
       desktop.defaultAppsShortcuts = enabled;
+
+      scripts = {
+        nx = enabled;
+        terminalUtils = enabled;
+
+        snip = enabled;
+        clipboard = enabled;
+      };
     };
   };
 }
