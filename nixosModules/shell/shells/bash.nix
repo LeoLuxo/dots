@@ -14,8 +14,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.shells = [ pkgs.bash ];
-
     ext = {
       shell.defaultShell = lib.mkDefault "bash";
 
@@ -23,7 +21,8 @@ in
       hm.programs.bash = {
         enable = true;
       };
-
     };
+
+    environment.shells = [ pkgs.bash ];
   };
 }
