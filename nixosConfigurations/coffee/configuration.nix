@@ -13,9 +13,12 @@ in
       enable = true;
       username = "lili";
     };
+
     keyboard = {
       layout = "us";
       variant = "altgr-intl";
     };
+
+    scripts.bootWindows = enabled;
   };
 }

@@ -18,7 +18,7 @@ in
 
   config = lib.mkIf cfg.enable {
     ext.desktop = {
-      dm.gnome.extensions."ddterm" = enabled;
+      manager.gnome.extensions."ddterm" = enabled;
 
       defaultApps.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
     };
