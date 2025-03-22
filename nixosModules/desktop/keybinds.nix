@@ -42,7 +42,7 @@ in
       ];
     }
     // (
-      if config.desktop.gnome.enable then
+      if config.desktop.manager.gnome.enable then
         {
           programs.dconf.enable = true;
 
