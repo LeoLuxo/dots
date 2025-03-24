@@ -2,6 +2,8 @@
 {
   # Overlay to patch global keybinds
   # TODO: Remove when the PR is merged
+  # https://github.com/Vencord/Vesktop/pull/609/
+  # https://github.com/Vencord/Vesktop/pull/326
   nixpkgs.overlays = [
     (final: prev: {
       vesktop = prev.vesktop.overrideAttrs (
