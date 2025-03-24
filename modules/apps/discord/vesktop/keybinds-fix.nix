@@ -17,8 +17,8 @@
           src = prev.fetchFromGitHub {
             owner = "PolisanTheEasyNick";
             repo = "Vesktop";
-            rev = "3a84dbc0d28a8152284d82004b1315e7fe03778a";
-            hash = "sha256-i+i0oOLST72cMWwtSHJnVDaWojMA3g7TXGvBBewGBcE=";
+            rev = "99a74cf328a864d395bec0b52bd09427433d7aea";
+            hash = "sha256-ai2CdTUJGbcdFRR2AxkEFga30a3Cy1DrVdHQs/F1Ak0=";
           };
 
           # Make sure the dependencies get updated as well
@@ -29,7 +29,7 @@
               src
               patches
               ;
-            hash = "sha256-IIR1iz/Un24/cv/kexRaV0lqFmnEAgXsIyQYOZUCVqI=";
+            hash = "sha256-xn3yE2S6hfCijV+Edx3PYgGro8eF76/GqarOIRj9Tbg=";
           };
         }
       );
