@@ -15,8 +15,8 @@ in
   config = lib.mkIf cfg.enable {
     networking.hosts = {
       "192.168.0.37" = [ "strobery" ];
-      # "192.168.0.37" = [ "coffee" ];
-      # "192.168.0.37" = [ "pancake" ];
+      "192.168.0.88" = [ "coffee" ];
+      "192.168.0.173" = [ "pancake" ];
     };
   };
 }
