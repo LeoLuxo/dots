@@ -23,8 +23,11 @@ in
       # Use fish_key_reader to get keycodes
       # https://fishshell.com/docs/current/cmds/bind.html
       shellInit = ''
+        # Bind backspace correctly just to make sure
+        bind backspace backward-delete-char
+
         # Rebind CTRL-backspace
-        bind -k backspace backward-kill-path-component
+        bind ctrl-h backward-kill-path-component
 
         # Bind CTRL-W
         bind \cw backward-kill-bigword
