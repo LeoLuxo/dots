@@ -27,6 +27,7 @@ in
         keys = enabled;
         locale = enabled;
         printing = enabled;
+        graphics = enabled;
       };
 
       desktop.defaultAppsShortcuts = enabled;
