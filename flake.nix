@@ -50,7 +50,7 @@
     # (The url MUST use git+ssh otherwise it won't properly authenticate and have access to the private repo)
     wallpapers.url = "git+ssh://git@github.com/LeoLuxo/dots-wallpapers";
 
-    # ----- flake and config ---------------------------------------------------------------------
+    # ----- metaconfig & nix ---------------------------------------------------------------------
     # Manages dotfiles in nix
     home-manager = {
       url = "github:nix-community/home-manager";
