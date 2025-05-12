@@ -1,5 +1,6 @@
 {
   lib,
+  options,
   config,
   inputs,
   ...
@@ -26,6 +27,11 @@ in
       passwordFile = mkOpt "the hashed password file" (types.nullOr types.path) (
         if config.secrets.enable then config.age.secrets."userpwds/${home}".path else null
       );
+
+      extraGroups = mkOpt "the user's auxiliary groups" (types.listOf types.str) [
+        "networkmanager"
+        "wheel"
+      ];
     });
 
   config = lib.mkIf (cfg != null) {
@@ -40,10 +46,7 @@ in
 
         hashedPasswordFile = lib.mkIf (cfg.passwordFile != null) cfg.passwordFile;
 
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-        ];
+        extraGroups = lib.mkAliasDefinitions options.ext.system.user.extraGroups;
       };
     };
   };

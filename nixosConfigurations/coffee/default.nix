@@ -4,6 +4,7 @@
 
   modules = [
     ./configuration.nix
+    ./audio.nix
     ./hardwareConfiguration.nix
 
     inputs.self.nixosModules.default
