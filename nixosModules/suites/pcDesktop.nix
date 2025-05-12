@@ -10,10 +10,10 @@ let
   inherit (lib2) enabled;
   inherit (lib) types;
 
-  cfg = config.ext.suites.desktop;
+  cfg = config.ext.suites.pc.desktop;
 in
 {
-  options.ext.suites.desktop = with lib2.options; {
+  options.ext.suites.pc.desktop = with lib2.options; {
     enable = lib.mkEnableOption "the desktop computer suite";
     username = mkOpt' "The username of the single user of the system." types.str;
   };
