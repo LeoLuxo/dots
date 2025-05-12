@@ -9,7 +9,7 @@ let
 in
 {
   ext = {
-    suites.laptop = {
+    suites.pc.laptop = {
       enable = true;
       username = "lili";
     };
