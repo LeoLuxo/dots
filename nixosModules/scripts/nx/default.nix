@@ -34,6 +34,11 @@ in
         mkOpt "Location of the post-rebuild file" types.path
           "${config.ext.system.user.home}/.nx/post_rebuild.sh";
 
+      # Set the location of the files used for nx-config-sync
+      NX_CONFIG_SYNC =
+        mkOpt "Location of the config-sync file" types.path
+          "${config.ext.system.user.home}/.nx/config_sync.sh";
+
       # Set the location of the todo doc
       NX_TODO = mkOpt "Location of the todo doc" types.path "/stuff/obsidian/Notes/NixOS Todo.md";
     };
@@ -92,9 +97,12 @@ in
 
     ext.hm = {
       # Set up pre- and post actions for nx-rebuild
-      home.file.".nx/pre_rebuild.sh".text = cfg.rebuild.preRebuildActions;
-      home.file.".nx/post_rebuild.sh".text = cfg.rebuild.postRebuildActions;
+      home.file.${lib.path.removePrefix config.ext.system.user.home cfg.variables.NX_PRE_REBUILD}.text =
+        cfg.rebuild.preRebuildActions;
+      home.file.${lib.path.removePrefix config.ext.system.user.home cfg.variables.NX_POST_REBUILD}.text =
+        cfg.rebuild.postRebuildActions;
     };
+
     # Add nx scripts and other packages
     ext.packages = with pkgs; [
       # Nix helper utilities
@@ -154,6 +162,11 @@ in
           nh
         ];
         replaceVariables = cfg.variables;
+      })
+
+      (writeScriptWithDeps {
+        name = "nx-sync-config";
+        file = cfg.variables.NX_CONFIG_SYNC;
       })
     ];
   };
