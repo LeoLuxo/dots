@@ -306,66 +306,68 @@ rec {
               #   }
               # ];
 
-              home.activation."sync-path-${cfgPath}" = lib.hm.dag.entryAfter [ "writeBoundary" ] (
-                ''
-                  # Make sure both parent dirs exist
-                  mkdir --parents "${builtins.dirOf cfgPathStr}" 
-                  mkdir --parents "${builtins.dirOf xdgPathStr}"
+              # DISABLED FOR NOW, MEGA BROKEN
 
-                  # Backup old dir/file
-                  if [ -e "${xdgPathStr}" ]; then
-                    cp "${xdgPathStr}" "${xdgPathStr}.bak" -r --force
-                  fi
+              # home.activation."sync-path-${cfgPath}" = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+              #   ''
+              #     # Make sure both parent dirs exist
+              #     mkdir --parents "${builtins.dirOf cfgPathStr}"
+              #     mkdir --parents "${builtins.dirOf xdgPathStr}"
 
-                ''
-                + (
-                  if merge != null then
-                    # For merged files
-                    let
-                      overrides = outerConfig.syncedFiles.overrides.${cfgPath};
-                      readOrDefault =
-                        file: if filesystem.pathIsRegularFile file then builtins.readFile file else merge.fallback;
+              #     # Backup old dir/file
+              #     if [ -e "${xdgPathStr}" ]; then
+              #       cp "${xdgPathStr}" "${xdgPathStr}.bak" -r --force
+              #     fi
 
-                      src = merge.toNix (readOrDefault cfgPathStr);
-                      xdg = merge.toNix (readOrDefault xdgPathStr);
-                      merged = src // xdg // merge.defaultOverrides;
-                      finalSrc = merge.fromNix merged;
-                      finalXdg = merge.fromNix (merged // overrides);
-                    in
-                    ''
-                      # Save new merged content to dots
-                      cat >"${cfgPathStr}" <<'EOL'
-                      ${finalSrc}
-                      EOL
+              #   ''
+              #   + (
+              #     if merge != null then
+              #       # For merged files
+              #       let
+              #         overrides = outerConfig.syncedFiles.overrides.${cfgPath};
+              #         readOrDefault =
+              #           file: if filesystem.pathIsRegularFile file then builtins.readFile file else merge.fallback;
 
-                      # Save merged content to xdg file  
-                      cat >"${xdgPathStr}" <<'EOL'
-                      ${finalXdg}
-                      EOL
-                    ''
-                  else
-                    # For raw files/dirs
-                    let
-                      rsync = "${pkgs.rsync}/bin/rsync";
-                      excludesArgs = lib.concatMapStrings (ex: ''--exclude="${ex}" '') excludes;
-                    in
-                    ''
-                      if [ -d "${xdgPathStr}" ]; then
-                        # Is a dir, we need the trailing slash because rsync
-                        
-                        # Copy path to dots
-                        ${rsync} --ignore-times -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
-                        
-                        # Copy merged path back to xdg
-                        ${rsync} --ignore-times -r "${cfgPathStr}/" "${xdgPathStr}"
-                      else
-                        # Is a file
-                        cp "${xdgPathStr}" "${cfgPathStr}" --force || true
-                        cp "${cfgPathStr}" "${xdgPathStr}" --force
-                      fi
-                    ''
-                )
-              );
+              #         src = merge.toNix (readOrDefault cfgPathStr);
+              #         xdg = merge.toNix (readOrDefault xdgPathStr);
+              #         merged = src // xdg // merge.defaultOverrides;
+              #         finalSrc = merge.fromNix merged;
+              #         finalXdg = merge.fromNix (merged // overrides);
+              #       in
+              #       ''
+              #         # Save new merged content to dots
+              #         cat >"${cfgPathStr}" <<'EOL'
+              #         ${finalSrc}
+              #         EOL
+
+              #         # Save merged content to xdg file
+              #         cat >"${xdgPathStr}" <<'EOL'
+              #         ${finalXdg}
+              #         EOL
+              #       ''
+              #     else
+              #       # For raw files/dirs
+              #       let
+              #         rsync = "${pkgs.rsync}/bin/rsync";
+              #         excludesArgs = lib.concatMapStrings (ex: ''--exclude="${ex}" '') excludes;
+              #       in
+              #       ''
+              #         if [ -d "${xdgPathStr}" ]; then
+              #           # Is a dir, we need the trailing slash because rsync
+
+              #           # Copy path to dots
+              #           ${rsync} --ignore-times -r ${excludesArgs} "${xdgPathStr}/" "${cfgPathStr}"
+
+              #           # Copy merged path back to xdg
+              #           ${rsync} --ignore-times -r "${cfgPathStr}/" "${xdgPathStr}"
+              #         else
+              #           # Is a file
+              #           cp "${xdgPathStr}" "${cfgPathStr}" --force || true
+              #           cp "${cfgPathStr}" "${xdgPathStr}" --force
+              #         fi
+              #       ''
+              #   )
+              # );
             };
         };
 
