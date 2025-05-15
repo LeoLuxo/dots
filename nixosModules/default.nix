@@ -25,9 +25,9 @@ let
 in
 
 modules
-// {
-  # Make "default" a mega-module that auto-imports all the other modules
-  default = {
-    imports = lib.attrValues modules;
-  };
-}
+# // {
+#   # Make "default" a mega-module that auto-imports all the other modules
+#   default = {
+#     imports = lib.attrValues modules;
+#   };
+# }

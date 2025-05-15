@@ -26,26 +26,51 @@ in
     {
       ext.hm.home.shellAliases = cfg.aliases;
     }
+    //
     # aliases with history
-    // (lib.mapAttrs' (
-      name: command:
-      let
-        historyCommands = {
-          fish = ''$history[1]'';
-          bash = ''$(fc -ln -1)'';
-          zsh = ''''${history[@][1]}'';
-        };
+    (lib.mkMerge (
+      lib.mapAttrsToList (
+        name: command:
+        let
+          historyCommands = {
+            fish = ''$history[1]'';
+            bash = ''$(fc -ln -1)'';
+            zsh = ''''${history[@][1]}'';
+          };
 
-        mappedCommands = builtins.mapAttrs (
-          _: lastCommand: command { inherit lastCommand; }
-        ) historyCommands;
-      in
-      {
-        ext.hm = {
-          programs.bash.shellAliases.${name} = mappedCommands.bash;
-          programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
-          programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
-        };
-      }
-    ) cfg.aliasesWithHistory);
+          mappedCommands = builtins.mapAttrs (
+            _: lastCommand: command { inherit lastCommand; }
+          ) historyCommands;
+        in
+        {
+          ext.hm = {
+            programs.bash.shellAliases.${name} = mappedCommands.bash;
+            programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
+            programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
+          };
+        }
+      ) cfg.aliasesWithHistory
+    ));
+
+  # // (lib.mapAttrs (
+  #   name: command:
+  #   let
+  #     historyCommands = {
+  #       fish = ''$history[1]'';
+  #       bash = ''$(fc -ln -1)'';
+  #       zsh = ''''${history[@][1]}'';
+  #     };
+
+  #     mappedCommands = builtins.mapAttrs (
+  #       _: lastCommand: command { inherit lastCommand; }
+  #     ) historyCommands;
+  #   in
+  #   {
+  #     # ext.hm = {
+  #     #   programs.bash.shellAliases.${name} = mappedCommands.bash;
+  #     #   programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
+  #     #   programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
+  #     # };
+  #   }
+  # ) (lib.traceVal cfg.aliasesWithHistory));
 }
