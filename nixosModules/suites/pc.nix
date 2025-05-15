@@ -30,7 +30,10 @@ in
         graphics = enabled;
       };
 
-      desktop.defaultAppsShortcuts = enabled;
+      desktop = {
+        defaultAppsShortcuts = enabled;
+        fonts = enabled;
+      };
 
       scripts = {
         nx = enabled;
