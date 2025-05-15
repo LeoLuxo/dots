@@ -3,9 +3,9 @@
   system = "x86_64-linux";
 
   modules = [
-    ./configuration.nix
-    ./audio.nix
-    ./hardwareConfiguration.nix
+    # ./configuration.nix
+    # ./audio.nix
+    # ./hardwareConfiguration.nix
 
     inputs.self.nixosModules.default
 
