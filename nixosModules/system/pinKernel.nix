@@ -9,10 +9,6 @@ let
   cfg = config.ext.system.pinKernel;
 in
 {
-  imports = [
-
-  ];
-
   options.ext.system.pinKernel = {
     enable = lib.mkEnableOption "pinning the linux kernel to a specific version";
   };

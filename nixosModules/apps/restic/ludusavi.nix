@@ -13,10 +13,6 @@ let
   cfg = config.ext.apps.restic.gameSavesBackup;
 in
 {
-  imports = [
-
-  ];
-
   options.ext.apps.restic.gameSavesBackup = with lib2.options; {
     enable = lib.mkEnableOption "ludusavi game saves auto-backups";
 

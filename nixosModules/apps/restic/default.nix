@@ -13,10 +13,6 @@ let
   cfg = config.ext.apps.restic;
 in
 {
-  imports = [
-
-  ];
-
   options.ext.apps.restic = with lib2.options; {
     enable = lib.mkEnableOption "restic";
 
