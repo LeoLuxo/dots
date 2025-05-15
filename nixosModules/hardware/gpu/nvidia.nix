@@ -8,10 +8,6 @@ let
   cfg = config.ext.hardware.gpu.nvidia;
 in
 {
-  imports = [
-
-  ];
-
   options.ext.hardware.gpu.nvidia = {
     enable = lib.mkEnableOption "nvidia gpu";
   };

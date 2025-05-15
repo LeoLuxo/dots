@@ -19,7 +19,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    ext.secrets = enabled;
+    ext.nix.secrets = enabled;
 
     # Fix eduroam certificate
     age.secrets."wifi/eduroam-ca.pem" = {
