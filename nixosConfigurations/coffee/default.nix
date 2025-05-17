@@ -49,7 +49,7 @@
     # inputs.self.nixosModules.scripts-snip
     # inputs.self.nixosModules.scripts-terminalUtils
     inputs.self.nixosModules.shell-aliases
-    # inputs.self.nixosModules.shell-defaultShell
+    inputs.self.nixosModules.shell-defaultShell
     # inputs.self.nixosModules.shell-prompt-ohmyposh
     # inputs.self.nixosModules.shell-prompt-starship
     # inputs.self.nixosModules.shell-shells-bash
