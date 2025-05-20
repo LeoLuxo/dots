@@ -94,5 +94,15 @@ in
 
       defaults.apps.backupTerminal = lib.mkDefault "kgx";
       defaults.apps.terminal = lib.mkOverride 1050 "kgx";
+
+      # Fixes "Your GStreamer installation is missing a plug-in." when trying to view audio/video properties
+      environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
+        lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0"
+          [
+            pkgs.gst_all_1.gst-plugins-good
+            pkgs.gst_all_1.gst-plugins-bad
+            pkgs.gst_all_1.gst-plugins-ugly
+            pkgs.gst_all_1.gst-plugins-base
+          ];
     };
 }

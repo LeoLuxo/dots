@@ -54,6 +54,7 @@ in
     gnome-2048 # A GNOME-native implementation of the popular 2048 puzzle game.
     teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
     eyedropper # A simple color picker tool that allows you to select a color from anywhere on the screen.
+    celluloid # A simple video player
 
     guitarix # A virtual guitar amplifier for use with Linux.
     r2modman # A mod manager for Risk of Rain 2 and other Unity games.
