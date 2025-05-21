@@ -28,7 +28,7 @@ let
         #!/usr/bin/env bash
 
         source "${./lrclib-fetch.sh}" --hide-lyrics $1
-        python3 "${./lrcput.py}" -r -R -d $1
+        python3 "${./lrcput.py}" -R -d $1
       '';
     }
   );
