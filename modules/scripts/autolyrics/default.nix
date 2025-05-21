@@ -27,8 +27,8 @@ let
       text = ''
         #!/usr/bin/env bash
 
-        source "${./lrclib-fetch.sh}" $1 --debug
-        # python3 "${./lrcput.py}" -r -R -d $1
+        source "${./lrclib-fetch.sh}" --hide-lyrics $1
+        python3 "${./lrcput.py}" -r -R -d $1
       '';
     }
   );
