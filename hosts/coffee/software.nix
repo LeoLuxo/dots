@@ -59,6 +59,8 @@ in
     guitarix # A virtual guitar amplifier for use with Linux.
     r2modman # A mod manager for Risk of Rain 2 and other Unity games.
 
+    nicotine-plus # A client for the Soulseek peer-to-peer file sharing network.
+
     (pkgs.symlinkJoin {
       name = "prismlauncher";
       paths = [ pkgs.prismlauncher ];
