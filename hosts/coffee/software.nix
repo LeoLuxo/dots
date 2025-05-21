@@ -24,6 +24,7 @@ in
     scripts.terminal-utils
     scripts.clipboard
     scripts.boot-windows
+    scripts.autolyrics
 
     apps.restic
 
