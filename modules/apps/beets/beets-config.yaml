@@ -38,6 +38,7 @@ item_fields:
 # The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
   default: artists/$main_artist/%if{$is_not_single,$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title,$artist - $title}
+  singleton: artists/$main_artist/%if{$is_not_single,$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title,$artist - $title}
   albumtype:soundtrack: soundtracks/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title
   comp: compilations/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $artist - $title
   
