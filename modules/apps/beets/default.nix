@@ -1,21 +1,28 @@
 {
   pkgs,
   constants,
+  extraLib,
   ...
 }:
 
 let
   inherit (constants) user;
+  inherit (extraLib) writeScriptWithDeps;
 in
 
 {
   home-manager.users.${user} = {
     home.packages = [
-      pkgs.beets
-    ];
-  };
+      (writeScriptWithDeps {
+        name = "beet";
 
-  environment.variables = {
-    BEETSDIR = ./beets-config.yaml;
+        deps = [ pkgs.beets ];
+
+        text = ''
+          #!/usr/bin/env bash
+          beet --config ${./beets-config.yaml} "$@"
+        '';
+      })
+    ];
   };
 }
