@@ -36,35 +36,7 @@ in
 
         text = ''
           #!/usr/bin/env bash
-
-          # # temp dir stuff copied from https://stackoverflow.com/questions/4632028/how-to-create-a-temporary-directory
-
-          # # create temp directory
-          # WORK_DIR=mktemp -d
-
-          # # check if tmp dir was created
-          # if [[ ! "$WORK_DIR" || ! -d "$WORK_DIR" ]]; then
-          # 	echo "Could not create temp dir"
-          # 	exit 1
-          # fi
-
-          # echo "Created temp working directory $WORK_DIR"
-
-          # # deletes the temp directory
-          # function cleanup {
-          # 	rm -rf "$WORK_DIR"
-          # 	echo "Deleted temp working directory $WORK_DIR"
-          # }
-
-          # # register the cleanup function to be called on the EXIT signal
-          # trap cleanup EXIT
-
-
           beet import --group-albums "$1"
-
-
-          # source "${./lrclib-fetch.sh}" --hide-lyrics "$1"
-          # python3 "${./lrcput.py}" -R -d "$1"
         '';
       })
     ];
