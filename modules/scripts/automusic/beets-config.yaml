@@ -43,7 +43,7 @@ clutter:
     # Defaults
     .DS_Store, Thumbs.DB,
     # Extras
-    .xml, .nfo, .lrc, .jpg, .png
+    *.xml, *.nfo, *.lrc, *.jpg, *.png
   ]
 
 # Convert all non-ASCII characters in paths to ASCII equivalents.
