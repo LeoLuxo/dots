@@ -23,42 +23,14 @@ import:
 
 item_fields:
   is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
-  primary_album_artist: |
-    import json
-    import requests
-    query_url="https://musicbrainz.org/ws/2/artist/{0}?inc=aliases&fmt=json".format(mb_albumartistid)
-    try:
-      primary_albumartist= requests.get(query_url).json()["sort-name"]
-    except:
-      if albumartist_sort:
-        print("MusicBrainz lookup for primary albumartist failed! Falling back on local sort-name.")
-        return albumartist_sort
-      else:
-        print("MusicBrainz lookup for primary albumartist failed, and local sort-name not found! Using local artist name as-is.")
-        return albumartist
-    else:
-      return primary_albumartist
-  primary_artist: |
-    import json
-    import requests
-    query_url="https://musicbrainz.org/ws/2/artist/{0}?inc=aliases&fmt=json".format(mb_artistid)
-    try:
-      primary_artist= requests.get(query_url).json()["sort-name"]
-    except:
-      if artist_sort:
-        print("MusicBrainz lookup for primary artist failed! Falling back on local sort-name.")
-        return artist_sort
-      else:
-        print("MusicBrainz lookup for primary artist failed, and local sort-name not found! Using local artist name as-is.")
-        return artist
-    else:
-      return primary_artist
+  main_artist: |
+    import re
+    return re.split('\W+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
 
 # Directory and naming scheme.
 # The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
-  default: artists/$primary_album_artist/%if{$is_not_single,$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title,$artist - $title}
-  singleton: artists/$primary_artist/%if{$is_not_single,$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title,$artist - $title}
+  default: artists/$main_artist/%if{$is_not_single,$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title,$artist - $title}
   albumtype:soundtrack: soundtracks/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title
   comp: compilations/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $artist - $title
   
