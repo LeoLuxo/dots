@@ -59,7 +59,7 @@ let
         # trap cleanup EXIT
 
 
-        beets import --config "${./beets-config.yaml}" --group-albums $1
+        beet import --config "${./beets-config.yaml}" --group-albums $1
 
 
         # source "${./lrclib-fetch.sh}" --hide-lyrics $1
