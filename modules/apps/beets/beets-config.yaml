@@ -22,9 +22,11 @@ import:
   bell: yes
   
 match:
-  max_rec:
+  distance_weights:
       # Allow missing tracks from albums
-      missing_tracks: none
+      missing_tracks: 0.2
+      # Make unmatched tracks way more important
+      unmatched_tracks: 1.0
 
 item_fields:
   is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
