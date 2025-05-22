@@ -1,0 +1,73 @@
+
+
+# The music library directory  
+directory: /stuff/media/music
+
+plugins: fetchart lyrics lastgenre embedart
+
+# Indicating whether the autotagger should use multiple threads.
+threaded: yes
+
+ui:
+  color: yes
+
+import:
+  write: yes
+  move: yes
+  autotag: yes
+  resume: ask
+  from_scratch: no
+  duplicate_action: skip
+  bell: yes
+
+# Directory and naming scheme.
+# The aunique{} function ensures that identically-named albums are placed in different directories.
+paths:
+  default: artists/$albumartist/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title
+  singleton: artists/$albumartist/Singles/$title
+  albumtype:soundtrack: soundtracks/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title
+  comp: compilations/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $artist - $title
+  
+# When beets imports all the files in a directory, it tries to remove the directory if it’s empty.
+# A directory is considered empty if it only contains files whose names match the glob patterns in clutter,
+# which should be a list of strings.
+# The importer only removes recursively searched subdirectories—the top-level directory you specify on the command line is never deleted.
+clutter:                     
+  [
+    # Defaults
+    .DS_Store, Thumbs.DB,
+    # Extras
+    .xml, .nfo
+  ]
+
+# Convert all non-ASCII characters in paths to ASCII equivalents.
+asciify_path: yes
+
+lastgenre:
+  auto: yes
+  force: yes
+  keep_existing: no
+  whitelist: yes
+  count: 5
+  
+lyrics:
+  auto: yes
+  force: yes
+  print: no
+  sources: [lrclib]
+  synced: yes
+  
+fetchart:
+  auto: yes
+  high_resolution: yes
+  
+embedart:
+  auto: yes
+  remove_art_file: yes
+  ifempty: no
+
+# filetote:
+#   pairing:
+#     enabled: true
+#     extensions: ".lrc"
+#   extensions: .jpg .png
