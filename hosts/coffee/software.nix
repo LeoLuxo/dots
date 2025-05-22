@@ -42,6 +42,7 @@ in
 
     apps.distrobox
     apps.nicotine-plus
+    apps.harmonoid
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
