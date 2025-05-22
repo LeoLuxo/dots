@@ -41,6 +41,7 @@ in
     apps.upscaler
 
     apps.distrobox
+    apps.nicotine-plus
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
