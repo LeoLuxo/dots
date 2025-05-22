@@ -20,6 +20,11 @@ import:
   from_scratch: no
   duplicate_action: ask
   bell: yes
+  
+match:
+  max_rec:
+      # Allow missing tracks from albums
+      missing_tracks: none
 
 item_fields:
   is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
