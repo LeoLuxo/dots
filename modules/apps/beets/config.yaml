@@ -62,7 +62,7 @@ clutter:
 
 # Make all sequences dissapear instead of adding an underscore, and allow : and ? (which are dissallowed in the default)
 replace:
-  '[\\/]': '|'
+  '[\\/]': ''
   '^\.': ''
   '[\x00-\x1f]': ''
   '[<>"\*\|]': ''
@@ -70,6 +70,7 @@ replace:
   '\s+$': ''
   '^\s+': ''
   '^-': ''
+path_sep_replace: ''
 
 
 lastgenre:
