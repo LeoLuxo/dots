@@ -21,6 +21,7 @@ import:
   duplicate_action: ask
   bell: yes
   languages: en
+  incremental: no
   
 match:
   distance_weights:
