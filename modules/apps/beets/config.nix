@@ -40,7 +40,7 @@
       return re.split('\\W+(feat(.?|uring)|ft\\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
     '';
     smart_single = ''
-      is_single = disctotal == 1 and tracktotal == 1
+      is_single = (disctotal == 1 and tracktotal == 1)
       if is_single:
         return f"{artist} - {title}"
       else
