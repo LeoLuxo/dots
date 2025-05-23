@@ -1,15 +1,18 @@
 {
   beets,
   pkgs,
+  formats,
   makeWrapper,
   runCommand,
   symlinkJoin,
 }:
 
 let
+  yaml = formats.yaml { };
+  config = yaml.generate "config.yaml" ./config.nix;
   configDir = runCommand "config-dir" { } ''
     mkdir -p $out
-    cp ${./config.yaml} $out/config.yaml
+    cp ${config} $out/config.yaml
   '';
 in
 symlinkJoin {
