@@ -50,6 +50,15 @@
         path = "/stuff/games/minecraft/instances";
         tags = [ "minecraft-instances" ];
       };
+
+      "music" = {
+        timer = "hourly";
+        randomDelay = "15m";
+
+        label = "Music";
+        path = "/stuff/media/music";
+        tags = [ "music" ];
+      };
     };
 
     gameSavesBackup = {
