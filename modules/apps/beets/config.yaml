@@ -4,7 +4,7 @@
 directory: /stuff/media/music
 library: /stuff/media/music/beets.db
 
-plugins: fetchart lyrics lastgenre embedart inline deezer autobpm fetchartist info
+plugins: fetchart lyrics lastgenre embedart inline deezer autobpm info
 
 # Indicating whether the autotagger should use multiple threads.
 threaded: yes
@@ -30,22 +30,17 @@ match:
     unmatched_tracks: 1.0
 
 item_fields:
-  # is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
+item_fields:
+  is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
   main_artist: |
     import re
     return re.split('\W+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
-  smart_single: |
-    is_single = (disctotal == 1 and tracktotal == 1)
-    if is_single:
-      return f"{artist} - {title}"
-    else:
-      return f"{album} ({year})/{track} - {title}"
 
 # Directory and naming scheme.
 # The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
-  default: artists/$main_artist/$smart_single
-  singleton: artists/$main_artist/$smart_single
+  default: artists/$main_artist/%if{$is_not_single,$album ($year)/$track - $title,$artist - $title}
+  singleton: artists/$main_artist/%if{$is_not_single,$album ($year)/$track - $title,$artist - $title}
   albumtype:soundtrack: soundtracks/$album ($year)/$track - $title
   comp: compilations/$album ($year)/$track - $artist - $title
   
@@ -62,7 +57,7 @@ clutter:
   ]
 
 # Convert all non-ASCII characters in paths to ASCII equivalents.
-asciify_path: yes
+# asciify_path: yes
 
 # Make all sequences dissapear instead of adding an underscore, and allow : and ? (which are dissallowed in the default)
 replace:
