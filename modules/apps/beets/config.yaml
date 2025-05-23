@@ -24,10 +24,10 @@ import:
   
 match:
   distance_weights:
-      # Allow missing tracks from albums
-      missing_tracks: 0.2
-      # Make unmatched tracks way more important
-      unmatched_tracks: 1.0
+    # Allow missing tracks from albums
+    missing_tracks: 0.2
+    # Make unmatched tracks way more important
+    unmatched_tracks: 1.0
 
 item_fields:
   # is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
@@ -68,7 +68,7 @@ asciify_path: yes
 replace:
   '[\\/]': ''
   '^\.': ''
-  '[\x00-\x1f]': _
+  '[\x00-\x1f]': ''
   '[<>"\*\|]': ''
   '\.$': ''
   '\s+$': ''
