@@ -38,7 +38,7 @@ item_fields:
     is_single = (disctotal == 1 and tracktotal == 1)
     if is_single:
       return f"{artist} - {title}"
-    else
+    else:
       return f"{album} ({year})/{track} - {title}"
 
 # Directory and naming scheme.
