@@ -4,7 +4,7 @@
 directory: /stuff/media/music
 library: /stuff/media/music/beets.db
 
-plugins: fetchart lyrics lastgenre embedart inline deezer spotify autobpm fetchartist
+plugins: fetchart lyrics lastgenre embedart inline deezer autobpm fetchartist info
 
 # Indicating whether the autotagger should use multiple threads.
 threaded: yes
