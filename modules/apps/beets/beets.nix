@@ -8,11 +8,11 @@
 }:
 
 let
-  yaml = formats.yaml { };
-  config = yaml.generate "config.yaml" (import ./config.nix);
+  # yaml = formats.yaml { };
+  # config = yaml.generate "config.yaml" (import ./config.nix);
   configDir = runCommand "config-dir" { } ''
     mkdir -p $out
-    cp ${config} $out/config.yaml
+    cp ${./config.yaml} $out/config.yaml
   '';
 in
 symlinkJoin {
