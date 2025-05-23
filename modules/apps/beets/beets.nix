@@ -9,7 +9,7 @@
 
 let
   yaml = formats.yaml { };
-  config = yaml.generate "config.yaml" ./config.nix;
+  config = yaml.generate "config.yaml" (import ./config.nix);
   configDir = runCommand "config-dir" { } ''
     mkdir -p $out
     cp ${config} $out/config.yaml
