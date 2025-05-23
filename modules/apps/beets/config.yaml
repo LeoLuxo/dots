@@ -40,10 +40,10 @@ item_fields:
 # Directory and naming scheme.
 # The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
-  default: artists/$main_artist/%if{$is_not_single,$album ($year)/$track - $title,$artist - $title}
-  singleton: artists/$main_artist/%if{$is_not_single,$album ($year)/$track - $title,$artist - $title}
-  albumtype:soundtrack: soundtracks/$album ($year)/$track - $title
-  comp: compilations/$album ($year)/$track - $artist - $title
+  default: artists/$main_artist/%if{$is_not_single,$album ($year)/$track. $title,$artist - $title}
+  singleton: artists/$main_artist/%if{$is_not_single,$album ($year)/$track. $title,$artist - $title}
+  albumtype:soundtrack: soundtracks/$album ($year)/$track. $title
+  comp: compilations/$album ($year)/$track. $artist - $title
   
 # When beets imports all the files in a directory, it tries to remove the directory if it’s empty.
 # A directory is considered empty if it only contains files whose names match the glob patterns in clutter,
