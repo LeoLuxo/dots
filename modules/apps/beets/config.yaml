@@ -30,18 +30,24 @@ match:
       unmatched_tracks: 1.0
 
 item_fields:
-  is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
+  # is_not_single: 1 if disctotal > 1 or tracktotal > 1 else 0
   main_artist: |
     import re
     return re.split('\W+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
+  smart_single: |
+    is_single = (disctotal == 1 and tracktotal == 1)
+    if is_single:
+      return f"{artist} - {title}"
+    else
+      return f"{album} ({year})/{track} - {title}"
 
 # Directory and naming scheme.
 # The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
-  default: artists/$main_artist/%if{$is_not_single,$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title,$artist - $title}
-  singleton: artists/$main_artist/%if{$is_not_single,$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title,$artist - $title}
-  albumtype:soundtrack: soundtracks/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $title
-  comp: compilations/$album ($year)%aunique{albumartist album year, albumtype label catalognum albumdisambig releasegroupdisambig}/$track - $artist - $title
+  default: artists/$main_artist/$smart_single
+  singleton: artists/$main_artist/$smart_single
+  albumtype:soundtrack: soundtracks/$album ($year)/$track - $title
+  comp: compilations/$album ($year)/$track - $artist - $title
   
 # When beets imports all the files in a directory, it tries to remove the directory if it’s empty.
 # A directory is considered empty if it only contains files whose names match the glob patterns in clutter,
