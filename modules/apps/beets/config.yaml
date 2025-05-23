@@ -95,3 +95,6 @@ embedart:
 
 autobpm:
   auto: yes
+
+fetchartist:
+  filename: "artist"

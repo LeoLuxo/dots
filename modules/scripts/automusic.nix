@@ -1,5 +1,4 @@
 {
-  pkgs,
   constants,
   extraLib,
   nixosModules,
@@ -21,22 +20,12 @@ in
       (writeScriptWithDeps {
         name = "automusic";
 
-        deps = [
-          # Dependencies of lrclib-fetch
-          pkgs.ffmpeg
-          pkgs.jq
-
-          (pkgs.python3.withPackages (python-pkgs: [
-            # Dependencies of lrcput
-            python-pkgs.mutagen
-            python-pkgs.eyed3
-            python-pkgs.tqdm
-          ]))
-        ];
+        deps = [ ];
 
         text = ''
           #!/usr/bin/env bash
-          beet import --group-albums "$1"
+          beet import --group-albums ~/downloads
+          beet fetchartist
         '';
       })
     ];
