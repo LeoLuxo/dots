@@ -15,6 +15,7 @@ ui:
 import:
   write: yes
   copy: yes
+  # move: yes
   autotag: yes
   resume: ask
   from_scratch: no
@@ -100,4 +101,4 @@ autobpm:
   auto: yes
 
 badfiles:
-  check_on_import: yes
+  check_on_import: no
