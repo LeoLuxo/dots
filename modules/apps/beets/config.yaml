@@ -14,7 +14,7 @@ ui:
 
 import:
   write: yes
-  move: yes
+  copy: yes
   autotag: yes
   resume: ask
   from_scratch: no
@@ -54,7 +54,7 @@ clutter:
     # Defaults
     ".DS_Store", "Thumbs.DB",
     # Extras
-    "*.xml", "*.nfo", "*.lrc", "*.jpg", "*.png", ".txt"
+    "*.xml", "*.nfo", "*.lrc", "*.jpg", "*.png", ".txt", ".cue"
   ]
 
 # Convert all non-ASCII characters in paths to ASCII equivalents.
