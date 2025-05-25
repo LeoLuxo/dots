@@ -42,6 +42,7 @@ in
 
     apps.distrobox
     apps.nicotine-plus
+    apps.sldl
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
@@ -60,6 +61,8 @@ in
 
     guitarix # A virtual guitar amplifier for use with Linux.
     r2modman # A mod manager for Risk of Rain 2 and other Unity games.
+
+    picard
 
     (pkgs.symlinkJoin {
       name = "prismlauncher";
