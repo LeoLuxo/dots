@@ -36,10 +36,10 @@ item_fields:
   is_single: 1 if disctotal <= 1 and tracktotal <= 1 else 0
   main_album_artist: |
     import re
-    return re.split('\W+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
+    return re.split('\s+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
   main_artist: |
     import re
-    return re.split('\W+(feat(.?|uring)|ft\.?)', artist, 1, flags=re.IGNORECASE)[0]
+    return re.split('\s+(feat(.?|uring)|ft\.?)', artist, 1, flags=re.IGNORECASE)[0]
 
 # Directory and naming scheme.
 # The aunique{} function ensures that identically-named albums are placed in different directories.
