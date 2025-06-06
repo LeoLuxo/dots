@@ -25,6 +25,12 @@ in
       command = ''
         id=$(${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"})
         wpctl set-default $id
+
+        # Link guitarix and outputs via pipewire directly
+        pw-link "gx_head_fx:out_0" "Scarlett 2i2 USB:playback_FL"
+        pw-link "gx_head_fx:out_1" "Scarlett 2i2 USB:playback_FR"
+        pw-link --disconnect "gx_head_fx:out_0" "ALC1220 Analog:playback_FL" || true
+        pw-link --disconnect "gx_head_fx:out_1" "ALC1220 Analog:playback_FR" || true
       '';
     })
 
@@ -34,6 +40,12 @@ in
       command = ''
         id=$(${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"})
         wpctl set-default $id
+
+        # Link guitarix and outputs via pipewire directly
+        pw-link "gx_head_fx:out_0" "ALC1220 Analog:playback_FL"
+        pw-link "gx_head_fx:out_1" "ALC1220 Analog:playback_FR"
+        pw-link --disconnect "gx_head_fx:out_0" "Scarlett 2i2 USB:playback_FL" || true
+        pw-link --disconnect "gx_head_fx:out_1" "Scarlett 2i2 USB:playback_FR" || true
       '';
     })
   ];
