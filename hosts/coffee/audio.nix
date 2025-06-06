@@ -38,81 +38,81 @@ in
     })
   ];
 
-  # musnix = {
-  #   enable = true;
-  #   # kernel.realtime = true;
-  # };
+  musnix = {
+    enable = true;
+    # kernel.realtime = true;
+  };
 
   users.users.${user}.extraGroups = [ "audio" ];
 
-  # home-manager.users.${user} = {
-  #   services = {
-  #     playerctld.enable = true;
-  #     # easyeffects = {
-  #     #   enable = true;
-  #     # };
-  #   };
-  # };
+  home-manager.users.${user} = {
+    services = {
+      playerctld.enable = true;
+      # easyeffects = {
+      #   enable = true;
+      # };
+    };
+  };
 
-  # services.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
 
   # security.rtkit.enable = true;
 
-  # services.pipewire = {
-  #   enable = true;
-  #   alsa = {
-  #     enable = true;
-  #     support32Bit = true;
-  #   };
-  #   pulse.enable = true;
-  #   jack.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    pulse.enable = true;
+    jack.enable = true;
 
-  #   extraConfig = {
-  #     # Low latency config for pipewire
-  #     pipewire."92-low-latency" = {
-  #       "context.properties" = {
-  #         "default.clock.rate" = 48000;
-  #         "default.clock.quantum" = 64;
-  #         "default.clock.min-quantum" = 64;
-  #         "default.clock.max-quantum" = 64;
-  #       };
-  #     };
+    extraConfig = {
+      # Low latency config for pipewire
+      # pipewire."92-low-latency" = {
+      #   "context.properties" = {
+      #     "default.clock.rate" = 48000;
+      #     "default.clock.quantum" = 64;
+      #     "default.clock.min-quantum" = 64;
+      #     "default.clock.max-quantum" = 64;
+      #   };
+      # };
 
-  #     # Low latency config for pulseaudio applications
-  #     pipewire-pulse."92-low-latency" = {
-  #       "context.properties" = [
-  #         {
-  #           name = "libpipewire-module-protocol-pulse";
-  #           args = { };
-  #         }
-  #       ];
-  #       "pulse.properties" = {
-  #         "pulse.min.req" = "64/48000";
-  #         "pulse.default.req" = "64/48000";
-  #         "pulse.max.req" = "64/48000";
-  #         "pulse.min.quantum" = "64/48000";
-  #         "pulse.max.quantum" = "64/48000";
-  #       };
-  #       "stream.properties" = {
-  #         "node.latency" = "64/48000";
-  #         "resample.quality" = 1;
-  #       };
-  #     };
-  #   };
+      # Low latency config for pulseaudio applications
+      # pipewire-pulse."92-low-latency" = {
+      #   "context.properties" = [
+      #     {
+      #       name = "libpipewire-module-protocol-pulse";
+      #       args = { };
+      #     }
+      #   ];
+      #   "pulse.properties" = {
+      #     "pulse.min.req" = "64/48000";
+      #     "pulse.default.req" = "64/48000";
+      #     "pulse.max.req" = "64/48000";
+      #     "pulse.min.quantum" = "64/48000";
+      #     "pulse.max.quantum" = "64/48000";
+      #   };
+      #   "stream.properties" = {
+      #     "node.latency" = "64/48000";
+      #     "resample.quality" = 1;
+      #   };
+      # };
+    };
 
-  #   wireplumber = {
-  #     enable = true;
-  #     extraConfig = {
-  #       "52-mic-pro-audio"."monitor.alsa.rules" = [
-  #         {
-  #           matches = [ { "device.name" = "alsa_input.usb-Anua_Mic_CM_900_Anua_Mic_CM_900-00"; } ];
-  #           actions.update-props."device.profile" = "pro-audio";
-  #         }
-  #       ];
-  #     };
-  #     extraScripts = { };
-  #   };
-  # };
+    wireplumber = {
+      enable = true;
+      extraConfig = {
+        "52-mic-pro-audio"."monitor.alsa.rules" = [
+          {
+            matches = [ { "device.name" = "alsa_input.usb-Anua_Mic_CM_900_Anua_Mic_CM_900-00"; } ];
+            actions.update-props."device.profile" = "pro-audio";
+          }
+        ];
+      };
+      extraScripts = { };
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     playerctl
