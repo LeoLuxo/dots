@@ -91,25 +91,25 @@ in
       };
 
       # Low latency config for pulseaudio applications
-      pipewire-pulse."92-low-latency" = {
-        "context.properties" = [
-          {
-            name = "libpipewire-module-protocol-pulse";
-            args = { };
-          }
-        ];
-        "pulse.properties" = {
-          "pulse.min.req" = "64/48000";
-          "pulse.default.req" = "64/48000";
-          "pulse.max.req" = "64/48000";
-          "pulse.min.quantum" = "64/48000";
-          "pulse.max.quantum" = "64/48000";
-        };
-        "stream.properties" = {
-          "node.latency" = "64/48000";
-          "resample.quality" = 1;
-        };
-      };
+      # pipewire-pulse."92-low-latency" = {
+      #   "context.properties" = [
+      #     {
+      #       name = "libpipewire-module-protocol-pulse";
+      #       args = { };
+      #     }
+      #   ];
+      #   "pulse.properties" = {
+      #     "pulse.min.req" = "64/48000";
+      #     "pulse.default.req" = "64/48000";
+      #     "pulse.max.req" = "64/48000";
+      #     "pulse.min.quantum" = "64/48000";
+      #     "pulse.max.quantum" = "64/48000";
+      #   };
+      #   "stream.properties" = {
+      #     "node.latency" = "64/48000";
+      #     "resample.quality" = 1;
+      #   };
+      # };
     };
 
     wireplumber = {
