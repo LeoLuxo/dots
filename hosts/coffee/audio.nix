@@ -52,7 +52,7 @@ in
 
   musnix = {
     enable = true;
-    kernel.realtime = true;
+    # kernel.realtime = true;
   };
 
   users.users.${user}.extraGroups = [ "audio" ];
@@ -68,7 +68,7 @@ in
 
   services.pulseaudio.enable = false;
 
-  security.rtkit.enable = true;
+  # security.rtkit.enable = true;
 
   services.pipewire = {
     enable = true;
@@ -100,13 +100,13 @@ in
         ];
         "pulse.properties" = {
           "pulse.min.req" = "64/48000";
-          "pulse.default.req" = "64/48000";
-          "pulse.max.req" = "64/48000";
+          "pulse.default.req" = "256/48000";
+          "pulse.max.req" = "256/48000";
           "pulse.min.quantum" = "64/48000";
-          "pulse.max.quantum" = "64/48000";
+          "pulse.max.quantum" = "256/48000";
         };
         "stream.properties" = {
-          "node.latency" = "64/48000";
+          "node.latency" = "256/48000";
           "resample.quality" = 1;
         };
       };
