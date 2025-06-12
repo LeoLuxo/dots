@@ -19,7 +19,7 @@ in
 {
   imports = [
     ./icons-and-name.nix
-    ./keybinds-fix.nix
+    # ./keybinds-fix.nix
 
     (mkQuickPatch {
       package = "vencord";
