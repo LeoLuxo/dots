@@ -28,7 +28,7 @@ in
       patches = [
         (pkgs.fetchpatch {
           url = "https://patch-diff.githubusercontent.com/raw/Vencord/Vesktop/pull/326.patch";
-          hash = "sha256-UaAYbBmMN3/kYVUwNV0/tH7aNZk32JnaUwjsAaZqXwk=";
+          hash = "";
         })
       ];
     })
