@@ -9,7 +9,7 @@
 let
   inherit (constants) user;
   inherit (extraLib)
-    mkQuickPatch
+    # mkQuickPatch
     mkGlobalKeybind
     mkJSONMerge
     mkSyncedPath
@@ -18,28 +18,28 @@ in
 
 {
   imports = [
-    ./icons-and-name.nix
-    ./keybinds-fix.nix
+    ./overlays/customIconsAndName.nix
+    ./overlays/globalKeybinds.nix
 
-    (mkQuickPatch {
-      package = "vencord";
-      patches = [
-        ./vencord-disable-update-check.patch
-      ];
-    })
+    # (mkQuickPatch {
+    #   package = "vencord";
+    #   patches = [
+    #     ./patches/vencord-disable-update-check.patch
+    #   ];
+    # })
 
-    (mkQuickPatch {
-      package = "vesktop";
-      patches = [
-        ./vesktop-disable-update-check.patch
+    # (mkQuickPatch {
+    #   package = "vesktop";
+    #   patches = [
+    #     ./patches/vesktop-disable-update-check.patch
 
-        # Vencord is being a little annoying so use our custom vencord and patch that to disable updates
-        # (pkgs.substituteAll {
-        #   src = ./use-custom-vencord.patch;
-        #   inherit (pkgs) vencord;
-        # })
-      ];
-    })
+    #     # Vencord is being a little annoying so use our custom vencord and patch that to disable updates
+    #     # (pkgs.substituteAll {
+    #     #   src = ./patches/use-custom-vencord.patch;
+    #     #   inherit (pkgs) vencord;
+    #     # })
+    #   ];
+    # })
 
     (mkGlobalKeybind {
       name = "Discord mute";
@@ -74,11 +74,10 @@ in
 
   home-manager.users.${user} = {
     home.packages = with pkgs; [
-      # (vesktop.override {
-      #   withSystemVencord = true;
-      #   inherit vencord;
-      # })
-      vesktop
+      (vesktop.override {
+        withSystemVencord = true;
+        inherit vencord;
+      })
     ];
   };
 }
