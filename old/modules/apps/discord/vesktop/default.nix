@@ -9,7 +9,7 @@
 let
   inherit (constants) user;
   inherit (extraLib)
-    mkQuickPatch
+    # mkQuickPatch
     mkGlobalKeybind
     mkJSONMerge
     mkSyncedPath
@@ -19,9 +19,7 @@ in
 {
   imports = [
     ./overlays/customIconsAndName.nix
-    # ./overlays/pinPackage.nix
     ./overlays/globalKeybinds.nix
-    # ./keybindsFixOld.nix
 
     # (mkQuickPatch {
     #   package = "vencord";
