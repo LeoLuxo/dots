@@ -2,27 +2,28 @@
 {
   # Overlay to patch global keybinds
   # TODO: Remove when the PR is merged
-  # https://github.com/Vencord/Vesktop/pull/326
+  # https://github.com/Vencord/Vesktop/pull/609/
   nixpkgs.overlays = [
-    (final: prev: {
-      vesktop = prev.vesktop.overrideAttrs (
-        finalAttrs: oldAttrs: {
-          # patches = [
-          #   (prev.fetchpatch {
-          #     url = "https://patch-diff.githubusercontent.com/raw/Vencord/Vesktop/pull/326.patch";
-          #     hash = "sha256-UaAYbBmMN3/kYVUwNV0/tH7aNZk32JnaUwjsAaZqXwk=";
-          #   })
-          # ];
+    (
+      final: prev:
 
-          # Nix is goddamn iritating and for some reason patching is not working at all :shrug:, so take the whole goddamn source of the fork
-          src = prev.fetchFromGitHub {
-            owner = "tuxinal";
-            repo = "Vesktop";
-            rev = "13199c22b869806afef924ed7bb0266c13062bb0";
-            hash = "";
-          };
-        }
-      );
-    })
+      let
+        pinnedPkgs = import (builtins.fetchTarball {
+          url = "https://github.com/NixOS/nixpkgs/archive/482d1c3fffc3f3fa3ba8e5f0429c48dc525c9ecf.tar.gz";
+        }) { };
+      in
+      {
+        vesktop = pinnedPkgs.vesktop.overrideAttrs (
+          finalAttrs: oldAttrs: {
+            src = prev.fetchFromGitHub {
+              owner = "PolisanTheEasyNick";
+              repo = "Vesktop";
+              rev = "99a74cf328a864d395bec0b52bd09427433d7aea";
+              hash = "sha256-ai2CdTUJGbcdFRR2AxkEFga30a3Cy1DrVdHQs/F1Ak0=";
+            };
+          }
+        );
+      }
+    )
   ];
 }
