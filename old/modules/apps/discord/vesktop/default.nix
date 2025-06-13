@@ -20,6 +20,7 @@ in
   imports = [
     ./overlays/customIconsAndName.nix
     ./overlays/pinPackage.nix
+    ./overlays/globalKeybinds.nix
     # ./keybindsFixOld.nix
 
     # (mkQuickPatch {
