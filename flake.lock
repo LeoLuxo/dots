@@ -239,6 +239,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-25-05": {
+      "locked": {
+        "lastModified": 1749727998,
+        "narHash": "sha256-mHv/yeUbmL91/TvV95p+mBVahm9mdQMJoqaTVTALaFw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "fd487183437963a59ba763c0cc4f27e3447dd6dd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1749668643,
@@ -364,6 +380,7 @@
         "nixpkgs": "nixpkgs_5",
         "nixpkgs-24-05": "nixpkgs-24-05",
         "nixpkgs-24-11": "nixpkgs-24-11",
+        "nixpkgs-25-05": "nixpkgs-25-05",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "wallpapers": "wallpapers"
