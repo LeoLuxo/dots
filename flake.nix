@@ -6,22 +6,6 @@
     flakelight ./. (
       { lib, ... }:
 
-      # let
-      #   createPkgs =
-      #     system: nixpkgs:
-      #     import nixpkgs {
-      #       inherit system;
-      #       config.allowUnfree = true;
-      #     };
-
-      #   specialPkgs = system: {
-      #     pkgsStable = createPkgs system inputs.nixpkgs-stable;
-      #     pkgsUnstable = createPkgs system inputs.nixpkgs-unstable;
-      #     pkgs24-05 = createPkgs system inputs.nixpkgs-24-05;
-      #     pkgs24-11 = createPkgs system inputs.nixpkgs-24-11;
-      #     pkgs25-05 = createPkgs system inputs.nixpkgs-25-05;
-      #   };
-      # in
       {
         # Will use "nixpkgs" as the default nixpkgs
         inherit inputs;
