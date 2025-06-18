@@ -1,10 +1,25 @@
 {
   inputs,
   lib,
-# specialPkgs,
 }:
 
 let
+
+  createPkgs =
+    system: nixpkgs:
+    import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+
+  specialPkgs = system: {
+    pkgsStable = createPkgs system inputs.nixpkgs-stable;
+    pkgsUnstable = createPkgs system inputs.nixpkgs-unstable;
+    pkgs24-05 = createPkgs system inputs.nixpkgs-24-05;
+    pkgs24-11 = createPkgs system inputs.nixpkgs-24-11;
+    pkgs25-05 = createPkgs system inputs.nixpkgs-25-05;
+  };
+
   # Function to create a nixos host config
   mkHost =
     hostModules:
@@ -46,16 +61,14 @@ let
       modules = hostModules;
 
       # Additional args passed to the module
-      specialArgs =
-        # (specialPkgs system) //
-        {
-          inherit
-            inputs
-            extraLib
-            nixosModules
-            constants
-            ;
-        };
+      specialArgs = (specialPkgs system) // {
+        inherit
+          inputs
+          extraLib
+          nixosModules
+          constants
+          ;
+      };
     };
 
 in
