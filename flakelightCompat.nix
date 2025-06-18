@@ -1,4 +1,8 @@
-{ inputs, lib }:
+{
+  inputs,
+  lib,
+# specialPkgs,
+}:
 
 let
   # Function to create a nixos host config
@@ -42,14 +46,16 @@ let
       modules = hostModules;
 
       # Additional args passed to the module
-      specialArgs = {
-        inherit
-          inputs
-          extraLib
-          nixosModules
-          constants
-          ;
-      };
+      specialArgs =
+        # (specialPkgs system) //
+        {
+          inherit
+            inputs
+            extraLib
+            nixosModules
+            constants
+            ;
+        };
     };
 
 in
