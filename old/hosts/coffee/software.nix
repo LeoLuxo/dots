@@ -43,6 +43,8 @@ in
     apps.distrobox
     apps.nicotine-plus
     apps.sldl
+
+    apps.sudachi
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
