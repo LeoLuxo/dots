@@ -65,6 +65,7 @@ in
     picard
     # lutris
     steam-rom-manager
+    snes9x
 
     (pkgs.symlinkJoin {
       name = "prismlauncher";
