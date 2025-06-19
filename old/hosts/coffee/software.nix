@@ -63,7 +63,8 @@ in
     r2modman # A mod manager for Risk of Rain 2 and other Unity games.
 
     picard
-    lutris
+    # lutris
+    steam-rom-manager
 
     (pkgs.symlinkJoin {
       name = "prismlauncher";
