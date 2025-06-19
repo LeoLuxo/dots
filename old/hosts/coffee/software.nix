@@ -66,6 +66,7 @@ in
     # lutris
     steam-rom-manager
     snes9x
+    snes9x-gtk
     # higan
 
     (pkgs.symlinkJoin {
