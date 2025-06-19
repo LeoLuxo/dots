@@ -45,6 +45,7 @@ in
     apps.sldl
 
     apps.sudachi
+    apps.yuzu
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
