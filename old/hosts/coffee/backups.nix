@@ -59,6 +59,15 @@
         path = "/stuff/media/music";
         tags = [ "music" ];
       };
+
+      "roms" = {
+        timer = "hourly";
+        randomDelay = "15m";
+
+        label = "Roms";
+        path = "/stuff/games/roms";
+        tags = [ "roms" ];
+      };
     };
 
     gameSavesBackup = {
