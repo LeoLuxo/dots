@@ -1,9 +1,11 @@
-mkHost: {
+{ mkHost, newModules }:
+{
 
   # Desktop
   "coffee" =
     mkHost
       [
+        newModules
         ./hosts/coffee
 
         ./hosts/base.nix
@@ -24,6 +26,7 @@ mkHost: {
   "pancake" =
     mkHost
       [
+        newModules
         ./hosts/pancake
 
         ./hosts/base.nix
