@@ -20,16 +20,7 @@ in
     nixosModulesOld.defaults
   ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   nix.settings = {
-    # Enable the new nix cli tool and flakes
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-
     trusted-users = [
       "root"
       user
