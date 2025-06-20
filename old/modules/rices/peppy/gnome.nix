@@ -3,7 +3,7 @@
   lib,
   constants,
   extraLib,
-  nixosModules,
+  nixosModulesOld,
   ...
 }:
 
@@ -33,7 +33,7 @@ in
     };
   };
 
-  imports = with nixosModules; [
+  imports = with nixosModulesOld; [
     desktop.gnome.gnome
     desktop.gnome.extensions.blur-my-shell
     desktop.gnome.extensions.clipboard-indicator

@@ -3,7 +3,7 @@
   pkgs,
   inputs,
   constants,
-  nixosModules,
+  nixosModulesOld,
   ...
 }:
 
@@ -16,7 +16,7 @@ in
     # Include home manager module
     inputs.home-manager.nixosModules.home-manager
 
-    nixosModules.defaults
+    nixosModulesOld.defaults
   ];
 
   # Allow unfree packages
