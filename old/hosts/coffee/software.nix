@@ -46,6 +46,7 @@ in
 
     # apps.sudachi
     apps.yuzu
+    apps.ryujinx
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
@@ -71,7 +72,6 @@ in
     snes9x
     snes9x-gtk
     # higan
-    ryubing
 
     (pkgs.symlinkJoin {
       name = "prismlauncher";
