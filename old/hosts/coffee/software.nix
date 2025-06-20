@@ -84,7 +84,7 @@ in
     })
   ];
 
-  wallpaper.image = inputs.wallpapers.static."lofiJapan";
+  wallpaper.image = inputs.wallpapers.static."seasideKingdom";
 
   # Set default shell
   shell.default = "fish";
