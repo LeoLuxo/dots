@@ -1,6 +1,7 @@
 {
   constants,
   pkgs,
+  nixosModules,
   ...
 }:
 
@@ -40,6 +41,8 @@ let
     };
 in
 {
+  imports = [ nixosModules.apps.joycons ];
+
   home-manager.users.${user} =
     { config, ... }:
     {
@@ -50,6 +53,4 @@ in
       xdg.dataFile."yuzu".source =
         config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/yuzu";
     };
-
-  services.joycond.enable = true;
 }
