@@ -1,10 +1,15 @@
-{ config, constants, ... }:
+{
+  config,
+  hostname,
+  constants,
+  ...
+}:
 {
   # Setup my auto backups
   restic = {
     enable = true;
     repo = "/stuff/restic/repo";
-    passwordFile = config.age.secrets."restic/${constants.hostName}-pwd".path;
+    passwordFile = config.age.secrets."restic/${hostname}-pwd".path;
 
     backups = {
       "obsidian" = {
