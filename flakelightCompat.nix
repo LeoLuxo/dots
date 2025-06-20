@@ -74,4 +74,7 @@ let
 
 in
 # Define nixos configs
-import ./old/hosts.nix mkHost
+import ./old/hosts.nix {
+  inherit mkHost;
+  newModules = inputs.self.nixosModules.default;
+}
