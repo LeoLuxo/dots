@@ -11,12 +11,13 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.clipboard-indicator
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.clipboard-indicator
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

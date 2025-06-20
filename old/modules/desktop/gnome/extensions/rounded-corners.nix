@@ -11,12 +11,13 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.rounded-window-corners-reborn
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.rounded-window-corners-reborn
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

@@ -126,7 +126,7 @@ in
     };
   };
 
-  environment.systemPackages = with pkgs; [
+  ext.packages = with pkgs; [
     playerctl
     pulsemixer
     qpwgraph

@@ -11,12 +11,13 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.bluetooth-quick-connect
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.bluetooth-quick-connect
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

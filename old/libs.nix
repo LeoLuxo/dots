@@ -213,12 +213,12 @@ rec {
       {
         programs.dconf.enable = true;
 
-        home-manager.users.${constants.user} = {
-          # Create an extra script for the keybind, this avoids a bunch of weird issues
-          home.packages = [
-            (pkgs.writeShellScriptBin scriptName command)
-          ];
+        # Create an extra script for the keybind, this avoids a bunch of weird issues
+        ext.packages = [
+          (pkgs.writeShellScriptBin scriptName command)
+        ];
 
+        home-manager.users.${constants.user} = {
           # Add the keybind to dconf
           dconf.settings =
             if config.desktop.gnome.enable then
@@ -467,11 +467,9 @@ rec {
       ...
     }:
     {
-      home-manager.users.${constants.user} = {
-        home.packages = [
-          (pkgs.callPackage desktopItemPackage { })
-        ];
-      };
+      ext.packages = [
+        (pkgs.callPackage desktopItemPackage { })
+      ];
     };
 
   # Apply one or more patches to a package without having to create an entire overlay for it

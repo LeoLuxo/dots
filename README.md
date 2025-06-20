@@ -18,6 +18,9 @@
 
 My NixOS config!
 
+## WARNING
+This config is currently ongoing a major rewrite. It still works (the rewrite is done continuously as to not make it overwhelmingly complicated), but the codebase is a mess. Inspect/use at your own risk!
+
 ## License
 Essentially **Public Domain**!
 

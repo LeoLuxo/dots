@@ -11,12 +11,12 @@ in
 {
   imports = [ ./gitignore.nix ];
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      # Gnome circles commit editor
-      commit
-    ];
+  ext.packages = with pkgs; [
+    # Gnome circles commit editor
+    commit
+  ];
 
+  home-manager.users.${user} = {
     # Add aliases
     home.shellAliases = {
       gs = "git status";

@@ -2,13 +2,8 @@
   lib,
   pkgs,
   nixosModulesOld,
-  constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   imports = with nixosModulesOld; [
@@ -18,9 +13,7 @@ in
 
   defaults.apps.notes = lib.mkDefault "obsidian";
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      obsidian
-    ];
-  };
+  ext.packages = with pkgs; [
+    obsidian
+  ];
 }

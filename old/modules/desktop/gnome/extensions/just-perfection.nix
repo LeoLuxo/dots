@@ -12,7 +12,7 @@ in
   programs.dconf.enable = true;
 
   # Needs to be installed on system for everything to work
-  environment.systemPackages = with pkgs; [
+  ext.packages = with pkgs; [
     gnomeExtensions.just-perfection
   ];
 

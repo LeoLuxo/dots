@@ -11,13 +11,13 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.emoji-copy
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.emoji-copy
-      ];
-
       dconf.settings = {
         "org/gnome/shell" = {
           # enabled-extensions = [ "clipboard-indicator@tudmotu.com" ];

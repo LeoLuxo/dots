@@ -11,12 +11,13 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.touchpad-gesture-customization
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.touchpad-gesture-customization
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

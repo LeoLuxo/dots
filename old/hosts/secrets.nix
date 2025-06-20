@@ -21,7 +21,7 @@ in
     inputs.agenix.nixosModules.default
   ];
 
-  environment.systemPackages = [
+  ext.packages = [
     # Install agenix CLI
     inputs.agenix.packages.${system}.default
   ];

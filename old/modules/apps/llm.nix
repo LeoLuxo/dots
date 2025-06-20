@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  # home.packages = [
+  # ext.packages = [
   #   (pkgs.alpaca.override {
   #     ollama = pkgs.ollama-cuda;
   #   })
