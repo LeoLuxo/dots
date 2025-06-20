@@ -44,7 +44,7 @@ in
     apps.nicotine-plus
     apps.sldl
 
-    apps.sudachi
+    # apps.sudachi
     apps.yuzu
   ];
 
@@ -71,6 +71,7 @@ in
     snes9x
     snes9x-gtk
     # higan
+    ryubing
 
     (pkgs.symlinkJoin {
       name = "prismlauncher";
