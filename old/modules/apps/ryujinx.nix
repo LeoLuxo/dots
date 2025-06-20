@@ -19,4 +19,6 @@ in
       xdg.configFile."Ryujinx".source =
         config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/ryujinx";
     };
+
+  services.joycond.enable = true;
 }

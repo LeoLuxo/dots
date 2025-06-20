@@ -50,4 +50,6 @@ in
       xdg.dataFile."yuzu".source =
         config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/yuzu";
     };
+
+  services.joycond.enable = true;
 }
