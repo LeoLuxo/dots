@@ -45,6 +45,7 @@ in
     apps.sldl
 
     # apps.sudachi
+    apps.steamRomManager
     apps.yuzu
     apps.ryujinx
   ];
@@ -68,7 +69,6 @@ in
 
     picard
     # lutris
-    steam-rom-manager
     snes9x
     snes9x-gtk
     # higan
