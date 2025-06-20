@@ -64,17 +64,4 @@ in
       ];
     };
   };
-
-  # Base system packages
-  ext.packages = with pkgs; [
-    nano
-    wget
-    git
-  ];
-
-  # Networking
-  networking = {
-    # Define hostname.
-    hostName = hostname;
-  };
 }
