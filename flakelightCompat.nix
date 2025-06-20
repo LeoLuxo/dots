@@ -49,7 +49,7 @@ let
         inherit inputs constants;
       };
 
-      nixosModules = extraLib.findFiles {
+      nixosModulesOld = extraLib.findFiles {
         dir = ./old/modules;
         extensions = [ "nix" ];
         defaultFiles = [ "default.nix" ];
@@ -65,7 +65,7 @@ let
         inherit
           inputs
           extraLib
-          nixosModules
+          nixosModulesOld
           constants
           ;
       };

@@ -1,6 +1,6 @@
 {
   lib,
-  nixosModules,
+  nixosModulesOld,
   extraLib,
   config,
   pkgs,
@@ -49,7 +49,7 @@ in
     };
   };
 
-  imports = with nixosModules; [
+  imports = with nixosModulesOld; [
     # Triple buffering fork thing
     # ./triple-buffering.nix
 
