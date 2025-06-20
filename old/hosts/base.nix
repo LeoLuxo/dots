@@ -4,11 +4,12 @@
   inputs,
   constants,
   nixosModulesOld,
+  hostname,
   ...
 }:
 
 let
-  inherit (constants) user userHome hostName;
+  inherit (constants) user userHome;
 in
 
 {
@@ -65,7 +66,7 @@ in
       home = userHome;
       description = user;
       isNormalUser = true;
-      hashedPasswordFile = config.age.secrets."userpwds/${hostName}".path;
+      hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
       extraGroups = [
         "networkmanager"
         "wheel"
@@ -83,6 +84,6 @@ in
   # Networking
   networking = {
     # Define hostname.
-    inherit hostName;
+    hostName = hostname;
   };
 }

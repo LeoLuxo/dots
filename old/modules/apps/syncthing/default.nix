@@ -3,11 +3,12 @@
   constants,
   config,
   lib,
+  hostname,
   ...
 }:
 
 let
-  inherit (constants) userHome user hostName;
+  inherit (constants) userHome user;
   inherit (extraLib) mkDesktopItem mkEmptyLines;
   inherit (lib) types options strings;
 
@@ -60,8 +61,8 @@ in
         group = "users";
 
         # Together, the key and cert define the device id
-        key = config.age.secrets."syncthing/${hostName}/key.pem".path;
-        cert = config.age.secrets."syncthing/${hostName}/cert.pem".path;
+        key = config.age.secrets."syncthing/${hostname}/key.pem".path;
+        cert = config.age.secrets."syncthing/${hostname}/cert.pem".path;
 
         # The path where default synchronised directories will be put.
         dataDir = syncthingFolder;
