@@ -17,7 +17,7 @@ in
   };
 
   config = modules.mkIf config.fonts.enable {
-    ext.packages = with pkgs; [
+    fonts.packages = with pkgs; [
       # Install certain nerd fonts
       nerd-fonts.fantasque-sans-mono
       nerd-fonts.mononoki
