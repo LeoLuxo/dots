@@ -13,7 +13,7 @@ mkHost: {
       ]
       {
         user = "lili";
-        hostName = "coffee";
+        hostname = "coffee";
         system = "x86_64-linux";
 
         resticRepoHot = "/stuff/Restic/repo";
@@ -33,7 +33,7 @@ mkHost: {
       ]
       {
         user = "lili";
-        hostName = "pancake";
+        hostname = "pancake";
         system = "x86_64-linux";
 
         resticRepoHot = "/stuff/Restic/repo";

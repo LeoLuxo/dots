@@ -25,7 +25,7 @@ let
     hostModules:
     {
       user,
-      hostName,
+      hostname,
       system,
       ...
     }@hostConstants:
@@ -67,6 +67,7 @@ let
           extraLib
           nixosModulesOld
           constants
+          hostname
           ;
       };
     };
