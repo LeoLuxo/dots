@@ -11,12 +11,13 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.removable-drive-menu
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.removable-drive-menu
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

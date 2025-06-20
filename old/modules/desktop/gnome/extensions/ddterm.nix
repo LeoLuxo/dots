@@ -14,12 +14,13 @@ in
 
   defaults.apps.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.ddterm
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.ddterm
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

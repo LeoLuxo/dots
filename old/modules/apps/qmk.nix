@@ -1,12 +1,7 @@
 {
   pkgs,
-  constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   # https://nixos.wiki/wiki/Qmk
@@ -15,9 +10,7 @@ in
   hardware.keyboard.qmk.enable = true;
 
   # QMK CLI
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      qmk
-    ];
-  };
+  ext.packages = with pkgs; [
+    qmk
+  ];
 }

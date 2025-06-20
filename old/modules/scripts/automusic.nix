@@ -1,12 +1,10 @@
 {
-  constants,
   extraLib,
   nixosModulesOld,
   ...
 }:
 
 let
-  inherit (constants) user;
   inherit (extraLib) writeScriptWithDeps;
 in
 
@@ -15,19 +13,17 @@ in
     apps.beets
   ];
 
-  home-manager.users.${user} = {
-    home.packages = [
-      (writeScriptWithDeps {
-        name = "automusic";
+  ext.packages = [
+    (writeScriptWithDeps {
+      name = "automusic";
 
-        deps = [ ];
+      deps = [ ];
 
-        text = ''
-          #!/usr/bin/env bash
-          beet import /stuff/media/downloads -m
-          # beet fetchartist
-        '';
-      })
-    ];
-  };
+      text = ''
+        #!/usr/bin/env bash
+        beet import /stuff/media/downloads -m
+        # beet fetchartist
+      '';
+    })
+  ];
 }

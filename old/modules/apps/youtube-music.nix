@@ -1,19 +1,15 @@
 {
   pkgs,
-  constants,
   extraLib,
   ...
 }:
 let
-  inherit (constants) user;
   inherit (extraLib) mkSyncedPath mkJSONMerge;
 in
 {
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      youtube-music
-    ];
-  };
+  ext.packages = with pkgs; [
+    youtube-music
+  ];
 
   imports = [
     (mkSyncedPath {

@@ -1,12 +1,7 @@
 {
-  constants,
   pkgs,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 let
   package =
@@ -124,9 +119,7 @@ let
     };
 in
 {
-  home-manager.users.${user} = {
-    home.packages = [
-      (pkgs.callPackage package { })
-    ];
-  };
+  ext.packages = [
+    (pkgs.callPackage package { })
+  ];
 }

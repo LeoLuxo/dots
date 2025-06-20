@@ -16,15 +16,16 @@ in
   services.geoclue2.enable = true;
   location.provider = "geoclue2";
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.openweather-refined
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkTuple mkUint32;
     in
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.openweather-refined
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

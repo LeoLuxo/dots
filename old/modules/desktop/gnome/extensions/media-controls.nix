@@ -11,15 +11,16 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.media-controls
+  ];
+
   home-manager.users.${user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkUint32;
     in
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.media-controls
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {
