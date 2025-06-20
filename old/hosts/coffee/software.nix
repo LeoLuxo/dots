@@ -71,6 +71,7 @@ in
     # lutris
     snes9x
     snes9x-gtk
+    melonDS
     # higan
 
     (pkgs.symlinkJoin {
