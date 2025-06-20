@@ -13,6 +13,10 @@ let
   userCfg = config.ext.system.user;
 in
 {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
+
   options.ext.hm =
     with lib2.options;
     mkOpt "Options to pass directly to home-manager." types.attrs { };
