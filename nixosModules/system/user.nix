@@ -13,9 +13,6 @@ let
   inherit (lib) types;
 in
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-  ];
 
   options.ext.system.user =
     with lib2.options;
