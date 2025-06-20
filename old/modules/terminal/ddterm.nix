@@ -1,7 +1,7 @@
-{ nixosModules, ... }:
+{ nixosModulesOld, ... }:
 
 {
-  imports = with nixosModules; [
+  imports = with nixosModulesOld; [
     desktop.gnome.extensions.ddterm
   ];
 }

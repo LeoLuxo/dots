@@ -1,7 +1,7 @@
 {
   constants,
   extraLib,
-  nixosModules,
+  nixosModulesOld,
   ...
 }:
 
@@ -11,7 +11,7 @@ let
 in
 
 {
-  imports = with nixosModules; [
+  imports = with nixosModulesOld; [
     apps.beets
   ];
 

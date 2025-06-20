@@ -1,10 +1,10 @@
 {
-  nixosModules,
+  nixosModulesOld,
   ...
 }:
 
 {
-  imports = with nixosModules; [
+  imports = with nixosModulesOld; [
     apps.syncthing
   ];
 

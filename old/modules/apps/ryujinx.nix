@@ -1,7 +1,7 @@
 {
   constants,
   pkgs,
-  nixosModules,
+  nixosModulesOld,
   ...
 }:
 
@@ -10,7 +10,7 @@ let
 in
 
 {
-  imports = [ nixosModules.apps.joycons ];
+  imports = [ nixosModulesOld.apps.joycons ];
 
   home-manager.users.${user} =
     { config, ... }:
