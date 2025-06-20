@@ -38,12 +38,12 @@ in
     {
       programs.dconf.enable = true;
 
+      ext.packages = with pkgs; [
+        gnomeExtensions.blur-my-shell
+      ];
       home-manager.users.${user} =
         { lib, ... }:
         {
-          home.packages = with pkgs; [
-            gnomeExtensions.blur-my-shell
-          ];
 
           dconf.settings = {
             "org/gnome/shell" = {

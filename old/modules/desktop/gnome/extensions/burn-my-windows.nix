@@ -11,12 +11,12 @@ in
 {
   programs.dconf.enable = true;
 
+  ext.packages = with pkgs; [
+    gnomeExtensions.burn-my-windows
+  ];
   home-manager.users.${user} =
     { lib, ... }:
     {
-      home.packages = with pkgs; [
-        gnomeExtensions.burn-my-windows
-      ];
 
       dconf.settings = {
         "org/gnome/shell" = {

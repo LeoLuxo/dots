@@ -1,12 +1,10 @@
 {
   pkgs,
-  constants,
   extraLib,
   ...
 }:
 
 let
-  inherit (constants) user;
   inherit (extraLib) mkGlobalKeybind;
 in
 
@@ -19,10 +17,8 @@ in
     })
   ];
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      # Gnome circles translator app
-      dialect
-    ];
-  };
+  ext.packages = with pkgs; [
+    # Gnome circles translator app
+    dialect
+  ];
 }

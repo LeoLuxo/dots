@@ -66,7 +66,7 @@ in
   };
 
   # Base system packages
-  environment.systemPackages = with pkgs; [
+  ext.packages = with pkgs; [
     nano
     wget
     git

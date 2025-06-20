@@ -1,4 +1,4 @@
-{ constants, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   nixpkgs.overlays = [
@@ -13,7 +13,7 @@
     })
   ];
 
-  home-manager.users.${constants.user}.home.packages = [
+  ext.packages = [
     pkgs.upscaler # An application that enhances image resolution by upscaling photos using advanced processing (designed in the GNOME spirit).
   ];
 }

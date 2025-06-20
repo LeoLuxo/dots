@@ -1,12 +1,10 @@
 {
   pkgs,
-  constants,
   extraLib,
   ...
 }:
 
 let
-  inherit (constants) user;
   inherit (extraLib) mkDesktopItem writeScriptWithDeps;
 in
 
@@ -33,10 +31,7 @@ in
     })
   ];
 
-  home-manager.users.${user} = {
-    home.packages = [
-      package
-    ];
-  };
-
+  ext.packages = [
+    package
+  ];
 }

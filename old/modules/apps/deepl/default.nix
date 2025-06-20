@@ -1,12 +1,7 @@
 {
   pkgs,
-  constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   imports = [
@@ -19,9 +14,7 @@ in
     # })
   ];
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      deepl-linux-electron
-    ];
-  };
+  ext.packages = with pkgs; [
+    deepl-linux-electron
+  ];
 }

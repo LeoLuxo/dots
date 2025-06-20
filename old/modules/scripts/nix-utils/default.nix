@@ -90,72 +90,72 @@ in
         dconf dump / >"$NX_DCONF_DIFF"
       '' variables;
 
+      # Add nx scripts and other packages
+      ext.packages = with pkgs; [
+        # Nix helper utilities
+        nh
+        nurl
+        nix-init
+
+        (writeScriptWithDeps {
+          name = "nx-code";
+          file = ./scripts/nx-code.sh;
+          replaceVariables = variables;
+        })
+
+        (writeScriptWithDeps {
+          name = "nx-todo";
+          file = ./scripts/nx-todo.sh;
+          replaceVariables = variables;
+        })
+
+        (writeScriptWithDeps {
+          name = "nx-secret";
+          file = ./scripts/nx-secret.sh;
+          deps = [ nano ];
+          replaceVariables = variables;
+        })
+
+        (writeScriptWithDeps {
+          name = "nx-template";
+          file = ./scripts/nx-template.sh;
+          replaceVariables = variables;
+        })
+
+        (writeScriptWithDeps {
+          name = "nx-cleanup";
+          file = ./scripts/nx-cleanup.sh;
+          deps = [ nh ];
+          replaceVariables = variables;
+        })
+
+        (writeScriptWithDeps {
+          name = "nx-dconf-diff";
+          file = ./scripts/nx-dconf-diff.sh;
+          deps = [
+            dconf
+            difftastic
+          ];
+          replaceVariables = variables;
+        })
+
+        (writeScriptWithDeps {
+          name = "nx-rebuild";
+          file = ./scripts/nx-rebuild.sh;
+          deps = [
+            dconf
+            git
+            nixfmt-rfc-style
+            nh
+          ];
+          replaceVariables = variables;
+        })
+      ];
+
       home-manager.users.${user} = {
         # Set up pre- and post actions for nx-rebuild
         home.file.".nx/pre_rebuild.sh".text = cfg.rebuild.preRebuildActions;
         home.file.".nx/post_rebuild.sh".text = cfg.rebuild.postRebuildActions;
-
-        # Add nx scripts and other packages
-        home.packages = with pkgs; [
-          # Nix helper utilities
-          nh
-          nurl
-          nix-init
-
-          (writeScriptWithDeps {
-            name = "nx-code";
-            file = ./scripts/nx-code.sh;
-            replaceVariables = variables;
-          })
-
-          (writeScriptWithDeps {
-            name = "nx-todo";
-            file = ./scripts/nx-todo.sh;
-            replaceVariables = variables;
-          })
-
-          (writeScriptWithDeps {
-            name = "nx-secret";
-            file = ./scripts/nx-secret.sh;
-            deps = [ nano ];
-            replaceVariables = variables;
-          })
-
-          (writeScriptWithDeps {
-            name = "nx-template";
-            file = ./scripts/nx-template.sh;
-            replaceVariables = variables;
-          })
-
-          (writeScriptWithDeps {
-            name = "nx-cleanup";
-            file = ./scripts/nx-cleanup.sh;
-            deps = [ nh ];
-            replaceVariables = variables;
-          })
-
-          (writeScriptWithDeps {
-            name = "nx-dconf-diff";
-            file = ./scripts/nx-dconf-diff.sh;
-            deps = [
-              dconf
-              difftastic
-            ];
-            replaceVariables = variables;
-          })
-
-          (writeScriptWithDeps {
-            name = "nx-rebuild";
-            file = ./scripts/nx-rebuild.sh;
-            deps = [
-              dconf
-              git
-              nixfmt-rfc-style
-              nh
-            ];
-            replaceVariables = variables;
-          })
-        ];
 
         # Add aliases
         home.shellAliases = {

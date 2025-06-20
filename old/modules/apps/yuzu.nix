@@ -43,12 +43,13 @@ in
 {
   imports = [ nixosModulesOld.apps.joycons ];
 
+  ext.packages = [
+    (pkgs.callPackage package { })
+  ];
+
   home-manager.users.${user} =
     { config, ... }:
     {
-      home.packages = [
-        (pkgs.callPackage package { })
-      ];
 
       xdg.dataFile."yuzu".source =
         config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/yuzu";

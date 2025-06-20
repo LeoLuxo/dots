@@ -1,13 +1,11 @@
 {
   lib,
   pkgs,
-  constants,
   extraLib,
   ...
 }:
 
 let
-  inherit (constants) user;
   inherit (extraLib)
     # mkQuickPatch
     mkGlobalKeybind
@@ -72,12 +70,10 @@ in
 
   defaults.apps.communication = lib.mkDefault "vesktop";
 
-  home-manager.users.${user} = {
-    home.packages = with pkgs; [
-      (vesktop.override {
-        withSystemVencord = true;
-        inherit vencord;
-      })
-    ];
-  };
+  ext.packages = with pkgs; [
+    (vesktop.override {
+      withSystemVencord = true;
+      inherit vencord;
+    })
+  ];
 }
