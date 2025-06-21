@@ -13,7 +13,7 @@
 
   defaults.apps.notes = lib.mkDefault "obsidian";
 
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     obsidian
   ];
 }

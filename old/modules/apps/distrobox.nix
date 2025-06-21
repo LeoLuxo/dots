@@ -5,5 +5,5 @@
     dockerCompat = true;
   };
 
-  ext.packages = [ pkgs.distrobox ];
+  my.packages = [ pkgs.distrobox ];
 }

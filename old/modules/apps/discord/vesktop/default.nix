@@ -70,7 +70,7 @@ in
 
   defaults.apps.communication = lib.mkDefault "vesktop";
 
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     (vesktop.override {
       withSystemVencord = true;
       inherit vencord;

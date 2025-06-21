@@ -10,7 +10,7 @@ in
 {
   programs.dconf.enable = true;
 
-  home-manager.users.${config.ext.system.user.name} =
+  home-manager.users.${config.my.system.user.name} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkUint32;

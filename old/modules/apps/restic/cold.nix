@@ -30,7 +30,7 @@ in
       cfg = config.restic.coldBackup;
     in
     modules.mkIf cfg.enable {
-      home-manager.users.${config.ext.system.user.name} = {
+      home-manager.users.${config.my.system.user.name} = {
         home.shellAliases = {
           # Add aliases for the cold repo
           restic3 = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";

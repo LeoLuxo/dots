@@ -32,7 +32,7 @@ in
     })
   ];
 
-  ext.packages = [
+  my.packages = [
     package
   ];
 }

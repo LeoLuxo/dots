@@ -56,7 +56,7 @@ let
 in
 
 {
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     (callPackage package { })
   ];
 }

@@ -79,13 +79,13 @@ in
       cfg = config.restic;
     in
     modules.mkIf cfg.enable {
-      ext.packages = with pkgs; [
+      my.packages = with pkgs; [
         sshpass
         restic
         rustic
       ];
 
-      home-manager.users.${config.ext.system.user.name} = {
+      home-manager.users.${config.my.system.user.name} = {
         home.shellAliases = {
           # Add aliases for the main repo
           restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";

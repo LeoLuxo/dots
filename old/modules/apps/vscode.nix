@@ -54,7 +54,7 @@ in
     EDITOR = "code";
   };
 
-  home-manager.users.${config.ext.system.user.name} = {
+  home-manager.users.${config.my.system.user.name} = {
     programs.vscode = {
       enable = true;
       # FHS is vscode but repackaged to run in a FHS environment to make plugin compatibility better

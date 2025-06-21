@@ -14,7 +14,7 @@
     package = pkgs.gnomeExtensions.gsconnect;
   };
 
-  home-manager.users.${config.ext.system.user.name} =
+  home-manager.users.${config.my.system.user.name} =
     { lib, ... }:
     {
       dconf.settings = {

@@ -117,10 +117,10 @@ let
     };
 in
 {
-  ext.packages = [
+  my.packages = [
     (pkgs.callPackage package { })
   ];
-  home-manager.users.${config.ext.system.user.name} =
+  home-manager.users.${config.my.system.user.name} =
     { config, ... }:
     {
 

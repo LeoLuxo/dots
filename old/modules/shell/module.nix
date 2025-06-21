@@ -27,6 +27,6 @@ in
   };
 
   config = {
-    users.users.${config.ext.system.user.name}.shell = pkgs.${config.shell.default};
+    users.users.${config.my.system.user.name}.shell = pkgs.${config.shell.default};
   };
 }

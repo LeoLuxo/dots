@@ -48,7 +48,7 @@
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     textpieces # A developer’s scratchpad that lets you quickly experiment with and transform text.
     hieroglyphic # An application that helps you locate and select LaTeX symbols by drawing or sketching them.
     impression # A utility for creating bootable USB drives from disk images.

@@ -5,7 +5,7 @@
 {
   virtualisation.docker.enable = true;
 
-  ext.system.user.extraGroups = [
+  my.system.user.extraGroups = [
     "docker"
   ];
 

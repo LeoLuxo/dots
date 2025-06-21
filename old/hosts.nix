@@ -9,7 +9,6 @@
         ./hosts/coffee
 
         ./hosts/base.nix
-        ./hosts/secrets.nix
         ./hosts/keybinds.nix
         ./hosts/xdgDirs.nix
       ]
@@ -30,7 +29,6 @@
         ./hosts/pancake
 
         ./hosts/base.nix
-        ./hosts/secrets.nix
         ./hosts/keybinds.nix
         ./hosts/xdgDirs.nix
       ]
