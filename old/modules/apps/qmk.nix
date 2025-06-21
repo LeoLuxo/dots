@@ -11,7 +11,7 @@
   hardware.keyboard.qmk.enable = true;
 
   # QMK CLI
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     qmk
   ];
 }

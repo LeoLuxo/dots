@@ -5,7 +5,7 @@
 }:
 
 {
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     guake
   ];
 

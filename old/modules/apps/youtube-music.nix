@@ -8,7 +8,7 @@ let
   inherit (extraLib) mkSyncedPath mkJSONMerge;
 in
 {
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     youtube-music
   ];
 

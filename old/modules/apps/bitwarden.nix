@@ -4,5 +4,5 @@
   ...
 }:
 {
-  ext.packages = with pkgs; [ bitwarden-desktop ];
+  my.packages = with pkgs; [ bitwarden-desktop ];
 }

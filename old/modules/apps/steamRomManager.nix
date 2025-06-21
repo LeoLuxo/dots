@@ -6,11 +6,11 @@
 }:
 
 {
-  ext.packages = [
+  my.packages = [
     pkgs.steam-rom-manager
   ];
 
-  home-manager.users.${config.ext.system.user.name} =
+  home-manager.users.${config.my.system.user.name} =
     { config, ... }:
     {
       xdg.configFile."steam-rom-manager/userData".source =

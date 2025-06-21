@@ -9,11 +9,11 @@
   programs.dconf.enable = true;
 
   # Needs to be installed on system for everything to work
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     gnomeExtensions.just-perfection
   ];
 
-  home-manager.users.${config.ext.system.user.name} =
+  home-manager.users.${config.my.system.user.name} =
     { lib, ... }:
 
     {

@@ -120,7 +120,7 @@ let
     };
 in
 {
-  ext.packages = [
+  my.packages = [
     (pkgs.callPackage package { })
   ];
 }

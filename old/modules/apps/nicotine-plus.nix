@@ -4,7 +4,7 @@
   ...
 }:
 {
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     nicotine-plus # A client for the Soulseek peer-to-peer file sharing network.
   ];
 

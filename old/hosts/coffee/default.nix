@@ -11,7 +11,7 @@
     ./audio.nix
   ];
 
-  ext = {
+  my = {
     system = {
       user.name = "lili";
       keys.enable = true;

@@ -10,9 +10,9 @@ let
   inherit (lib) types;
 in
 {
-  options.ext.packages =
+  options.my.packages =
     with lib2.options;
     mkOpt "Packages to pass directly to systemPackages." (types.listOf types.package) [ ];
 
-  config.environment.systemPackages = lib.mkAliasDefinitions options.ext.packages;
+  config.environment.systemPackages = lib.mkAliasDefinitions options.my.packages;
 }

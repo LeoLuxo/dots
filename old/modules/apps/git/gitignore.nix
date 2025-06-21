@@ -4,7 +4,7 @@
 }:
 
 {
-  home-manager.users.${config.ext.system.user.name} = {
+  home-manager.users.${config.my.system.user.name} = {
     programs.git.ignores = [
       #
       # LINUX

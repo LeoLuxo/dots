@@ -22,13 +22,13 @@
     # Applies to home.file and also xdg.*File
     backupFileExtension = "bak";
 
-    users.${config.ext.system.user.name} = {
+    users.${config.my.system.user.name} = {
       # Do not change
       home.stateVersion = "24.05";
 
       # Home Manager needs a bit of information about you and the paths it should manage.
-      home.username = config.ext.system.user.name;
-      home.homeDirectory = config.ext.system.user.home;
+      home.username = config.my.system.user.name;
+      home.homeDirectory = config.my.system.user.home;
 
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;

@@ -5,7 +5,7 @@
 }:
 
 {
-  ext.packages = [
+  my.packages = [
     pkgs.joycond-cemuhook
   ];
 
