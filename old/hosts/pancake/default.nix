@@ -10,5 +10,11 @@
     ./wifi.nix
   ];
 
-  ext.system.user.name = "lili";
+  ext = {
+    system = {
+      user.name = "lili";
+      keys.enable = true;
+    };
+    nix.secrets.enable = true;
+  };
 }

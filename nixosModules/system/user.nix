@@ -1,6 +1,5 @@
 {
   lib,
-  options,
   config,
   inputs,
   hostname,
@@ -30,7 +29,7 @@ in
     extraGroups = mkOpt "the user's auxiliary groups" (types.listOf types.str) [ "networkmanager" ];
   };
 
-  config = lib.mkIf (lib.traceVal cfg.enable) {
+  config = lib.mkIf cfg.enable {
     # Define default user account.
     users = {
       mutableUsers = false;

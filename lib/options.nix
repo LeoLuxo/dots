@@ -63,7 +63,7 @@ rec {
     description: opts:
     lib.mkOption {
       type = types.submodule {
-        inherit opts;
+        options = opts;
       };
       default = { };
       inherit description;
@@ -74,7 +74,7 @@ rec {
     lib.mkOption {
       type = types.nullOr (
         types.submodule {
-          inherit opts;
+          options = opts;
         }
       );
       default = null;
@@ -111,7 +111,7 @@ rec {
     lib.mkOption {
       type = types.attrsOf (
         types.submodule {
-          inherit opts;
+          options = opts;
         }
       );
       inherit description default;
@@ -122,7 +122,7 @@ rec {
     lib.mkOption {
       type = types.attrsOf (
         types.submodule {
-          inherit opts;
+          options = opts;
         }
       );
       default = { };
