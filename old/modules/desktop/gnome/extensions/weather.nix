@@ -1,12 +1,9 @@
 {
   pkgs,
+  config,
   constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   programs.dconf.enable = true;
@@ -20,7 +17,7 @@ in
     gnomeExtensions.openweather-refined
   ];
 
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkTuple mkUint32;

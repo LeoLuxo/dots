@@ -1,12 +1,9 @@
 {
   pkgs,
+  config,
   constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   programs.dconf.enable = true;
@@ -15,7 +12,7 @@ in
     gnomeExtensions.removable-drive-menu
   ];
 
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { lib, ... }:
     {
 

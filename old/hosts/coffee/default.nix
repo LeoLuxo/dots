@@ -10,4 +10,6 @@
     ./backups.nix
     ./audio.nix
   ];
+
+  ext.system.user.name = "lili";
 }

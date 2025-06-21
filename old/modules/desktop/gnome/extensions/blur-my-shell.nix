@@ -8,7 +8,7 @@
 }:
 
 let
-  inherit (constants) user;
+
   inherit (extraLib) mkBoolDefaultTrue mkSubmodule mkBoolDefaultFalse;
   inherit (lib) options types;
 in
@@ -41,7 +41,7 @@ in
       ext.packages = with pkgs; [
         gnomeExtensions.blur-my-shell
       ];
-      home-manager.users.${user} =
+      home-manager.users.${config.ext.system.user.name} =
         { lib, ... }:
         {
 

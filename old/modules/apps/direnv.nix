@@ -1,4 +1,4 @@
-{ constants, ... }:
+{ constants, config, ... }:
 {
   programs.direnv = {
     enable = true;
@@ -17,7 +17,7 @@
     '';
   };
 
-  home-manager.users.${constants.user} = {
+  home-manager.users.${config.ext.system.user.name} = {
 
     # Add aliases
     home.shellAliases = {

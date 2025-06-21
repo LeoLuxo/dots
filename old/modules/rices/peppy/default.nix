@@ -11,7 +11,7 @@
 let
   inherit (lib) mkDefault options types;
   inherit (extraLib) mkBoolDefaultFalse;
-  inherit (constants) user;
+
 in
 
 {
@@ -71,7 +71,7 @@ in
       accent = config.rice.peppy.theme.accent;
     in
     {
-      home-manager.users.${user} = {
+      home-manager.users.${config.ext.system.user.name} = {
         imports = [
           inputs.catppuccin.homeManagerModules.catppuccin
         ];
@@ -113,7 +113,7 @@ in
       };
 
       # Install catppuccin extensions to vscode
-      # home-manager.users.${constants.user} = {
+      # home-manager.users.${config.ext.system.user.name} = {
       # home.activation."vscode-peppy" = ''
       #   ${pkgs.vscode}/bin/code \
       #     --install-extension ${./assets/Catppuccin.catppuccin-vsc-3.16.0.vsix} --force \

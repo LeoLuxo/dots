@@ -9,7 +9,7 @@
 
 let
   inherit (lib) options types;
-  inherit (constants) user;
+
   inherit (extraLib) toPascalCase;
 in
 
@@ -61,7 +61,7 @@ in
       package = pkgs.catppuccin-cursors."${cfg.flavor}${toPascalCase cfg.accent}";
     in
     {
-      home-manager.users.${user} = {
+      home-manager.users.${config.ext.system.user.name} = {
         home.pointerCursor = {
           inherit name package;
 

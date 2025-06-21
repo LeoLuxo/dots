@@ -3,12 +3,8 @@
   ...
 }:
 
-let
-  inherit (constants) user;
-in
-
 {
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     programs.oh-my-posh = {
       enable = true;
       settings = import ./theme.nix;

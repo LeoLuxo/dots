@@ -9,7 +9,7 @@
 
 let
   inherit (lib) options types;
-  inherit (constants) user;
+
   inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse mkSubmodule;
 in
 
@@ -53,7 +53,7 @@ in
       cfg = config.rice.peppy;
     in
     {
-      home-manager.users.${user} = {
+      home-manager.users.${config.ext.system.user.name} = {
         # Enable catppuccin for gtk
         gtk = {
           enable = true;

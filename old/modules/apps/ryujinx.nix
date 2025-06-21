@@ -1,13 +1,10 @@
 {
   constants,
+  config,
   pkgs,
   nixosModulesOld,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   imports = [ nixosModulesOld.apps.joycons ];
@@ -16,7 +13,7 @@ in
     pkgs.ryubing
   ];
 
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { config, ... }:
     {
       xdg.configFile."Ryujinx".source =
