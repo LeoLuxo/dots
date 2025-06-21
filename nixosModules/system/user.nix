@@ -24,13 +24,10 @@ in
 
     passwordFile = mkOpt "the hashed password file" (types.nullOr types.path) (
       # if config.secrets.enable then config.age.secrets."userpwds/${hostname}".path else null
-      lib.traceVal config.age.secrets."userpwds/${hostname}".path
+      config.age.secrets."userpwds/${hostname}".path
     );
 
-    extraGroups = mkOpt "the user's auxiliary groups" (types.listOf types.str) [
-      "networkmanager"
-      "wheel"
-    ];
+    extraGroups = mkOpt "the user's auxiliary groups" (types.listOf types.str) [ "networkmanager" ];
   };
 
   config = lib.mkIf (lib.traceVal cfg.enable) {
@@ -42,33 +39,10 @@ in
         home = cfg.home;
         description = cfg.name;
         isNormalUser = true;
-
         hashedPasswordFile = lib.mkIf (cfg.passwordFile != null) cfg.passwordFile;
-        # hashedPasswordFile = cfg.passwordFile;
-        # hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
-
-        # extraGroups = lib.mkAliasDefinitions options.ext.system.user.extraGroups;
-        extraGroups = [
-          "networkmanager"
-          "wheel"
-        ];
+        extraGroups = [ "wheel" ] ++ cfg.extraGroups;
       };
     };
-
-    # users = {
-    #   mutableUsers = false;
-
-    #   users.${user} = {
-    #     home = userHome;
-    #     description = user;
-    #     isNormalUser = true;
-    #     hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
-    #     extraGroups = [
-    #       "networkmanager"
-    #       "wheel"
-    #     ];
-    #   };
-    # };
 
     nix.settings = {
       trusted-users = [
