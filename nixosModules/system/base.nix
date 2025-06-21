@@ -1,4 +1,8 @@
-{ pkgs, hostname, ... }:
+{
+  pkgs,
+  hostname,
+  ...
+}:
 {
   # Networking
   networking = {

@@ -5,6 +5,7 @@
 
 let
 
+  # Given a nixpkgs input, creates a pkgs instance
   createPkgs =
     system: nixpkgs:
     import nixpkgs {
@@ -12,13 +13,24 @@ let
       config.allowUnfree = true;
     };
 
-  specialPkgs = system: {
-    pkgsStable = createPkgs system inputs.nixpkgs-stable;
-    pkgsUnstable = createPkgs system inputs.nixpkgs-unstable;
-    pkgs24-05 = createPkgs system inputs.nixpkgs-24-05;
-    pkgs24-11 = createPkgs system inputs.nixpkgs-24-11;
-    pkgs25-05 = createPkgs system inputs.nixpkgs-25-05;
-  };
+  # specialPkgs = system: {
+  #   pkgsStable = createPkgs system inputs.nixpkgs-stable;
+  #   pkgsUnstable = createPkgs system inputs.nixpkgs-unstable;
+  #   pkgs24-05 = createPkgs system inputs.nixpkgs-24-05;
+  #   pkgs24-11 = createPkgs system inputs.nixpkgs-24-11;
+  #   pkgs25-05 = createPkgs system inputs.nixpkgs-25-05;
+  # };
+
+  # Gathers all EXTRA nixpkgs-xxx instances from the flake inputs
+  allNixpkgs = lib.attrsets.filterAttrs (name: _: lib.strings.hasPrefix "nixpkgs-" name) inputs;
+
+  # Given a system, maps all nixpkgs-xxx instances to an appropriately named pkgs-xxx instance
+  specialPkgs =
+    system:
+    lib.attrsets.mapAttrs' (name: value: {
+      name = "pkgs" + (lib.strings.removePrefix "nixpkgs" name);
+      value = createPkgs system value;
+    }) allNixpkgs;
 
   # Function to create a nixos host config
   mkHost =
@@ -61,7 +73,7 @@ let
       modules = hostModules;
 
       # Additional args passed to the module
-      specialArgs = (specialPkgs system) // {
+      specialArgs = (lib.traceVal (specialPkgs system)) // {
         inherit
           inputs
           extraLib
