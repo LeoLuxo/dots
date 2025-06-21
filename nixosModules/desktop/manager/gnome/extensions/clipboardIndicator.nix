@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.clipboardIndicator;
+  cfg = config.my.desktop.gnome.extensions.clipboardIndicator;
 in
 
 {
-  options.ext.desktop.gnome.extensions.clipboardIndicator = {
+  options.my.desktop.gnome.extensions.clipboardIndicator = {
     enable = lib.mkEnableOption "the clipboard indicator GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

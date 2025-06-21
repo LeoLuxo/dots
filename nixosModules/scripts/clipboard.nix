@@ -6,15 +6,15 @@
 }:
 
 let
-  cfg = config.ext.scripts.clipboard;
+  cfg = config.my.scripts.clipboard;
 in
 {
-  options.ext.scripts.clipboard = {
+  options.my.scripts.clipboard = {
     enable = lib.mkEnableOption "clipboard script";
   };
 
   config = lib.mkIf cfg.enable {
-    ext = {
+    my = {
       # wl-clipboard only works under wayland, dunno how to make this config work under X11
       shell.aliases = {
         "copy" = "wl-copy";

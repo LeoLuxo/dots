@@ -6,15 +6,15 @@
 }:
 
 let
-  cfg = config.ext.scripts.terminalUtils;
+  cfg = config.my.scripts.terminalUtils;
 in
 {
-  options.ext.scripts.terminalUtils = {
+  options.my.scripts.terminalUtils = {
     enable = lib.mkEnableOption "terminalUtils scripts";
   };
 
   config = lib.mkIf cfg.enable {
-    ext = {
+    my = {
       shell = {
         aliases = {
           pls = "please";

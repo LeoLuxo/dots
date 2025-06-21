@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.netSpeedSimplified;
+  cfg = config.my.desktop.gnome.extensions.netSpeedSimplified;
 in
 
 {
-  options.ext.desktop.gnome.extensions.netSpeedSimplified = {
+  options.my.desktop.gnome.extensions.netSpeedSimplified = {
     enable = lib.mkEnableOption "the net speed simplified GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

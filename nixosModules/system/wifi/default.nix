@@ -10,16 +10,16 @@ let
   inherit (lib2) enabled;
   inherit (lib) types;
 
-  cfg = config.ext.system.wifi;
+  cfg = config.my.system.wifi;
 in
 {
-  options.ext.system.wifi = with lib2.options; {
+  options.my.system.wifi = with lib2.options; {
     enable = lib.mkEnableOption "wifi networks";
     enabledNetworks = mkOpt "enabled networks" (types.listOf types.string) [ ];
   };
 
   config = lib.mkIf cfg.enable {
-    ext.nix.secrets = enabled;
+    my.nix.secrets = enabled;
 
     # Fix eduroam certificate
     age.secrets."wifi/eduroam-ca.pem" = {

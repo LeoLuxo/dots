@@ -5,43 +5,43 @@
 }:
 
 let
-  cfg = config.ext.desktop.defaultAppsShortcuts;
+  cfg = config.my.desktop.defaultAppsShortcuts;
 in
 {
-  options.ext.desktop.defaultAppsShortcuts = {
+  options.my.desktop.defaultAppsShortcuts = {
     enable = lib.mkEnableOption "the default apps shortcuts";
   };
 
   config = lib.mkIf cfg.enable {
-    ext.desktop.keybinds = {
+    my.desktop.keybinds = {
       "Open terminal" = {
         binding = "<Super>grave";
-        command = config.ext.desktop.defaultApps.terminal;
+        command = config.my.desktop.defaultApps.terminal;
       };
 
       "Open backup terminal" = {
         binding = "<Super>t";
-        command = config.ext.desktop.defaultApps.backupTerminal;
+        command = config.my.desktop.defaultApps.backupTerminal;
       };
 
       "Open web browser" = {
         binding = "<Super>F1";
-        command = config.ext.desktop.defaultApps.browser;
+        command = config.my.desktop.defaultApps.browser;
       };
 
       "Open notes" = {
         binding = "<Super>F2";
-        command = config.ext.desktop.defaultApps.notes;
+        command = config.my.desktop.defaultApps.notes;
       };
 
       "Open code editor" = {
         binding = "<Super>F3";
-        command = config.ext.desktop.defaultApps.codeEditor;
+        command = config.my.desktop.defaultApps.codeEditor;
       };
 
       "Open communication" = {
         binding = "<Super>F4";
-        command = config.ext.desktop.defaultApps.communication;
+        command = config.my.desktop.defaultApps.communication;
       };
     };
   };

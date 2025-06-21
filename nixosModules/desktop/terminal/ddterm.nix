@@ -9,15 +9,15 @@ let
   lib2 = inputs.self.lib;
   inherit (lib2) enabled;
 
-  cfg = config.ext.desktop.terminal.ddterm;
+  cfg = config.my.desktop.terminal.ddterm;
 in
 {
-  options.ext.desktop.terminal.ddterm = {
+  options.my.desktop.terminal.ddterm = {
     enable = lib.mkEnableOption "the ddterm terminal";
   };
 
   config = lib.mkIf cfg.enable {
-    ext.desktop = {
+    my.desktop = {
       manager.gnome.extensions."ddterm" = enabled;
 
       defaultApps.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";

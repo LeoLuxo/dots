@@ -10,16 +10,16 @@ let
   inherit (lib2) enabled;
   inherit (lib) types;
 
-  cfg = config.ext.suites.pc;
+  cfg = config.my.suites.pc;
 in
 {
-  options.ext.suites.pc = with lib2.options; {
+  options.my.suites.pc = with lib2.options; {
     enable = lib.mkEnableOption "the personal computer suite";
     username = mkOpt' "The username of the single user of the system." types.str;
   };
 
   config = lib.mkIf cfg.enable {
-    ext = {
+    my = {
       system = {
         user.name = cfg.username;
         boot = enabled;

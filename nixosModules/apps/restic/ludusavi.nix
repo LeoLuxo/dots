@@ -10,10 +10,10 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.apps.restic.gameSavesBackup;
+  cfg = config.my.apps.restic.gameSavesBackup;
 in
 {
-  options.ext.apps.restic.gameSavesBackup = with lib2.options; {
+  options.my.apps.restic.gameSavesBackup = with lib2.options; {
     enable = lib.mkEnableOption "ludusavi game saves auto-backups";
 
     timer = mkOpt' "the interval with which to backup" types.str;
@@ -32,7 +32,7 @@ in
           name = "ludusavi-restic";
           text = ''
             # Running as user is required here as otherwise ludusavi can't find any games
-            sudo -H -u ${config.ext.system.user.name} ludusavi backup --preview --api
+            sudo -H -u ${config.my.system.user.name} ludusavi backup --preview --api
             | from json
             | get games
             | items {|game, info|

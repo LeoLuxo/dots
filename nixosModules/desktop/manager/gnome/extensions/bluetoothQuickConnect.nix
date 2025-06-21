@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.bluetoothQuickConnect;
+  cfg = config.my.desktop.gnome.extensions.bluetoothQuickConnect;
 in
 
 {
-  options.ext.desktop.gnome.extensions.bluetoothQuickConnect = {
+  options.my.desktop.gnome.extensions.bluetoothQuickConnect = {
     enable = lib.mkEnableOption "the bluetooth quick connect GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

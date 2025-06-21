@@ -9,7 +9,7 @@
 let
   lib2 = inputs.self.lib;
 
-  cfg = config.ext.desktop.gnome.extensions.blurMyShell;
+  cfg = config.my.desktop.gnome.extensions.blurMyShell;
 in
 
 {
@@ -30,7 +30,7 @@ in
   config = {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

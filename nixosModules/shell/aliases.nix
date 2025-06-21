@@ -9,10 +9,10 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.shell;
+  cfg = config.my.shell;
 in
 {
-  options.ext.shell = with lib2.options; {
+  options.my.shell = with lib2.options; {
     aliases = mkOpt "Shell command aliases" (types.attrsOf types.str) { };
 
     aliasesWithHistory = lib.mkOption {
@@ -22,7 +22,7 @@ in
     };
   };
 
-  config.ext.hm = (
+  config.my.hm = (
     lib.mkMerge (
       [
         # simple aliases

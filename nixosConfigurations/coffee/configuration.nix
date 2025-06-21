@@ -8,7 +8,7 @@ let
   inherit (lib2) enabled;
 in
 {
-  ext = {
+  my = {
     suites.pc.desktop = {
       enable = true;
       username = "lili";

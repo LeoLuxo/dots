@@ -9,10 +9,10 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.system.keyboard;
+  cfg = config.my.system.keyboard;
 in
 {
-  options.ext.system.keyboard =
+  options.my.system.keyboard =
     with lib2.options;
     mkSubmoduleNull "the options for keyboard layout configuration" {
       layout = mkOpt' "the layout of the keyboard" types.str;

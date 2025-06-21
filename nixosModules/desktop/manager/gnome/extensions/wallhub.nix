@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.wallhub;
+  cfg = config.my.desktop.gnome.extensions.wallhub;
 in
 
 {
-  options.ext.desktop.gnome.extensions.wallhub = {
+  options.my.desktop.gnome.extensions.wallhub = {
     enable = lib.mkEnableOption "the wallhub GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

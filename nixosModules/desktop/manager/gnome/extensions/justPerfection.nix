@@ -6,11 +6,11 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.justPerfection;
+  cfg = config.my.desktop.gnome.extensions.justPerfection;
 in
 
 {
-  options.ext.desktop.gnome.extensions.justPerfection = {
+  options.my.desktop.gnome.extensions.justPerfection = {
     enable = lib.mkEnableOption "the just-perfection GNOME extension";
   };
 
@@ -22,7 +22,7 @@ in
       gnomeExtensions.just-perfection
     ];
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
 
       {

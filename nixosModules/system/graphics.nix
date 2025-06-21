@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.ext.system.graphics;
+  cfg = config.my.system.graphics;
 in
 {
-  options.ext.system.graphics = {
+  options.my.system.graphics = {
     enable = lib.mkEnableOption "graphics";
   };
 

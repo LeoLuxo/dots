@@ -9,7 +9,7 @@
     inputs.musnix.nixosModules.musnix
   ];
 
-  ext = {
+  my = {
     desktop.keybinds =
       let
         getIdForDevice = device: "pw-cli ls \"${device}\" | grep -Poi '(?<=id )\\d+'";

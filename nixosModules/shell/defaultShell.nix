@@ -8,10 +8,10 @@
 let
   lib2 = inputs.self.lib;
 
-  cfg = config.ext.shell.defaultShell;
+  cfg = config.my.shell.defaultShell;
 in
 {
-  options.ext.shell.defaultShell =
+  options.my.shell.defaultShell =
     with lib2.options;
     mkEnum "Which shell to set as default" [
       "bash"
@@ -21,7 +21,7 @@ in
       "xonsh"
     ] "bash";
 
-  config = lib.mkIf (config.ext.system.user != null) {
-    users.users.${config.ext.system.user.name}.shell = cfg;
+  config = lib.mkIf (config.my.system.user != null) {
+    users.users.${config.my.system.user.name}.shell = cfg;
   };
 }

@@ -6,11 +6,11 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.openWeatherRefined;
+  cfg = config.my.desktop.gnome.extensions.openWeatherRefined;
 in
 
 {
-  options.ext.desktop.gnome.extensions.openWeatherRefined = {
+  options.my.desktop.gnome.extensions.openWeatherRefined = {
     enable = lib.mkEnableOption "the openweather-refined GNOME extension";
   };
 
@@ -22,7 +22,7 @@ in
     services.geoclue2.enable = true;
     location.provider = "geoclue2";
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       let
         inherit (lib.hm.gvariant) mkTuple mkUint32;

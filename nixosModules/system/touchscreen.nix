@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.ext.system.touchscreen;
+  cfg = config.my.system.touchscreen;
 in
 {
-  options.ext.system.touchscreen = {
+  options.my.system.touchscreen = {
     enable = lib.mkEnableOption "touchscreen support";
   };
 

@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.tripleBuffering;
+  cfg = config.my.desktop.gnome.tripleBuffering;
 in
 {
-  options.ext.desktop.gnome.tripleBuffering = {
+  options.my.desktop.gnome.tripleBuffering = {
     enable = lib.mkEnableOption "the triple buffering patch for GNOME";
   };
 

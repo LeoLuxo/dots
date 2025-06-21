@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.ext.hardware.gpu.nvidia;
+  cfg = config.my.hardware.gpu.nvidia;
 in
 {
-  options.ext.hardware.gpu.nvidia = {
+  options.my.hardware.gpu.nvidia = {
     enable = lib.mkEnableOption "nvidia gpu";
   };
 

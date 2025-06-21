@@ -10,14 +10,14 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  userCfg = config.ext.system.user;
+  userCfg = config.my.system.user;
 in
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  options.ext.hm =
+  options.my.hm =
     with lib2.options;
     mkOpt "Options to pass directly to home-manager." types.attrs { };
 
@@ -31,10 +31,10 @@ in
       # Applies to home.file and also xdg.*File
       backupFileExtension = "bak";
 
-      users.${userCfg.name} = lib.mkAliasDefinitions options.ext.hm;
+      users.${userCfg.name} = lib.mkAliasDefinitions options.my.hm;
     };
 
-    ext.hm = {
+    my.hm = {
       # Do not change
       home.stateVersion = "24.05";
 
