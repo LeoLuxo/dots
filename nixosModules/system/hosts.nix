@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.ext.system.hosts;
+  cfg = config.my.system.hosts;
 in
 {
-  options.ext.system.hosts = {
+  options.my.system.hosts = {
     enable = lib.mkEnableOption "local hosts";
   };
 

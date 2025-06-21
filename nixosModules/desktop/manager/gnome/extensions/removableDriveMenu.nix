@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.removableDriveMenu;
+  cfg = config.my.desktop.gnome.extensions.removableDriveMenu;
 in
 
 {
-  options.ext.desktop.gnome.extensions.removableDriveMenu = {
+  options.my.desktop.gnome.extensions.removableDriveMenu = {
     enable = lib.mkEnableOption "the removable drive menu GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

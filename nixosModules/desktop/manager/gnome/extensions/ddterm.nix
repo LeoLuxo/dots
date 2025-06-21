@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.ddterm;
+  cfg = config.my.desktop.gnome.extensions.ddterm;
 in
 
 {
-  options.ext.desktop.gnome.extensions.ddterm = {
+  options.my.desktop.gnome.extensions.ddterm = {
     enable = lib.mkEnableOption "the ddterm terminal";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

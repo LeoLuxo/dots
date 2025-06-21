@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.touchpadGestureCustomization;
+  cfg = config.my.desktop.gnome.extensions.touchpadGestureCustomization;
 in
 
 {
-  options.ext.desktop.gnome.extensions.touchpadGestureCustomization = {
+  options.my.desktop.gnome.extensions.touchpadGestureCustomization = {
     enable = lib.mkEnableOption "the touchpad gesture customization GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

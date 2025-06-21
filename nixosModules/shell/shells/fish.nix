@@ -6,15 +6,15 @@
 }:
 
 let
-  cfg = config.ext.shell.fish;
+  cfg = config.my.shell.fish;
 in
 {
-  options.ext.shell.fish = {
+  options.my.shell.fish = {
     enable = lib.mkEnableOption "fish";
   };
 
   config = lib.mkIf cfg.enable {
-    ext = {
+    my = {
       shell.defaultShell = lib.mkDefault "fish";
 
       hm.programs.fish = {

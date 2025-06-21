@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.ext.scripts.bootWindows;
+  cfg = config.my.scripts.bootWindows;
 in
 {
-  options.ext.scripts.bootWindows = {
+  options.my.scripts.bootWindows = {
     enable = lib.mkEnableOption "the bootWindows script";
   };
 
@@ -28,7 +28,7 @@ in
     in
     {
 
-      ext.packages = [
+      my.packages = [
         package
 
         (pkgs.mkDesktopItem {

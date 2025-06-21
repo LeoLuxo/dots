@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.mediaControls;
+  cfg = config.my.desktop.gnome.extensions.mediaControls;
 in
 
 {
-  options.ext.desktop.gnome.extensions.mediaControls = {
+  options.my.desktop.gnome.extensions.mediaControls = {
     enable = lib.mkEnableOption "the media controls GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       let
         inherit (lib.hm.gvariant) mkUint32;

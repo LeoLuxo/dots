@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.ext.system.printing;
+  cfg = config.my.system.printing;
 in
 {
-  options.ext.system.printing = {
+  options.my.system.printing = {
     enable = lib.mkEnableOption "printing";
   };
 

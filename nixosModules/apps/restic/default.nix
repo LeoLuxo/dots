@@ -10,10 +10,10 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.apps.restic;
+  cfg = config.my.apps.restic;
 in
 {
-  options.ext.apps.restic = with lib2.options; {
+  options.my.apps.restic = with lib2.options; {
     enable = lib.mkEnableOption "restic";
 
     repo = mkOpt' "the path to the restic repository" types.path;
@@ -31,7 +31,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    ext = {
+    my = {
       packages = with pkgs; [
         sshpass
         restic

@@ -11,10 +11,10 @@ let
   inherit (lib2) enabled disabled;
   inherit (lib) types;
 
-  cfg = config.ext.desktop.gnome;
+  cfg = config.my.desktop.gnome;
 in
 {
-  options.ext.desktop.gnome = with lib2.options; {
+  options.my.desktop.gnome = with lib2.options; {
     enable = lib.mkEnableOption "the GNOME desktop manager";
 
     power = mkSubmodule "Power management options." {
@@ -42,24 +42,24 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    ext.desktop.gnome = {
+    my.desktop.gnome = {
       # Disabled for now, because it's not working properly.
       tripleBuffering = disabled;
       customApps = enabled;
     };
 
-    ext.shell.aliases = {
+    my.shell.aliases = {
       "find-shortcut" = "gsettings list-recursively | grep -i";
     };
 
-    ext.desktop.defaultApps.backupTerminal = lib.mkDefault "kgx";
-    ext.desktop.defaultApps.terminal = lib.mkOverride 1050 "kgx";
+    my.desktop.defaultApps.backupTerminal = lib.mkDefault "kgx";
+    my.desktop.defaultApps.terminal = lib.mkOverride 1050 "kgx";
 
     # Base extensions that should be included by default imo
-    ext.desktop.gnome.extensions.justPerfection = enabled;
-    ext.desktop.gnome.extensions.removableDriveMenu = enabled;
-    ext.desktop.gnome.extensions.appIndicator = enabled;
-    ext.desktop.gnome.extensions.bluetoothQuickConnect = enabled;
+    my.desktop.gnome.extensions.justPerfection = enabled;
+    my.desktop.gnome.extensions.removableDriveMenu = enabled;
+    my.desktop.gnome.extensions.appIndicator = enabled;
+    my.desktop.gnome.extensions.bluetoothQuickConnect = enabled;
 
     # Enable and configure the X11 windowing system.
     services.xserver = {
@@ -84,7 +84,7 @@ in
 
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       let
         inherit (lib.hm.gvariant) mkUint32;

@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.ext.system.locale;
+  cfg = config.my.system.locale;
 in
 {
-  options.ext.system.locale = {
+  options.my.system.locale = {
     enable = lib.mkEnableOption "locale";
   };
 

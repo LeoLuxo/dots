@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.systemMonitor;
+  cfg = config.my.desktop.gnome.extensions.systemMonitor;
 in
 
 {
-  options.ext.desktop.gnome.extensions.systemMonitor = {
+  options.my.desktop.gnome.extensions.systemMonitor = {
     enable = lib.mkEnableOption "the system monitor GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

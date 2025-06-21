@@ -10,10 +10,10 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.scripts.nx;
+  cfg = config.my.scripts.nx;
 in
 {
-  options.ext.scripts.nx = with lib2.options; {
+  options.my.scripts.nx = with lib2.options; {
     enable = lib.mkEnableOption "nx scripts";
 
     variables = mkSubmodule "Variables used by the nx scripts" {
@@ -24,20 +24,20 @@ in
       # Set the location of the file used for dconf-diff
       NX_DCONF_DIFF =
         mkOpt "Location of the dconf-diff file" types.path
-          "${config.ext.system.user.home}/.nx/dconf_diff";
+          "${config.my.system.user.home}/.nx/dconf_diff";
 
       # Set the location of the files used for nx-rebuild
       NX_PRE_REBUILD =
         mkOpt "Location of the pre-rebuild file" types.path
-          "${config.ext.system.user.home}/.nx/pre_rebuild.sh";
+          "${config.my.system.user.home}/.nx/pre_rebuild.sh";
       NX_POST_REBUILD =
         mkOpt "Location of the post-rebuild file" types.path
-          "${config.ext.system.user.home}/.nx/post_rebuild.sh";
+          "${config.my.system.user.home}/.nx/post_rebuild.sh";
 
       # Set the location of the files used for nx-config-sync
       NX_CONFIG_SYNC =
         mkOpt "Location of the config-sync file" types.path
-          "${config.ext.system.user.home}/.nx/config_sync.sh";
+          "${config.my.system.user.home}/.nx/config_sync.sh";
 
       # Set the location of the todo doc
       NX_TODO = mkOpt "Location of the todo doc" types.path "/stuff/obsidian/Notes/NixOS Todo.md";
@@ -50,7 +50,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    ext.desktop.keybinds = {
+    my.desktop.keybinds = {
       "Open nx-code" = {
         binding = "<Super>F9";
         command = "nx-code";
@@ -62,7 +62,7 @@ in
       };
     };
 
-    ext.shell = {
+    my.shell = {
       aliases = {
         nx-cd = "cd $NX_DOTS";
         nxcd = "nx-cd";
@@ -88,23 +88,23 @@ in
     programs.nix-index.enable = false;
 
     # Add some post-build actions
-    ext.nx.rebuild.postRebuildActions = lib2.replaceScriptVariables ''
+    my.nx.rebuild.postRebuildActions = lib2.replaceScriptVariables ''
       # Save current dconf settings (for nx-dconf-diff)
       echo "Dumping dconf"
       mkdir --parents "$(dirname "$NX_DCONF_DIFF")" && touch "$NX_DCONF_DIFF"
       dconf dump / >"$NX_DCONF_DIFF"
     '' cfg.variables;
 
-    ext.hm = {
+    my.hm = {
       # Set up pre- and post actions for nx-rebuild
-      home.file.${lib.path.removePrefix config.ext.system.user.home cfg.variables.NX_PRE_REBUILD}.text =
+      home.file.${lib.path.removePrefix config.my.system.user.home cfg.variables.NX_PRE_REBUILD}.text =
         cfg.rebuild.preRebuildActions;
-      home.file.${lib.path.removePrefix config.ext.system.user.home cfg.variables.NX_POST_REBUILD}.text =
+      home.file.${lib.path.removePrefix config.my.system.user.home cfg.variables.NX_POST_REBUILD}.text =
         cfg.rebuild.postRebuildActions;
     };
 
     # Add nx scripts and other packages
-    ext.packages = with pkgs; [
+    my.packages = with pkgs; [
       # Nix helper utilities
       nh
       nurl

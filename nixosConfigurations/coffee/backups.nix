@@ -1,6 +1,6 @@
 { config, hostname, ... }:
 {
-  ext.apps.restic = {
+  my.apps.restic = {
     enable = true;
     repo = "/stuff/restic/repo";
     passwordFile = config.age.secrets."restic/${hostname}-pwd".path;

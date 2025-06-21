@@ -6,11 +6,11 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.gsconnect;
+  cfg = config.my.desktop.gnome.extensions.gsconnect;
 in
 
 {
-  options.ext.desktop.gnome.extensions.gsconnect = {
+  options.my.desktop.gnome.extensions.gsconnect = {
     enable = lib.mkEnableOption "the gsconnect GNOME extension";
   };
 
@@ -23,7 +23,7 @@ in
       package = pkgs.gnomeExtensions.gsconnect;
     };
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         dconf.settings = {
