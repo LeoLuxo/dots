@@ -1,6 +1,6 @@
-{ constants, ... }:
+{ constants, config, ... }:
 {
-  home-manager.users.${constants.user} =
+  home-manager.users.${config.ext.system.user.name} =
     { config, ... }:
     {
       xdg.userDirs = {

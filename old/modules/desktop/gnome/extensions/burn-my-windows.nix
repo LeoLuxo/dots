@@ -1,12 +1,9 @@
 {
   pkgs,
+  config,
   constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   programs.dconf.enable = true;
@@ -14,7 +11,7 @@ in
   ext.packages = with pkgs; [
     gnomeExtensions.burn-my-windows
   ];
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { lib, ... }:
     {
 

@@ -218,7 +218,7 @@ rec {
           (pkgs.writeShellScriptBin scriptName command)
         ];
 
-        home-manager.users.${constants.user} = {
+        home-manager.users.${config.ext.system.user.name} = {
           # Add the keybind to dconf
           dconf.settings =
             if config.desktop.gnome.enable then
@@ -283,7 +283,7 @@ rec {
         else
           { };
 
-      config.home-manager.users.${constants.user} =
+      config.home-manager.users.${config.ext.system.user.name} =
         let
           outerConfig = config;
         in
@@ -402,9 +402,9 @@ rec {
         _: lastCommand: command { inherit lastCommand; }
       ) historyCommands;
     in
-    { constants, ... }:
+    { constants, config, ... }:
     {
-      home-manager.users.${constants.user} = {
+      home-manager.users.${config.ext.system.user.name} = {
         programs.bash.shellAliases.${name} = mappedCommands.bash;
         programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
         programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';

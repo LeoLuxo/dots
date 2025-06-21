@@ -14,7 +14,7 @@
         ./hosts/xdgDirs.nix
       ]
       {
-        user = "lili";
+        # user = "lili";
         hostname = "coffee";
         system = "x86_64-linux";
 
@@ -35,7 +35,7 @@
         ./hosts/xdgDirs.nix
       ]
       {
-        user = "lili";
+        # user = "lili";
         hostname = "pancake";
         system = "x86_64-linux";
 

@@ -1,14 +1,11 @@
 {
   pkgs,
+  config,
   nixosModulesOld,
   constants,
   inputs,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   # Include global modules

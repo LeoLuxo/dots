@@ -44,7 +44,7 @@ in
             name = "ludusavi-restic";
             text = ''
               # Running as user is required here as otherwise ludusavi can't find any games
-              sudo -H -u ${constants.user} ludusavi backup --preview --api
+              sudo -H -u ${config.ext.system.user.name} ludusavi backup --preview --api
               | from json
               | get games
               | items {|game, info|

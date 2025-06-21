@@ -9,7 +9,7 @@
 
 let
   inherit (extraLib) mkBoolDefaultFalse;
-  inherit (constants) user;
+
   inherit (lib)
     options
     types
@@ -85,7 +85,7 @@ in
         rustic
       ];
 
-      home-manager.users.${user} = {
+      home-manager.users.${config.ext.system.user.name} = {
         home.shellAliases = {
           # Add aliases for the main repo
           restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";

@@ -1,16 +1,9 @@
 {
   config,
-  pkgs,
   inputs,
-  constants,
   nixosModulesOld,
-  hostname,
   ...
 }:
-
-let
-  inherit (constants) user userHome;
-in
 
 {
   imports = [
@@ -19,12 +12,6 @@ in
 
     nixosModulesOld.defaults
   ];
-
-  nix.settings = {
-    trusted-users = [
-      user
-    ];
-  };
 
   # Home-Manager config
   home-manager = {
@@ -35,32 +22,32 @@ in
     # Applies to home.file and also xdg.*File
     backupFileExtension = "bak";
 
-    users.${user} = {
+    users.${config.ext.system.user.name} = {
       # Do not change
       home.stateVersion = "24.05";
 
       # Home Manager needs a bit of information about you and the paths it should manage.
-      home.username = user;
-      home.homeDirectory = userHome;
+      home.username = config.ext.system.user.name;
+      home.homeDirectory = config.ext.system.user.home;
 
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;
     };
   };
 
-  # Define default user account.
-  users = {
-    mutableUsers = false;
+  # # Define default user account.
+  # users = {
+  #   mutableUsers = false;
 
-    users.${user} = {
-      home = userHome;
-      description = user;
-      isNormalUser = true;
-      hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-    };
-  };
+  #   users.${user} = {
+  #     home = userHome;
+  #     description = user;
+  #     isNormalUser = true;
+  #     hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
+  #     extraGroups = [
+  #       "networkmanager"
+  #       "wheel"
+  #     ];
+  #   };
+  # };
 }

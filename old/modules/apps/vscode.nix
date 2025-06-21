@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   nixosModulesOld,
@@ -8,7 +9,7 @@
 }:
 
 let
-  inherit (constants) user;
+
   inherit (extraLib) mkSyncedPath mkJSONMerge;
 in
 
@@ -53,7 +54,7 @@ in
     EDITOR = "code";
   };
 
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     programs.vscode = {
       enable = true;
       # FHS is vscode but repackaged to run in a FHS environment to make plugin compatibility better

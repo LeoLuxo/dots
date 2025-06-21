@@ -13,14 +13,6 @@ let
       config.allowUnfree = true;
     };
 
-  # specialPkgs = system: {
-  #   pkgsStable = createPkgs system inputs.nixpkgs-stable;
-  #   pkgsUnstable = createPkgs system inputs.nixpkgs-unstable;
-  #   pkgs24-05 = createPkgs system inputs.nixpkgs-24-05;
-  #   pkgs24-11 = createPkgs system inputs.nixpkgs-24-11;
-  #   pkgs25-05 = createPkgs system inputs.nixpkgs-25-05;
-  # };
-
   # Gathers all EXTRA nixpkgs-xxx instances from the flake inputs
   allNixpkgs = lib.attrsets.filterAttrs (name: _: lib.strings.hasPrefix "nixpkgs-" name) inputs;
 
@@ -36,18 +28,17 @@ let
   mkHost =
     hostModules:
     {
-      user,
       hostname,
       system,
       ...
     }@hostConstants:
     let
       defaultConstants = rec {
-        userHome = "/home/${user}";
+        # userHome = "/home/${user}";
         nixosPath = "/etc/nixos";
-        secretsPath = "${userHome}/misc/secrets";
+        secretsPath = "/home/lili/misc/secrets";
 
-        userKeyPrivate = "${userHome}/.ssh/id_ed25519";
+        userKeyPrivate = "/home/lili/.ssh/id_ed25519";
         userKeyPublic = "${userKeyPrivate}.pub";
         hostKeyPrivate = "/etc/ssh/ssh_host_ed25519_key";
         hostKeyPublic = "${hostKeyPrivate}.pub";
@@ -73,7 +64,7 @@ let
       modules = hostModules;
 
       # Additional args passed to the module
-      specialArgs = (lib.traceVal (specialPkgs system)) // {
+      specialArgs = (specialPkgs system) // {
         inherit
           inputs
           extraLib
