@@ -1,13 +1,10 @@
 {
   constants,
+  config,
   pkgs,
   nixosModulesOld,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 let
   package =
@@ -47,7 +44,7 @@ in
     (pkgs.callPackage package { })
   ];
 
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { config, ... }:
     {
 

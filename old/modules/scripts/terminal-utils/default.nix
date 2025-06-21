@@ -1,12 +1,13 @@
 {
   pkgs,
+  config,
   constants,
   extraLib,
   ...
 }:
 
 let
-  inherit (constants) user;
+
   inherit (extraLib) mkShellHistoryAlias writeScriptWithDeps;
 in
 
@@ -65,7 +66,7 @@ in
     })
   ];
 
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     # Add aliases
     home.shellAliases = {
       pls = "please";

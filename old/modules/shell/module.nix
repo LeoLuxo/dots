@@ -1,13 +1,13 @@
 {
   pkgs,
-  lib,
   config,
+  lib,
   constants,
   ...
 }:
 
 let
-  inherit (constants) user;
+
   inherit (lib) options types;
 in
 
@@ -27,6 +27,6 @@ in
   };
 
   config = {
-    users.users.${user}.shell = pkgs.${config.shell.default};
+    users.users.${config.ext.system.user.name}.shell = pkgs.${config.shell.default};
   };
 }

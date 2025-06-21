@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   constants,
   ...
 }:
@@ -10,7 +11,7 @@
     pkgs.wl-clipboard
   ];
 
-  home-manager.users.${constants.user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     home.shellAliases = {
       "copy" = "wl-copy";
       "paste" = "wl-paste";

@@ -1,14 +1,11 @@
 {
   constants,
+  config,
   ...
 }:
 
-let
-  inherit (constants) user;
-in
-
 {
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     services.kdeconnect = {
       enable = true;
       indicator = true;

@@ -9,4 +9,6 @@
 
     ./wifi.nix
   ];
+
+  ext.system.user.name = "lili";
 }

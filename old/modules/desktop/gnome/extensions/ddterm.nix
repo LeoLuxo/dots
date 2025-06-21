@@ -1,13 +1,10 @@
 {
   pkgs,
+  config,
   constants,
   lib,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   programs.dconf.enable = true;
@@ -18,7 +15,7 @@ in
     gnomeExtensions.ddterm
   ];
 
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { lib, ... }:
     {
 

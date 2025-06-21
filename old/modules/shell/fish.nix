@@ -1,13 +1,11 @@
 {
   pkgs,
+  config,
   lib,
   constants,
   ...
 }:
 
-let
-  inherit (constants) user;
-in
 {
   imports = [ ./module.nix ];
 
@@ -16,7 +14,7 @@ in
   programs.fish.enable = true;
   environment.shells = [ pkgs.fish ];
 
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     programs.fish = {
       enable = true;
 

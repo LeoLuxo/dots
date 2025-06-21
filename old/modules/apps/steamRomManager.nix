@@ -1,19 +1,16 @@
 {
   constants,
+  config,
   pkgs,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   ext.packages = [
     pkgs.steam-rom-manager
   ];
 
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { config, ... }:
     {
       xdg.configFile."steam-rom-manager/userData".source =

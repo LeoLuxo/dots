@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   constants,
@@ -7,7 +8,7 @@
 }:
 
 let
-  inherit (constants) user;
+
   inherit (extraLib) mkGlobalKeybind;
 in
 
@@ -55,9 +56,9 @@ in
     # kernel.realtime = true;
   };
 
-  users.users.${user}.extraGroups = [ "audio" ];
+  ext.system.user.extraGroups = [ "audio" ];
 
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     services = {
       playerctld.enable = true;
       # easyeffects = {

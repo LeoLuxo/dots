@@ -1,13 +1,10 @@
 {
   pkgs,
+  config,
   lib,
   constants,
   ...
 }:
-
-let
-  inherit (constants) user;
-in
 
 {
   imports = [ ./module.nix ];
@@ -16,7 +13,7 @@ in
 
   environment.shells = [ pkgs.bash ];
 
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     # Let home manager manage bash; needed to set sessionVariables
     programs.bash = {
       enable = true;

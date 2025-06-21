@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   constants,
   ...
 }:
@@ -16,7 +17,7 @@ in
     commit
   ];
 
-  home-manager.users.${user} = {
+  home-manager.users.${config.ext.system.user.name} = {
     # Add aliases
     home.shellAliases = {
       gs = "git status";

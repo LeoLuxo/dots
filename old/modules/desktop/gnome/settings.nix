@@ -5,16 +5,12 @@
 }:
 
 let
-  inherit (constants) user;
-in
-
-let
   cfg = config.desktop.gnome;
 in
 {
   programs.dconf.enable = true;
 
-  home-manager.users.${user} =
+  home-manager.users.${config.ext.system.user.name} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkUint32;

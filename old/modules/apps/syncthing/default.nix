@@ -1,6 +1,5 @@
 {
   extraLib,
-  constants,
   config,
   lib,
   hostname,
@@ -8,7 +7,6 @@
 }:
 
 let
-  inherit (constants) userHome user;
   inherit (extraLib) mkDesktopItem mkEmptyLines;
   inherit (lib) types options strings;
 
@@ -51,13 +49,13 @@ in
   config = {
     services.syncthing =
       let
-        syncthingFolder = "${userHome}/.config/syncthing";
+        syncthingFolder = "${config.ext.system.user.home}/.config/syncthing";
       in
       {
         enable = true;
 
         # By default if syncthing.user is not set, a user named "syncthing" will be created whose home directory is dataDir, and it will run under a group "syncthing".
-        inherit user;
+        user = config.ext.system.user.name;
         group = "users";
 
         # Together, the key and cert define the device id
