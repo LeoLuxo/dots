@@ -25,7 +25,7 @@ in
         };
 
         "org/gnome/shell/extensions/bluetooth-quick-connect" = {
-          refresh-button-on = true;
+          refresh-button-on = false;
           show-battery-value-on = true;
         };
       };
