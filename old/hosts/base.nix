@@ -34,20 +34,4 @@
       programs.home-manager.enable = true;
     };
   };
-
-  # # Define default user account.
-  # users = {
-  #   mutableUsers = false;
-
-  #   users.${user} = {
-  #     home = userHome;
-  #     description = user;
-  #     isNormalUser = true;
-  #     hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
-  #     extraGroups = [
-  #       "networkmanager"
-  #       "wheel"
-  #     ];
-  #   };
-  # };
 }
