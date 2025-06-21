@@ -6,10 +6,10 @@
 
 let
 
-  cfg = config.ext.suites.pc;
+  cfg = config.my.suites.pc;
 in
 {
-  options.ext.suites.pc = {
+  options.my.suites.pc = {
     enable = lib.mkEnableOption "the server suite";
   };
 

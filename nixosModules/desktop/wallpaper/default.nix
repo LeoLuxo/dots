@@ -14,7 +14,7 @@ let
     strings
     modules
     ;
-  cfg = config.ext.desktop.wallpaper;
+  cfg = config.my.desktop.wallpaper;
 in
 
 let
@@ -22,7 +22,7 @@ let
   sanitizedImage = lib2.sanitizePath cfg.image;
 in
 {
-  options.ext.desktop.wallpaper = with lib2.options; {
+  options.my.desktop.wallpaper = with lib2.options; {
     enable = mkOpt "Enable the wallpaper module" types.bool (cfg.image != null);
 
     image = mkNullOr "The image for the wallpaper" (types.either path package);

@@ -10,10 +10,10 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.desktop.keybinds;
+  cfg = config.my.desktop.keybinds;
 in
 {
-  options.ext.desktop.keybinds =
+  options.my.desktop.keybinds =
     with lib2.options;
     mkAttrsSub' {
       binding = options.mkOption {
@@ -37,7 +37,7 @@ in
     in
     {
       # Create an extra script for the keybind, this avoids a bunch of weird issues
-      ext.packages = [
+      my.packages = [
         (pkgs.writeShellScriptBin scriptName keybind.command)
       ];
     }
@@ -47,7 +47,7 @@ in
           programs.dconf.enable = true;
 
           # Add the keybind to dconf
-          ext.hm.dconf.settings = {
+          my.hm.dconf.settings = {
             "org/gnome/settings-daemon/plugins/media-keys" = {
               custom-keybindings = [
                 "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"

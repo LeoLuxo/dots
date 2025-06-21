@@ -7,14 +7,14 @@
 }:
 
 let
-  cfg = config.ext.system.user;
+  cfg = config.my.system.user;
   lib2 = inputs.self.lib;
 
   inherit (lib) types;
 in
 {
 
-  options.ext.system.user =
+  options.my.system.user =
     with lib2.options;
     mkSubmoduleNull "the options when setting up a single-user machine" (rec {
       name = mkOpt' "the name of the default user" types.str;
@@ -43,7 +43,7 @@ in
 
         hashedPasswordFile = lib.mkIf (cfg.passwordFile != null) cfg.passwordFile;
 
-        extraGroups = lib.mkAliasDefinitions options.ext.system.user.extraGroups;
+        extraGroups = lib.mkAliasDefinitions options.my.system.user.extraGroups;
       };
     };
   };

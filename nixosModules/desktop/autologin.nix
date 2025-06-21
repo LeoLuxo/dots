@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.ext.desktop.autologin;
+  cfg = config.my.desktop.autologin;
 in
 {
-  options.ext.desktop.autologin = {
+  options.my.desktop.autologin = {
     enable = lib.mkEnableOption "desktop manager autologin";
   };
 
@@ -16,7 +16,7 @@ in
     # Enable automatic login for the user.
     services.displayManager.autoLogin = {
       enable = true;
-      user = config.ext.system.user.name;
+      user = config.my.system.user.name;
     };
   };
 }

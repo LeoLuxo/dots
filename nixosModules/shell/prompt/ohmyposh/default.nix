@@ -5,15 +5,15 @@
 }:
 
 let
-  cfg = config.ext.shell.prompt.ohmyposh;
+  cfg = config.my.shell.prompt.ohmyposh;
 in
 {
-  options.ext.shell.prompt.ohmyposh = {
+  options.my.shell.prompt.ohmyposh = {
     enable = lib.mkEnableOption "ohmyposh shell prompt";
   };
 
   config = lib.mkIf cfg.enable {
-    ext.hm = {
+    my.hm = {
       programs.oh-my-posh = {
         enable = true;
         settings = import ./theme.nix;

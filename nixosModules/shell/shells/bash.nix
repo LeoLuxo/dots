@@ -6,15 +6,15 @@
 }:
 
 let
-  cfg = config.ext.shell.bash;
+  cfg = config.my.shell.bash;
 in
 {
-  options.ext.shell.bash = {
+  options.my.shell.bash = {
     enable = lib.mkEnableOption "bash";
   };
 
   config = lib.mkIf cfg.enable {
-    ext = {
+    my = {
       shell.defaultShell = lib.mkDefault "bash";
 
       # Let home manager manage bash; needed to set sessionVariables

@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.appIndicator;
+  cfg = config.my.desktop.gnome.extensions.appIndicator;
 in
 
 {
-  options.ext.desktop.gnome.extensions.appIndicator = {
+  options.my.desktop.gnome.extensions.appIndicator = {
     enable = lib.mkEnableOption "the appindicator GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

@@ -5,10 +5,10 @@
 }:
 
 let
-  cfg = config.ext.system.boot;
+  cfg = config.my.system.boot;
 in
 {
-  options.ext.system.boot = {
+  options.my.system.boot = {
     enable = lib.mkEnableOption "bootloading";
   };
 

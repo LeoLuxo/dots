@@ -6,18 +6,18 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.extensions.burnMyWindows;
+  cfg = config.my.desktop.gnome.extensions.burnMyWindows;
 in
 
 {
-  options.ext.desktop.gnome.extensions.burnMyWindows = {
+  options.my.desktop.gnome.extensions.burnMyWindows = {
     enable = lib.mkEnableOption "the burn-my-windows GNOME extension";
   };
 
   config = lib.mkIf cfg.enable {
     programs.dconf.enable = true;
 
-    ext.hm =
+    my.hm =
       { lib, ... }:
       {
         home.packages = with pkgs; [

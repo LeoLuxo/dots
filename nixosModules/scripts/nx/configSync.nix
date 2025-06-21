@@ -10,7 +10,7 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  cfg = config.ext.scripts.nx.configSync;
+  cfg = config.my.scripts.nx.configSync;
 in
 {
   # Synchronize files/directories between this dots repo and a system xdg path
@@ -27,12 +27,12 @@ in
   #    - Supports automatic merging of differences
   #    - File format must be convertible to/from Nix
   #    - The option <path>.overrides can be used to add merge overrides accross nixos modules
-  options.ext.scripts.nx.configSync = with lib2.options; {
+  options.my.scripts.nx.configSync = with lib2.options; {
     enable = lib.mkEnableOption "nx config sync";
 
     path =
       mkOpt "Location of the config sync directory" types.path
-        "${config.ext.scripts.nx.variables.NX_DOTS}/config";
+        "${config.my.scripts.nx.variables.NX_DOTS}/config";
 
     paths = mkAttrsSub' "Files/directories to sync and optionally merge" {
       # <path> = Path relative to repo's config directory
@@ -45,7 +45,7 @@ in
 
   config = lib.mkIf cfg.enable (
     let
-      scriptFile = lib.path.removePrefix config.ext.system.user.home config.ext.scripts.nx.variables.NX_CONFIG_SYNC;
+      scriptFile = lib.path.removePrefix config.my.system.user.home config.my.scripts.nx.variables.NX_CONFIG_SYNC;
 
       typeMap = {
         "json" = {
@@ -57,7 +57,7 @@ in
     in
 
     lib.mapAttrs' (syncName: syncFile: {
-      ext.hm =
+      my.hm =
         hmArgs:
         let
           merge = typeMap syncFile.mergeType;

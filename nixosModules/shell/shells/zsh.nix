@@ -6,15 +6,15 @@
 }:
 
 let
-  cfg = config.ext.shell.zsh;
+  cfg = config.my.shell.zsh;
 in
 {
-  options.ext.shell.zsh = {
+  options.my.shell.zsh = {
     enable = lib.mkEnableOption "zsh";
   };
 
   config = lib.mkIf cfg.enable {
-    ext = {
+    my = {
       shell.defaultShell = lib.mkDefault "zsh";
 
       hm = {

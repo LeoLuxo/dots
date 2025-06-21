@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.ext.desktop.gnome.customApps;
+  cfg = config.my.desktop.gnome.customApps;
 in
 {
-  options.ext.desktop.gnome.customApps = {
+  options.my.desktop.gnome.customApps = {
     enable = lib.mkEnableOption "modifications the default app list for GNOME";
   };
 
