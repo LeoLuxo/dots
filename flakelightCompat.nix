@@ -71,6 +71,7 @@ let
           nixosModulesOld
           constants
           hostname
+          system
           ;
       };
     };

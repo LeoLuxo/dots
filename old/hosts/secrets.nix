@@ -16,25 +16,25 @@ let
 in
 {
 
-  imports = [
-    # Include agenix module
-    inputs.agenix.nixosModules.default
-  ];
+  # imports = [
+  #   # Include agenix module
+  #   inputs.agenix.nixosModules.default
+  # ];
 
-  ext.packages = [
-    # Install agenix CLI
-    inputs.agenix.packages.${system}.default
-  ];
+  # ext.packages = [
+  #   # Install agenix CLI
+  #   inputs.agenix.packages.${system}.default
+  # ];
 
-  age = {
-    # Use the host key OR user key
-    identityPaths = [
-      hostKeyPrivate
-      userKeyPrivate
-    ];
+  # age = {
+  #   # Use the host key OR user key
+  #   identityPaths = [
+  #     hostKeyPrivate
+  #     userKeyPrivate
+  #   ];
 
-    # Add secrets from the flake to agenix config
-    secrets = flake.ageSecrets;
-  };
+  #   # Add secrets from the flake to agenix config
+  #   secrets = flake.ageSecrets;
+  # };
 
 }
