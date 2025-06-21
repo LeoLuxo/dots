@@ -20,7 +20,7 @@ let
   };
 in
 {
-  ext.packages = [
+  my.packages = [
     (writeScriptWithDeps {
       name = "beet";
 

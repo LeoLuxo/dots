@@ -13,11 +13,11 @@
   services.geoclue2.enable = true;
   location.provider = "geoclue2";
 
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     gnomeExtensions.openweather-refined
   ];
 
-  home-manager.users.${config.ext.system.user.name} =
+  home-manager.users.${config.my.system.user.name} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkTuple mkUint32;

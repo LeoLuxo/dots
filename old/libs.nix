@@ -214,11 +214,11 @@ rec {
         programs.dconf.enable = true;
 
         # Create an extra script for the keybind, this avoids a bunch of weird issues
-        ext.packages = [
+        my.packages = [
           (pkgs.writeShellScriptBin scriptName command)
         ];
 
-        home-manager.users.${config.ext.system.user.name} = {
+        home-manager.users.${config.my.system.user.name} = {
           # Add the keybind to dconf
           dconf.settings =
             if config.desktop.gnome.enable then
@@ -283,7 +283,7 @@ rec {
         else
           { };
 
-      config.home-manager.users.${config.ext.system.user.name} =
+      config.home-manager.users.${config.my.system.user.name} =
         let
           outerConfig = config;
         in
@@ -404,7 +404,7 @@ rec {
     in
     { constants, config, ... }:
     {
-      home-manager.users.${config.ext.system.user.name} = {
+      home-manager.users.${config.my.system.user.name} = {
         programs.bash.shellAliases.${name} = mappedCommands.bash;
         programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
         programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
@@ -467,7 +467,7 @@ rec {
       ...
     }:
     {
-      ext.packages = [
+      my.packages = [
         (pkgs.callPackage desktopItemPackage { })
       ];
     };

@@ -13,7 +13,7 @@ in
     apps.beets
   ];
 
-  ext.packages = [
+  my.packages = [
     (writeScriptWithDeps {
       name = "automusic";
 

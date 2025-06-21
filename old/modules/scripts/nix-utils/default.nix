@@ -57,11 +57,11 @@ in
         NX_SECRETS = secretsPath;
 
         # Set the location of the file used for dconf-diff
-        NX_DCONF_DIFF = "${config.ext.system.user.home}/.nx/dconf_diff";
+        NX_DCONF_DIFF = "${config.my.system.user.home}/.nx/dconf_diff";
 
         # Set the location of the files used for nx-rebuild
-        NX_PRE_REBUILD = "${config.ext.system.user.home}/.nx/pre_rebuild.sh";
-        NX_POST_REBUILD = "${config.ext.system.user.home}/.nx/post_rebuild.sh";
+        NX_PRE_REBUILD = "${config.my.system.user.home}/.nx/pre_rebuild.sh";
+        NX_POST_REBUILD = "${config.my.system.user.home}/.nx/post_rebuild.sh";
 
         # Set the location of the todo doc
         NX_TODO = "/stuff/obsidian/Notes/NixOS Todo.md";
@@ -86,7 +86,7 @@ in
       '' variables;
 
       # Add nx scripts and other packages
-      ext.packages = with pkgs; [
+      my.packages = with pkgs; [
         # Nix helper utilities
         nh
         nurl
@@ -147,7 +147,7 @@ in
         })
       ];
 
-      home-manager.users.${config.ext.system.user.name} = {
+      home-manager.users.${config.my.system.user.name} = {
         # Set up pre- and post actions for nx-rebuild
         home.file.".nx/pre_rebuild.sh".text = cfg.rebuild.preRebuildActions;
         home.file.".nx/post_rebuild.sh".text = cfg.rebuild.postRebuildActions;

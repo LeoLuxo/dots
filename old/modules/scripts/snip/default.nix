@@ -18,7 +18,7 @@ in
     })
   ];
 
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     (writeScriptWithDeps {
       name = "snip";
       file = ./snip.sh;

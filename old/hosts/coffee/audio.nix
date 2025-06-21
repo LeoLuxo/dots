@@ -56,9 +56,9 @@ in
     # kernel.realtime = true;
   };
 
-  ext.system.user.extraGroups = [ "audio" ];
+  my.system.user.extraGroups = [ "audio" ];
 
-  home-manager.users.${config.ext.system.user.name} = {
+  home-manager.users.${config.my.system.user.name} = {
     services = {
       playerctld.enable = true;
       # easyeffects = {
@@ -127,7 +127,7 @@ in
     };
   };
 
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     playerctl
     pulsemixer
     qpwgraph

@@ -19,7 +19,7 @@ in
     })
   ];
 
-  ext.packages = with pkgs; [
+  my.packages = with pkgs; [
     # To query the filetype of files
     file
 
@@ -66,7 +66,7 @@ in
     })
   ];
 
-  home-manager.users.${config.ext.system.user.name} = {
+  home-manager.users.${config.my.system.user.name} = {
     # Add aliases
     home.shellAliases = {
       pls = "please";

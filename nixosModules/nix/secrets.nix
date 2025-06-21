@@ -8,19 +8,19 @@
 let
   lib2 = inputs.self.lib;
   inherit (lib) types;
-  cfg = config.ext.nix.secrets;
+  cfg = config.my.nix.secrets;
 in
 {
   imports = [
     inputs.agenix.nixosModules.default
   ];
 
-  options.ext.nix.secrets = with lib2.options; {
+  options.my.nix.secrets = with lib2.options; {
     enable = lib.mkEnableOption "secrets management using agenix";
 
     keys = mkOpt "keys to use for decryption" (types.listOf types.path) (
-      if config.ext.system.keys.enable then
-        (lib.mapAttrsToList (_: keyFiles: keyFiles.private) config.ext.system.keys.keys)
+      if config.my.system.keys.enable then
+        (lib.mapAttrsToList (_: keyFiles: keyFiles.private) config.my.system.keys.keys)
       else
         [ ]
     );
@@ -35,7 +35,7 @@ in
     in
     {
       # Install agenix CLI
-      ext.packages = [
+      my.packages = [
         inputs.agenix.packages.${system}.default
       ];
 
