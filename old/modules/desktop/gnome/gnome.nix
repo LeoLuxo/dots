@@ -71,6 +71,13 @@ in
       cfg = config.desktop.gnome;
     in
     modules.mkIf cfg.enable {
+      # HEIC support
+      environment.systemPackages = [
+        pkgs.libheif
+        pkgs.libheif.out
+      ];
+      environment.pathsToLink = [ "share/thumbnailers" ];
+
       # Enable and configure the X11 windowing system.
       services.xserver = {
         enable = true;
