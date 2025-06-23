@@ -82,7 +82,7 @@
     })
   ];
 
-  wallpaper.image = inputs.wallpapers.dynamic."fletschhorn";
+  wallpaper.image = inputs.wallpapers.dynamic."firewatch";
 
   # Set default shell
   shell.default = "fish";
