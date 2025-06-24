@@ -1,22 +1,14 @@
 {
   pkgs,
-  config,
   extraLib,
   ...
 }:
 
 let
-  inherit (extraLib) mkGlobalKeybind writeScriptWithDeps;
+  inherit (extraLib) writeScriptWithDeps;
 in
 
 {
-  imports = [
-    (mkGlobalKeybind {
-      name = "Instant screenshot";
-      binding = "<Super>s";
-      command = "snip";
-    })
-  ];
 
   my.packages = with pkgs; [
     (writeScriptWithDeps {
@@ -28,4 +20,11 @@ in
       ];
     })
   ];
+
+  my.desktop.keybinds = {
+    "Instant screenshot" = {
+      binding = "<Super>s";
+      command = "snip";
+    };
+  };
 }
