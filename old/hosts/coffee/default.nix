@@ -17,6 +17,5 @@
       keys.enable = true;
     };
     nix.secrets.enable = true;
-    # desktop.defaultAppsShortcuts.enable = true;
   };
 }

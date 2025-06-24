@@ -2,8 +2,15 @@
   config,
   pkgs,
   inputs,
+  constants,
+  extraLib,
   ...
 }:
+
+let
+
+  inherit (extraLib) mkGlobalKeybind;
+in
 
 let
   getIdForDevice = device: "pw-cli ls \"${device}\" | grep -Poi '(?<=id )\\d+'";
@@ -11,18 +18,10 @@ in
 {
   imports = [
     inputs.musnix.nixosModules.musnix
-  ];
 
-  musnix = {
-    enable = true;
-    # kernel.realtime = true;
-  };
-
-  my.system.user.extraGroups = [ "audio" ];
-
-  my.desktop.keybinds = {
     # https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/
-    "Toggle audio to speakers" = {
+    (mkGlobalKeybind {
+      name = "Toggle audio to speakers";
       binding = "XF86Launch6"; # F15
       command = ''
         id=$(${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"})
@@ -34,9 +33,10 @@ in
         pw-link --disconnect "gx_head_fx:out_0" "ALC1220 Analog:playback_FL" || true
         pw-link --disconnect "gx_head_fx:out_1" "ALC1220 Analog:playback_FR" || true
       '';
-    };
+    })
 
-    "Toggle audio to headphones" = {
+    (mkGlobalKeybind {
+      name = "Toggle audio to headphones";
       binding = "XF86Launch5"; # F14
       command = ''
         id=$(${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"})
@@ -48,8 +48,15 @@ in
         pw-link --disconnect "gx_head_fx:out_0" "Scarlett 2i2 USB:playback_FL" || true
         pw-link --disconnect "gx_head_fx:out_1" "Scarlett 2i2 USB:playback_FR" || true
       '';
-    };
+    })
+  ];
+
+  musnix = {
+    enable = true;
+    # kernel.realtime = true;
   };
+
+  my.system.user.extraGroups = [ "audio" ];
 
   home-manager.users.${config.my.system.user.name} = {
     services = {

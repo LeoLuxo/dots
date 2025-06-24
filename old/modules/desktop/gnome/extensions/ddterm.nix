@@ -9,7 +9,7 @@
 {
   programs.dconf.enable = true;
 
-  my.desktop.defaultApps.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
+  defaults.apps.terminal = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
 
   my.packages = with pkgs; [
     gnomeExtensions.ddterm
