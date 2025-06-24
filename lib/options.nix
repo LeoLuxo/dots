@@ -34,31 +34,6 @@ rec {
       inherit description;
     };
 
-  /**
-    Creates a submodule option with specified options.
-
-    # Example
-
-    ```nix
-    mkSubmodule "A submodule" { foo = mkOpt types.str "bar"; }
-    =>
-    Option of type submodule with specified options
-    ```
-
-    # Type
-
-    ```
-    mkSubmodule :: String -> AttrSet -> Option
-    ```
-
-    # Arguments
-
-    description
-    : Documentation string for the submodule option
-
-    opts
-    : The options to include in the submodule
-  */
   mkSubmodule =
     description: opts:
     lib.mkOption {
@@ -81,31 +56,6 @@ rec {
       inherit description;
     };
 
-  /**
-    Creates an attribute set of submodules with specified options.
-
-    # Example
-
-    ```nix
-    mkAttrsSub "A set of submodules" { foo = mkOpt types.str "bar"; }
-    =>
-    Option of type attrsOf(submodule) with specified options
-    ```
-
-    # Type
-
-    ```
-    mkAttrsSub :: String -> AttrSet -> Option
-    ```
-
-    # Arguments
-
-    description
-    : Documentation string for the submodules attribute set
-
-    opts
-    : The options to include in each submodule
-  */
   mkAttrsSub =
     description: opts: default:
     lib.mkOption {
@@ -128,4 +78,12 @@ rec {
       default = { };
       inherit description;
     };
+
+  # Merges a list of top-level config keys, while avoiding infinite recursion problems
+  # Courtesy of https://gist.github.com/udf/4d9301bdc02ab38439fd64fbda06ea43
+  mkMergeTopLevel =
+    names: attrs:
+    lib.getAttrs names (
+      lib.mapAttrs (k: v: lib.mkMerge v) (lib.foldAttrs (n: a: [ n ] ++ a) [ ] attrs)
+    );
 }

@@ -99,8 +99,8 @@ in
         };
       };
 
-      defaults.apps.backupTerminal = lib.mkDefault "kgx";
-      defaults.apps.terminal = lib.mkOverride 1050 "kgx";
+      my.desktop.defaultApps.backupTerminal = lib.mkDefault "kgx";
+      my.desktop.defaultApps.terminal = lib.mkOverride 1050 "kgx";
 
       # Fixes "Your GStreamer installation is missing a plug-in." when trying to view audio/video properties
       environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =

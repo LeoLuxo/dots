@@ -10,7 +10,6 @@
 let
   inherit (constants) dotsRepoPath secretsPath;
   inherit (extraLib)
-    mkGlobalKeybind
     mkShellHistoryAlias
     writeScriptWithDeps
     mkSubmodule
@@ -22,18 +21,6 @@ in
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
-
-    (mkGlobalKeybind {
-      name = "Open nx-code";
-      binding = "<Super>F9";
-      command = "nx-code";
-    })
-
-    (mkGlobalKeybind {
-      name = "Open nx-todo";
-      binding = "<Super>F10";
-      command = "nx-todo";
-    })
 
     (mkShellHistoryAlias {
       name = ",,";
@@ -146,6 +133,18 @@ in
           replaceVariables = variables;
         })
       ];
+
+      my.desktop.keybinds = {
+        "Open nx-code" = {
+          binding = "<Super>F9";
+          command = "nx-code";
+        };
+
+        "Open nx-todo" = {
+          binding = "<Super>F10";
+          command = "nx-todo";
+        };
+      };
 
       home-manager.users.${config.my.system.user.name} = {
         # Set up pre- and post actions for nx-rebuild

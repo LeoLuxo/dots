@@ -8,7 +8,6 @@
 let
   inherit (extraLib)
     # mkQuickPatch
-    mkGlobalKeybind
     mkJSONMerge
     mkSyncedPath
     ;
@@ -39,18 +38,6 @@ in
     #   ];
     # })
 
-    (mkGlobalKeybind {
-      name = "Discord mute";
-      binding = "<Super>m";
-      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    })
-
-    (mkGlobalKeybind {
-      name = "Discord deafen";
-      binding = "<Super><Shift>m";
-      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    })
-
     (mkSyncedPath {
       xdgPath = "vesktop/settings.json";
       cfgPath = "vesktop/vesktop.json";
@@ -68,7 +55,21 @@ in
     })
   ];
 
-  defaults.apps.communication = lib.mkDefault "vesktop";
+  my.desktop = {
+    defaultApps.communication = lib.mkDefault "vesktop";
+
+    keybinds = {
+      "Discord mute" = {
+        binding = "<Super>m";
+        command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+      };
+
+      "Discord deafen" = {
+        binding = "<Super><Shift>m";
+        command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+      };
+    };
+  };
 
   my.packages = with pkgs; [
     (vesktop.override {
