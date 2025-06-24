@@ -48,7 +48,7 @@ in
     # })
   ];
 
-  defaults.apps.codeEditor = lib.mkDefault "code";
+  my.desktop.defaultApps.codeEditor = lib.mkDefault "code";
 
   environment.variables = {
     EDITOR = "code";
