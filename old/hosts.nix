@@ -2,21 +2,41 @@
 {
 
   # Desktop
-  "coffee" = mkHost [ newModules ./hosts/coffee ] {
-    # user = "lili";
-    hostname = "coffee";
-    system = "x86_64-linux";
+  "coffee" =
+    mkHost
+      [
+        newModules
+        ./hosts/coffee
 
-    resticRepoHot = "/stuff/Restic/repo";
-    resticRepoCold = "/backup/Restic/repo";
-  };
+        ./hosts/base.nix
+        ./hosts/keybinds.nix
+        ./hosts/xdgDirs.nix
+      ]
+      {
+        # user = "lili";
+        hostname = "coffee";
+        system = "x86_64-linux";
+
+        resticRepoHot = "/stuff/Restic/repo";
+        resticRepoCold = "/backup/Restic/repo";
+      };
 
   # Laptop (Surface Pro 7)
-  "pancake" = mkHost [ newModules ./hosts/pancake ] {
-    # user = "lili";
-    hostname = "pancake";
-    system = "x86_64-linux";
+  "pancake" =
+    mkHost
+      [
+        newModules
+        ./hosts/pancake
 
-    resticRepoHot = "/stuff/Restic/repo";
-  };
+        ./hosts/base.nix
+        ./hosts/keybinds.nix
+        ./hosts/xdgDirs.nix
+      ]
+      {
+        # user = "lili";
+        hostname = "pancake";
+        system = "x86_64-linux";
+
+        resticRepoHot = "/stuff/Restic/repo";
+      };
 }
