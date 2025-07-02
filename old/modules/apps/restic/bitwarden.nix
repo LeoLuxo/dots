@@ -67,7 +67,7 @@ in
           bw lock
           bw logout
 
-          7z a "$OUT/passwords.7z" "$OUT/*" -p"$(sudo cat /run/agenix/bitwarden/password)"
+          7z a "$OUT/passwords.7z" "$OUT/*" -p"$(sudo cat ${cfg.bwPasswordFile})"
 
           rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
