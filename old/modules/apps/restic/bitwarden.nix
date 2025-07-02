@@ -47,40 +47,35 @@ in
     in
     modules.mkIf cfg.enable {
       systemd.services."restic-bitwarden" = {
+        script = ''
+          BW_CLIENTID=$(cat ${cfg.bwClientIDFile})
+          BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
+          OUT=$(mktemp --directory)
+
+          bw login --apikey
+          BW_SESSION=$(bw unlock --passwordfile ${cfg.bwPasswordFile} --raw)
+
+          bw export --output "$OUT/passwords.json" --format encrypted_json
+          bw export --output "$OUT/passwords.json" --format json
+          bw export --output "$OUT/passwords.csv" --format csv
+          bw export --output "$OUT/passwords.zip" --format zip
+
+          bw lock
+          bw logout
+
+          rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
+
+          rm -rf "$OUT"
+        '';
+
+        path = [
+          pkgs.bitwarden-cli
+          pkgs.rustic
+        ];
+
         serviceConfig = {
           Type = "oneshot";
           User = "root";
-
-          ExecStart = writeNushellScript {
-            name = "restic-bitwarden";
-            # Running as root so can read the secrets directly
-            text = ''
-              BW_CLIENTID=$(cat ${cfg.bwClientIDFile})
-              BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
-              OUT=$(mktemp --directory)
-
-              bw login --apikey
-              BW_SESSION=$(bw unlock --passwordfile ${cfg.bwPasswordFile} --raw)
-
-              bw export --output "$OUT/passwords.json" --format encrypted_json
-              bw export --output "$OUT/passwords.json" --format json
-              bw export --output "$OUT/passwords.csv" --format csv
-              bw export --output "$OUT/passwords.zip" --format zip
-
-              bw lock
-              bw logout
-
-              rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
-
-              rm -rf "$OUT"
-            '';
-            deps = [
-              pkgs.bitwarden-cli
-              pkgs.restic
-              "/run/wrappers"
-            ];
-            binFolder = false;
-          };
         };
       };
 
