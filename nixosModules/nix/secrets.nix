@@ -18,7 +18,7 @@ in
   options.my.nix.secrets = with lib2.options; {
     enable = lib.mkEnableOption "secrets management using agenix";
 
-    keys = mkOpt "keys to use for decryption" (types.listOf types.path) (
+    keys = mkOptDefault "keys to use for decryption" (types.listOf types.path) (
       if config.my.system.keys.enable then
         (lib.mapAttrsToList (_: keyFiles: keyFiles.private) config.my.system.keys.keys)
       else

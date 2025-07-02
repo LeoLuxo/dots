@@ -15,11 +15,11 @@ in
   options.my.system.keys = with lib2.options; {
     enable = lib.mkEnableOption "key management";
 
-    keys =
-      mkAttrsSub "keys accessible to the config"
+    keys = 
+      mkAttrsSubDefault "keys accessible to the config"
         {
-          public = mkOpt' "the public key path" types.path;
-          private = mkOpt' "the private key path" types.path;
+          public = mkOpt "the public key path" types.path;
+          private = mkOpt "the private key path" types.path;
         }
         {
           user = lib.mkIf (config.my.system.user != null) {
