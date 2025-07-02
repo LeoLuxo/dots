@@ -160,9 +160,9 @@ in
           script =
             let
               checkCommand =
-                if cfg.replication.performFullCheck != null then
+                if cfg.replication.performFullCheck then
                   "restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} check --read-data"
-                else if cfg.replication.performQuickCheck != null then
+                else if cfg.replication.performQuickCheck then
                   "restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} check"
                 else
                   "";
