@@ -1,8 +1,6 @@
 {
   pkgs,
-  config,
   nixosModulesOld,
-  constants,
   inputs,
   ...
 }:
