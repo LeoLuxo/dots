@@ -5,10 +5,11 @@
 }:
 {
   # Setup my auto backups
-  restic = {
+  restic = rec {
     enable = true;
     repo = "/stuff/restic/repo";
     passwordFile = config.age.secrets."restic/${hostname}-pwd".path;
+    notifyOnFail = true;
 
     backups = {
       "obsidian" = {
@@ -77,7 +78,25 @@
     gameSavesBackup = {
       enable = true;
       timer = "hourly";
-      randomDelay = "60m";
+      randomDelay = "45m";
+    };
+
+    replication = {
+      enable = true;
+      timer = "daily";
+      randomDelay = "2h";
+
+      localRepos."hdd" = {
+        path = "/backup/restic/repo";
+        inherit passwordFile;
+      };
+
+      remoteRepos."hetzner storage box" = {
+        path = "restic/coffee";
+        inherit passwordFile;
+        remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
+        remotePasswordFile = config.age.secrets."restic/storage-box-pwd".path;
+      };
     };
   };
 }
