@@ -12,7 +12,6 @@ let
   inherit (lib)
     options
     types
-    modules
     strings
     lists
     ;
@@ -20,7 +19,7 @@ in
 
 {
   imports = [
-    ./cold.nix
+    ./replication.nix
     ./ludusavi.nix
   ];
 
@@ -33,6 +32,11 @@ in
 
     passwordFile = options.mkOption {
       type = types.path;
+    };
+
+    notifyOnFail = options.mkOption {
+      type = types.bool;
+      default = true;
     };
 
     backups = options.mkOption {
@@ -71,40 +75,13 @@ in
       );
       default = { };
     };
-
-    notifyOnFail = options.mkOption {
-      type = types.bool;
-      default = true;
-    };
-
-    # replications = options.mkOption {
-    #   type = types.attrsOf (
-    #     types.submodule {
-    #       options = {
-    #         path = options.mkOption {
-    #           type = types.path;
-    #         };
-
-    #         timer = options.mkOption {
-    #           type = types.str;
-    #         };
-
-    #         randomDelay = options.mkOption {
-    #           type = types.nullOr types.str;
-    #           default = null;
-    #         };
-    #       };
-    #     }
-    #   );
-    #   default = { };
-    # };
   };
 
   config =
     let
       cfg = config.restic;
     in
-    modules.mkIf cfg.enable {
+    lib.mkIf cfg.enable {
       my.packages = with pkgs; [
         sshpass
         restic
@@ -121,6 +98,7 @@ in
 
       systemd = lib.mkMerge (
         lib.mapAttrsToList (name: backup: {
+          # Services for each of the local backups
           services."restic-autobackup-${name}" = {
             script =
               let
@@ -141,25 +119,26 @@ in
               User = "root";
             };
 
-            onFailure = lib.mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed-notification.service" ];
+            onFailure = lib.mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed.service" ];
           };
 
+          # Timers for each of the local backups
           timers."restic-autobackup-${name}" = {
             wantedBy = [ "timers.target" ];
             timerConfig = {
               OnCalendar = backup.timer;
               Persistent = true;
               Unit = "restic-autobackup-${name}.service";
-              RandomizedDelaySec = modules.mkIf (backup.randomDelay != null) backup.randomDelay;
+              RandomizedDelaySec = lib.mkIf (backup.randomDelay != null) backup.randomDelay;
             };
 
             # https://nixos.wiki/wiki/Systemd/Timers
             # https://wiki.archlinux.org/title/Systemd/Timers
           };
 
-          services."restic-autobackup-${name}-failed-notification" = lib.mkIf cfg.notifyOnFail {
+          # Notification services in case of failure for each of the local backups
+          services."restic-autobackup-${name}-failed" = lib.mkIf cfg.notifyOnFail {
             enable = true;
-            description = "Notify on failed backup for ${name}";
             serviceConfig = {
               Type = "oneshot";
               User = config.my.system.user.name;
