@@ -67,7 +67,9 @@ in
           bw lock
           bw logout
 
-          rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
+          7z a "$OUT/passwords.7z" "$OUT/*" -p"$(sudo cat /run/agenix/bitwarden/password)"
+
+          rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
           rm -rf "$OUT"
           rm -rf "/root/.config/Bitwarden CLI"
@@ -76,6 +78,7 @@ in
         path = [
           pkgs.bitwarden-cli
           pkgs.rustic
+          pkgs.p7zip
         ];
 
         serviceConfig = {
