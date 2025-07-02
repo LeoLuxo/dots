@@ -19,7 +19,7 @@ in
 
   options.my.hm =
     with lib2.options;
-    mkOpt "Options to pass directly to home-manager." types.attrs { };
+    mkOptDefault "Options to pass directly to home-manager." types.attrs { };
 
   config = lib.mkIf (userCfg.enable) {
     # Home-Manager config
