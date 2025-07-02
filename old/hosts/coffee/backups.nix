@@ -102,7 +102,7 @@
         inherit passwordFile;
       };
 
-      remoteRepos."hetzner storage box" = {
+      remoteRepos."hetzner-storage-box" = {
         path = "restic/coffee";
         inherit passwordFile;
         remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;

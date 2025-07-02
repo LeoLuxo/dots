@@ -172,10 +172,9 @@ in
               '') cfg.replication.localRepos;
 
               remoteCopiesCommands = lib.mapAttrsToList (_: remoteRepo: ''
-                export SSHPASS=$(cat ${remoteRepo.remotePasswordFile})
                 ADDRESS=$(cat ${remoteRepo.remoteAddressFile})
 
-                restic -o sftp.command="sshpass -v -e ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
+                restic -o sftp.command="sshpass -v -f ${remoteRepo.remotePasswordFile} ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
               '') cfg.replication.remoteRepos;
             in
             ''
@@ -194,6 +193,7 @@ in
           path = [
             pkgs.restic
             pkgs.sshpass
+            pkgs.openssh
           ];
 
           serviceConfig = {
@@ -230,5 +230,15 @@ in
               "$(journalctl -u restic-replication-failed -n 5 -o cat)"
           '';
         };
+
+        # home-manager.users.${config.my.system.user.name}.home.shellAliases = lib.mkMerge (
+        #   (lib.mapAttrsToList (name: localRepo: { }) cfg.replication.localRepos)
+        # );
+
+        # {
+        #   # Add aliases for the main repo
+        #   restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
+        #   rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
+        # };
       };
 }
