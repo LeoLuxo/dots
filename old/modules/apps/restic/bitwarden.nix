@@ -50,13 +50,13 @@ in
         script = ''
           rm -rf "/root/.config/Bitwarden CLI"
 
-          BW_CLIENTID=$(cat ${cfg.bwClientIDFile})
-          BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
+          export BW_CLIENTID=$(cat ${cfg.bwClientIDFile})
+          export BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
           OUT=$(mktemp --directory)
 
           bw --nointeraction --cleanexit login --apikey
           bw --nointeraction --cleanexit status
-          BW_SESSION=$(bw --nointeraction --cleanexit unlock --passwordfile ${cfg.bwPasswordFile} --raw)
+          export BW_SESSION=$(bw --nointeraction --cleanexit unlock --passwordfile ${cfg.bwPasswordFile} --raw)
 
           bw --nointeraction --cleanexit export --output "$OUT/passwords.json" --format encrypted_json
           bw --nointeraction --cleanexit export --output "$OUT/passwords.json" --format json
