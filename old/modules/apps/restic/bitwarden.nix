@@ -54,14 +54,15 @@ in
           export BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
           OUT=$(mktemp --directory)
 
-          bw --nointeraction --cleanexit login --apikey
-          bw --nointeraction --cleanexit status
-          export BW_SESSION=$(bw --nointeraction --cleanexit unlock --passwordfile ${cfg.bwPasswordFile} --raw)
+          alias bw='bw --nointeraction --cleanexit'
 
-          bw --nointeraction --cleanexit export --output "$OUT/passwords.json" --format encrypted_json
-          bw --nointeraction --cleanexit export --output "$OUT/passwords.json" --format json
-          bw --nointeraction --cleanexit export --output "$OUT/passwords.csv" --format csv
-          bw --nointeraction --cleanexit export --output "$OUT/passwords.zip" --format zip
+          bw login --apikey
+          export BW_SESSION=$(bw unlock --passwordfile ${cfg.bwPasswordFile} --raw)
+
+          bw export --output "$OUT/passwords.zip" --format zip
+          bw export --output "$OUT/passwords.csv" --format csv
+          bw export --output "$OUT/passwords.json" --format json
+          bw export --output "$OUT/passwords_encrypted.json" --format encrypted_json
 
           bw lock
           bw logout
