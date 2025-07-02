@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (extraLib) mkBoolDefaultFalse writeNushellScript;
+  inherit (extraLib) mkBoolDefaultFalse;
   inherit (lib)
     options
     types

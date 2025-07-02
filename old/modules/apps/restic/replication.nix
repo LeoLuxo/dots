@@ -189,7 +189,10 @@ in
               # Forget
             '';
 
-          path = [ pkgs.restic ];
+          path = [
+            pkgs.restic
+            pkgs.sshpass
+          ];
 
           serviceConfig = {
             Type = "oneshot";
