@@ -72,6 +72,11 @@ in
       default = { };
     };
 
+    notifyOnFail = options.mkOption {
+      type = types.bool;
+      default = true;
+    };
+
     # replications = options.mkOption {
     #   type = types.attrsOf (
     #     types.submodule {
@@ -135,6 +140,8 @@ in
               Type = "oneshot";
               User = "root";
             };
+
+            onFailure = lib.mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed-notification.service" ];
           };
 
           timers."restic-autobackup-${name}" = {
@@ -148,6 +155,24 @@ in
 
             # https://nixos.wiki/wiki/Systemd/Timers
             # https://wiki.archlinux.org/title/Systemd/Timers
+          };
+
+          services."restic-autobackup-${name}-failed-notification" = lib.mkIf cfg.notifyOnFail {
+            enable = true;
+            description = "Notify on failed backup for ${name}";
+            serviceConfig = {
+              Type = "oneshot";
+              User = config.my.system.user.name;
+            };
+
+            # required for notify-send
+            environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/%U/bus";
+
+            script = ''
+              ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+                "Backup failed for '${name}'" \
+                "$(journalctl -u restic-autobackup-${name} -n 5 -o cat)"
+            '';
           };
 
         }) cfg.backups
