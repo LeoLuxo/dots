@@ -168,12 +168,12 @@ in
                   "";
 
               localCopiesCommands = lib.mapAttrsToList (_: localRepo: ''
-                restic --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile} --repo ${localRepo.path} --password-file ${localRepo.passwordFile}
+                restic copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile} --repo ${localRepo.path} --password-file ${localRepo.passwordFile}
               '') cfg.replication.localRepos;
 
               remoteCopiesCommands = lib.mapAttrsToList (_: remoteRepo: ''
                 ADDRESS=$(cat ${remoteRepo.remoteAddressFile})
-                restic -o sftp.command="sshpass -f ${remoteRepo.remotePasswordFile} ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path}--password-file ${remoteRepo.passwordFile}
+                restic -o sftp.command="sshpass -f ${remoteRepo.remotePasswordFile} ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
               '') cfg.replication.remoteRepos;
             in
             ''
