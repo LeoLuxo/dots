@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sudo echo "Running as superuser"
+
 sizeBefore=$(du -h -s /nix/store)
 
 # Clean up old NixOS generations and garbage-collect the nix store
@@ -11,5 +13,6 @@ sudo nix-store --optimise
 
 sizeAfter=$(du -h -s /nix/store)
 
+echo
 echo "Before: $sizeBefore"
 echo "Afer:   $sizeAfter"
