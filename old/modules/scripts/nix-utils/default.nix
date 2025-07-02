@@ -160,7 +160,7 @@ in
           nxr = "nx-rebuild";
 
           nx-edit = "nx-code";
-          nx-search = "nh search --limit 4";
+          # nx-search = "nh search --limit 4";
         };
       };
     };
