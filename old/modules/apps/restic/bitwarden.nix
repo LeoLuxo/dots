@@ -48,6 +48,8 @@ in
     modules.mkIf cfg.enable {
       systemd.services."restic-bitwarden" = {
         script = ''
+          rm -rf "/root/.config/Bitwarden CLI"
+
           BW_CLIENTID=$(cat ${cfg.bwClientIDFile})
           BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
           OUT=$(mktemp --directory)
@@ -66,6 +68,7 @@ in
           rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
           rm -rf "$OUT"
+          rm -rf "/root/.config/Bitwarden CLI"
         '';
 
         path = [
