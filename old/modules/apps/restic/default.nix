@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  constants,
   lib,
   extraLib,
   ...
@@ -72,6 +71,28 @@ in
       );
       default = { };
     };
+
+    # replications = options.mkOption {
+    #   type = types.attrsOf (
+    #     types.submodule {
+    #       options = {
+    #         path = options.mkOption {
+    #           type = types.path;
+    #         };
+
+    #         timer = options.mkOption {
+    #           type = types.str;
+    #         };
+
+    #         randomDelay = options.mkOption {
+    #           type = types.nullOr types.str;
+    #           default = null;
+    #         };
+    #       };
+    #     }
+    #   );
+    #   default = { };
+    # };
   };
 
   config =
@@ -94,18 +115,22 @@ in
       };
 
       systemd.services = lib.mapAttrs' (
-        name: backup:
-        lib.nameValuePair "restic-autobackup-${name}" {
+        backupName: backupCfg:
+        lib.nameValuePair "restic-autobackup-${backupName}" {
           script =
             let
               tags =
-                if lists.length backup.tags > 0 then ''--tag ${strings.concatStringsSep "," backup.tags}'' else "";
-              displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
-              label = if backup.label != null then ''--label "${backup.label}"'' else "";
+                if lists.length backupCfg.tags > 0 then
+                  ''--tag ${strings.concatStringsSep "," backupCfg.tags}''
+                else
+                  "";
+              displayPath =
+                if backupCfg.displayPath != null then ''--as-path "${backupCfg.displayPath}"'' else "";
+              label = if backupCfg.label != null then ''--label "${backupCfg.label}"'' else "";
             in
             ''
               # Running as root so we can read the password file directly
-              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backupCfg.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
             '';
 
           path = [ pkgs.rustic ];
@@ -134,8 +159,8 @@ in
       ) cfg.backups;
 
       environment.variables = {
-        # RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
-        # RESTIC_STORAGE_BOX_PWD_FILE = config.age.secrets."restic/storage-box-pwd".path;
+        RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
+        RESTIC_STORAGE_BOX_PWD_FILE = config.age.secrets."restic/storage-box-pwd".path;
 
         # RESTIC_REPO_HOT = constants.resticRepoHot;
         # RESTIC_REPO_COLD = constants.resticRepoCold or "";
