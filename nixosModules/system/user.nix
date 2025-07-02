@@ -23,6 +23,8 @@ in
 
     home = mkOptDefault "the home folder" types.path "/home/${cfg.name}";
 
+    uid = mkOptDefault "the user id" types.int 1000;
+
     passwordFile = mkOptDefault "the hashed password file" (types.nullOr types.path) (
       # if config.secrets.enable then config.age.secrets."userpwds/${hostname}".path else null
       config.age.secrets."userpwds/${hostname}".path
@@ -44,6 +46,7 @@ in
         isNormalUser = true;
         hashedPasswordFile = lib.mkIf (cfg.passwordFile != null) cfg.passwordFile;
         extraGroups = [ "wheel" ] ++ cfg.extraGroups;
+        uid = cfg.uid;
       };
     };
 

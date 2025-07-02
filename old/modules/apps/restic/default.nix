@@ -165,8 +165,8 @@ in
               User = config.my.system.user.name;
             };
 
-            # required for notify-send
-            environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/%U/bus";
+            # Required for notify-send
+            environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
 
             script = ''
               ${pkgs.libnotify}/bin/notify-send --urgency=critical \
