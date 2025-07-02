@@ -16,7 +16,7 @@ let
 in
 
 {
-  options.restic.gameSavesBackup = {
+  options.restic.backupPresets.gameSaves = {
     enable = mkBoolDefaultFalse;
 
     timer = options.mkOption {
@@ -31,7 +31,7 @@ in
 
   config =
     let
-      cfg = config.restic.gameSavesBackup;
+      cfg = config.restic.backupPresets.gameSaves;
     in
     modules.mkIf cfg.enable {
       systemd.services."restic-gamesaves" = {
