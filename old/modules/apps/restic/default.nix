@@ -114,49 +114,44 @@ in
         };
       };
 
-      systemd.services = lib.mapAttrs' (
-        backupName: backupCfg:
-        lib.nameValuePair "restic-autobackup-${backupName}" {
-          script =
-            let
-              tags =
-                if lists.length backupCfg.tags > 0 then
-                  ''--tag ${strings.concatStringsSep "," backupCfg.tags}''
-                else
-                  "";
-              displayPath =
-                if backupCfg.displayPath != null then ''--as-path "${backupCfg.displayPath}"'' else "";
-              label = if backupCfg.label != null then ''--label "${backupCfg.label}"'' else "";
-            in
-            ''
-              # Running as root so we can read the password file directly
-              rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backupCfg.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
-            '';
+      systemd = lib.mkMerge (
+        lib.mapAttrsToList (name: backup: {
+          services."restic-autobackup-${name}" = {
+            script =
+              let
+                tags =
+                  if lists.length backup.tags > 0 then ''--tag ${strings.concatStringsSep "," backup.tags}'' else "";
+                displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
+                label = if backup.label != null then ''--label "${backup.label}"'' else "";
+              in
+              ''
+                # Running as root so we can read the password file directly
+                rustic --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+              '';
 
-          path = [ pkgs.rustic ];
+            path = [ pkgs.rustic ];
 
-          serviceConfig = {
-            Type = "oneshot";
-            User = "root";
-          };
-        }
-      ) cfg.backups;
-
-      systemd.timers = lib.mapAttrs' (
-        name: backup:
-        lib.nameValuePair "restic-autobackup-${name}" {
-          wantedBy = [ "timers.target" ];
-          timerConfig = {
-            OnCalendar = backup.timer;
-            Persistent = true;
-            Unit = "restic-autobackup-${name}.service";
-            RandomizedDelaySec = modules.mkIf (backup.randomDelay != null) backup.randomDelay;
+            serviceConfig = {
+              Type = "oneshot";
+              User = "root";
+            };
           };
 
-          # https://nixos.wiki/wiki/Systemd/Timers
-          # https://wiki.archlinux.org/title/Systemd/Timers
-        }
-      ) cfg.backups;
+          timers."restic-autobackup-${name}" = {
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+              OnCalendar = backup.timer;
+              Persistent = true;
+              Unit = "restic-autobackup-${name}.service";
+              RandomizedDelaySec = modules.mkIf (backup.randomDelay != null) backup.randomDelay;
+            };
+
+            # https://nixos.wiki/wiki/Systemd/Timers
+            # https://wiki.archlinux.org/title/Systemd/Timers
+          };
+
+        }) cfg.backups
+      );
 
       environment.variables = {
         RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
