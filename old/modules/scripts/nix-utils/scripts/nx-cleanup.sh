@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sizeBefore=$(du -h -s /nix/store)
+
 # Clean up old NixOS generations and garbage-collect the nix store
 nh clean all --keep 10 --keep-since 30d
 # sudo nix-collect-garbage -d --delete-older-than 2d
@@ -7,4 +9,7 @@ nh clean all --keep 10 --keep-since 30d
 # Hard link nix store
 sudo nix-store --optimise
 
-du -h -s /nix/store
+sizeAfter=$(du -h -s /nix/store)
+
+echo "Before: $sizeBefore"
+echo "Afer:   $sizeAfter"
