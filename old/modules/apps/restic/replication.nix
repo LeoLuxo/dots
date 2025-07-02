@@ -231,9 +231,25 @@ in
           '';
         };
 
-        # home-manager.users.${config.my.system.user.name}.home.shellAliases = lib.mkMerge (
-        #   (lib.mapAttrsToList (name: localRepo: { }) cfg.replication.localRepos)
-        # );
+        home-manager.users.${config.my.system.user.name}.home.shellAliases = lib.mkMerge (
+          # Add aliases for each of the extra local repos
+          (lib.mapAttrsToList (name: localRepo: {
+            "restic-local-${name}" = ''
+              RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile})
+              restic --repo ${localRepo.path}
+            '';
+          }) cfg.replication.localRepos)
+
+          # Add aliases for each of the extra remote repos
+          ++ (lib.mapAttrsToList (name: remoteRepo: {
+            "restic-remote-${name}" = ''
+              ADDRESS=$(sudo cat ${remoteRepo.remoteAddressFile})
+              RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile})
+              SSHPASS=$(sudo cat ${remoteRepo.remotePasswordFile})
+              restic -o sftp.command="sshpass -v -e ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path}
+            '';
+          }) cfg.replication.remoteRepos)
+        );
 
         # {
         #   # Add aliases for the main repo
