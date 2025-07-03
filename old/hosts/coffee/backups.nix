@@ -131,6 +131,17 @@
         remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
         privateKey = config.my.system.keys.keys.host.private;
       };
+
+      forget = {
+        enable = true;
+        prune = true;
+
+        keepWithin = "1d";
+        keepWithinHourly = "7d";
+        keepWithinDaily = "1m";
+        keepWithinWeekly = "1y";
+        keepMonthly = "unlimited";
+      };
     };
   };
 }
