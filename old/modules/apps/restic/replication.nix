@@ -172,9 +172,7 @@ in
               '') cfg.replication.localRepos;
 
               remoteCopiesCommands = lib.mapAttrsToList (_: remoteRepo: ''
-                ADDRESS=$(cat ${remoteRepo.remoteAddressFile})
-
-                restic -o sftp.command="sshpass -v -f ${remoteRepo.remotePasswordFile} ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
+                ADDRESS=$(cat ${remoteRepo.remoteAddressFile}) restic -o sftp.command="sshpass -f ${remoteRepo.remotePasswordFile} ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
               '') cfg.replication.remoteRepos;
             in
             ''
@@ -232,23 +230,22 @@ in
         };
 
         home-manager.users.${config.my.system.user.name}.home.shellAliases = lib.mkMerge (
-          # Add aliases for each of the extra local repos
+          # Add aliases for each of the extra local repos\
           (lib.mapAttrsToList (name: localRepo: {
             "restic-local-${name}" =
-              ''RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${localRepo.path} '';
+              ''RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.restic} --repo ${localRepo.path} '';
+
+            "rustic-local-${name}" =
+              ''RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.rustic} --repo ${localRepo.path} '';
           }) cfg.replication.localRepos)
 
           # Add aliases for each of the extra remote repos
           ++ (lib.mapAttrsToList (name: remoteRepo: {
             "restic-remote-${name}" =
-              ''ADDRESS=$(sudo cat ${remoteRepo.remoteAddressFile}) RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) SSHPASS=$(sudo cat ${remoteRepo.remotePasswordFile}) restic -o sftp.command="sshpass -v -e ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} '';
+              ''ADDRESS=$(sudo cat ${remoteRepo.remoteAddressFile}) RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) SSHPASS=$(sudo cat ${remoteRepo.remotePasswordFile}) restic -o sftp.command="sshpass -e ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} '';
+
+            # Can't have rustic alias as it doesn't have the -o flag
           }) cfg.replication.remoteRepos)
         );
-
-        # {
-        #   # Add aliases for the main repo
-        #   restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
-        #   rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
-        # };
       };
 }

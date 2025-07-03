@@ -58,6 +58,16 @@ in
               default = null;
             };
 
+            exclude = options.mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
+
+            excludeIgnoreCase = options.mkOption {
+              type = types.listOf types.str;
+              default = [ ];
+            };
+
             tags = options.mkOption {
               type = types.listOf types.str;
               default = [ ];
@@ -93,8 +103,8 @@ in
       home-manager.users.${config.my.system.user.name} = {
         home.shellAliases = {
           # Add aliases for the main repo
-          restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo ${cfg.repo}";
-          rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) rustic --repo ${cfg.repo}";
+          restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.restic} --repo ${cfg.repo}";
+          rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.rustic} --repo ${cfg.repo}";
         };
       };
 
@@ -106,12 +116,20 @@ in
               let
                 tags =
                   if lists.length backup.tags > 0 then ''--tag ${strings.concatStringsSep "," backup.tags}'' else "";
+
                 displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
+
                 label = if backup.label != null then ''--label "${backup.label}"'' else "";
+
+                exclusions = lib.concatMapStringsSep " " (glob: ''--glob "${glob}"'') backup.exclude;
+
+                exclusionsIgnoreCase = lib.concatMapStringsSep " " (
+                  iglob: ''--iglob "${iglob}"''
+                ) backup.excludeIgnoreCase;
               in
               ''
                 # Running as root so we can read the password file directly
-                rustic --no-progress --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+                rustic --no-progress --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${exclusions} ${exclusionsIgnoreCase} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
               '';
 
             path = [ pkgs.rustic ];
@@ -158,13 +176,5 @@ in
 
         }) cfg.backups
       );
-
-      environment.variables = {
-        RESTIC_STORAGE_BOX_ADDR_FILE = config.age.secrets."restic/storage-box-addr".path;
-        RESTIC_STORAGE_BOX_PWD_FILE = config.age.secrets."restic/storage-box-pwd".path;
-
-        # RESTIC_REPO_HOT = constants.resticRepoHot;
-        # RESTIC_REPO_COLD = constants.resticRepoCold or "";
-      };
     };
 }
