@@ -12,6 +12,16 @@
     notifyOnFail = true;
 
     backups = {
+      "home" = {
+        timer = "hourly";
+        randomDelay = "15m";
+
+        label = "Home";
+        path = config.my.system.user.home;
+        exclude = [ ".local/share/Steam/steamapps" ];
+        tags = [ "home" ];
+      };
+
       "obsidian" = {
         timer = "*:0/15"; # every 15 minutes
 
