@@ -11,6 +11,13 @@
     passwordFile = config.age.secrets."restic/${hostname}-pwd".path;
     notifyOnFail = true;
 
+    periodicChecks = {
+      timer = "0/2:00"; # every two hours
+      randomDelay = "2h";
+      readData = "5G";
+      cleanupCache = true;
+    };
+
     backups = {
       "home" = {
         timer = "hourly";
