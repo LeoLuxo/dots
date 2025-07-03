@@ -173,7 +173,7 @@ in
 
               # ADDRESS=$(cat ${remoteRepo.remoteAddressFile}) restic -o sftp.command="sshpass -f ${remoteRepo.remotePasswordFile} ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
               remoteCopiesCommands = lib.mapAttrsToList (_: remoteRepo: ''
-                restic --repo sftp:$(sudo cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i "${remoteRepo.privateKey}" -o StrictHostKeyChecking=no' --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
+                restic --repo sftp:$(sudo cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
               '') cfg.replication.remoteRepos;
             in
             ''
@@ -243,7 +243,7 @@ in
           # Add aliases for each of the extra remote repos
           ++ (lib.mapAttrsToList (name: remoteRepo: {
             "restic-remote-${name}" =
-              ''RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo sftp:$(sudo cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i "${remoteRepo.privateKey}" -o StrictHostKeyChecking=no' '';
+              ''RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo sftp:$(sudo cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' '';
 
             # Can't have rustic alias as it doesn't have the -o flag
           }) cfg.replication.remoteRepos)
