@@ -178,16 +178,16 @@ in
               '') cfg.replication.remoteRepos;
             in
             ''
-              # Perform checks
+              echo Performing checks
               ${checkCommand}
 
-              # Perform local copies
+              echo Performing local copies
               ${lib.concatStringsSep "\n" localCopiesCommands}
 
-              # Perform remote copies
+              echo Performing remote copies
               ${lib.concatStringsSep "\n" remoteCopiesCommands}
 
-              # Forget
+              echo Forgetting snapshots
             '';
 
           path = [
