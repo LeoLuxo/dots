@@ -61,6 +61,8 @@ in
             ];
             binFolder = false;
           };
+
+          onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-ludusavi-failed.service" ];
         };
       };
 
@@ -72,6 +74,23 @@ in
           Unit = "restic-ludusavi.service";
           RandomizedDelaySec = modules.mkIf (cfg.randomDelay != null) cfg.randomDelay;
         };
+      };
+
+      systemd.services."restic-ludusavi-failed" = lib.mkIf config.restic.notifyOnFail {
+        enable = true;
+        serviceConfig = {
+          Type = "oneshot";
+          User = config.my.system.user.name;
+        };
+
+        # Required for notify-send
+        environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
+
+        script = ''
+          ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+            "Restic ludusavi backup failed" \
+            "$(journalctl -u restic-ludusavi-failed -n 5 -o cat)"
+        '';
       };
     };
 }
