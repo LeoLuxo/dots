@@ -53,19 +53,19 @@ in
           OUT=$(mktemp --directory)
 
           # Cleanexit makes it so the login and unlock commands don't error out if bitwarden is already logged-in or unlocked
-          alias bw='bw --nointeraction --cleanexit'
+          bwclean='bw --nointeraction --cleanexit'
 
-          bw login --apikey
-          export BW_SESSION=$(bw unlock --passwordfile ${cfg.bwPasswordFile} --raw)
+          $bwclean login --apikey
+          export BW_SESSION=$($bwclean unlock --passwordfile ${cfg.bwPasswordFile} --raw)
 
-          bw export --output "$OUT/passwords.zip" --format zip
-          bw export --output "$OUT/passwords.csv" --format csv
-          bw export --output "$OUT/passwords.json" --format json
-          bw export --output "$OUT/passwords_encrypted.json" --format encrypted_json
+          $bwclean export --output "$OUT/passwords.zip" --format zip
+          $bwclean export --output "$OUT/passwords.csv" --format csv
+          $bwclean export --output "$OUT/passwords.json" --format json
+          $bwclean export --output "$OUT/passwords_encrypted.json" --format encrypted_json
 
-          bw lock
+          $bwclean lock
           # Don't log out because otherwise I keep getting emails about a new login on every back up -.-
-          # bw logout
+          # $bwclean logout
           unset BW_SESSION
           unset BW_CLIENTID
           unset BW_CLIENTSECRET
