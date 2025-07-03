@@ -171,10 +171,35 @@ in
                 restic copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile} --repo ${localRepo.path} --password-file ${localRepo.passwordFile}
               '') cfg.replication.localRepos;
 
-              # ADDRESS=$(cat ${remoteRepo.remoteAddressFile}) restic -o sftp.command="sshpass -f ${remoteRepo.remotePasswordFile} ssh -o StrictHostKeyChecking=no -p${builtins.toString remoteRepo.remotePort} $ADDRESS -s sftp" -r sftp:$ADDRESS:${remoteRepo.path} --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
               remoteCopiesCommands = lib.mapAttrsToList (_: remoteRepo: ''
                 restic --repo sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
               '') cfg.replication.remoteRepos;
+
+              forgetCommand =
+                let
+                  cfgf = cfg.replication.forget;
+                in
+                if cfgf.enable then
+                  ''
+                    restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} forget --group-by host,tags
+                  ''
+                  + (if cfgf.prune then " --prune" else "")
+                  + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
+                  + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
+                  + (if cfgf.keepDaily != null then " --keep-daily ${cfgf.keepDaily}" else "")
+                  + (if cfgf.keepWeekly != null then " --keep-weekly ${cfgf.keepWeekly}" else "")
+                  + (if cfgf.keepMonthly != null then " --keep-monthly ${cfgf.keepMonthly}" else "")
+                  + (if cfgf.keepYearly != null then " --keep-yearly ${cfgf.keepYearly}" else "")
+                  + (if cfgf.keepWithin != null then " --keep-within ${cfgf.keepWithin}" else "")
+                  + (if cfgf.keepWithinHourly != null then " --keep-within-hourly ${cfgf.keepWithinHourly}" else "")
+                  + (if cfgf.keepWithinDaily != null then " --keep-within-daily ${cfgf.keepWithinDaily}" else "")
+                  + (if cfgf.keepWithinWeekly != null then " --keep-within-weekly ${cfgf.keepWithinWeekly}" else "")
+                  + (
+                    if cfgf.keepWithinMonthly != null then " --keep-within-monthly ${cfgf.keepWithinMonthly}" else ""
+                  )
+                  + (if cfgf.keepWithinYearly != null then " --keep-within-yearly ${cfgf.keepWithinYearly}" else "")
+                else
+                  "";
             in
             ''
               echo Performing checks
@@ -187,6 +212,7 @@ in
               ${lib.concatStringsSep "\n" remoteCopiesCommands}
 
               echo Forgetting snapshots
+              ${forgetCommand}
             '';
 
           path = [
