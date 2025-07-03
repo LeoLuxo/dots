@@ -18,10 +18,12 @@
 
         label = "Home";
         path = config.my.system.user.home;
-        exclude = [
-          "downloads"
-          ".local/share/Steam/steamapps"
-          ".cache"
+        glob = [
+          "!/home/*/downloads"
+          "!/home/*/.steam"
+          "!/home/*/.cache"
+          "!/home/*/.local/share/Trash"
+          "!/home/*/.local/share/Steam/steamapps"
         ];
         tags = [ "home" ];
       };

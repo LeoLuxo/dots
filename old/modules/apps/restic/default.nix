@@ -58,12 +58,12 @@ in
               default = null;
             };
 
-            exclude = options.mkOption {
+            glob = options.mkOption {
               type = types.listOf types.str;
               default = [ ];
             };
 
-            excludeIgnoreCase = options.mkOption {
+            iglob = options.mkOption {
               type = types.listOf types.str;
               default = [ ];
             };
@@ -114,22 +114,15 @@ in
           services."restic-autobackup-${name}" = {
             script =
               let
-                tags =
-                  if lists.length backup.tags > 0 then ''--tag ${strings.concatStringsSep "," backup.tags}'' else "";
-
+                tags = lib.concatMapStringsSep " " (x: ''--tag "${x}"'') backup.tags;
                 displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
-
                 label = if backup.label != null then ''--label "${backup.label}"'' else "";
-
-                exclusions = lib.concatMapStringsSep " " (glob: ''--glob "!${glob}"'') backup.exclude;
-
-                exclusionsIgnoreCase = lib.concatMapStringsSep " " (
-                  iglob: ''--iglob "!${iglob}"''
-                ) backup.excludeIgnoreCase;
+                globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
+                iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
               in
               ''
                 # Running as root so we can read the password file directly
-                rustic --no-progress --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${exclusions} ${exclusionsIgnoreCase} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+                rustic --no-progress --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
               '';
 
             path = [ pkgs.rustic ];
