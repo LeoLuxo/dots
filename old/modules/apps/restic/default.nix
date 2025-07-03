@@ -121,10 +121,10 @@ in
 
                 label = if backup.label != null then ''--label "${backup.label}"'' else "";
 
-                exclusions = lib.concatMapStringsSep " " (glob: ''--glob "${glob}"'') backup.exclude;
+                exclusions = lib.concatMapStringsSep " " (glob: ''--glob "!${glob}"'') backup.exclude;
 
                 exclusionsIgnoreCase = lib.concatMapStringsSep " " (
-                  iglob: ''--iglob "${iglob}"''
+                  iglob: ''--iglob "!${iglob}"''
                 ) backup.excludeIgnoreCase;
               in
               ''
