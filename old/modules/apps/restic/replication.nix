@@ -180,9 +180,7 @@ in
                   cfgf = cfg.replication.forget;
                 in
                 if cfgf.enable then
-                  ''
-                    restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} forget --group-by host,tags
-                  ''
+                  ''restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} forget --group-by host,tags ''
                   + (if cfgf.prune then " --prune" else "")
                   + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
                   + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
