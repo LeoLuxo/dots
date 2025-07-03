@@ -32,6 +32,11 @@ in
       type = types.either types.bool types.str;
       default = false;
     };
+
+    cleanupCache = options.mkOption {
+      type = types.either types.bool;
+      default = false;
+    };
   };
 
   config =
@@ -43,10 +48,11 @@ in
         let
           readData = if cfg.readData != false then "--read-data" else "";
           readDataSubset = if lib.isString cfg.readData then ''--read-data-subset "${cfg.readData}"'' else "";
+          cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
         in
         {
           script = ''
-            restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} check ${readData} ${readDataSubset}
+            restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} check ${readData} ${readDataSubset} ${cleanupCache}
           '';
 
           path = [
@@ -58,7 +64,7 @@ in
             User = "root";
           };
 
-          onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-replication-failed.service" ];
+          onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-checks-failed.service" ];
         };
 
       systemd.timers."restic-checks" = {
@@ -83,7 +89,7 @@ in
 
         script = ''
           ${pkgs.libnotify}/bin/notify-send --urgency=critical \
-            "Restic checks failed" \
+            "Restic periodic checks failed" \
             "$(journalctl -u restic-checks-failed -n 5 -o cat)"
         '';
       };
