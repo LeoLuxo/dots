@@ -70,7 +70,7 @@ in
           unset BW_CLIENTID
           unset BW_CLIENTSECRET
 
-          7z a "$OUT/passwords.7z" "$OUT/*" -p"$(sudo cat ${cfg.bwPasswordFile})"
+          7z a "$OUT/passwords.7z" "$OUT/*" -p"$(cat ${cfg.bwPasswordFile})"
 
           rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
