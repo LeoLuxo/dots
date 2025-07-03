@@ -19,9 +19,10 @@ in
 
 {
   imports = [
-    ./replication.nix
-    ./ludusavi.nix
     ./bitwarden.nix
+    ./checks.nix
+    ./ludusavi.nix
+    ./replication.nix
   ];
 
   options.restic = {
