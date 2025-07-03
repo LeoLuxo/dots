@@ -16,7 +16,7 @@ let
 in
 
 {
-  options.restic.backupPresets.gameSaves = {
+  options.restic.backupPresets.ludusavi = {
     enable = mkBoolDefaultFalse;
 
     timer = options.mkOption {
@@ -31,10 +31,10 @@ in
 
   config =
     let
-      cfg = config.restic.backupPresets.gameSaves;
+      cfg = config.restic.backupPresets.ludusavi;
     in
     modules.mkIf cfg.enable {
-      systemd.services."restic-gamesaves" = {
+      systemd.services."restic-ludusavi" = {
         serviceConfig = {
           Type = "oneshot";
           User = "root";
@@ -64,12 +64,12 @@ in
         };
       };
 
-      systemd.timers."restic-gamesaves" = {
+      systemd.timers."restic-ludusavi" = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = cfg.timer;
           Persistent = true;
-          Unit = "restic-gamesaves.service";
+          Unit = "restic-ludusavi.service";
           RandomizedDelaySec = modules.mkIf (cfg.randomDelay != null) cfg.randomDelay;
         };
       };

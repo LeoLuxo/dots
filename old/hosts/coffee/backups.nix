@@ -76,7 +76,7 @@
     };
 
     backupPresets = {
-      gameSaves = {
+      ludusavi = {
         enable = true;
         timer = "hourly";
         randomDelay = "45m";
