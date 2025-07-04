@@ -160,26 +160,44 @@ in
           script =
             let
               checkCommand =
-                if cfg.replication.performFullCheck then
-                  "restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} check --read-data"
-                else if cfg.replication.performQuickCheck then
-                  "restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} check"
+                if cfg.replication.performFullCheck || cfg.replication.performQuickCheck then
+                  # Running as user to catch errors due to files with root permissions contaminating the repo
+                  ''
+                    RESTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
+                      sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                      restic --repo ${cfg.repo} check
+                  ''
+                  + (if cfg.replication.performFullCheck then " --read-data" else "")
                 else
                   "";
 
-              localCopiesCommands = lib.mapAttrsToList (_: localRepo: ''
-                restic copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile} --repo ${localRepo.path} --password-file ${localRepo.passwordFile}
-              '') cfg.replication.localRepos;
+              localCopiesCommands = lib.mapAttrsToList (
+                _: localRepo:
+                # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
+                ''
+                  RESTIC_PASSWORD=$(cat ${localRepo.passwordFile}) \
+                  RESTIC_FROM_PASSWORD=$(cat ${cfg.passwordFile}) \
+                    sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                    restic copy --from-repo ${cfg.repo} --repo ${localRepo.path}
+                '') cfg.replication.localRepos;
 
-              remoteCopiesCommands = lib.mapAttrsToList (_: remoteRepo: ''
-                restic --repo sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' --password-file ${remoteRepo.passwordFile} copy --from-repo ${cfg.repo} --from-password-file ${cfg.passwordFile}
-              '') cfg.replication.remoteRepos;
+              remoteCopiesCommands = lib.mapAttrsToList (
+                _: remoteRepo:
+                # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
+                ''
+                  RESTIC_PASSWORD=$(cat ${remoteRepo.passwordFile}) \
+                  RESTIC_FROM_PASSWORD=$(cat ${cfg.passwordFile}) \
+                  ADDRESS=$(cat ${remoteRepo.remoteAddressFile}) \
+                    sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                    restic --repo sftp:$ADDRESS:${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' copy --from-repo ${cfg.repo}
+                '') cfg.replication.remoteRepos;
 
               forgetCommand =
                 let
                   cfgf = cfg.replication.forget;
                 in
                 if cfgf.enable then
+                  # No need to run as user here normally
                   ''restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} forget --group-by host,tags ''
                   + (if cfgf.prune then " --prune" else "")
                   + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
@@ -200,16 +218,16 @@ in
                   "";
             in
             ''
-              echo Performing checks
+              echo \n Performing checks
               ${checkCommand}
 
-              echo Performing local copies
+              echo \n Performing local copies
               ${lib.concatStringsSep "\n" localCopiesCommands}
 
-              echo Performing remote copies
+              echo \n Performing remote copies
               ${lib.concatStringsSep "\n" remoteCopiesCommands}
 
-              echo Forgetting snapshots
+              echo \n Forgetting snapshots
               ${forgetCommand}
             '';
 
@@ -217,6 +235,7 @@ in
             pkgs.restic
             pkgs.sshpass
             pkgs.openssh
+            "/run/wrappers" # for sudo
           ];
 
           serviceConfig = {
