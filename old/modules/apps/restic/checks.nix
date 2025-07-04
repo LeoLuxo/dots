@@ -51,12 +51,17 @@ in
           cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
         in
         {
+
+          # Running as user to catch errors due to files with root permissions contaminating the repo
           script = ''
-            restic --repo ${cfg.repo} --password-file ${cfg.passwordFile} check ${readData} ${readDataSubset} ${cleanupCache}
+            RESTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
+              sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+              restic --repo ${cfg.repo} check ${readData} ${readDataSubset} ${cleanupCache}
           '';
 
           path = [
             pkgs.restic
+            "/run/wrappers" # for sudo
           ];
 
           serviceConfig = {

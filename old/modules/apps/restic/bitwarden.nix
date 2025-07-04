@@ -53,7 +53,7 @@ in
           OUT=$(mktemp --directory)
 
           # Cleanexit makes it so the login and unlock commands don't error out if bitwarden is already logged-in or unlocked
-          # Also for reference, bw seems to cache logins etc in here (as root): "/root/.config/Bitwarden CLI"
+          # Also for reference, bw (when running as root) seems to cache logins etc in here: "/root/.config/Bitwarden CLI"
           bwclean='bw --nointeraction --cleanexit'
 
           $bwclean login --apikey
@@ -73,7 +73,9 @@ in
 
           7z a "$OUT/passwords.7z" "$OUT/*" -p"$(cat ${cfg.bwPasswordFile})"
 
-          rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
+          RUSTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
+            sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+            rustic --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
           rm -rf "$OUT"
         '';
@@ -82,6 +84,7 @@ in
           pkgs.bitwarden-cli
           pkgs.rustic
           pkgs.p7zip
+          "/run/wrappers" # for sudo
         ];
 
         serviceConfig = {

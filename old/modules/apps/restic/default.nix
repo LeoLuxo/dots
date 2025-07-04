@@ -9,12 +9,7 @@
 let
   inherit (extraLib) mkBoolDefaultFalse;
 
-  inherit (lib)
-    options
-    types
-    strings
-    lists
-    ;
+  inherit (lib) options types;
 in
 
 {
@@ -120,12 +115,17 @@ in
                 globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
                 iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
               in
+              # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
               ''
-                # Running as root so we can read the password file directly
-                rustic --no-progress --password-file ${cfg.passwordFile} --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+                RUSTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
+                  sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                  rustic --no-progress --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
               '';
 
-            path = [ pkgs.rustic ];
+            path = [
+              pkgs.rustic
+              "/run/wrappers" # for sudo
+            ];
 
             serviceConfig = {
               Type = "oneshot";
