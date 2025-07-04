@@ -50,8 +50,8 @@ in
               | items {|game, info|
                 let paths = $info.files | columns
 
-                RESTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
-                  sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                sudo --user=${config.my.system.user.name} --set-home \
+                  RESTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
                   rustic --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
                 $game

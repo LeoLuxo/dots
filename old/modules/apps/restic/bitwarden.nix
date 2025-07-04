@@ -73,8 +73,8 @@ in
 
           7z a "$OUT/passwords.7z" "$OUT/*" -p"$(cat ${cfg.bwPasswordFile})"
 
-          RUSTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
-            sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+          sudo --user=${config.my.system.user.name} --set-home \
+            RUSTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
             rustic --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
           rm -rf "$OUT"

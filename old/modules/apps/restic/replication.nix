@@ -163,8 +163,8 @@ in
                 if cfg.replication.performFullCheck || cfg.replication.performQuickCheck then
                   # Running as user to catch errors due to files with root permissions contaminating the repo
                   ''
-                    RESTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
-                      sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                    sudo --user=${config.my.system.user.name} --set-home \
+                      RESTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
                       restic --repo ${cfg.repo} check
                   ''
                   + (if cfg.replication.performFullCheck then " --read-data" else "")
@@ -175,9 +175,9 @@ in
                 _: localRepo:
                 # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
                 ''
-                  RESTIC_PASSWORD=$(cat ${localRepo.passwordFile}) \
-                  RESTIC_FROM_PASSWORD=$(cat ${cfg.passwordFile}) \
-                    sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                  sudo --user=${config.my.system.user.name} --set-home \
+                    RESTIC_PASSWORD=$(cat ${localRepo.passwordFile}) \
+                    RESTIC_FROM_PASSWORD=$(cat ${cfg.passwordFile}) \
                     restic copy --from-repo ${cfg.repo} --repo ${localRepo.path}
                 '') cfg.replication.localRepos;
 
@@ -185,10 +185,10 @@ in
                 _: remoteRepo:
                 # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
                 ''
-                  RESTIC_PASSWORD=$(cat ${remoteRepo.passwordFile}) \
-                  RESTIC_FROM_PASSWORD=$(cat ${cfg.passwordFile}) \
-                  ADDRESS=$(cat ${remoteRepo.remoteAddressFile}) \
-                    sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                  sudo --user=${config.my.system.user.name} --set-home \
+                    RESTIC_PASSWORD=$(cat ${remoteRepo.passwordFile}) \
+                    RESTIC_FROM_PASSWORD=$(cat ${cfg.passwordFile}) \
+                    ADDRESS=$(cat ${remoteRepo.remoteAddressFile}) \
                     restic --repo sftp:$ADDRESS:${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' copy --from-repo ${cfg.repo}
                 '') cfg.replication.remoteRepos;
 
@@ -218,16 +218,16 @@ in
                   "";
             in
             ''
-              echo \n Performing checks
+              echo Performing checks
               ${checkCommand}
 
-              echo \n Performing local copies
+              echo Performing local copies
               ${lib.concatStringsSep "\n" localCopiesCommands}
 
-              echo \n Performing remote copies
+              echo Performing remote copies
               ${lib.concatStringsSep "\n" remoteCopiesCommands}
 
-              echo \n Forgetting snapshots
+              echo Forgetting snapshots
               ${forgetCommand}
             '';
 
