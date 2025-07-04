@@ -37,36 +37,40 @@ in
       systemd.services."restic-ludusavi" = {
         serviceConfig = {
           Type = "oneshot";
-          User = "root";
+          User = config.my.system.user.name;
+          LoadCredential = [ "repoPassword:${config.restic.passwordFile}" ];
 
           ExecStart = writeNushellScript {
             name = "ludusavi-restic";
             text = ''
               # Running as user is required here as otherwise ludusavi can't find any games
-              sudo --set-home --user=${config.my.system.user.name} \
               ludusavi backup --preview --api
               | from json
               | get games
               | items {|game, info|
                 let paths = $info.files | columns
 
-                sudo --user=${config.my.system.user.name} --set-home \
-                  RESTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
-                  rustic --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
+                rustic --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
                 $game
               }
             '';
+
             deps = [
               pkgs.ludusavi
               pkgs.rustic
-              "/run/wrappers" # for sudo
             ];
+
             binFolder = false;
           };
-
-          onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-ludusavi-failed.service" ];
         };
+
+        environment = {
+          RESTIC_PASSWORD_FILE = "%d/repoPassword";
+          RUSTIC_PASSWORD_FILE = "%d/repoPassword";
+        };
+
+        onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-ludusavi-failed.service" ];
       };
 
       systemd.timers."restic-ludusavi" = {
