@@ -64,17 +64,18 @@ in
                   type = types.path;
                 };
 
-                remotePort = options.mkOption {
-                  type = types.port;
-                  default = 23;
-                };
-
                 remoteAddressFile = options.mkOption {
                   type = types.path;
                 };
 
+                remotePort = options.mkOption {
+                  type = types.nullOr types.port;
+                  default = null;
+                };
+
                 privateKey = options.mkOption {
-                  type = types.path;
+                  type = types.nullOr types.path;
+                  default = null;
                 };
               };
             }
@@ -184,13 +185,18 @@ in
               remoteCopiesCommands = lib.mapAttrsToList (
                 _: remoteRepo:
                 # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
+                let
+                  specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
+                  specifiedPort =
+                    if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
+                in
                 ''
                   sudo --user=${config.my.system.user.name} --set-home \
                     RESTIC_PASSWORD=$(cat ${remoteRepo.passwordFile}) \
                     RESTIC_FROM_PASSWORD=$(cat ${cfg.passwordFile}) \
-                    ADDRESS=$(cat ${remoteRepo.remoteAddressFile}) \
-                    restic --repo sftp:$ADDRESS:${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' copy --from-repo ${cfg.repo}
-                '') cfg.replication.remoteRepos;
+                    restic --repo sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' copy --from-repo ${cfg.repo}
+                ''
+              ) cfg.replication.remoteRepos;
 
               forgetCommand =
                 let

@@ -15,11 +15,11 @@ in
   options.my.system.keys = with lib2.options; {
     enable = lib.mkEnableOption "key management";
 
-    keys = 
-      mkAttrsSubDefault "keys accessible to the config"
+    keys =
+      mkAttrsSubDefault "key pairs accessible to the other nixos modules"
         {
-          public = mkOpt "the public key path" types.path;
-          private = mkOpt "the private key path" types.path;
+          public = mkOpt "the path of this pair's public key" types.path;
+          private = mkOpt "the path of this pair's private key" types.path;
         }
         {
           user = lib.mkIf (config.my.system.user != null) {
