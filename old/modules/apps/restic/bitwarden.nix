@@ -47,6 +47,23 @@ in
     in
     modules.mkIf cfg.enable {
       systemd.services."restic-bitwarden" = {
+        serviceConfig = {
+          Type = "oneshot";
+          User = config.my.system.user.name;
+          LoadCredential = [ "repoPassword:${config.restic.passwordFile}" ];
+        };
+
+        environment = {
+          RESTIC_PASSWORD_FILE = "%d/repoPassword";
+          RUSTIC_PASSWORD_FILE = "%d/repoPassword";
+        };
+
+        path = [
+          pkgs.bitwarden-cli
+          pkgs.rustic
+          pkgs.p7zip
+        ];
+
         script = ''
           export BW_CLIENTID=$(cat ${cfg.bwClientIDFile})
           export BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
@@ -73,24 +90,10 @@ in
 
           7z a "$OUT/passwords.7z" "$OUT/*" -p"$(cat ${cfg.bwPasswordFile})"
 
-          sudo --user=${config.my.system.user.name} --set-home \
-            RUSTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
-            rustic --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
+          rustic --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
           rm -rf "$OUT"
         '';
-
-        path = [
-          pkgs.bitwarden-cli
-          pkgs.rustic
-          pkgs.p7zip
-          "/run/wrappers" # for sudo
-        ];
-
-        serviceConfig = {
-          Type = "oneshot";
-          User = "root";
-        };
 
         onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-bitwarden-failed.service" ];
       };
