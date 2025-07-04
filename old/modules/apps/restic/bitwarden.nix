@@ -74,21 +74,20 @@ in
         script = ''
           OUT=$(mktemp --directory)
 
-          # Cleanexit makes it so the login and unlock commands don't error out if bitwarden is already logged-in or unlocked
+          # --cleanexit makes it so the login and unlock commands don't error out if bitwarden is already logged-in or unlocked
           # Also for reference, bw (when running as root) seems to cache logins etc in here: "/root/.config/Bitwarden CLI"
-          bwclean='bw --nointeraction --cleanexit'
 
-          $bwclean login --apikey
-          export BW_SESSION=$($bwclean unlock --passwordfile "$CREDENTIALS_DIRECTORY/bwPassword" --raw)
+          bw --nointeraction --cleanexit login --apikey
+          export BW_SESSION=$(bw --nointeraction --cleanexit unlock --passwordfile "$CREDENTIALS_DIRECTORY/bwPassword" --raw)
 
-          $bwclean export --output "$OUT/passwords.zip" --format zip
-          $bwclean export --output "$OUT/passwords.csv" --format csv
-          $bwclean export --output "$OUT/passwords.json" --format json
-          $bwclean export --output "$OUT/passwords_encrypted.json" --format encrypted_json
+          bw --nointeraction export --output "$OUT/passwords.zip" --format zip
+          bw --nointeraction export --output "$OUT/passwords.csv" --format csv
+          bw --nointeraction export --output "$OUT/passwords.json" --format json
+          bw --nointeraction export --output "$OUT/passwords_encrypted.json" --format encrypted_json
 
-          $bwclean lock
+          bw --nointeraction lock
           # Don't log out because otherwise I keep getting emails about a new login on every backup -.-
-          # $bwclean logout
+          # bw --nointeraction logout
           unset BW_SESSION
 
           7z a "$OUT/passwords.7z" "$OUT/*" -p"$(cat "$CREDENTIALS_DIRECTORY/bwPassword")"
