@@ -78,11 +78,8 @@ in
       ];
       environment.pathsToLink = [ "share/thumbnailers" ];
 
-      # Enable and configure the X11 windowing system.
-      services.xserver = {
-        enable = true;
-
-        # Enable the GNOME Desktop Environment.
+      # Enable the GNOME Desktop Environment.
+      services = {
         displayManager.gdm = {
           enable = true;
           wayland = true;
