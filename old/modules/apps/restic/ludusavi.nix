@@ -43,13 +43,16 @@ in
             name = "ludusavi-restic";
             text = ''
               # Running as user is required here as otherwise ludusavi can't find any games
-              sudo -H -u ${config.my.system.user.name} ludusavi backup --preview --api
+              sudo --set-home --user=${config.my.system.user.name} \
+              ludusavi backup --preview --api
               | from json
               | get games
               | items {|game, info|
                 let paths = $info.files | columns
 
-              	rustic --password-file ${config.restic.passwordFile} --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
+                RESTIC_PASSWORD=$(cat ${config.restic.passwordFile}) \
+                  sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                  rustic --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
                 $game
               }
@@ -57,7 +60,7 @@ in
             deps = [
               pkgs.ludusavi
               pkgs.rustic
-              "/run/wrappers"
+              "/run/wrappers" # for sudo
             ];
             binFolder = false;
           };
