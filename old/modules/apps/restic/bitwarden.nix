@@ -50,12 +50,19 @@ in
         serviceConfig = {
           Type = "oneshot";
           User = config.my.system.user.name;
-          LoadCredential = [ "repoPassword:${config.restic.passwordFile}" ];
+          LoadCredential = [
+            "repoPassword:${config.restic.passwordFile}"
+            "bwClientID:${cfg.bwClientIDFile}"
+            "bwClientSecret:${cfg.bwClientSecretFile}"
+            "bwPassword:${cfg.bwPasswordFile}"
+          ];
         };
 
         environment = {
           RESTIC_PASSWORD_FILE = "%d/repoPassword";
           RUSTIC_PASSWORD_FILE = "%d/repoPassword";
+          BW_CLIENTID = "%d/bwClientID";
+          BW_CLIENTSECRET = "%d/bwClientSecret";
         };
 
         path = [
@@ -65,8 +72,6 @@ in
         ];
 
         script = ''
-          export BW_CLIENTID=$(cat ${cfg.bwClientIDFile})
-          export BW_CLIENTSECRET=$(cat ${cfg.bwClientSecretFile})
           OUT=$(mktemp --directory)
 
           # Cleanexit makes it so the login and unlock commands don't error out if bitwarden is already logged-in or unlocked
@@ -74,7 +79,7 @@ in
           bwclean='bw --nointeraction --cleanexit'
 
           $bwclean login --apikey
-          export BW_SESSION=$($bwclean unlock --passwordfile ${cfg.bwPasswordFile} --raw)
+          export BW_SESSION=$($bwclean unlock --passwordfile "$CREDENTIALS_DIRECTORY/bwPassword" --raw)
 
           $bwclean export --output "$OUT/passwords.zip" --format zip
           $bwclean export --output "$OUT/passwords.csv" --format csv
@@ -85,10 +90,8 @@ in
           # Don't log out because otherwise I keep getting emails about a new login on every backup -.-
           # $bwclean logout
           unset BW_SESSION
-          unset BW_CLIENTID
-          unset BW_CLIENTSECRET
 
-          7z a "$OUT/passwords.7z" "$OUT/*" -p"$(cat ${cfg.bwPasswordFile})"
+          7z a "$OUT/passwords.7z" "$OUT/*" -p"$(cat "$CREDENTIALS_DIRECTORY/bwPassword")"
 
           rustic --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
 
