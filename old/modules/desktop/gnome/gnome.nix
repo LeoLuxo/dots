@@ -96,6 +96,9 @@ in
         };
       };
 
+      # Enable the gnome keyring
+      services.gnome.gnome-keyring.enable = true;
+
       defaults.apps.backupTerminal = lib.mkDefault "kgx";
       defaults.apps.terminal = lib.mkOverride 1050 "kgx";
 

@@ -27,10 +27,10 @@ in
             public = "${config.my.system.user.home}/.ssh/id_ed25519.pub";
           };
 
-          host = {
-            private = "/etc/ssh/ssh_host_ed25519_key";
-            public = "/etc/ssh/ssh_host_ed25519_key.pub";
-          };
+          # host = {
+          #   private = "/etc/ssh/ssh_host_ed25519_key";
+          #   public = "/etc/ssh/ssh_host_ed25519_key.pub";
+          # };
         };
   };
 
