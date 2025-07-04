@@ -54,8 +54,8 @@ in
 
           # Running as user to catch errors due to files with root permissions contaminating the repo
           script = ''
-            RESTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
-              sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+            sudo --user=${config.my.system.user.name} --set-home \
+              RESTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
               restic --repo ${cfg.repo} check ${readData} ${readDataSubset} ${cleanupCache}
           '';
 

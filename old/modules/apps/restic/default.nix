@@ -117,8 +117,8 @@ in
               in
               # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
               ''
-                RUSTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
-                  sudo --user=${config.my.system.user.name} --set-home --preserve-env \
+                sudo --user=${config.my.system.user.name} --set-home \
+                  RUSTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
                   rustic --no-progress --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
               '';
 
