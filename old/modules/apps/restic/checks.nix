@@ -44,33 +44,34 @@ in
       cfg = config.restic.periodicChecks;
     in
     modules.mkIf cfg.enable {
-      systemd.services."restic-checks" =
-        let
-          readData = if cfg.readData != false then "--read-data" else "";
-          readDataSubset = if lib.isString cfg.readData then ''--read-data-subset "${cfg.readData}"'' else "";
-          cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
-        in
-        {
+      systemd.services."restic-checks" = {
+        serviceConfig = {
+          Type = "oneshot";
+          User = config.my.system.user.name;
+          LoadCredential = [ "repoPassword:${cfg.passwordFile}" ];
+        };
 
-          # Running as user to catch errors due to files with root permissions contaminating the repo
-          script = ''
-            sudo --user=${config.my.system.user.name} --set-home \
-              RESTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
-              restic --repo ${cfg.repo} check ${readData} ${readDataSubset} ${cleanupCache}
+        environment = {
+          RESTIC_PASSWORD_FILE = "%d/repoPassword";
+          RUSTIC_PASSWORD_FILE = "%d/repoPassword";
+        };
+
+        path = [
+          pkgs.restic
+        ];
+
+        script =
+          let
+            readData = if cfg.readData != false then "--read-data" else "";
+            readDataSubset = if lib.isString cfg.readData then ''--read-data-subset "${cfg.readData}"'' else "";
+            cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
+          in
+          ''
+            restic --repo ${cfg.repo} check ${readData} ${readDataSubset} ${cleanupCache}
           '';
 
-          path = [
-            pkgs.restic
-            "/run/wrappers" # for sudo
-          ];
-
-          serviceConfig = {
-            Type = "oneshot";
-            User = "root";
-          };
-
-          onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-checks-failed.service" ];
-        };
+        onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-checks-failed.service" ];
+      };
 
       systemd.timers."restic-checks" = {
         wantedBy = [ "timers.target" ];

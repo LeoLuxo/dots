@@ -107,6 +107,22 @@ in
         lib.mapAttrsToList (name: backup: {
           # Services for each of the local backups
           services."restic-autobackup-${name}" = {
+            serviceConfig = {
+              Type = "oneshot";
+              User = config.my.system.user.name;
+              LoadCredential = [ "repoPassword:${cfg.passwordFile}" ]; # https://systemd.io/CREDENTIALS/
+            };
+
+            # %d expands to $CREDENTIALS_DIRECTORY
+            environment = {
+              RESTIC_PASSWORD_FILE = "%d/repoPassword";
+              RUSTIC_PASSWORD_FILE = "%d/repoPassword";
+            };
+
+            path = [
+              pkgs.rustic
+            ];
+
             script =
               let
                 tags = lib.concatMapStringsSep " " (x: ''--tag "${x}"'') backup.tags;
@@ -115,22 +131,9 @@ in
                 globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
                 iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
               in
-              # Read the password while still in root, but run restic/rustic as user to prevent writing root-locked files in the repo
               ''
-                sudo --user=${config.my.system.user.name} --set-home \
-                  RUSTIC_PASSWORD=$(cat ${cfg.passwordFile}) \
-                  rustic --no-progress --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+                rustic --no-progress --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
               '';
-
-            path = [
-              pkgs.rustic
-              "/run/wrappers" # for sudo
-            ];
-
-            serviceConfig = {
-              Type = "oneshot";
-              User = "root";
-            };
 
             onFailure = lib.mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed.service" ];
           };
