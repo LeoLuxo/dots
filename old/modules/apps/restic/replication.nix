@@ -180,6 +180,9 @@ in
                     "${getID name}-address:${repo.remoteAddressFile}"
                   ]) cfg.replication.remoteRepos
                 );
+
+              # Otherwise ssh won't have access to the passphrase to my key through the ssh-agent
+              ExecStartPre = "${pkgs.systemd}/bin/systemctl --user import-environment SSH_AUTH_SOCK";
             };
 
             path = [
@@ -210,10 +213,6 @@ in
                       if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
                   in
                   ''
-                    set -x
-                    echo $SSH_AUTH_SOCK
-                    set +x
-
                     restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo sftp:$(cat $CREDENTIALS_DIRECTORY/${getID name}-address):${remoteRepo.path} --password-file "$CREDENTIALS_DIRECTORY/${getID name}-password" copy --from-repo ${cfg.repo} --from-password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword"
                   ''
                 ) cfg.replication.remoteRepos;
