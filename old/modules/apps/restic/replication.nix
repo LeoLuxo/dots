@@ -209,7 +209,12 @@ in
                     specifiedPort =
                       if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
                   in
-                  ''restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo sftp:$(cat $CREDENTIALS_DIRECTORY/${getID name}-address):${remoteRepo.path} --password-file "$CREDENTIALS_DIRECTORY/${getID name}-password" copy --from-repo ${cfg.repo} --from-password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword"''
+                  ''
+                    ls $CREDENTIALS_DIRECTORY
+                    cat $CREDENTIALS_DIRECTORY/${getID name}-password
+                    cat $CREDENTIALS_DIRECTORY/${getID name}-address
+                    restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo sftp:$(cat $CREDENTIALS_DIRECTORY/${getID name}-address):${remoteRepo.path} --password-file "$CREDENTIALS_DIRECTORY/${getID name}-password" copy --from-repo ${cfg.repo} --from-password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword"
+                  ''
                 ) cfg.replication.remoteRepos;
 
                 forgetCommand =
