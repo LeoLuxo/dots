@@ -105,14 +105,14 @@
         randomDelay = "45m";
       };
 
-      bitwarden = {
-        enable = true;
-        timer = "daily";
-        randomDelay = "1h";
-        bwClientIDFile = config.age.secrets."bitwarden/client-id".path;
-        bwClientSecretFile = config.age.secrets."bitwarden/client-secret".path;
-        bwPasswordFile = config.age.secrets."bitwarden/password".path;
-      };
+      # bitwarden = {
+      #   enable = true;
+      #   timer = "daily";
+      #   randomDelay = "1h";
+      #   bwClientIDFile = config.age.secrets."bitwarden/client-id".path;
+      #   bwClientSecretFile = config.age.secrets."bitwarden/client-secret".path;
+      #   bwPasswordFile = config.age.secrets."bitwarden/password".path;
+      # };
     };
 
     replication = {
