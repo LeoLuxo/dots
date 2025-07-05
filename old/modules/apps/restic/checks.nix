@@ -45,17 +45,6 @@ in
     in
     modules.mkIf cfg.enable {
       systemd.services."restic-checks" = {
-        serviceConfig = {
-          Type = "oneshot";
-          User = config.my.system.user.name;
-          LoadCredential = [ "repoPassword:${cfg.passwordFile}" ];
-        };
-
-        environment = {
-          RESTIC_PASSWORD_FILE = "%d/repoPassword";
-          RUSTIC_PASSWORD_FILE = "%d/repoPassword";
-        };
-
         path = [
           pkgs.restic
         ];
@@ -67,7 +56,7 @@ in
             cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
           in
           ''
-            restic --repo ${cfg.repo} check ${readData} ${readDataSubset} ${cleanupCache}
+            restic --repo "${cfg.repo} "--password-file "${cfg.passwordFile}" check ${readData} ${readDataSubset} ${cleanupCache}
           '';
 
         onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-checks-failed.service" ];
@@ -84,15 +73,6 @@ in
       };
 
       systemd.services."restic-checks-failed" = lib.mkIf config.restic.notifyOnFail {
-        enable = true;
-        serviceConfig = {
-          Type = "oneshot";
-          User = config.my.system.user.name;
-        };
-
-        # Required for notify-send
-        environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
-
         script = ''
           ${pkgs.libnotify}/bin/notify-send --urgency=critical \
             "Restic periodic checks failed" \

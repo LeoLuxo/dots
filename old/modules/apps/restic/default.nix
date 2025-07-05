@@ -98,27 +98,15 @@ in
       home-manager.users.${config.my.system.user.name} = {
         home.shellAliases = {
           # Add aliases for the main repo
-          restic-main = "RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.restic} --repo ${cfg.repo}";
-          rustic-main = "RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.rustic} --repo ${cfg.repo}";
+          restic-main = ''${lib.getExe pkgs.restic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
+          rustic-main = ''${lib.getExe pkgs.rustic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
         };
       };
 
-      systemd = lib.mkMerge (
+      systemd.user = lib.mkMerge (
         lib.mapAttrsToList (name: backup: {
           # Services for each of the local backups
           services."restic-autobackup-${name}" = {
-            serviceConfig = {
-              Type = "oneshot";
-              User = config.my.system.user.name;
-              LoadCredential = [ "repoPassword:${cfg.passwordFile}" ]; # https://systemd.io/CREDENTIALS/
-            };
-
-            # %d expands to $CREDENTIALS_DIRECTORY
-            environment = {
-              RESTIC_PASSWORD_FILE = "%d/repoPassword";
-              RUSTIC_PASSWORD_FILE = "%d/repoPassword";
-            };
-
             path = [
               pkgs.rustic
             ];
@@ -132,7 +120,7 @@ in
                 iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
               in
               ''
-                rustic --no-progress --repo ${cfg.repo} backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+                rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
               '';
 
             onFailure = lib.mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed.service" ];
@@ -154,15 +142,6 @@ in
 
           # Notification services in case of failure for each of the local backups
           services."restic-autobackup-${name}-failed" = lib.mkIf cfg.notifyOnFail {
-            enable = true;
-            serviceConfig = {
-              Type = "oneshot";
-              User = config.my.system.user.name;
-            };
-
-            # Required for notify-send
-            environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
-
             script = ''
               ${pkgs.libnotify}/bin/notify-send --urgency=critical \
                 "Backup failed for '${name}'" \
