@@ -4,6 +4,19 @@
   ...
 }:
 {
+  age.secrets =
+    let
+      userPerms = {
+        owner = config.my.system.user.name;
+        group = "users";
+        mode = "400"; # read-only for owner
+      };
+    in
+    {
+      "restic/${hostname}-pwd" = userPerms;
+      "restic/storage-box-addr" = userPerms;
+    };
+
   # Setup my auto backups
   restic = rec {
     enable = true;
