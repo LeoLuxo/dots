@@ -182,7 +182,11 @@ in
                 );
 
               # Otherwise ssh won't have access to the passphrase to my key through the ssh-agent
-              ExecStartPre = "${pkgs.systemd}/bin/systemctl --user import-environment SSH_AUTH_SOCK";
+              # ExecStartPre = "${pkgs.systemd}/bin/systemctl --user import-environment SSH_AUTH_SOCK";
+            };
+
+            environment = {
+              SSH_AUTH_SOCK = "%t/keyring/ssh";
             };
 
             path = [
