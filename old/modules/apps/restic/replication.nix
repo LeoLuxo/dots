@@ -157,118 +157,86 @@ in
     lib.mkIf (cfg.enable && cfg.replication.enable)
       # Replication: periodically do checks & copy to other repos & forget old snapshots
       {
-        systemd.services."restic-replication" =
-          let
-            getID = x: lib.strings.sanitizeDerivationName x;
-          in
-          {
-            serviceConfig = {
-              Type = "oneshot";
-              User = config.my.system.user.name;
-              LoadCredential =
-                [
-                  "mainRepoPassword:${cfg.passwordFile}"
-                ]
+        systemd.user.services."restic-replication" = {
+          path = [
+            pkgs.restic
+            pkgs.sshpass
+            pkgs.openssh
+          ];
 
-                ++ lib.mapAttrsToList (
-                  name: repo: "${getID name}-password:${repo.passwordFile}"
-                ) cfg.replication.localRepos
+          script =
+            let
+              checkCommand =
+                if cfg.replication.performFullCheck || cfg.replication.performQuickCheck then
+                  ''restic --repo ${cfg.repo} --password-file "${cfg.passwordFile}" check''
+                  + (if cfg.replication.performFullCheck then " --read-data" else "")
+                else
+                  "";
 
-                ++ lib.flatten (
-                  lib.mapAttrsToList (name: repo: [
-                    "${getID name}-password:${repo.passwordFile}"
-                    "${getID name}-address:${repo.remoteAddressFile}"
-                  ]) cfg.replication.remoteRepos
-                );
+              localCopiesCommands = lib.mapAttrsToList (
+                name: localRepo:
+                ''restic --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfg.repo}" --from-password-file "${cfg.passwordFile}"''
+              ) cfg.replication.localRepos;
 
-              # Otherwise ssh won't have access to the passphrase to my key through the ssh-agent
-              # ExecStartPre = "${pkgs.systemd}/bin/systemctl --machine=${config.my.system.user.name}@.host --user import-environment SSH_AUTH_SOCK";
-            };
+              remoteCopiesCommands = lib.mapAttrsToList (
+                name: remoteRepo:
+                let
+                  specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
+                  specifiedPort =
+                    if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
+                in
+                ''
+                  set -x
+                  echo $SSH_AUTH_SOCK
+                  echo $DBUS_SESSION_BUS_ADDRESS
+                  set +x
 
-            environment = {
-              SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
-            };
+                  restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfg.repo}" --from-password-file "${cfg.passwordFile}"
+                ''
+              ) cfg.replication.remoteRepos;
 
-            path = [
-              pkgs.restic
-              pkgs.sshpass
-              pkgs.openssh
-            ];
+              forgetCommand =
+                let
+                  cfgf = cfg.replication.forget;
+                in
+                if cfgf.enable then
+                  ''restic --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" forget --group-by host,tags ''
+                  + (if cfgf.prune then " --prune" else "")
+                  + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
+                  + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
+                  + (if cfgf.keepDaily != null then " --keep-daily ${cfgf.keepDaily}" else "")
+                  + (if cfgf.keepWeekly != null then " --keep-weekly ${cfgf.keepWeekly}" else "")
+                  + (if cfgf.keepMonthly != null then " --keep-monthly ${cfgf.keepMonthly}" else "")
+                  + (if cfgf.keepYearly != null then " --keep-yearly ${cfgf.keepYearly}" else "")
+                  + (if cfgf.keepWithin != null then " --keep-within ${cfgf.keepWithin}" else "")
+                  + (if cfgf.keepWithinHourly != null then " --keep-within-hourly ${cfgf.keepWithinHourly}" else "")
+                  + (if cfgf.keepWithinDaily != null then " --keep-within-daily ${cfgf.keepWithinDaily}" else "")
+                  + (if cfgf.keepWithinWeekly != null then " --keep-within-weekly ${cfgf.keepWithinWeekly}" else "")
+                  + (
+                    if cfgf.keepWithinMonthly != null then " --keep-within-monthly ${cfgf.keepWithinMonthly}" else ""
+                  )
+                  + (if cfgf.keepWithinYearly != null then " --keep-within-yearly ${cfgf.keepWithinYearly}" else "")
+                else
+                  "";
+            in
+            ''
+              echo Performing checks
+              ${checkCommand}
 
-            script =
-              let
-                checkCommand =
-                  if cfg.replication.performFullCheck || cfg.replication.performQuickCheck then
-                    ''restic --repo ${cfg.repo} --password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword" check''
-                    + (if cfg.replication.performFullCheck then " --read-data" else "")
-                  else
-                    "";
+              echo Performing local copies
+              ${lib.concatStringsSep "\n" localCopiesCommands}
 
-                localCopiesCommands = lib.mapAttrsToList (
-                  name: localRepo:
-                  ''restic --repo ${localRepo.path} --password-file "$CREDENTIALS_DIRECTORY/${getID name}-password" copy --from-repo ${cfg.repo} --from-password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword"''
-                ) cfg.replication.localRepos;
+              echo Performing remote copies
+              ${lib.concatStringsSep "\n" remoteCopiesCommands}
 
-                remoteCopiesCommands = lib.mapAttrsToList (
-                  name: remoteRepo:
-                  let
-                    specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
-                    specifiedPort =
-                      if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
-                  in
-                  ''
-                    set -x
-                    echo $SSH_AUTH_SOCK
-                    ls $CREDENTIALS_DIRECTORY
-                    cat $CREDENTIALS_DIRECTORY/${getID name}-password
-                    set +x
+              echo Forgetting snapshots
+              ${forgetCommand}
+            '';
 
-                    restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo sftp:$(cat $CREDENTIALS_DIRECTORY/${getID name}-address):${remoteRepo.path} --password-file "$CREDENTIALS_DIRECTORY/${getID name}-password" copy --from-repo ${cfg.repo} --from-password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword"
-                  ''
-                ) cfg.replication.remoteRepos;
+          onFailure = lib.mkIf cfg.notifyOnFail [ "restic-replication-failed.service" ];
+        };
 
-                forgetCommand =
-                  let
-                    cfgf = cfg.replication.forget;
-                  in
-                  if cfgf.enable then
-                    ''restic --repo ${cfg.repo} --password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword" forget --group-by host,tags ''
-                    + (if cfgf.prune then " --prune" else "")
-                    + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
-                    + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
-                    + (if cfgf.keepDaily != null then " --keep-daily ${cfgf.keepDaily}" else "")
-                    + (if cfgf.keepWeekly != null then " --keep-weekly ${cfgf.keepWeekly}" else "")
-                    + (if cfgf.keepMonthly != null then " --keep-monthly ${cfgf.keepMonthly}" else "")
-                    + (if cfgf.keepYearly != null then " --keep-yearly ${cfgf.keepYearly}" else "")
-                    + (if cfgf.keepWithin != null then " --keep-within ${cfgf.keepWithin}" else "")
-                    + (if cfgf.keepWithinHourly != null then " --keep-within-hourly ${cfgf.keepWithinHourly}" else "")
-                    + (if cfgf.keepWithinDaily != null then " --keep-within-daily ${cfgf.keepWithinDaily}" else "")
-                    + (if cfgf.keepWithinWeekly != null then " --keep-within-weekly ${cfgf.keepWithinWeekly}" else "")
-                    + (
-                      if cfgf.keepWithinMonthly != null then " --keep-within-monthly ${cfgf.keepWithinMonthly}" else ""
-                    )
-                    + (if cfgf.keepWithinYearly != null then " --keep-within-yearly ${cfgf.keepWithinYearly}" else "")
-                  else
-                    "";
-              in
-              ''
-                echo Performing checks
-                ${checkCommand}
-
-                echo Performing local copies
-                ${lib.concatStringsSep "\n" localCopiesCommands}
-
-                echo Performing remote copies
-                ${lib.concatStringsSep "\n" remoteCopiesCommands}
-
-                echo Forgetting snapshots
-                ${forgetCommand}
-              '';
-
-            onFailure = lib.mkIf cfg.notifyOnFail [ "restic-replication-failed.service" ];
-          };
-
-        systemd.timers."restic-replication" = {
+        systemd.user.timers."restic-replication" = {
           wantedBy = [ "timers.target" ];
           timerConfig = {
             OnCalendar = cfg.replication.timer;
@@ -278,15 +246,9 @@ in
           };
         };
 
-        systemd.services."restic-replication-failed" = lib.mkIf cfg.notifyOnFail {
-          enable = true;
-          serviceConfig = {
-            Type = "oneshot";
-            User = config.my.system.user.name;
-          };
-
+        systemd.user.services."restic-replication-failed" = lib.mkIf cfg.notifyOnFail {
           # Required for notify-send
-          environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
+          # environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
 
           script = ''
             ${pkgs.libnotify}/bin/notify-send --urgency=critical \
