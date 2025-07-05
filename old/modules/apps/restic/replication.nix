@@ -157,14 +157,14 @@ in
     lib.mkIf (cfg.enable && cfg.replication.enable)
       # Replication: periodically do checks & copy to other repos & forget old snapshots
       {
-        systemd.user.services."restic-replication" =
+        systemd.services."restic-replication" =
           let
             getID = x: lib.strings.sanitizeDerivationName x;
           in
           {
             serviceConfig = {
               Type = "oneshot";
-              # User = config.my.system.user.name;
+              User = config.my.system.user.name;
               LoadCredential =
                 [
                   "mainRepoPassword:${cfg.passwordFile}"
@@ -185,9 +185,9 @@ in
               # ExecStartPre = "${pkgs.systemd}/bin/systemctl --machine=${config.my.system.user.name}@.host --user import-environment SSH_AUTH_SOCK";
             };
 
-            # environment = {
-            #   SSH_AUTH_SOCK = "%t/keyring/ssh";
-            # };
+            environment = {
+              SSH_AUTH_SOCK = "/run/user/1000/keyring/ssh";
+            };
 
             path = [
               pkgs.restic
