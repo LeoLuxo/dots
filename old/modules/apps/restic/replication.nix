@@ -186,7 +186,7 @@ in
             };
 
             environment = {
-              SSH_AUTH_SOCK = "%t/keyring/ssh";
+              SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
             };
 
             path = [
