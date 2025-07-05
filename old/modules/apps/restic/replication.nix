@@ -157,14 +157,14 @@ in
     lib.mkIf (cfg.enable && cfg.replication.enable)
       # Replication: periodically do checks & copy to other repos & forget old snapshots
       {
-        systemd.services."restic-replication" =
+        systemd.user.services."restic-replication" =
           let
             getID = x: lib.strings.sanitizeDerivationName x;
           in
           {
             serviceConfig = {
               Type = "oneshot";
-              User = config.my.system.user.name;
+              # User = config.my.system.user.name;
               LoadCredential =
                 [
                   "mainRepoPassword:${cfg.passwordFile}"
@@ -182,11 +182,11 @@ in
                 );
 
               # Otherwise ssh won't have access to the passphrase to my key through the ssh-agent
-              ExecStartPre = "${pkgs.systemd}/bin/systemctl --machine=${config.my.system.user.name}@.host --user import-environment SSH_AUTH_SOCK";
+              # ExecStartPre = "${pkgs.systemd}/bin/systemctl --machine=${config.my.system.user.name}@.host --user import-environment SSH_AUTH_SOCK";
             };
 
             # environment = {
-            #   SSH_AUTH_SOCK = "$XDG_RUNTIME_DIR/keyring/ssh";
+            #   SSH_AUTH_SOCK = "%t/keyring/ssh";
             # };
 
             path = [
@@ -219,6 +219,8 @@ in
                   ''
                     set -x
                     echo $SSH_AUTH_SOCK
+                    ls $CREDENTIALS_DIRECTORY
+                    cat $CREDENTIALS_DIRECTORY/${getID name}-password
                     set +x
 
                     restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo sftp:$(cat $CREDENTIALS_DIRECTORY/${getID name}-address):${remoteRepo.path} --password-file "$CREDENTIALS_DIRECTORY/${getID name}-password" copy --from-repo ${cfg.repo} --from-password-file "$CREDENTIALS_DIRECTORY/mainRepoPassword"
