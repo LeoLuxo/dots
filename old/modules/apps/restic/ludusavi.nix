@@ -34,12 +34,8 @@ in
       cfg = config.restic.backupPresets.ludusavi;
     in
     modules.mkIf cfg.enable {
-      systemd.services."restic-ludusavi" = {
+      systemd.user.services."restic-ludusavi" = {
         serviceConfig = {
-          Type = "oneshot";
-          User = config.my.system.user.name;
-          LoadCredential = [ "repoPassword:${config.restic.passwordFile}" ];
-
           ExecStart = writeNushellScript {
             name = "ludusavi-restic";
             text = ''
@@ -50,7 +46,7 @@ in
               | items {|game, info|
                 let paths = $info.files | columns
 
-                rustic --repo ${config.restic.repo} backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
+                rustic --repo "${config.restic.repo}" --password-file "${config.restic.passwordFile}" backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
                 
                 $game
               }
@@ -65,15 +61,10 @@ in
           };
         };
 
-        environment = {
-          RESTIC_PASSWORD_FILE = "%d/repoPassword";
-          RUSTIC_PASSWORD_FILE = "%d/repoPassword";
-        };
-
         onFailure = lib.mkIf config.restic.notifyOnFail [ "restic-ludusavi-failed.service" ];
       };
 
-      systemd.timers."restic-ludusavi" = {
+      systemd.user.timers."restic-ludusavi" = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = cfg.timer;
@@ -83,16 +74,7 @@ in
         };
       };
 
-      systemd.services."restic-ludusavi-failed" = lib.mkIf config.restic.notifyOnFail {
-        enable = true;
-        serviceConfig = {
-          Type = "oneshot";
-          User = config.my.system.user.name;
-        };
-
-        # Required for notify-send
-        environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
-
+      systemd.user.services."restic-ludusavi-failed" = lib.mkIf config.restic.notifyOnFail {
         script = ''
           ${pkgs.libnotify}/bin/notify-send --urgency=critical \
             "Restic ludusavi backup failed" \

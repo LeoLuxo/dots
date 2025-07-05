@@ -186,12 +186,7 @@ in
                     if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
                 in
                 ''
-                  set -x
-                  echo $SSH_AUTH_SOCK
-                  echo $DBUS_SESSION_BUS_ADDRESS
-                  set +x
-
-                  restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfg.repo}" --from-password-file "${cfg.passwordFile}"
+                  restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfg.repo}" --from-password-file "${cfg.passwordFile}"
                 ''
               ) cfg.replication.remoteRepos;
 
@@ -247,9 +242,6 @@ in
         };
 
         systemd.user.services."restic-replication-failed" = lib.mkIf cfg.notifyOnFail {
-          # Required for notify-send
-          # environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
-
           script = ''
             ${pkgs.libnotify}/bin/notify-send --urgency=critical \
               "Restic replication failed" \
@@ -261,16 +253,16 @@ in
           # Add aliases for each of the extra local repos
           (lib.mapAttrsToList (name: localRepo: {
             "restic-local-${name}" =
-              ''RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.restic} --repo "${localRepo.path}"'';
+              ''${lib.getExe pkgs.restic} --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}"'';
 
             "rustic-local-${name}" =
-              ''RUSTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) ${lib.getExe pkgs.rustic} --repo "${localRepo.path}"'';
+              ''${lib.getExe pkgs.rustic} --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}"'';
           }) cfg.replication.localRepos)
 
           # Add aliases for each of the extra remote repos
           ++ (lib.mapAttrsToList (name: remoteRepo: {
             "restic-remote-${name}" =
-              ''RESTIC_PASSWORD=$(sudo cat ${cfg.passwordFile}) restic --repo sftp:$(sudo cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path} --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' '';
+              ''restic --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' '';
 
             # Can't have rustic alias as it doesn't have the -o flag
           }) cfg.replication.remoteRepos)
