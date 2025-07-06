@@ -21,7 +21,7 @@
   restic = rec {
     enable = true;
     repo = "/stuff/restic/repo";
-    passwordFile = config.age.secrets."restic/${hostname}-pwd".path;
+    passwordFile = config.my.secrets."restic/${hostname}-pwd";
     notifyOnFail = true;
 
     periodicChecks = {
@@ -122,9 +122,9 @@
       #   enable = true;
       #   timer = "daily";
       #   randomDelay = "1h";
-      #   bwClientIDFile = config.age.secrets."bitwarden/client-id".path;
-      #   bwClientSecretFile = config.age.secrets."bitwarden/client-secret".path;
-      #   bwPasswordFile = config.age.secrets."bitwarden/password".path;
+      #   bwClientIDFile = config.my.secrets."bitwarden/client-id";
+      #   bwClientSecretFile = config.my.secrets."bitwarden/client-secret";
+      #   bwPasswordFile = config.my.secrets."bitwarden/password";
       # };
     };
 
@@ -141,7 +141,7 @@
       remoteRepos."hetzner-storage-box" = {
         path = "restic/coffee";
         inherit passwordFile;
-        remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
+        remoteAddressFile = config.my.secrets."restic/storage-box-addr";
         privateKey = config.my.keys.user.private;
       };
 

@@ -59,8 +59,8 @@ in
         group = "users";
 
         # Together, the key and cert define the device id
-        key = config.age.secrets."syncthing/${hostname}/key.pem".path;
-        cert = config.age.secrets."syncthing/${hostname}/cert.pem".path;
+        key = config.my.secrets."syncthing/${hostname}/key.pem";
+        cert = config.my.secrets."syncthing/${hostname}/cert.pem";
 
         # The path where default synchronised directories will be put.
         dataDir = syncthingFolder;

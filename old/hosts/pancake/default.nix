@@ -17,6 +17,6 @@ in
 
   my = {
     user.name = "lili";
-    secrets = enabled;
+    secretManagement = enabled;
   };
 }
