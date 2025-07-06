@@ -20,6 +20,8 @@ in
     user.name = "lili";
     secretManagement = enabled;
 
-    apps.zoxide = enabled;
+    apps = {
+      zoxide = enabled;
+    };
   };
 }

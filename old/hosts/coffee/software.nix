@@ -21,8 +21,6 @@
     scripts.boot-windows
     scripts.automusic
 
-    apps.restic
-
     apps.youtube-music
     apps.obsidian
     apps.firefox

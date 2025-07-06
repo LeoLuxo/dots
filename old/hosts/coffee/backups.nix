@@ -18,144 +18,148 @@
     };
 
   # Setup my auto backups
-  restic = rec {
-    enable = true;
-    repo = "/stuff/restic/repo";
-    passwordFile = config.my.secrets."restic/${hostname}-pwd";
-    notifyOnFail = true;
-
-    periodicChecks = {
-      timer = "0/2:00"; # every two hours
-      randomDelay = "2h";
-      readData = "5G";
-      cleanupCache = true;
-    };
-
-    backups = {
-      "home" = {
-        timer = "hourly";
-        randomDelay = "15m";
-
-        label = "Home";
-        path = config.my.user.home;
-        glob = [
-          "!/home/*/downloads"
-          "!/home/*/.steam"
-          "!/home/*/.cache"
-          "!/home/*/.local/share/Trash"
-          "!/home/*/.local/share/Steam/steamapps"
-        ];
-        tags = [ "home" ];
-      };
-
-      "obsidian" = {
-        timer = "*:0/15"; # every 15 minutes
-
-        label = "Obsidian";
-        path = "/stuff/obsidian";
-        tags = [ "obsidian" ];
-      };
-
-      "uni-courses" = {
-        timer = "hourly";
-        randomDelay = "15m";
-
-        label = "University Courses";
-        path = "/stuff/uniCourses";
-        tags = [ "uni-courses" ];
-      };
-
-      "important-docs" = {
-        timer = "hourly";
-        randomDelay = "15m";
-
-        label = "Important Documents";
-        path = "/stuff/importantDocs";
-        tags = [ "important-docs" ];
-      };
-
-      "share" = {
-        timer = "hourly";
-        randomDelay = "15m";
-
-        label = "Share";
-        path = "/stuff/share";
-        tags = [ "share" ];
-      };
-
-      "minecraft-instances" = {
-        timer = "hourly";
-        randomDelay = "15m";
-
-        label = "Minecraft Instances";
-        path = "/stuff/games/minecraft/instances";
-        tags = [ "minecraft-instances" ];
-      };
-
-      "music" = {
-        timer = "hourly";
-        randomDelay = "15m";
-
-        label = "Music";
-        path = "/stuff/media/music";
-        tags = [ "music" ];
-      };
-
-      "roms" = {
-        timer = "hourly";
-        randomDelay = "15m";
-
-        label = "Roms";
-        path = "/stuff/games/roms";
-        tags = [ "roms" ];
-      };
-    };
-
-    backupPresets = {
-      ludusavi = {
-        enable = true;
-        timer = "hourly";
-        randomDelay = "45m";
-      };
-
-      # bitwarden = {
-      #   enable = true;
-      #   timer = "daily";
-      #   randomDelay = "1h";
-      #   bwClientIDFile = config.my.secrets."bitwarden/client-id";
-      #   bwClientSecretFile = config.my.secrets."bitwarden/client-secret";
-      #   bwPasswordFile = config.my.secrets."bitwarden/password";
-      # };
-    };
-
-    replication = {
+  my.apps.restic =
+    let
+      repoPassword = config.my.secrets."restic/${hostname}-pwd";
+    in
+    {
       enable = true;
-      timer = "daily";
-      randomDelay = "2h";
+      repo = "/stuff/restic/repo";
+      passwordFile = repoPassword;
+      notifyOnFail = true;
 
-      localRepos."hdd" = {
-        path = "/backup/restic/repo";
-        inherit passwordFile;
+      periodicChecks = {
+        timer = "0/2:00"; # every two hours
+        randomDelay = "2h";
+        readData = "5G";
+        cleanupCache = true;
       };
 
-      remoteRepos."hetzner-storage-box" = {
-        path = "restic/coffee";
-        inherit passwordFile;
-        remoteAddressFile = config.my.secrets."restic/storage-box-addr";
-        privateKey = config.my.keys.user.private;
+      backups = {
+        "home" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Home";
+          path = config.my.user.home;
+          glob = [
+            "!/home/*/downloads"
+            "!/home/*/.steam"
+            "!/home/*/.cache"
+            "!/home/*/.local/share/Trash"
+            "!/home/*/.local/share/Steam/steamapps"
+          ];
+          tags = [ "home" ];
+        };
+
+        "obsidian" = {
+          timer = "*:0/15"; # every 15 minutes
+
+          label = "Obsidian";
+          path = "/stuff/obsidian";
+          tags = [ "obsidian" ];
+        };
+
+        "uni-courses" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "University Courses";
+          path = "/stuff/uniCourses";
+          tags = [ "uni-courses" ];
+        };
+
+        "important-docs" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Important Documents";
+          path = "/stuff/importantDocs";
+          tags = [ "important-docs" ];
+        };
+
+        "share" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Share";
+          path = "/stuff/share";
+          tags = [ "share" ];
+        };
+
+        "minecraft-instances" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Minecraft Instances";
+          path = "/stuff/games/minecraft/instances";
+          tags = [ "minecraft-instances" ];
+        };
+
+        "music" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Music";
+          path = "/stuff/media/music";
+          tags = [ "music" ];
+        };
+
+        "roms" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Roms";
+          path = "/stuff/games/roms";
+          tags = [ "roms" ];
+        };
       };
 
-      forget = {
+      backupPresets = {
+        ludusavi = {
+          enable = true;
+          timer = "hourly";
+          randomDelay = "45m";
+        };
+
+        # bitwarden = {
+        #   enable = true;
+        #   timer = "daily";
+        #   randomDelay = "1h";
+        #   bwClientIDFile = config.my.secrets."bitwarden/client-id";
+        #   bwClientSecretFile = config.my.secrets."bitwarden/client-secret";
+        #   bwPasswordFile = config.my.secrets."bitwarden/password";
+        # };
+      };
+
+      replication = {
         enable = true;
-        prune = true;
+        timer = "daily";
+        randomDelay = "2h";
 
-        keepWithin = "1d";
-        keepWithinHourly = "3d";
-        keepWithinDaily = "10d";
-        keepWithinWeekly = "1m";
-        keepWithinMonthly = "1y";
-        keepYearly = "unlimited";
+        localRepos."hdd" = {
+          path = "/backup/restic/repo";
+          passwordFile = repoPassword;
+        };
+
+        remoteRepos."hetzner-storage-box" = {
+          path = "restic/coffee";
+          passwordFile = repoPassword;
+          remoteAddressFile = config.my.secrets."restic/storage-box-addr";
+          privateKey = config.my.keys.user.private;
+        };
+
+        forget = {
+          enable = true;
+          prune = true;
+
+          keepWithin = "1d";
+          keepWithinHourly = "3d";
+          keepWithinDaily = "10d";
+          keepWithinWeekly = "1m";
+          keepWithinMonthly = "1y";
+          keepYearly = "unlimited";
+        };
       };
     };
-  };
 }
