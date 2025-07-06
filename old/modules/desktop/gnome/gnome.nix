@@ -79,7 +79,7 @@ in
       environment.pathsToLink = [ "share/thumbnailers" ];
 
       # Enable the GNOME Desktop Environment.
-      services = {
+      services.xserver = {
         displayManager.gdm = {
           enable = true;
           wayland = true;
