@@ -15,7 +15,7 @@
 
     ensureProfiles = {
       environmentFiles = [
-        config.age.secrets."wifi/networkmanager-env".path
+        config.my.secrets."wifi/networkmanager-env"
       ];
 
       profiles = {
@@ -103,7 +103,7 @@
         # Uni network
         eduroam = {
           "802-1x" = {
-            ca-cert = config.age.secrets."wifi/eduroam-ca.pem".path;
+            ca-cert = config.my.secrets."wifi/eduroam-ca.pem";
             eap = "peap;";
             identity = "$EDUROAM_IDENTITY";
             password = "$EDUROAM_PASSWORD";
