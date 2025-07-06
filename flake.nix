@@ -15,7 +15,7 @@
         systems = [ "x86_64-linux" ];
 
         # Use a compatibility layer until I've transferred all the old modules to the new module system
-        nixosConfigurations = import ./flakelightCompat.nix { inherit lib inputs; };
+        nixosConfigurations = import ./oldCompat.nix { inherit lib inputs; };
       }
     );
 
