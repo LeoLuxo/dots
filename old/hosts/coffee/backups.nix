@@ -142,7 +142,7 @@
         path = "restic/coffee";
         inherit passwordFile;
         remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
-        privateKey = config.my.system.keys.keys.user.private;
+        privateKey = config.my.keys.user.private;
       };
 
       forget = {
