@@ -2,33 +2,62 @@
   description = "My NixOS configuration :)";
 
   outputs =
-    { flakelight, ... }@inputs:
-    flakelight ./. (
-      { lib, ... }:
+    { flake-utils, ... }@inputs:
+    flake-utils.lib.eachDefaultSystemPassThrough (
+      system:
+      let
+        # Gathers all nixpkgs-xxx instances from the flake inputs
+        allNixpkgs = (
+          lib.attrsets.filterAttrs (name: _: lib.strings.hasPrefix "nixpkgs-" name) (
+            builtins.trace inputs inputs
+          )
+        );
+        in
+        let 
 
+        # The config for each of the nixpkgs instances
+        nixpkgsConfig = {
+          inherit system;
+          config = {
+            allowUnfree = true;
+          };
+        };
+
+        # Evaluate all nixpkgs-xxx instances to an appropriately named pkgs-xxx instance
+        allPkgs = lib.attrsets.mapAttrs' (name: nixpkgsInstance: {
+          name = "pkgs" + (lib.strings.removePrefix "nixpkgs" name);
+          value = import nixpkgsInstance nixpkgsConfig;
+        }) allNixpkgs;
+
+        # Set up nixpks lib + my custom lib
+        # lib = pkgs.lib // {
+        #   my = import ./lib;
+        # };
+
+        lib = allPkgs.pkgs.lib;
+        lib2 = import ./lib;
+
+        importArgs = {
+          inherit lib2 lib inputs;
+        };
+      in
       {
-        # Will use "nixpkgs" as the default nixpkgs
-        inherit inputs;
-
-        nixDir = ./.;
-
-        systems = [ "x86_64-linux" ];
-
         # Use a compatibility layer until I've transferred all the old modules to the new module system
-        nixosConfigurations = import ./oldCompat.nix { inherit lib inputs; };
+        nixosConfigurations = import ./oldCompat.nix importArgs;
+
+        nixosModules = import ./nixosModules importArgs;
       }
     );
 
-  inputs = rec {
+  inputs = {
     # ----- nixpkgs -------------------------------------------------------------------------------
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
     nixpkgs-25-05.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-24-05.url = "github:nixos/nixpkgs/nixos-24.05";
-
-    nixpkgs-stable = nixpkgs-25-05;
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    nixpkgs = nixpkgs-25-05;
 
     # ----- personal stuff ------------------------------------------------------------------------
     # My wallpapers
@@ -43,9 +72,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # A modular Nix flake framework for simplifying flake definitions.
-    # https://github.com/nix-community/flakelight/blob/master/API_GUIDE.md
-    flakelight.url = "github:nix-community/flakelight";
+    # Provides a set of tools to more easily manage flakes and per-system attrs
+    flake-utils.url = "github:numtide/flake-utils";
 
     # Encryption library, used for secrets in nix
     agenix = {
