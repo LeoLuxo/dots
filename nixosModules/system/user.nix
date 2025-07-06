@@ -1,37 +1,56 @@
 {
   lib,
   config,
-  inputs,
   hostname,
   ...
 }:
 
 let
-  cfg = config.my.user;
-  lib2 = inputs.self.lib;
-
+  inherit (lib.options) mkOption;
   inherit (lib) types;
+
+  cfg = config.my.user;
 in
 {
 
-  options.my.user = with lib2.options; {
-    enable = mkOptDefault "whether to consider this config to be single-user" types.bool (
-      cfg.name != null
-    );
+  options.my.user = {
+    enable = mkOption {
+      description = "whether to consider this config to be single-user";
+      type = types.bool;
+      default = cfg.name != null;
+    };
 
-    name = mkOpt "the name of the default user" types.str;
+    name = mkOption {
+      description = "the name of the default user";
+      type = types.str;
+    };
 
-    home = mkOptDefault "the home folder" types.path "/home/${cfg.name}";
+    home = mkOption {
+      description = "the home folder";
+      type = types.path;
+      default = "/home/${cfg.name}";
+    };
 
-    uid = mkOptDefault "the user id" types.int 1000;
+    uid = mkOption {
+      description = "the user id";
+      type = types.int;
+      default = 1000;
+    };
 
-    passwordFile = mkOptDefault "the hashed password file" (types.nullOr types.path) (
-      if config.my.secretManagement.enable then config.my.secrets."userpwds/${hostname}" else null
-    );
+    passwordFile = mkOption {
+      description = "the hashed password file";
+      type = types.nullOr types.path;
+      default =
+        if config.my.secretManagement.enable then config.my.secrets."userpwds/${hostname}" else null;
+    };
 
-    extraGroups = mkOptDefault "the user's auxiliary groups" (types.listOf types.str) [
-      "networkmanager"
-    ];
+    extraGroups = mkOption {
+      description = "the user's auxiliary groups";
+      type = types.listOf types.str;
+      default = [
+        "networkmanager"
+      ];
+    };
   };
 
   config = lib.mkIf cfg.enable {

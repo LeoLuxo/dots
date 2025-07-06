@@ -6,8 +6,8 @@
   ...
 }:
 let
-  lib2 = inputs.self.lib;
   inherit (lib) types;
+  inherit (lib.options) mkOption;
 
   cfg = config.my.secretManagement;
 in
@@ -16,20 +16,20 @@ in
     inputs.agenix.nixosModules.default
   ];
 
-  options.my = with lib2.options; {
+  options.my = {
     secretManagement = {
       enable = lib.mkEnableOption "secrets management using agenix";
 
-      keys = mkOptDefault "keys to use for decryption" (types.listOf types.path) (
-        lib.mapAttrsToList (_: keyPair: keyPair.private) config.my.keys
-      );
+      keys = mkOption {
+        description = "keys to use for decryption";
+        type = types.listOf types.path;
+        default = lib.mapAttrsToList (_: keyPair: keyPair.private) config.my.keys;
+      };
     };
 
     # Option that's supposed to mirror agenix's secrets, see below in config
     secrets = lib.mkOption {
-      description = ''
-        Attribute set of secrets' path.
-      '';
+      description = "attribute set of secrets' path";
       type = types.attrsOf types.path;
       default = { };
     };
