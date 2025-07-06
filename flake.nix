@@ -15,8 +15,8 @@
           };
         };
 
-        allPkgs = {
-          pkgs = import inputs.nixpkgs nixpkgsConfig;
+        pkgs = import inputs.nixpkgs nixpkgsConfig;
+        otherPkgs = {
           pkgs-stable = import inputs.nixpkgs-stable nixpkgsConfig;
           pkgs-unstable = import inputs.nixpkgs-unstable nixpkgsConfig;
 
@@ -24,7 +24,6 @@
           pkgs-24-11 = import inputs.nixpkgs-24-11 nixpkgsConfig;
           pkgs-24-05 = import inputs.nixpkgs-24-05 nixpkgsConfig;
         };
-        inherit (allPkgs) pkgs;
 
         # Set up nixpks lib + my custom lib
         lib = pkgs.lib // {
@@ -41,7 +40,7 @@
             lib
             inputs
             pkgs
-            allPkgs
+            otherPkgs
             nixosSystem
             ;
         };
@@ -56,7 +55,7 @@
 
   inputs = {
     # ----- nixpkgs -------------------------------------------------------------------------------
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
