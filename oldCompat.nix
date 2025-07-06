@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  lib2,
 }:
 
 let
@@ -63,6 +64,7 @@ let
         inherit
           inputs
           extraLib
+          lib2
           nixosModulesOld
           constants
           hostname
