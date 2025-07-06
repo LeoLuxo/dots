@@ -64,7 +64,7 @@ in
 
         # The path where default synchronised directories will be put.
         dataDir = syncthingFolder;
-        # The path where the settings and keys will be checked for.
+        # The path where the settings and keys (if not set expicitly) will be checked for.
         configDir = syncthingFolder;
 
         # Overrides any devices/folders added or deleted through the WebUI
@@ -79,7 +79,7 @@ in
 
         settings.options = {
           # Anonymous data usage
-          # I would accept it but for some reason values 1 or 2 wouldn't work
+          # I would accept it but for some reason values 1 or 2 don't work
           urAccepted = -1;
 
           # Relay servers
