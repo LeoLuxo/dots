@@ -13,12 +13,11 @@ in
   };
 
   mkSubmodule =
-    description: opts:
+    opts:
     lib.mkOption {
       type = types.submodule {
         options = opts;
       };
-      inherit description;
     };
 
   mkAttrs =

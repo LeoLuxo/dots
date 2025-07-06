@@ -10,6 +10,7 @@ let
   inherit (lib2) mkAttrs;
   inherit (lib) types;
   inherit (lib.options) mkOption;
+  inherit (lib.modules) mkIf;
 
 in
 {
@@ -28,7 +29,7 @@ in
     };
 
     default = {
-      user = lib.mkIf (config.my.user != null) {
+      user = mkIf (config.my.user != null) {
         private = "${config.my.user.home}/.ssh/id_ed25519";
         public = "${config.my.user.home}/.ssh/id_ed25519.pub";
       };

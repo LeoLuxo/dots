@@ -8,6 +8,7 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption;
+  inherit (lib.modules) mkIf;
 
   cfg = config.my.secretManagement;
 in
@@ -35,7 +36,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable (
+  config = mkIf cfg.enable (
     let
       # Fetch secrets from private repo
       # Secrets are SUPPOSED to be fully independent from the dotfiles/nix configuration in my opinion, thus this (intentionally) makes my config impure
