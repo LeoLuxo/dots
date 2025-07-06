@@ -2,7 +2,7 @@
   inputs,
   nixosSystem,
   lib,
-  allPkgs,
+  otherPkgs,
   ...
 }:
 
@@ -53,7 +53,7 @@ let
           hostname
           system
           ;
-      } // allPkgs;
+      } // otherPkgs;
     };
 
 in
