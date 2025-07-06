@@ -1,8 +1,8 @@
-{ inputs, ... }:
+{ lib, ... }:
 
 let
-  lib2 = inputs.self.lib;
-  inherit (lib2) enabled;
+
+  inherit (lib.my) enabled;
 in
 {
   # Include local modules
