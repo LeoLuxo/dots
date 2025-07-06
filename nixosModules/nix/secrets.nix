@@ -3,12 +3,12 @@
   config,
   inputs,
   system,
-  options,
   ...
 }:
 let
   lib2 = inputs.self.lib;
   inherit (lib) types;
+
   cfg = config.my.secretManagement;
 in
 {
@@ -23,9 +23,6 @@ in
       keys = mkOptDefault "keys to use for decryption" (types.listOf types.path) (
         lib.mapAttrsToList (_: keyPair: keyPair.private) config.my.keys
       );
-
-      # Alias for agenix's secrets for use in configurating the user/group/mode
-      # secrets = lib.mkAliasDefinitions options.age.secrets;
     };
 
     # Option that's supposed to mirror agenix's secrets, see below in config
