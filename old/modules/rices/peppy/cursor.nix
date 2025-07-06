@@ -61,7 +61,7 @@ in
       package = pkgs.catppuccin-cursors."${cfg.flavor}${toPascalCase cfg.accent}";
     in
     {
-      home-manager.users.${config.my.system.user.name} = {
+      home-manager.users.${config.my.user.name} = {
         home.pointerCursor = {
           inherit name package;
 

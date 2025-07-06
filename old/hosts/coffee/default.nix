@@ -17,10 +17,8 @@ in
   ];
 
   my = {
-
-    system.user.name = "lili";
-
-    nix.secrets.enable = true;
+    user.name = "lili";
+    secrets = enabled;
 
     apps.zoxide = enabled;
   };

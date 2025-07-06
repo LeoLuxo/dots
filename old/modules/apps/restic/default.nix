@@ -95,7 +95,7 @@ in
         rustic
       ];
 
-      home-manager.users.${config.my.system.user.name} = {
+      home-manager.users.${config.my.user.name} = {
         home.shellAliases = {
           # Add aliases for the main repo
           restic-main = ''${lib.getExe pkgs.restic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';

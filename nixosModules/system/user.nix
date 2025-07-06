@@ -7,14 +7,14 @@
 }:
 
 let
-  cfg = config.my.system.user;
+  cfg = config.my.user;
   lib2 = inputs.self.lib;
 
   inherit (lib) types;
 in
 {
 
-  options.my.system.user = with lib2.options; {
+  options.my.user = with lib2.options; {
     enable = mkOptDefault "whether to consider this config to be single-user" types.bool (
       cfg.name != null
     );

@@ -49,13 +49,13 @@ in
   config = {
     services.syncthing =
       let
-        syncthingFolder = "${config.my.system.user.home}/.config/syncthing";
+        syncthingFolder = "${config.my.user.home}/.config/syncthing";
       in
       {
         enable = true;
 
         # By default if syncthing.user is not set, a user named "syncthing" will be created whose home directory is dataDir, and it will run under a group "syncthing".
-        user = config.my.system.user.name;
+        user = config.my.user.name;
         group = "users";
 
         # Together, the key and cert define the device id

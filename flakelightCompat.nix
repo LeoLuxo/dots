@@ -53,8 +53,6 @@ let
         defaultFiles = [ "default.nix" ];
       };
 
-      # lib2 = import ./lib/default.nix;
-
     in
     lib.nixosSystem {
       inherit system;

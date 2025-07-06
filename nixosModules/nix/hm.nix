@@ -10,7 +10,7 @@ let
   lib2 = inputs.self.lib;
   inherit (lib) types;
 
-  userCfg = config.my.system.user;
+  userCfg = config.my.user;
 in
 {
   imports = [

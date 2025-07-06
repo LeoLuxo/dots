@@ -12,7 +12,7 @@
     gnomeExtensions.emoji-copy
   ];
 
-  home-manager.users.${config.my.system.user.name} =
+  home-manager.users.${config.my.user.name} =
     { lib, ... }:
     {
       dconf.settings = {

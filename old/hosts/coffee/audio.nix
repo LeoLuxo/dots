@@ -56,9 +56,9 @@ in
     # kernel.realtime = true;
   };
 
-  my.system.user.extraGroups = [ "audio" ];
+  my.user.extraGroups = [ "audio" ];
 
-  home-manager.users.${config.my.system.user.name} = {
+  home-manager.users.${config.my.user.name} = {
     services = {
       playerctld.enable = true;
       # easyeffects = {
