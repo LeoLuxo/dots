@@ -58,9 +58,11 @@ let
         defaultFiles = [ "default.nix" ];
       };
 
+      # lib2 = import ./lib/default.nix;
+
     in
     lib.nixosSystem {
-      inherit (hostConstants) system;
+      inherit system;
       modules = hostModules;
 
       # Additional args passed to the module
