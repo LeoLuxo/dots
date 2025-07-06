@@ -2,18 +2,10 @@
   description = "My NixOS configuration :)";
 
   outputs =
-    { flake-utils, ... }@inputs:
+    { nixpkgs, flake-utils, ... }@inputs:
     flake-utils.lib.eachDefaultSystemPassThrough (
       system:
       let
-        # Gathers all nixpkgs-xxx instances from the flake inputs
-        allNixpkgs = (
-          lib.attrsets.filterAttrs (name: _: lib.strings.hasPrefix "nixpkgs-" name) (
-            builtins.trace inputs inputs
-          )
-        );
-        in
-        let 
 
         # The config for each of the nixpkgs instances
         nixpkgsConfig = {
@@ -23,22 +15,35 @@
           };
         };
 
-        # Evaluate all nixpkgs-xxx instances to an appropriately named pkgs-xxx instance
-        allPkgs = lib.attrsets.mapAttrs' (name: nixpkgsInstance: {
-          name = "pkgs" + (lib.strings.removePrefix "nixpkgs" name);
-          value = import nixpkgsInstance nixpkgsConfig;
-        }) allNixpkgs;
+        allPkgs = {
+          pkgs = import inputs.nixpkgs nixpkgsConfig;
+          pkgs-stable = import inputs.nixpkgs-stable nixpkgsConfig;
+          pkgs-unstable = import inputs.nixpkgs-unstable nixpkgsConfig;
+
+          pkgs-25-05 = import inputs.nixpkgs-25-05 nixpkgsConfig;
+          pkgs-24-11 = import inputs.nixpkgs-24-11 nixpkgsConfig;
+          pkgs-24-05 = import inputs.nixpkgs-24-05 nixpkgsConfig;
+        };
+        inherit (allPkgs) pkgs;
 
         # Set up nixpks lib + my custom lib
-        # lib = pkgs.lib // {
-        #   my = import ./lib;
-        # };
+        lib = pkgs.lib // {
+          my = import ./lib {
+            lib = pkgs.lib;
+            inherit pkgs;
+          };
+        };
 
-        lib = allPkgs.pkgs.lib;
-        lib2 = import ./lib;
+        nixosSystem = nixpkgs.lib.nixosSystem;
 
         importArgs = {
-          inherit lib2 lib inputs;
+          inherit
+            lib
+            inputs
+            pkgs
+            allPkgs
+            nixosSystem
+            ;
         };
       in
       {

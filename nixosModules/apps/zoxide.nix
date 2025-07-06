@@ -6,8 +6,8 @@
 }:
 
 let
-  lib2 = inputs.self.lib;
-  inherit (lib2) enabled;
+
+  inherit (lib.my) enabled;
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf;
 

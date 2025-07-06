@@ -1,5 +1,4 @@
 {
-  inputs,
   config,
   pkgs,
   lib,
@@ -7,9 +6,8 @@
 }:
 
 let
-  lib2 = inputs.self.lib;
-  inherit (lib2) mkAttrs;
   inherit (lib) types;
+  inherit (lib.my) mkAttrs;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
 

@@ -1,29 +1,12 @@
 {
   inputs,
+  nixosSystem,
   lib,
-  lib2,
+  allPkgs,
+  ...
 }:
 
 let
-
-  # Given a nixpkgs input, creates a pkgs instance
-  createPkgs =
-    system: nixpkgs:
-    import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
-  # Gathers all EXTRA nixpkgs-xxx instances from the flake inputs
-  allNixpkgs = lib.attrsets.filterAttrs (name: _: lib.strings.hasPrefix "nixpkgs-" name) inputs;
-
-  # Given a system, maps all nixpkgs-xxx instances to an appropriately named pkgs-xxx instance
-  specialPkgs =
-    system:
-    lib.attrsets.mapAttrs' (name: value: {
-      name = "pkgs" + (lib.strings.removePrefix "nixpkgs" name);
-      value = createPkgs system value;
-    }) allNixpkgs;
 
   # Function to create a nixos host config
   mkHost =
@@ -55,22 +38,22 @@ let
       };
 
     in
-    lib.nixosSystem {
+    nixosSystem {
       inherit system;
       modules = hostModules;
 
       # Additional args passed to the module
-      specialArgs = (specialPkgs system) // {
+      specialArgs = {
         inherit
+          lib
           inputs
           extraLib
-          lib2
           nixosModulesOld
           constants
           hostname
           system
           ;
-      };
+      } // allPkgs;
     };
 
 in
