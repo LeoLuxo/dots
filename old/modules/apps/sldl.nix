@@ -24,7 +24,7 @@ let
 
       src = fetchzip {
         url = "https://github.com/fiso64/slsk-batchdl/releases/download/v${version}/sldl_linux-${arch}.zip";
-        hash = "sha256-cJARGt9eLEYKbJTF9OU8/9Y+PeiMH45fu2vCLSUHkfc=";
+        hash = "sha256-KyprBbp9rNSmKzBG7IjR22osqtAxsEuVFZ7FUPhmprg=";
         stripRoot = false;
       };
 

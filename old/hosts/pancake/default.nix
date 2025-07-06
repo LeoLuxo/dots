@@ -18,5 +18,7 @@ in
   my = {
     user.name = "lili";
     secretManagement = enabled;
+
+    system.pinKernel = enabled;
   };
 }

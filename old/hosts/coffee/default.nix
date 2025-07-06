@@ -20,6 +20,8 @@ in
     user.name = "lili";
     secretManagement = enabled;
 
+    system.pinKernel = enabled;
+
     apps = {
       zoxide = enabled;
     };
