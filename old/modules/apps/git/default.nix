@@ -1,13 +1,8 @@
 {
   pkgs,
   config,
-  constants,
   ...
 }:
-
-let
-  inherit (constants) user userKeyPublic;
-in
 
 {
   imports = [ ./gitignore.nix ];
@@ -25,7 +20,7 @@ in
 
     # Needed for signing with ssh key
     # ref: https://jeppesen.io/git-commit-sign-nix-home-manager-ssh/
-    home.file.".ssh/allowed_signers".text = "* ${builtins.readFile userKeyPublic}";
+    home.file.".ssh/allowed_signers".text = "* ${builtins.readFile config.my.keys.user.public}";
 
     programs.git = {
       enable = true;
@@ -68,7 +63,7 @@ in
 
         # Sign all commits using ssh key
         commit.gpgsign = true;
-        user.signingkey = "${userKeyPublic}";
+        user.signingkey = "${config.my.keys.user.public}";
         gpg = {
           format = "ssh";
           ssh.allowedSignersFile = "~/.ssh/allowed_signers";
