@@ -96,51 +96,51 @@ in
               };
 
               keepLast = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepHourly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepDaily = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepWeekly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepMonthly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepYearly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepWithin = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepWithinHourly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepWithinDaily = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepWithinWeekly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepWithinMonthly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
               keepWithinYearly = lib.mkOption {
-                type = types.nullOr types.string;
+                type = types.nullOr types.str;
                 default = null;
               };
             };
