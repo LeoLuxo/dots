@@ -19,10 +19,7 @@ in
     enable = lib.mkEnableOption "secrets management using agenix";
 
     keys = mkOptDefault "keys to use for decryption" (types.listOf types.path) (
-      if config.my.system.keys.enable then
-        (lib.mapAttrsToList (_: keyFiles: keyFiles.private) config.my.system.keys.keys)
-      else
-        [ ]
+      lib.mapAttrsToList (_: keyFiles: keyFiles.private) config.my.keys
     );
   };
 

@@ -38,11 +38,6 @@ let
         nixosPath = "/etc/nixos";
         secretsPath = "/home/lili/misc/secrets";
 
-        userKeyPrivate = "/home/lili/.ssh/id_ed25519";
-        userKeyPublic = "${userKeyPrivate}.pub";
-        hostKeyPrivate = "/etc/ssh/ssh_host_ed25519_key";
-        hostKeyPublic = "${hostKeyPrivate}.pub";
-
         dotsRepoPath = (nixosPath + "/dots");
       };
 
