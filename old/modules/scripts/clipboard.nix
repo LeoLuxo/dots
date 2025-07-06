@@ -11,7 +11,7 @@
     pkgs.wl-clipboard
   ];
 
-  home-manager.users.${config.my.system.user.name} = {
+  home-manager.users.${config.my.user.name} = {
     home.shellAliases = {
       "copy" = "wl-copy";
       "paste" = "wl-paste";

@@ -1,4 +1,9 @@
-{ ... }:
+{ inputs, ... }:
+
+let
+  lib2 = inputs.self.lib;
+  inherit (lib2) enabled;
+in
 {
   # Include local modules
   imports = [
@@ -11,9 +16,7 @@
   ];
 
   my = {
-
-    system.user.name = "lili";
-
-    nix.secrets.enable = true;
+    user.name = "lili";
+    secrets = enabled;
   };
 }

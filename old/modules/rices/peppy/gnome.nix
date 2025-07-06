@@ -53,7 +53,7 @@ in
       cfg = config.rice.peppy;
     in
     {
-      home-manager.users.${config.my.system.user.name} = {
+      home-manager.users.${config.my.user.name} = {
         # Enable catppuccin for gtk
         gtk = {
           enable = true;

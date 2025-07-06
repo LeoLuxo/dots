@@ -49,7 +49,7 @@ in
   #     systemd.services."restic-bitwarden" = {
   #       serviceConfig = {
   #         Type = "oneshot";
-  #         User = config.my.system.user.name;
+  #         User = config.my.user.name;
   #         LoadCredential = [
   #           "repoPassword:${config.restic.passwordFile}"
   #           "bwClientID:${cfg.bwClientIDFile}"
@@ -114,11 +114,11 @@ in
   #       enable = true;
   #       serviceConfig = {
   #         Type = "oneshot";
-  #         User = config.my.system.user.name;
+  #         User = config.my.user.name;
   #       };
 
   #       # Required for notify-send
-  #       environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.system.user.uid}/bus";
+  #       environment.DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${builtins.toString config.my.user.uid}/bus";
 
   #       script = ''
   #         ${pkgs.libnotify}/bin/notify-send --urgency=critical \
