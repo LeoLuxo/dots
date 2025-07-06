@@ -6,8 +6,9 @@
 }:
 
 let
-  inherit (lib.options) mkOption;
   inherit (lib) types;
+  inherit (lib.options) mkOption;
+  inherit (lib.modules) mkIf;
 
   cfg = config.my.user;
 in
@@ -53,7 +54,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     # Define default user account.
     users = {
       mutableUsers = false;
@@ -62,7 +63,7 @@ in
         home = cfg.home;
         description = cfg.name;
         isNormalUser = true;
-        hashedPasswordFile = lib.mkIf (cfg.passwordFile != null) cfg.passwordFile;
+        hashedPasswordFile = mkIf (cfg.passwordFile != null) cfg.passwordFile;
         extraGroups = [ "wheel" ] ++ cfg.extraGroups;
         uid = cfg.uid;
       };

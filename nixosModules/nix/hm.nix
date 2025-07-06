@@ -9,6 +9,7 @@
 let
   inherit (lib) types;
   inherit (lib.options) mkOption;
+  inherit (lib.modules) mkIf;
 
   userCfg = config.my.user;
 in
@@ -23,7 +24,7 @@ in
     default = { };
   };
 
-  config = lib.mkIf (userCfg.enable) {
+  config = mkIf (userCfg.enable) {
     # Home-Manager config
     home-manager = {
       useGlobalPkgs = true;
