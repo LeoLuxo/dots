@@ -7,8 +7,8 @@
 }:
 
 let
-  lib2 = inputs.self.lib;
   inherit (lib) types;
+  inherit (lib.options) mkOption;
 
   userCfg = config.my.user;
 in
@@ -17,9 +17,11 @@ in
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  options.my.hm =
-    with lib2.options;
-    mkOptDefault "Options to pass directly to home-manager." types.attrs { };
+  options.my.hm = mkOption {
+    description = "Options to pass directly to home-manager.";
+    type = types.attrs;
+    default = { };
+  };
 
   config = lib.mkIf (userCfg.enable) {
     # Home-Manager config
