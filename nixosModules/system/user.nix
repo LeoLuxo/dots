@@ -26,8 +26,7 @@ in
     uid = mkOptDefault "the user id" types.int 1000;
 
     passwordFile = mkOptDefault "the hashed password file" (types.nullOr types.path) (
-      # if config.secrets.enable then config.age.secrets."userpwds/${hostname}".path else null
-      config.age.secrets."userpwds/${hostname}".path
+      if config.my.secretManagement.enable then config.my.secrets."userpwds/${hostname}" else null
     );
 
     extraGroups = mkOptDefault "the user's auxiliary groups" (types.listOf types.str) [

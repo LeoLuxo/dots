@@ -18,7 +18,7 @@ in
 
   my = {
     user.name = "lili";
-    secrets = enabled;
+    secretManagement = enabled;
 
     apps.zoxide = enabled;
   };
