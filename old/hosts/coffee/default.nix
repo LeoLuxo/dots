@@ -1,4 +1,9 @@
-{ ... }:
+{ inputs, ... }:
+
+let
+  lib2 = inputs.self.lib;
+  inherit (lib2) enabled;
+in
 {
   # Include local modules
   imports = [
@@ -17,5 +22,7 @@
       keys.enable = true;
     };
     nix.secrets.enable = true;
+
+    apps.zoxide = enabled;
   };
 }
