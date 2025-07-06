@@ -1,10 +1,10 @@
-inputs:
+libArgs:
 
 let
   subModules = {
-    options = import ./options.nix inputs;
-    paths = import ./paths.nix inputs;
-    strings = import ./strings.nix inputs;
+    options = import ./options.nix libArgs;
+    paths = import ./paths.nix libArgs;
+    strings = import ./strings.nix libArgs;
   };
 in
 subModules
