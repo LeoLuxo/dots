@@ -33,15 +33,12 @@
           };
         };
 
-        nixosSystem = nixpkgs.lib.nixosSystem;
-
         importArgs = {
           inherit
             lib
             inputs
             pkgs
             otherPkgs
-            nixosSystem
             ;
         };
       in

@@ -1,6 +1,5 @@
 {
   inputs,
-  nixosSystem,
   lib,
   otherPkgs,
   ...
@@ -38,7 +37,7 @@ let
       };
 
     in
-    nixosSystem {
+    inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       modules = hostModules;
 
