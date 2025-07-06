@@ -13,7 +13,7 @@
     pkgs.ryubing
   ];
 
-  home-manager.users.${config.my.system.user.name} =
+  home-manager.users.${config.my.user.name} =
     { config, ... }:
     {
       xdg.configFile."Ryujinx".source =

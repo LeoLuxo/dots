@@ -8,14 +8,14 @@
 let
   lib2 = inputs.self.lib;
   inherit (lib) types;
-  cfg = config.my.nix.secrets;
+  cfg = config.my.secrets;
 in
 {
   imports = [
     inputs.agenix.nixosModules.default
   ];
 
-  options.my.nix.secrets = with lib2.options; {
+  options.my.secrets = with lib2.options; {
     enable = lib.mkEnableOption "secrets management using agenix";
 
     keys = mkOptDefault "keys to use for decryption" (types.listOf types.path) (

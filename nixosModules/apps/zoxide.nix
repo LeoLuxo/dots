@@ -25,7 +25,7 @@ in
   config = mkIf cfg.enable {
     programs.zoxide = enabled;
 
-    home-manager.users.${config.my.system.user.name}.home.shellAliases = mkIf cfg.enableAlias {
+    home-manager.users.${config.my.user.name}.home.shellAliases = mkIf cfg.enableAlias {
       cd = "z";
     };
   };

@@ -12,7 +12,7 @@
     gnomeExtensions.appindicator
   ];
 
-  home-manager.users.${config.my.system.user.name} =
+  home-manager.users.${config.my.user.name} =
     { lib, ... }:
     {
 

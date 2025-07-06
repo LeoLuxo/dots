@@ -7,7 +7,7 @@
   age.secrets =
     let
       userPerms = {
-        owner = config.my.system.user.name;
+        owner = config.my.user.name;
         group = "users";
         mode = "400"; # read-only for owner
       };
@@ -37,7 +37,7 @@
         randomDelay = "15m";
 
         label = "Home";
-        path = config.my.system.user.home;
+        path = config.my.user.home;
         glob = [
           "!/home/*/downloads"
           "!/home/*/.steam"
