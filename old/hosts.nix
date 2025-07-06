@@ -10,7 +10,6 @@
 
         ./hosts/base.nix
         ./hosts/keybinds.nix
-        ./hosts/xdgDirs.nix
       ]
       {
         # user = "lili";
@@ -30,7 +29,6 @@
 
         ./hosts/base.nix
         ./hosts/keybinds.nix
-        ./hosts/xdgDirs.nix
       ]
       {
         # user = "lili";
