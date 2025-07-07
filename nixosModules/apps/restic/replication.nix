@@ -228,12 +228,20 @@ in
           }) cfg.localRepos)
 
           # Add aliases for each of the extra remote repos
-          ++ (lib.mapAttrsToList (name: remoteRepo: {
-            "restic-remote-${name}" =
-              ''restic --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" --option sftp.args='-p${builtins.toString remoteRepo.remotePort} -i ${remoteRepo.privateKey} -o StrictHostKeyChecking=no' '';
+          ++ (lib.mapAttrsToList (
+            name: remoteRepo:
+            let
+              specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
+              specifiedPort =
+                if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
+            in
+            {
+              "restic-remote-${name}" =
+                ''restic --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" --option sftp.args='${specifiedPort} ${specifiedPrivateKey}  -o StrictHostKeyChecking=no' '';
 
-            # Can't have rustic alias as it doesn't have the -o flag
-          }) cfg.remoteRepos)
+              # Can't have rustic alias as it doesn't have the -o flag
+            }
+          ) cfg.remoteRepos)
         );
       };
 }
