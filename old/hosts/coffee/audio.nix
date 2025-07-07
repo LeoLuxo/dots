@@ -2,61 +2,75 @@
   config,
   pkgs,
   inputs,
-  constants,
-  extraLib,
   ...
 }:
 
-let
-
-  inherit (extraLib) mkGlobalKeybind;
-in
-
-let
-  getIdForDevice = device: "pw-cli ls \"${device}\" | grep -Poi '(?<=id )\\d+'";
-in
 {
   imports = [
     inputs.musnix.nixosModules.musnix
-
-    # https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/
-    (mkGlobalKeybind {
-      name = "Toggle audio to speakers";
-      binding = "XF86Launch6"; # F15
-      command = ''
-        id=$(${getIdForDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"})
-        wpctl set-default $id
-
-        # Link guitarix and outputs via pipewire directly
-        pw-link "gx_head_fx:out_0" "Scarlett 2i2 USB:playback_FL"
-        pw-link "gx_head_fx:out_1" "Scarlett 2i2 USB:playback_FR"
-        pw-link --disconnect "gx_head_fx:out_0" "ALC1220 Analog:playback_FL" || true
-        pw-link --disconnect "gx_head_fx:out_1" "ALC1220 Analog:playback_FR" || true
-      '';
-    })
-
-    (mkGlobalKeybind {
-      name = "Toggle audio to headphones";
-      binding = "XF86Launch5"; # F14
-      command = ''
-        id=$(${getIdForDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"})
-        wpctl set-default $id
-
-        # Link guitarix and outputs via pipewire directly
-        pw-link "gx_head_fx:out_0" "ALC1220 Analog:playback_FL"
-        pw-link "gx_head_fx:out_1" "ALC1220 Analog:playback_FR"
-        pw-link --disconnect "gx_head_fx:out_0" "Scarlett 2i2 USB:playback_FL" || true
-        pw-link --disconnect "gx_head_fx:out_1" "Scarlett 2i2 USB:playback_FR" || true
-      '';
-    })
   ];
+
+  my.packages = with pkgs; [
+    playerctl
+    pulsemixer
+    qpwgraph
+    easyeffects
+    helvum
+    pavucontrol
+    alsa-scarlett-gui
+  ];
+
+  my.user.extraGroups = [ "audio" ];
+
+  my.keybinds =
+    let
+      getIdForDevice = device: "pw-cli ls \"${device}\" | grep -Poi '(?<=id )\\d+' ";
+      setDefaultOutputDevice = device: ''id=$(${getIdForDevice device}) wpctl set-default $id '';
+
+      linkGXLeft = device: ''pw-link "gx_head_fx:out_0" "${device}:playback_FL" '';
+      linkGXRight = device: ''pw-link "gx_head_fx:out_1" "${device}:playback_FR" '';
+
+      linkGX = device: ''
+        ${linkGXLeft device}
+        ${linkGXRight device}
+      '';
+      unlinkGX = device: ''
+        ${linkGXLeft device} --disconnect || true
+        ${linkGXRight device} --disconnect || true
+      '';
+    in
+    {
+      # I got the binding "ids" from here: https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/
+
+      "Toggle audio to speakers" = {
+        binding = "XF86Launch6"; # F15
+        command = ''
+          # Set default output device to speakers
+          ${setDefaultOutputDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"}
+
+          # Link guitarix and outputs via pipewire directly
+          ${linkGX "Scarlett 2 i2 USB"}
+          ${unlinkGX "ALC1220 Analog"}
+        '';
+      };
+
+      "Toggle audio to headphones" = {
+        binding = "XF86Launch5"; # F14
+        command = ''
+          # Set default output device to headphones
+          ${setDefaultOutputDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"}
+
+          # Link guitarix and outputs via pipewire directly
+          ${linkGX "ALC1220 Analog"}
+          ${unlinkGX "Scarlett 2 i2 USB"}
+        '';
+      };
+    };
 
   musnix = {
     enable = true;
     # kernel.realtime = true;
   };
-
-  my.user.extraGroups = [ "audio" ];
 
   home-manager.users.${config.my.user.name} = {
     services = {
@@ -126,15 +140,5 @@ in
       extraScripts = { };
     };
   };
-
-  my.packages = with pkgs; [
-    playerctl
-    pulsemixer
-    qpwgraph
-    easyeffects
-    helvum
-    pavucontrol
-    alsa-scarlett-gui
-  ];
 
 }

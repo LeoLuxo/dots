@@ -8,7 +8,6 @@
 let
   inherit (extraLib)
     # mkQuickPatch
-    mkGlobalKeybind
     mkJSONMerge
     mkSyncedPath
     ;
@@ -39,24 +38,6 @@ in
     #   ];
     # })
 
-    (mkGlobalKeybind {
-      name = "Discord mute";
-      binding = "<Super>m";
-      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    })
-
-    (mkGlobalKeybind {
-      name = "Discord deafen";
-      binding = "<Super><Shift>m";
-      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    })
-
-    (mkSyncedPath {
-      xdgPath = "vesktop/settings.json";
-      cfgPath = "vesktop/vesktop.json";
-      merge = mkJSONMerge { };
-    })
-
     (mkSyncedPath {
       xdgPath = "vesktop/settings/settings.json";
       cfgPath = "vesktop/vencord.json";
@@ -65,6 +46,12 @@ in
           themeLinks = [ ];
         };
       };
+    })
+
+    (mkSyncedPath {
+      xdgPath = "vesktop/settings.json";
+      cfgPath = "vesktop/vesktop.json";
+      merge = mkJSONMerge { };
     })
   ];
 
@@ -76,4 +63,16 @@ in
       inherit vencord;
     })
   ];
+
+  my.keybinds = {
+    "Discord mute" = {
+      binding = "<Super>m";
+      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+    };
+
+    "Discord deafen" = {
+      binding = "<Super><Shift>m";
+      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+    };
+  };
 }

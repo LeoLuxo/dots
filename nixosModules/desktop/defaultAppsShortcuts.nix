@@ -12,7 +12,7 @@ in
     enable = lib.mkEnableOption "the default apps shortcuts";
   };
 
-  config.my.desktop.keybinds = lib.mkIf cfg.enable {
+  config.my.keybinds = lib.mkIf cfg.enable {
     "Open terminal" = {
       binding = "<Super>grave";
       command = config.my.desktop.defaultApps.terminal;
