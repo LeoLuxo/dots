@@ -7,9 +7,6 @@
       [
         newModules
         ./hosts/coffee
-
-        ./hosts/base.nix
-        ./hosts/keybinds.nix
       ]
       {
         # user = "lili";
@@ -26,9 +23,6 @@
       [
         newModules
         ./hosts/pancake
-
-        ./hosts/base.nix
-        ./hosts/keybinds.nix
       ]
       {
         # user = "lili";
