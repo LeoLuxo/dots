@@ -34,9 +34,12 @@ rec {
                   options
                 else
                   # the given options field is (probably) a function expecting the extra args
-                  options (submoduleArgs {
-                    name = config._module.args.name;
-                  });
+                  options (
+                    submoduleArgs
+                    // {
+                      name = config._module.args.name;
+                    }
+                  );
             }
           )
         );

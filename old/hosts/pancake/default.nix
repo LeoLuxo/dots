@@ -19,6 +19,8 @@ in
     user.name = "lili";
     secretManagement = enabled;
 
+    desktop.defaultAppsShortcuts = enabled;
+
     system.pinKernel = enabled;
   };
 }
