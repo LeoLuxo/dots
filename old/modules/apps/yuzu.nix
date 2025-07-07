@@ -45,12 +45,4 @@ in
   ];
 
   my.symlinks.xdgData."yuzu" = "/stuff/games/roms/switch/data/yuzu";
-  # home-manager.users.${config.my.user.name} =
-  #   { config, ... }:
-  #   {
-
-  # xdg.dataFile."yuzu".source =
-  #   config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/yuzu";
-
-  # };
 }
