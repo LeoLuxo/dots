@@ -22,6 +22,8 @@ in
 
     system.pinKernel = enabled;
 
+    desktop.defaultAppsShortcuts = enabled;
+
     apps = {
       zoxide = enabled;
     };
