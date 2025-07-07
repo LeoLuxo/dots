@@ -25,7 +25,10 @@
   my.keybinds =
     let
       getIdForDevice = device: "pw-cli ls \"${device}\" | grep -Poi '(?<=id )\\d+' ";
-      setDefaultOutputDevice = device: ''id=$(${getIdForDevice device}) wpctl set-default $id '';
+      setDefaultOutputDevice = device: ''
+        id=$(${getIdForDevice device})
+        wpctl set-default $id
+      '';
 
       linkGXLeft = device: ''pw-link "gx_head_fx:out_0" "${device}:playback_FL" '';
       linkGXRight = device: ''pw-link "gx_head_fx:out_1" "${device}:playback_FR" '';
@@ -36,7 +39,7 @@
       '';
       unlinkGX = device: ''
         ${linkGXLeft device} --disconnect || true
-        ${linkGXRight device} --disconnect || true
+        ${linkGXRight device} --disconnect || true\
       '';
     in
     {
