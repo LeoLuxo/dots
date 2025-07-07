@@ -146,7 +146,7 @@
           path = "restic/coffee";
           passwordFile = repoPassword;
           remoteAddressFile = config.my.secrets."restic/storage-box-addr";
-          privateKey = config.my.keys.user.private;
+          # privateKey = config.my.keys.user.private;
         };
 
         forget = {
