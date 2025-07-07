@@ -2,7 +2,7 @@
 
 {
   # Fix eduroam certificate
-  age.secrets."wifi/eduroam-ca.pem" = {
+  my.secretManagement.secrets."wifi/eduroam-ca.pem" = {
     # Required by NetworkManager
     owner = "root";
     group = "root";

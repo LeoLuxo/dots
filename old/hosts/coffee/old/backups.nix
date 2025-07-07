@@ -4,7 +4,7 @@
   ...
 }:
 {
-  age.secrets =
+  my.secretManagement.secrets =
     let
       userPerms = {
         owner = config.my.user.name;
