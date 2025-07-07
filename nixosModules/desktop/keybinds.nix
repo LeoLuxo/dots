@@ -45,6 +45,32 @@ in
     }
   );
 
+  config = {
+    # Generic config
+    my.packages = lib.mapAttrsToList (
+      _: keybind: pkgs.writeShellScriptBin keybind.scriptName keybind.command
+    ) cfg;
+
+    # Gnome-specific config, add the keybind to dconf
+    my.hm.dconf.settings = lib.mkIf config.desktop.gnome.enable (
+      lib.mkMerge (
+        lib.mapAttrsToList (name: keybind: {
+          "org/gnome/settings-daemon/plugins/media-keys" = {
+            custom-keybindings = [
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${keybind.id}/"
+            ];
+          };
+
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${keybind.id}" = {
+            inherit name;
+            binding = keybind.binding;
+            command = keybind.scriptName;
+          };
+        }) cfg
+      )
+    );
+  };
+
   # config = mkSmartMerge [ "my" "desktop" "keybinds" ] (
   #   lib.flatten (
   #     lib.mapAttrsToList (
