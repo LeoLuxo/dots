@@ -61,7 +61,9 @@ in
 
         desktop = "${userCfg.home}/misc";
         documents = "${userCfg.home}/misc";
-        publicShare = "${userCfg.home}/misc";
+
+        templates = null;
+        publicShare = null;
       };
     };
   };
