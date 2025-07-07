@@ -10,13 +10,17 @@ let
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.user;
+  cfg = config.my.system.user;
 in
 {
+  # Alias for convenience
+  imports = [
+    (lib.mkAliasOptionModule [ "my" "user" ] [ "my" "system" "user" ])
+  ];
 
-  options.my.user = {
+  options.my.system.user = {
     enable = mkOption {
-      description = "whether to consider this config to be single-user";
+      description = "whether to consider this nixos config to be single-user";
       type = types.bool;
       default = cfg.name != null;
     };
