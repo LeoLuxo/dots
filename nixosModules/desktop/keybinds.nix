@@ -40,7 +40,7 @@ in
       scriptName = mkOption {
         description = "the name of the script that will be created for the keybind and invoked when the keybind is triggered";
         type = types.str;
-        default = cfg.${name}.id;
+        default = "keybind-${cfg.${name}.id}";
       };
     }
   );
