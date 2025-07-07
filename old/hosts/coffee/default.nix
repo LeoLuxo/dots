@@ -7,13 +7,13 @@ in
 {
   # Include local modules
   imports = [
-    ./software.nix
-    ./hardware.nix
-    ./system.nix
-    ./syncthing.nix
+    ./old/software.nix
+    ./old/hardware.nix
+    ./old/system.nix
+    ./old/syncthing.nix
 
-    ./backups.nix
-    ./audio.nix
+    ./old/backups.nix
+    ./old/audio.nix
   ];
 
   my = {
