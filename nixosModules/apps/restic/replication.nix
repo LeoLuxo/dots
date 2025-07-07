@@ -239,7 +239,7 @@ in
               "restic-remote-${name}" =
                 ''restic --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" --option sftp.args='${specifiedPort} ${specifiedPrivateKey}  -o StrictHostKeyChecking=no' '';
 
-              # Can't have rustic alias as it doesn't have the -o flag
+              # Can't have rustic alias as it doesn't have the --option flag afaik
             }
           ) cfg.remoteRepos)
         );
