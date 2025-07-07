@@ -146,7 +146,7 @@
           path = "restic/coffee";
           passwordFile = repoPassword;
           remoteAddressFile = config.my.secrets."restic/storage-box-addr";
-          # privateKey = config.my.keys.user.private;
+          # Don't specify key and let ssh find the right key/identity to connect with
         };
 
         forget = {
