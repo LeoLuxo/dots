@@ -19,7 +19,15 @@ in
   my = {
     user.name = "lili";
     secretManagement = enabled;
-    symlinks = enabled;
+
+    symlinks = {
+      enable = true;
+
+      xdgConfig."Ryujinx" = "/stuff/games/roms/switch/data/ryujinx";
+      xdgConfig."steam-rom-manager/userData" = "/stuff/games/roms/.srm/userData";
+      xdgData."sudachi" = "/stuff/games/roms/switch/data/yuzu";
+      xdgData."yuzu" = "/stuff/games/roms/switch/data/yuzu";
+    };
 
     system.pinKernel = enabled;
 

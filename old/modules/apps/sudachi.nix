@@ -120,6 +120,4 @@ in
   my.packages = [
     (pkgs.callPackage package { })
   ];
-
-  my.symlinks.xdgData."sudachi" = "/stuff/games/roms/switch/data/yuzu";
 }
