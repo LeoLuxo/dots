@@ -19,6 +19,7 @@ in
   my = {
     user.name = "lili";
     secretManagement = enabled;
+    symlinks = enabled;
 
     system.pinKernel = enabled;
 

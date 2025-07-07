@@ -13,10 +13,11 @@
     pkgs.ryubing
   ];
 
-  home-manager.users.${config.my.user.name} =
-    { config, ... }:
-    {
-      xdg.configFile."Ryujinx".source =
-        config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/ryujinx";
-    };
+  my.symlinks.xdgConfig."Ryujinx" = "/stuff/games/roms/switch/data/ryujinx";
+  # home-manager.users.${config.my.user.name} =
+  #   { config, ... }:
+  #   {
+  #     xdg.configFile."Ryujinx".source =
+  #       config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/ryujinx";
+  #   };
 }
