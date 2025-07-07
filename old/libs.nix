@@ -192,53 +192,53 @@ rec {
 
   # Utility to easily create a new global keybind.
   # Currently only implemented for Gnome
-  mkGlobalKeybind =
-    {
-      name,
-      binding,
-      command,
-    }:
-    (
-      let
-        id = strings.toLower (strings.sanitizeDerivationName name);
-        scriptName = "keybind-${id}";
-      in
-      # Module to be imported
-      {
-        config,
-        pkgs,
-        constants,
-        ...
-      }:
-      {
-        programs.dconf.enable = true;
+  # mkGlobalKeybind =
+  #   {
+  #     name,
+  #     binding,
+  #     command,
+  #   }:
+  #   (
+  #     let
+  #       id = strings.toLower (strings.sanitizeDerivationName name);
+  #       scriptName = "keybind-${id}";
+  #     in
+  #     # Module to be imported
+  #     {
+  #       config,
+  #       pkgs,
+  #       constants,
+  #       ...
+  #     }:
+  #     {
+  #       programs.dconf.enable = true;
 
-        # Create an extra script for the keybind, this avoids a bunch of weird issues
-        my.packages = [
-          (pkgs.writeShellScriptBin scriptName command)
-        ];
+  #       # Create an extra script for the keybind, this avoids a bunch of weird issues
+  #       my.packages = [
+  #         (pkgs.writeShellScriptBin scriptName command)
+  #       ];
 
-        home-manager.users.${config.my.user.name} = {
-          # Add the keybind to dconf
-          dconf.settings =
-            if config.desktop.gnome.enable then
-              {
-                "org/gnome/settings-daemon/plugins/media-keys" = {
-                  custom-keybindings = [
-                    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
-                  ];
-                };
+  #       home-manager.users.${config.my.user.name} = {
+  #         # Add the keybind to dconf
+  #         dconf.settings =
+  #           if config.desktop.gnome.enable then
+  #             {
+  #               "org/gnome/settings-daemon/plugins/media-keys" = {
+  #                 custom-keybindings = [
+  #                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
+  #                 ];
+  #               };
 
-                "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
-                  inherit binding name;
-                  command = scriptName;
-                };
-              }
-            else
-              (builtins.abort "gnome disabled, cannot create keybind!");
-        };
-      }
-    );
+  #               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
+  #                 inherit binding name;
+  #                 command = scriptName;
+  #               };
+  #             }
+  #           else
+  #             (builtins.abort "gnome disabled, cannot create keybind!");
+  #       };
+  #     }
+  #   );
 
   # Synchronize files/directories between this dots repo and a system xdg path
   # Destination changes take priority (when changed through a UI for example).
