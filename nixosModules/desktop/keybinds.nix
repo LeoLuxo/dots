@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  options,
   pkgs,
   ...
 }:
@@ -11,10 +12,16 @@ let
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.keybinds;
+  cfg = config.my.desktop.keybinds;
 in
 {
-  options.my.keybinds = mkAttrs' "the desktop keybinds to configure" (
+
+  # Alias for convenience
+  imports = [
+    (lib.mkAliasOptionModule [ "my" "keybinds" ] [ "my" "desktop" "keybinds" ])
+  ];
+
+  options.my.desktop.keybinds = mkAttrs' "the desktop keybinds to configure" (
     { name, ... }:
     {
       binding = mkOption {
