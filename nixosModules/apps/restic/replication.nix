@@ -16,150 +16,108 @@ let
   cfgRestic = config.my.apps.restic;
 in
 
-{
-  options.my.apps.restic.replication = mkOption {
-    type = types.submodule {
-      options = {
-        enable = mkEnableOption "automatic replication of the repo to other repos";
+let
+  mkKeepOption =
+    description:
+    mkOption {
+      inherit description;
+      type = types.nullOr types.str;
+      default = null;
+    };
+in
 
-        timer = mkOption {
-          description = "the timer (see https://wiki.archlinux.org/title/Systemd/Timers) that dictates how often to back up";
+{
+  options.my.apps.restic.replication = {
+    enable = mkEnableOption "automatic replication of the repo to other repos";
+
+    timer = mkOption {
+      description = "the timer (see https://wiki.archlinux.org/title/Systemd/Timers) that dictates how often to back up";
+      type = types.str;
+    };
+
+    randomDelay = mkOption {
+      description = "a random delay added to the timer to avoid clashing with simulatenous other backups";
+      type = types.nullOr types.str;
+      default = null;
+    };
+
+    performQuickCheck = mkOption {
+      description = "whether to perform a quick check (without --read-data) of the repo before replicating";
+      type = types.bool;
+      default = true;
+    };
+
+    performFullCheck = mkOption {
+      description = "whether to perform a full check (with --read-data) of the repo before replicating";
+      type = types.bool;
+      default = false;
+    };
+
+    localRepos = mkAttrs {
+      description = "the local (same system) repos to replicate to";
+
+      options = {
+        path = mkOption {
+          description = "the path to the local repo";
           type = types.str;
         };
 
-        randomDelay = mkOption {
-          description = "a random delay added to the timer to avoid clashing with simulatenous other backups";
-          type = types.nullOr types.str;
+        passwordFile = mkOption {
+          description = "the password of the local repo";
+          type = types.path;
+        };
+      };
+    };
+
+    remoteRepos = mkAttrs {
+      description = "the remote/cloud repos to replicate to";
+
+      options = {
+        path = mkOption {
+          description = "the path to the repo inside the remote";
+          type = types.str;
+        };
+
+        passwordFile = mkOption {
+          description = "the password of the remote repo";
+          type = types.path;
+        };
+
+        remoteAddressFile = mkOption {
+          description = "the path to a file containing the address of the remote";
+          type = types.path;
+        };
+
+        remotePort = mkOption {
+          description = "the port to connect to the remote with, set to null to unspecify and use ssh's default";
+          type = types.nullOr types.port;
           default = null;
         };
 
-        performQuickCheck = mkOption {
-          description = "whether to perform a quick check (without --read-data) of the repo before replicating";
-          type = types.bool;
-          default = true;
-        };
-
-        performFullCheck = mkOption {
-          description = "whether to perform a full check (with --read-data) of the repo before replicating";
-          type = types.bool;
-          default = false;
-        };
-
-        localRepos = mkAttrs {
-          description = "the local (same system) repos to replicate to";
-
-          options = {
-            path = mkOption {
-              description = "the path to the local repo";
-              type = types.str;
-            };
-
-            passwordFile = mkOption {
-              description = "the password of the local repo";
-              type = types.path;
-            };
-          };
-        };
-
-        remoteRepos = mkAttrs {
-          description = "the remote/cloud repos to replicate to";
-
-          options = {
-            path = mkOption {
-              description = "the path to the repo inside the remote";
-              type = types.str;
-            };
-
-            passwordFile = mkOption {
-              description = "the password of the remote repo";
-              type = types.path;
-            };
-
-            remoteAddressFile = mkOption {
-              description = "the path to a file containing the address of the remote";
-              type = types.path;
-            };
-
-            remotePort = mkOption {
-              description = "the port to connect to the remote with, set to null to unspecify and use ssh's default";
-              type = types.nullOr types.port;
-              default = null;
-            };
-
-            privateKey = mkOption {
-              description = "the identity file to connect to the remote with; set to null to unspecify";
-              type = types.nullOr types.path;
-              default = null;
-            };
-          };
-        };
-
-        forget = mkSubmodule {
-          enable = mkEnableOption "automatically forget snapshots after replicating";
-          prune = mkEnableOption "automatically prune (i.e. delete and clean up) unused files from forgotten snapshots after replicating";
-
-          keepLast = lib.mkOption {
-            description = "keep the last n snapshots (use 'unlimited' to keep all snapshots)";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepHourly = lib.mkOption {
-            description = "keep the last n hourly snapshots (use 'unlimited' to keep all hourly snapshots)";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepDaily = lib.mkOption {
-            description = "keep the last n daily snapshots (use 'unlimited' to keep all daily snapshots)";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepWeekly = lib.mkOption {
-            description = "keep the last n weekly snapshots (use 'unlimited' to keep all weekly snapshots)";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepMonthly = lib.mkOption {
-            description = "keep the last n monthly snapshots (use 'unlimited' to keep all monthly snapshots)";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepYearly = lib.mkOption {
-            description = "keep the last n yearly snapshots (use 'unlimited' to keep all yearly snapshots)";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepWithin = lib.mkOption {
-            description = "keep snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepWithinHourly = lib.mkOption {
-            description = "keep hourly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepWithinDaily = lib.mkOption {
-            description = "keep daily snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepWithinWeekly = lib.mkOption {
-            description = "keep weekly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepWithinMonthly = lib.mkOption {
-            description = "keep monthly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-            type = types.nullOr types.str;
-            default = null;
-          };
-          keepWithinYearly = lib.mkOption {
-            description = "keep yearly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-            type = types.nullOr types.str;
-            default = null;
-          };
+        privateKey = mkOption {
+          description = "the identity file to connect to the remote with; set to null to unspecify";
+          type = types.nullOr types.path;
+          default = null;
         };
       };
+    };
+
+    forget = mkSubmodule {
+      enable = mkEnableOption "automatically forget snapshots after replicating";
+      prune = mkEnableOption "automatically prune (i.e. delete and clean up) unused files from forgotten snapshots after replicating";
+
+      keepLast = mkKeepOption "keep the last n snapshots (use 'unlimited' to keep all snapshots)";
+      keepHourly = mkKeepOption "keep the last n hourly snapshots (use 'unlimited' to keep all hourly snapshots)";
+      keepDaily = mkKeepOption "keep the last n daily snapshots (use 'unlimited' to keep all daily snapshots)";
+      keepWeekly = mkKeepOption "keep the last n weekly snapshots (use 'unlimited' to keep all weekly snapshots)";
+      keepMonthly = mkKeepOption "keep the last n monthly snapshots (use 'unlimited' to keep all monthly snapshots)";
+      keepYearly = mkKeepOption "keep the last n yearly snapshots (use 'unlimited' to keep all yearly snapshots)";
+      keepWithin = mkKeepOption "keep snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+      keepWithinHourly = mkKeepOption "keep hourly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+      keepWithinDaily = mkKeepOption "keep daily snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+      keepWithinWeekly = mkKeepOption "keep weekly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+      keepWithinMonthly = mkKeepOption "keep monthly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+      keepWithinYearly = mkKeepOption "keep yearly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
     };
   };
 
