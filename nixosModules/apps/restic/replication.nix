@@ -136,14 +136,14 @@ in
             let
               checkCommand =
                 if cfg.performFullCheck || cfg.performQuickCheck then
-                  ''restic --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
+                  ''restic --retry-lock 5m --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
                   + (if cfg.performFullCheck then " --read-data" else "")
                 else
                   "";
 
               localCopiesCommands = lib.mapAttrsToList (
                 name: localRepo:
-                ''restic --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
+                ''restic --retry-lock 5m --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
               ) cfg.localRepos;
 
               remoteCopiesCommands = lib.mapAttrsToList (
@@ -154,7 +154,7 @@ in
                     if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
                 in
                 ''
-                  restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
+                  restic --retry-lock 5m --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
                 ''
               ) cfg.remoteRepos;
 
@@ -163,7 +163,7 @@ in
                   cfgf = cfg.forget;
                 in
                 if cfgf.enable then
-                  ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
+                  ''restic --retry-lock 5m --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
                   + (if cfgf.prune then " --prune" else "")
                   + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
                   + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
