@@ -120,11 +120,13 @@ in
   my.packages = [
     (pkgs.callPackage package { })
   ];
-  home-manager.users.${config.my.user.name} =
-    { config, ... }:
-    {
 
-      xdg.dataFile."sudachi".source =
-        config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/yuzu";
-    };
+  my.symlinks.xdgData."sudachi" = "/stuff/games/roms/switch/data/yuzu";
+  # home-manager.users.${config.my.user.name} =
+  #   { config, ... }:
+  #   {
+
+  #     xdg.dataFile."sudachi".source =
+  #       config.lib.file.mkOutOfStoreSymlink "/stuff/games/roms/switch/data/yuzu";
+  #   };
 }
