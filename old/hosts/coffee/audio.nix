@@ -52,7 +52,7 @@
           ${setDefaultOutputDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"}
 
           # Link guitarix and outputs via pipewire directly
-          ${linkGX "Scarlett 2 i2 USB"}
+          ${linkGX "Scarlett 2i2 USB"}
           ${unlinkGX "ALC1220 Analog"}
         '';
       };
@@ -65,7 +65,7 @@
 
           # Link guitarix and outputs via pipewire directly
           ${linkGX "ALC1220 Analog"}
-          ${unlinkGX "Scarlett 2 i2 USB"}
+          ${unlinkGX "Scarlett 2i2 USB"}
         '';
       };
     };
