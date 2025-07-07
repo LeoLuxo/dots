@@ -11,10 +11,10 @@ let
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.desktop.keybinds;
+  cfg = config.my.keybinds;
 in
 {
-  options.my.desktop.keybinds = mkAttrs' "the desktop keybinds to configure" (
+  options.my.keybinds = mkAttrs' "the desktop keybinds to configure" (
     { name, ... }:
     {
       binding = mkOption {
