@@ -36,6 +36,9 @@ in
     };
 
     cleanupCache = mkEnableOption "automatically clean up the cache while checking";
+    cleanupStaleLocks = mkEnableOption "automatically clean up stale locks after checking" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -46,12 +49,20 @@ in
 
       script =
         let
-          readData = if cfg.readData != false then "--read-data" else "";
+          readData = if cfg.readData != false then ''--read-data'' else "";
           readDataSubset = if lib.isString cfg.readData then ''--read-data-subset "${cfg.readData}"'' else "";
           cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
+
+          cleanupStaleLocks =
+            if cfg.cleanupStaleLocks then
+              ''restic --repo "${cfg.repo} "--password-file "${cfg.passwordFile}" unlock''
+            else
+              "";
         in
         ''
           restic --repo "${cfg.repo} "--password-file "${cfg.passwordFile}" check ${readData} ${readDataSubset} ${cleanupCache}
+
+          ${cleanupStaleLocks}
         '';
 
       onFailure = mkIf cfgRestic.notifyOnFail [ "restic-checks-failed.service" ];
