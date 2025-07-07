@@ -99,8 +99,8 @@ in
       # Enable the gnome keyring
       services.gnome.gnome-keyring.enable = true;
 
-      my.desktop.defaultApps.backupTerminal = lib.mkDefault "kgx";
-      my.desktop.defaultApps.terminal = lib.mkOverride 1050 "kgx";
+      my.desktop.defaultApps.backupTerminal = lib.mkDefault "kgx"; # Priority 1000
+      my.desktop.defaultApps.terminal = lib.mkOverride 1050 "kgx"; # Even lower priority than mkDefault (smaller = higher priority)
 
       # Fixes "Your GStreamer installation is missing a plug-in." when trying to view audio/video properties
       environment.sessionVariables.GST_PLUGIN_SYSTEM_PATH_1_0 =
