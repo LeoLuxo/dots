@@ -48,7 +48,7 @@
       "Toggle audio to speakers" = {
         binding = "XF86Launch6"; # F15
         command = ''
-          # Set default output device to speakers
+          # Set default output device to speakers using wireplumber
           ${setDefaultOutputDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"}
 
           # Link guitarix and outputs via pipewire directly
@@ -60,7 +60,7 @@
       "Toggle audio to headphones" = {
         binding = "XF86Launch5"; # F14
         command = ''
-          # Set default output device to headphones
+          # Set default output device to headphones using wireplumber
           ${setDefaultOutputDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"}
 
           # Link guitarix and outputs via pipewire directly
