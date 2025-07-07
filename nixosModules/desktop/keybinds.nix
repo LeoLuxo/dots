@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  options,
   pkgs,
   ...
 }:
@@ -15,7 +14,6 @@ let
   cfg = config.my.desktop.keybinds;
 in
 {
-
   # Alias for convenience
   imports = [
     (lib.mkAliasOptionModule [ "my" "keybinds" ] [ "my" "desktop" "keybinds" ])
