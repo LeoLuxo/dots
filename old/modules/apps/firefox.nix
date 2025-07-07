@@ -4,7 +4,7 @@
 }:
 
 {
-  defaults.apps.browser = lib.mkDefault "firefox";
+  my.desktop.defaultApps.browser = lib.mkDefault "firefox";
 
   programs = {
     # Setup firefox.

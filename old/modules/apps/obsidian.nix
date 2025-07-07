@@ -11,7 +11,7 @@
     fonts
   ];
 
-  defaults.apps.notes = lib.mkDefault "obsidian";
+  my.desktop.defaultApps.notes = lib.mkDefault "obsidian";
 
   my.packages = with pkgs; [
     obsidian
