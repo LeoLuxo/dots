@@ -9,13 +9,13 @@ let
 in
 
 {
-  my.packages = with pkgs; [
+  my.packages = [
     (writeScriptWithDeps {
       name = "snip";
       file = ./snip.sh;
       deps = [
-        gnome-screenshot
-        wl-clipboard
+        pkgs.gnome-screenshot
+        pkgs.wl-clipboard
       ];
     })
   ];
