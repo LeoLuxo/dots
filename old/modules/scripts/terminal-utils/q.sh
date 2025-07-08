@@ -14,11 +14,9 @@ depth=${DEPTH:-1}
 touch /tmp/Q_LAST_DIR
 chmod 777 /tmp/Q_LAST_DIR
 
-perms() {
-	echo -e "${FILE}Permissions ${INFO}$(stat -c %A "$1")${RESET}\n"
-}
-
 checkfile() {
+	echo -e "${FILE}Permissions ${INFO}$(stat -c %A "$1")${RESET}"
+
 	mime="$(file "$1" --mime)"
 
 	if echo $mime | grep -q "charset=binary"; then
@@ -41,6 +39,7 @@ checkfile() {
 }
 
 checkdir() {
+	echo -e "${DIR}Permissions ${INFO}$(stat -c %A "$1")${RESET}"
 	echo -e "${DIR}Directory ${INFO}$(realpath "$1")${RESET}\n"
 
 	# Show directory tree
@@ -65,12 +64,10 @@ checkpath() {
 
 		elif [[ -d $1 ]]; then
 			# Is directory
-			perms "$1"
 			checkdir "$1"
 
 		elif [[ -f $1 ]]; then
 			# Is file
-			perms "$1"
 			checkfile "$1"
 
 		else
