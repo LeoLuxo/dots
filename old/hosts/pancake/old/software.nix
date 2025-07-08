@@ -16,7 +16,6 @@
     shell.fish
     # shell.nushell
 
-    scripts.nix-utils
     scripts.snip
     scripts.terminal-utils
     scripts.clipboard
