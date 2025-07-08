@@ -75,8 +75,8 @@ in
 
       c = "$EDITOR .";
 
-      "." = "q";
-      "qq" = "cd $(cat /tmp/Q_LAST_DIR)";
+      "." = "q .";
+      "qq" = ''cd $(cat /tmp/Q_LAST_DIR_$(id -u))'';
 
       ".." = "cd ..";
       "..." = "cd ../..";
