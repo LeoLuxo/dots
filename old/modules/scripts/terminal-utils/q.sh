@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 ERROR='\033[0;31m'
+WARNING='\033[0;33m'
 INFO='\033[1;97m'
 DIR='\033[1;94m'
 FILE='\033[1;95m'
@@ -45,8 +46,8 @@ checkdir() {
 checkpath() {
 	if [[ ! -r $1 ]]; then
 		# Is not readable by current user
-		echo -e "${INFO}Path '$1' is not readable, try with sudo:${RESET}"
-		sudo checkpath "$1"
+		echo -e "${WARNING}Path '$1' is not readable, try with sudo:${RESET}"
+		sudo bash -c "$(declare -f checkpath); checkpath \"$1\"" # https://unix.stackexchange.com/questions/269078/executing-a-bash-script-function-with-sudo
 
 	elif [[ -L $1 ]]; then
 		# Is symlink
