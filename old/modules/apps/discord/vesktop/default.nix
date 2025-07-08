@@ -55,7 +55,7 @@ in
     })
   ];
 
-  my.desktop.defaultApps.communication = lib.mkDefault "vesktop";
+  my.defaultApps.communication = lib.mkDefault "vesktop";
 
   my.packages = with pkgs; [
     (vesktop.override {

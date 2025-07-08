@@ -18,7 +18,7 @@ let
     };
 in
 {
-  options.my.desktop.defaultApps = {
+  options.my.defaultApps = {
     browser = mkEntry "The default internet browsing app.";
     notes = mkEntry "The default note-taking app.";
     communication = mkEntry "The default communication app.";
