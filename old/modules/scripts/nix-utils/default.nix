@@ -222,11 +222,13 @@ in
         writePreRebuild = mkIf (cfgPaths.preRebuild != null) (writeFile {
           path = cfgPaths.preRebuild;
           text = cfg.rebuild.preRebuildActions;
+          force = true;
         });
 
         writePostRebuild = mkIf (cfgPaths.postRebuild != null) (writeFile {
           path = cfgPaths.postRebuild;
           text = cfg.rebuild.postRebuildActions;
+          force = true;
         });
       };
 
