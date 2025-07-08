@@ -102,6 +102,9 @@ in
         # Set the location of the files used for nx-rebuild
         NX_PRE_REBUILD = notNullOr cfgPaths.preRebuild "";
         NX_POST_REBUILD = notNullOr cfgPaths.postRebuild "";
+
+        # Set the location of the todo doc
+        NX_TODO = notNullOr cfgPaths.nixosTodo "";
       };
     in
     {
