@@ -29,6 +29,8 @@ in
       xdgData."yuzu" = "/stuff/games/roms/switch/data/yuzu";
     };
 
+    nx = enabled;
+
     system.pinKernel = enabled;
 
     desktop.defaultAppsShortcuts = enabled;
@@ -37,6 +39,9 @@ in
       zoxide = enabled;
     };
 
-    paths.nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
+    paths = {
+      nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
+      nixosRepo = "/etc/nixos/dots";
+    };
   };
 }

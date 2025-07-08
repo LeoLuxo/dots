@@ -21,7 +21,7 @@ let
         nixosPath = "/etc/nixos";
         secretsPath = "/home/lili/misc/secrets";
 
-        dotsRepoPath = (nixosPath + "/dots");
+        nixosRepoPath = (nixosPath + "/dots");
       };
 
       constants = defaultConstants // hostConstants;
