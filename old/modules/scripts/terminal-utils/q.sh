@@ -48,7 +48,7 @@ checkpath() {
 		# Is not readable by current user
 		echo -e "${WARNING}Path '$1' is not readable, try with sudo:${RESET}"
 		FUNC=$(declare -f) # https://unix.stackexchange.com/questions/269078/executing-a-bash-script-function-with-sudo
-		sudo bash -c "$FUNC; checkpath \"$1\""
+		sudo --preserve-env bash -c "$FUNC; checkpath \"$1\""
 
 	elif [[ -L $1 ]]; then
 		# Is symlink
