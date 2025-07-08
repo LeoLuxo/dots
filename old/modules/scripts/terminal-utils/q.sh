@@ -43,14 +43,25 @@ checkdir() {
 }
 
 checkpath() {
-	if [[ -L $1 ]]; then
+	if [[ ! -r $1 ]]; then
+		# Is not readable by current user
+		echo -e "${INFO}Path '$1' is not readable, try with sudo:${RESET}"
+		sudo checkpath "$1"
+
+	elif [[ -L $1 ]]; then
+		# Is symlink
 		target="$(readlink $1)"
 		echo -e "${SYMLINK}$1${RESET} -> ${SYMLINK}${target}${RESET}"
 		checkpath "$target"
+
 	elif [[ -d $1 ]]; then
+		# Is directory
 		checkdir "$1"
+
 	elif [[ -f $1 ]]; then
+		# Is file
 		checkfile "$1"
+
 	else
 		echo -e "${ERROR}Path '$1' does not exist or is invalid${RESET}"
 		exit 1
