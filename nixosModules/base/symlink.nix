@@ -1,13 +1,11 @@
 {
   lib,
   config,
-  inputs,
   ...
 }:
 
 let
   inherit (lib) types;
-  inherit (lib.my) enabled mkAttrs mkAttrs';
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
 
@@ -17,13 +15,13 @@ let
     { config, ... }:
     {
       options = {
-        targetPath = mkOption {
+        target = mkOption {
           description = "path relative to the symlink directory that should be symlinked";
           type = types.str;
           default = config._module.args.name;
         };
 
-        destinationPath = mkOption {
+        destination = mkOption {
           description = "path anywhere on the system where the symlink should point to";
           type = types.str;
         };
@@ -53,6 +51,7 @@ in
   };
 
   config.my.hm = mkIf cfg.enable (
+    # `config` below is home-manager's config
     { config, ... }:
     let
       mapAttrsToSymlink = lib.mapAttrs (
@@ -66,8 +65,8 @@ in
         else
           {
             # `link` is a symlinkAttrType with more options
-            target = link.targetPath;
-            source = config.lib.file.mkOutOfStoreSymlink link.destinationPath;
+            target = link.target;
+            source = config.lib.file.mkOutOfStoreSymlink link.destination;
           }
       );
 

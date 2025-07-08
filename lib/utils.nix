@@ -30,4 +30,14 @@
       name = lib.strings.sanitizeDerivationName (builtins.baseNameOf path);
     };
 
+  notNullOr = value: fallback: if value != null then value else fallback;
+
+  writeFile =
+    { path, text }:
+    ''
+      mkdir --parents "$(dirname "${path}")"
+      cat >"${path}" <<-EOF
+      ${text}
+      EOF
+    '';
 }
