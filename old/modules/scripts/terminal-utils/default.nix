@@ -76,7 +76,8 @@ in
       c = "$EDITOR .";
 
       "." = "q .";
-      "qq" = ''cd $(cat /tmp/Q_LAST_DIR_$(id -u))'';
+      "qq" =
+        ''if [[ -e "$(cat /tmp/Q_LAST_DIR_$(id -u))" ]]; then cd $(cat /tmp/Q_LAST_DIR_$(id -u)); else echo "No directory to cd to."; fi'';
 
       ".." = "cd ..";
       "..." = "cd ../..";
