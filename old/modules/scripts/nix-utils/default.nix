@@ -3,7 +3,6 @@
   lib,
   config,
   inputs,
-  constants,
   extraLib,
   ...
 }:
@@ -12,18 +11,16 @@ let
 
   inherit (lib) types;
   inherit (lib.my) writeFile notNullOr;
-  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
 
-  inherit (constants) dotsRepoPath secretsPath;
   inherit (extraLib)
     mkShellHistoryAlias
     writeScriptWithDeps
     mkSubmodule
-    replaceScriptVariables
     ;
 
-  cfg = config.nx;
+  cfg = config.my.nx;
   cfgPaths = config.my.paths;
 in
 
@@ -52,7 +49,9 @@ in
   ];
 
   options = {
-    nx = {
+    my.nx = {
+      enable = mkEnableOption "nix utilities";
+
       rebuild = mkSubmodule {
         preRebuildActions = mkEmptyLines;
         postRebuildActions = mkEmptyLines;
@@ -65,7 +64,7 @@ in
       };
 
       nx = mkPathEntry {
-        description = "default path for all nx-related stuff";
+        description = "default path for all nix-utility-related stuff";
         default = "${cfgPaths.home}/.nx";
       };
 
@@ -90,11 +89,11 @@ in
     };
   };
 
-  config =
+  config = mkIf cfg.enable (
     let
       variables = {
         # Set the location of the dots and secrets repos
-        NX_DOTS = notNullOr cfgPaths.dotsRepo "";
+        NX_DOTS = notNullOr cfgPaths.nixosRepo "";
         NX_SECRETS = notNullOr cfgPaths.secrets "";
 
         # Set the location of the file used for dconf-diff
@@ -106,6 +105,27 @@ in
       };
     in
     {
+      warnings = (
+        lib.optionals (cfgPaths.nixosRepo == null) [
+          "The nx option is enabled but paths.nixosRepo is not set, expect some breakage."
+        ]
+        ++ lib.optionals (cfgPaths.secrets == null) [
+          "The nx option is enabled but paths.secrets is not set, expect some breakage."
+        ]
+        ++ lib.optionals (cfgPaths.dconfDiff == null) [
+          "The nx option is enabled but paths.dconfDiff is not set, expect some breakage."
+        ]
+        ++ lib.optionals (cfgPaths.preRebuild == null) [
+          "The nx option is enabled but paths.preRebuild is not set, expect some breakage."
+        ]
+        ++ lib.optionals (cfgPaths.postRebuild == null) [
+          "The nx option is enabled but paths.postRebuild is not set, expect some breakage."
+        ]
+        ++ lib.optionals (cfgPaths.nixosTodo == null) [
+          "The nx option is enabled but paths.nixosTodo is not set, expect some breakage."
+        ]
+      );
+
       # Set environment variables
       environment.variables = variables;
 
@@ -116,7 +136,7 @@ in
       programs.nix-index.enable = false;
 
       # Add some post-build actions
-      nx.rebuild.postRebuildActions = mkIf (cfgPaths.dconfDiff != null) ''
+      my.nx.rebuild.postRebuildActions = mkIf (cfgPaths.dconfDiff != null) ''
         # Save current dconf settings (for nx-dconf-diff)
         echo "Dumping dconf"
         mkdir --parents "$(dirname "${cfgPaths.dconfDiff}")" && touch "${cfgPaths.dconfDiff}"
@@ -137,7 +157,7 @@ in
           replaceVariables = variables;
         })
 
-        (mkIf (cfgPaths.dotsRepo != null) (writeScriptWithDeps {
+        (mkIf (cfgPaths.nixosRepo != null) (writeScriptWithDeps {
           name = "nx-rebuild";
           file = ./scripts/nx-rebuild.sh;
           deps = [
@@ -149,13 +169,13 @@ in
           replaceVariables = variables;
         }))
 
-        (mkIf (cfgPaths.dotsRepo != null) (writeScriptWithDeps {
+        (mkIf (cfgPaths.nixosRepo != null) (writeScriptWithDeps {
           name = "nx-code";
           file = ./scripts/nx-code.sh;
           replaceVariables = variables;
         }))
 
-        (mkIf (cfgPaths.dotsRepo != null) (writeScriptWithDeps {
+        (mkIf (cfgPaths.nixosRepo != null) (writeScriptWithDeps {
           name = "nx-template";
           file = ./scripts/nx-template.sh;
           replaceVariables = variables;
@@ -186,7 +206,7 @@ in
       ];
 
       my.keybinds = {
-        "Open nx-code" = mkIf (cfgPaths.dotsRepo != null) {
+        "Open nx-code" = mkIf (cfgPaths.nixosRepo != null) {
           binding = "<Super>F9";
           command = "nx-code";
         };
@@ -222,6 +242,7 @@ in
           nx-search = "nh search --limit 4";
         };
       };
-    };
+    }
+  );
 
 }

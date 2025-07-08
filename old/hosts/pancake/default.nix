@@ -20,10 +20,15 @@ in
     secretManagement = enabled;
     symlinks = enabled;
 
+    nx = enabled;
+
     desktop.defaultAppsShortcuts = enabled;
 
     system.pinKernel = enabled;
 
-    paths.nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
+    paths = {
+      nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
+      nixosRepo = "/etc/nixos/dots";
+    };
   };
 }

@@ -31,7 +31,7 @@ in
       default = "/etc/nixos";
     };
 
-    "dotsRepo" = mkPathEntry {
+    "nixosRepo" = mkPathEntry {
       description = "the working copy of this repository";
     };
   };

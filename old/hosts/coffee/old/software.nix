@@ -101,7 +101,7 @@
   };
 
   # Auto-update wallpaper repo
-  nx.rebuild.preRebuildActions = ''
+  my.nx.rebuild.preRebuildActions = ''
     echo Updating wallpaper flake
     nix flake update wallpapers --allow-dirty
     git add flake.lock

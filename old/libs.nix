@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (constants) dotsRepoPath system;
+  inherit (constants) nixosRepoPath system;
   inherit (inputs.nixpkgs) lib;
   inherit (lib)
     strings
@@ -291,7 +291,7 @@ rec {
         {
           config =
             let
-              cfgPathStr = "${dotsRepoPath}/config/${cfgPath}";
+              cfgPathStr = "${nixosRepoPath}/config/${cfgPath}";
               xdgPathStr = "${config.xdg.configHome}/${builtins.toString xdgPath}";
             in
             {
