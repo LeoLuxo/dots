@@ -14,6 +14,10 @@ depth=${DEPTH:-1}
 touch /tmp/Q_LAST_DIR
 chmod 777 /tmp/Q_LAST_DIR
 
+perms() {
+	echo -e "${FILE}Permissions ${INFO}$(stat -c %A "$1")${RESET}\n"
+}
+
 checkfile() {
 	mime="$(file "$1" --mime)"
 
@@ -47,29 +51,35 @@ checkdir() {
 }
 
 checkpath() {
-	if [[ ! -r $1 ]]; then
-		# Is not readable by current user
-		echo -e "${WARNING}Path '$1' is not readable, try with sudo:${RESET}"
-		exec sudo bash "$0" "$@"
+	if [[ -e $1 ]]; then
+		if [[ ! -r $1 ]]; then
+			# Is not readable by current user
+			echo -e "${WARNING}Path '$1' is not readable by you, try with sudo:${RESET}"
+			exec sudo bash "$0" "$@"
 
-	elif [[ -L $1 ]]; then
-		# Is symlink
-		target="$(readlink $1)"
-		echo -e "${SYMLINK}$1${RESET} -> ${SYMLINK}${target}${RESET}"
-		checkpath "$target"
+		elif [[ -L $1 ]]; then
+			# Is symlink
+			target="$(readlink $1)"
+			echo -e "${SYMLINK}$1${RESET} -> ${SYMLINK}${target}${RESET}"
+			checkpath "$target"
 
-	elif [[ -d $1 ]]; then
-		# Is directory
-		perms "$1"
-		checkdir "$1"
+		elif [[ -d $1 ]]; then
+			# Is directory
+			perms "$1"
+			checkdir "$1"
 
-	elif [[ -f $1 ]]; then
-		# Is file
-		perms "$1"
-		checkfile "$1"
+		elif [[ -f $1 ]]; then
+			# Is file
+			perms "$1"
+			checkfile "$1"
+
+		else
+			echo -e "${ERROR}Path '$1' cannot be read or is invalid${RESET}"
+			exit 1
+		fi
 
 	else
-		echo -e "${ERROR}Path '$1' does not exist or is invalid${RESET}"
+		echo -e "${ERROR}Path '$1' does not exist${RESET}"
 		exit 1
 	fi
 }
