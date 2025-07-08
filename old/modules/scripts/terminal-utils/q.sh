@@ -11,8 +11,9 @@ RESET='\033[0m'
 # Default depth of 1
 depth=${DEPTH:-1}
 
-touch /tmp/Q_LAST_DIR
-chmod 777 /tmp/Q_LAST_DIR
+QFILE="/tmp/Q_LAST_DIR_$(id -u)"
+touch "$QFILE"
+chmod 700 "$QFILE"
 
 checkfile() {
 	echo -e "${FILE}Permissions ${INFO}$(stat -c %A "$1")${RESET}"
@@ -35,7 +36,7 @@ checkfile() {
 	fi
 
 	# Set last dir for qq alias
-	echo $(dirname $(realpath "$1")) >/tmp/Q_LAST_DIR
+	dirname $(realpath "$1") | tee "$QFILE" >/dev/null
 }
 
 checkdir() {
@@ -46,14 +47,14 @@ checkdir() {
 	tree -a -L $depth --dirsfirst -h -v "$1" -C
 
 	# Set last dir for qq alias
-	echo $(realpath "$1") >/tmp/Q_LAST_DIR
+	realpath "$1" | tee "$QFILE" >/dev/null
 }
 
 checkpath() {
 	if [[ -e $1 ]]; then
 		if [[ ! -r $1 ]]; then
 			# Is not readable by current user
-			echo -e "${WARNING}Path '$1' is not readable by you, try with sudo:${RESET}"
+			echo -e "${WARNING}Path '$1' is not readable by you, trying with sudo.${RESET}"
 			exec sudo bash "$0" "$@"
 
 		elif [[ -L $1 ]]; then
