@@ -36,5 +36,7 @@ in
     apps = {
       zoxide = enabled;
     };
+
+    paths.nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
   };
 }
