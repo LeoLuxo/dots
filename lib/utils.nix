@@ -33,8 +33,14 @@
   notNullOr = value: fallback: if value != null then value else fallback;
 
   writeFile =
-    { path, text }:
+    {
+      path,
+      text,
+      force ? false,
+    }:
     ''
+      ${if force then "rm -f ${path}" else ""}
+
       mkdir --parents "$(dirname "${path}")"
       cat >"${path}" <<-EOF
       ${text}
