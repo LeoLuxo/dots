@@ -217,7 +217,7 @@ in
         };
       };
 
-      system.activationScripts = {
+      system.userActivationScripts = {
         # Set up pre- and post actions for nx-rebuild
         writePreRebuild = mkIf (cfgPaths.preRebuild != null) (writeFile {
           path = cfgPaths.preRebuild;
