@@ -13,7 +13,7 @@ depth=${DEPTH:-1}
 
 QFILE="/tmp/Q_LAST_DIR_$(id -u)"
 touch "$QFILE"
-chmod 700 "$QFILE"
+chmod 600 "$QFILE"
 
 checkfile() {
 	echo -e "${FILE}Permissions ${INFO}$(stat -c %A "$1")${RESET}"
