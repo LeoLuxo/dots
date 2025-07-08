@@ -15,13 +15,10 @@ let
       makeWrapper,
       makeDesktopItem,
       autoPatchelfHook,
-      # QT
       kdePackages,
-      # Multimedia
       libva,
       libvdpau,
       libdrm,
-      # Sistema
       openssl,
       zlib,
       glib,

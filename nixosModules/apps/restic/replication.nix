@@ -119,6 +119,12 @@ in
       keepWithinMonthly = mkKeepOption "keep monthly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
       keepWithinYearly = mkKeepOption "keep yearly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
     };
+
+    cleanupStaleLocks =
+      mkEnableOption "automatically clean up stale locks before performing replication"
+      // {
+        default = true;
+      };
   };
 
   config =
@@ -134,6 +140,12 @@ in
 
           script =
             let
+              cleanupStaleLocksCommand =
+                if cfg.cleanupStaleLocks then
+                  ''restic --repo "${cfgRestic.repo} "--password-file "${cfgRestic.passwordFile}" unlock''
+                else
+                  "";
+
               checkCommand =
                 if cfg.performFullCheck || cfg.performQuickCheck then
                   ''restic --retry-lock 5m --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
@@ -143,18 +155,19 @@ in
 
               localCopiesCommands = lib.mapAttrsToList (
                 name: localRepo:
-                ''restic --retry-lock 5m --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
+                ''restic --retry-lock 10m --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
               ) cfg.localRepos;
 
               remoteCopiesCommands = lib.mapAttrsToList (
                 name: remoteRepo:
                 let
+
                   specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
                   specifiedPort =
                     if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
                 in
                 ''
-                  restic --retry-lock 5m --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
+                  restic --retry-lock 10m --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
                 ''
               ) cfg.remoteRepos;
 
@@ -183,6 +196,9 @@ in
                   "";
             in
             ''
+              echo Removing stale locks
+              ${cleanupStaleLocksCommand}
+
               echo Performing checks
               ${checkCommand}
 

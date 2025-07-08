@@ -13,22 +13,29 @@ let
 
   cfg = config.my.symlinks;
 
+  symlinkAttrType = types.submodule (
+    { config, ... }:
+    {
+      options = {
+        targetPath = mkOption {
+          description = "path relative to the symlink directory that should be symlinked";
+          type = types.str;
+          default = config._module.args.name;
+        };
+
+        destinationPath = mkOption {
+          description = "path anywhere on the system where the symlink should point to";
+          type = types.str;
+        };
+      };
+    }
+  );
+
   mkSymlinkOption =
     description:
-    # mkAttrs {
-    #   description = "${description} (${path})";
-    #   options =
-    #     { name, ... }:
-    #     {
-    #       destinationPath = mkOption {
-    #         description = "path anywhere on the system where the symlink should point to";
-    #         type = types.str;
-    #       };
-    #     };
-    # };
     mkOption {
       inherit description;
-      type = types.attrsOf types.str;
+      type = types.attrsOf (types.either types.str symlinkAttrType);
       default = { };
     };
 in
@@ -49,11 +56,21 @@ in
     { config, ... }:
     let
       mapAttrsToSymlink = lib.mapAttrs (
-        name: destination: {
-          target = name;
-          source = config.lib.file.mkOutOfStoreSymlink destination;
-        }
+        name: link:
+        if lib.isString link then
+          {
+            # `link` is a string and so it contains the destination directly, and we get the target from the attribute name
+            target = name;
+            source = config.lib.file.mkOutOfStoreSymlink link;
+          }
+        else
+          {
+            # `link` is a symlinkAttrType with more options
+            target = link.targetPath;
+            source = config.lib.file.mkOutOfStoreSymlink link.destinationPath;
+          }
       );
+
     in
     {
       xdg.configFile = mapAttrsToSymlink cfg.xdgConfig;
