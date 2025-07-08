@@ -55,6 +55,8 @@ checkpath() {
 		if [[ ! -r $1 ]]; then
 			# Is not readable by current user
 			echo -e "${WARNING}Path '$1' is not readable by you, trying with sudo.${RESET}"
+			# Disable qq for this time, as 1) when running as root we'll be writing to root's QFILE, and 2) we can't access root-permission dirs with cd as user anyway
+			rm "$QFILE"
 			exec sudo bash "$0" "$@"
 
 		elif [[ -L $1 ]]; then
