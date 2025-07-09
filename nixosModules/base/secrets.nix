@@ -104,7 +104,7 @@ in
 
       # Add fish shell completions for edit-secret
       programs.fish.interactiveShellInit = mkIf cfg.editSecretsCommand.enable ''
-        complete -c edit-secret -a '(pushd ${cfg.editSecretsCommand.path}/secrets; __fish_complete_path (commandline -t); popd)'
+        complete -c edit-secret -a '(pushd ${cfg.editSecretsCommand.path}/secrets; __fish_complete_path (commandline -ct); popd)'
       '';
     }
   );
