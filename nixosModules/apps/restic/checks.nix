@@ -55,12 +55,12 @@ in
 
           cleanupStaleLocks =
             if cfg.cleanupStaleLocks then
-              ''restic --repo "${cfgRestic.repo} "--password-file "${cfgRestic.passwordFile}" unlock''
+              ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" unlock''
             else
               "";
         in
         ''
-          restic --repo "${cfgRestic.repo} "--password-file "${cfgRestic.passwordFile}" check ${readData} ${readDataSubset} ${cleanupCache}
+          restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${readDataSubset} ${cleanupCache}
 
           ${cleanupStaleLocks}
         '';
