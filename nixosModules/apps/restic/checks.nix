@@ -42,7 +42,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.services."restic-checks" = {
+    systemd.user.services."restic-checks" = {
       path = [
         pkgs.restic
       ];
@@ -68,7 +68,7 @@ in
       onFailure = mkIf cfgRestic.notifyOnFail [ "restic-checks-failed.service" ];
     };
 
-    systemd.timers."restic-checks" = {
+    systemd.user.timers."restic-checks" = {
       wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = cfg.timer;
@@ -78,7 +78,7 @@ in
       };
     };
 
-    systemd.services."restic-checks-failed" = mkIf cfgRestic.notifyOnFail {
+    systemd.user.services."restic-checks-failed" = mkIf cfgRestic.notifyOnFail {
       script = ''
         ${pkgs.libnotify}/bin/notify-send --urgency=critical \
           "Restic periodic checks failed" \
