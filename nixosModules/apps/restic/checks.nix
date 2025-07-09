@@ -49,8 +49,13 @@ in
 
       script =
         let
-          readData = if cfg.readData != false then ''--read-data'' else "";
-          readDataSubset = if lib.isString cfg.readData then ''--read-data-subset "${cfg.readData}"'' else "";
+          readData =
+            if lib.isString cfg.readData then
+              ''--read-data-subset "${cfg.readData}"''
+            else if cfg.readData == true then
+              ''--read-data''
+            else
+              "";
           cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
 
           cleanupStaleLocks =
@@ -60,7 +65,7 @@ in
               "";
         in
         ''
-          restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${readDataSubset} ${cleanupCache}
+          restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${cleanupCache}
 
           ${cleanupStaleLocks}
         '';
