@@ -3,12 +3,17 @@
   config,
   inputs,
   system,
+  extraLib,
+  pkgs,
   ...
 }:
 let
   inherit (lib) types;
-  inherit (lib.options) mkOption;
+  inherit (lib.my) mkSubmodule;
+  inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
+
+  inherit (extraLib) writeScriptWithDeps;
 
   cfg = config.my.secretManagement;
 in
@@ -18,6 +23,12 @@ in
 
     # Alias for abstraction, so clients of these modules don't have to think about age specifically
     (lib.mkAliasOptionModule [ "my" "secretManagement" "secrets" ] [ "age" "secrets" ])
+
+    # Alias to map from the other paths option to the specific path for secretManagement
+    (lib.mkAliasOptionModule
+      [ "my" "paths" "secrets" ]
+      [ "my" "secretManagement" "editSecretsCommand" "path" ]
+    )
   ];
 
   options.my = {
@@ -28,6 +39,15 @@ in
         description = "keys to use for decryption";
         type = types.listOf types.path;
         default = lib.mapAttrsToList (_: keyPair: keyPair.private) config.my.keys;
+      };
+
+      editSecretsCommand = mkSubmodule {
+        enable = mkEnableOption "the command to edit secrets";
+
+        path = mkOption {
+          description = "the path to the secrets repo";
+          type = types.path;
+        };
       };
     };
 
@@ -47,9 +67,26 @@ in
       secretsFlake = builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets";
     in
     {
-      # Install agenix CLI
       my.packages = [
+        # Install agenix CLI
         inputs.agenix.packages.${system}.default
+
+        # Add the edit-secret command
+        (mkIf cfg.editSecretsCommand.enable (writeScriptWithDeps {
+          name = "edit-secret";
+          text = ''
+            pushd ${cfg.editSecretsCommand.path}/secrets
+
+            export EDITOR=nano
+            export RULES="${cfg.editSecretsCommand.path}/secrets.nix"
+            agenix --edit $@
+
+            popd
+          '';
+          addBashShebang = true;
+          elevate = true;
+          deps = [ pkgs.nano ];
+        }))
       ];
 
       age = {
@@ -65,6 +102,11 @@ in
       # to
       #   my.secrets.<name>
       my.secrets = lib.mapAttrs (_: value: value.path) config.age.secrets;
+
+      # Add fish shell completions for edit-secret
+      programs.fish.interactiveShellInit = mkIf cfg.editSecretsCommand.enable ''
+        complete -c edit-secret -a '(pushd ${cfg.editSecretsCommand.path}/secrets; __fish_complete_path (commandline -t); popd)'
+      '';
     }
   );
 }

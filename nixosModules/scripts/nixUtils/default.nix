@@ -59,9 +59,6 @@ in
     };
 
     my.paths = {
-      secrets = mkPathEntry {
-        description = "path to the working copy of the secrets repository";
-      };
 
       nx = mkPathEntry {
         description = "default path for all nix-utility-related stuff";
@@ -92,9 +89,8 @@ in
   config = mkIf cfg.enable (
     let
       variables = {
-        # Set the location of the dots and secrets repos
+        # Set the location of the dots repo
         NX_DOTS = notNullOr cfgPaths.nixosRepo "";
-        NX_SECRETS = notNullOr cfgPaths.secrets "";
 
         # Set the location of the file used for dconf-diff
         NX_DCONF_DIFF = notNullOr cfgPaths.dconfDiff "";
@@ -111,9 +107,6 @@ in
       warnings = (
         lib.optionals (cfgPaths.nixosRepo == null) [
           "The nx option is enabled but paths.nixosRepo is not set, expect some breakage."
-        ]
-        ++ lib.optionals (cfgPaths.secrets == null) [
-          "The nx option is enabled but paths.secrets is not set, expect some breakage."
         ]
         ++ lib.optionals (cfgPaths.dconfDiff == null) [
           "The nx option is enabled but paths.dconfDiff is not set, expect some breakage."
@@ -187,13 +180,6 @@ in
         (mkIf (cfgPaths.nixosTodo != null) (writeScriptWithDeps {
           name = "nx-todo";
           file = ./scripts/nx-todo.sh;
-          replaceVariables = variables;
-        }))
-
-        (mkIf (cfgPaths.secrets != null) (writeScriptWithDeps {
-          name = "nx-secret";
-          file = ./scripts/nx-secret.sh;
-          deps = [ nano ];
           replaceVariables = variables;
         }))
 

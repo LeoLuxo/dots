@@ -61,7 +61,7 @@ rec {
       file ? null,
       text ? builtins.readFile file,
       deps ? [ ],
-      bashShebang ? false,
+      addBashShebang ? false,
       binFolder ? true,
       replaceVariables ? { },
       elevate ? false,
@@ -71,7 +71,7 @@ rec {
       scriptText = replaceScriptVariables scriptTextPreVars replaceVariables;
 
       # https://nixos.org/manual/nixpkgs/unstable/#trivial-builder-text-writing
-      innerBuilder = if bashShebang then pkgs.writeShellScript else pkgs.writeScript;
+      innerBuilder = if addBashShebang then pkgs.writeShellScript else pkgs.writeScript;
       outerBuilder = if binFolder then pkgs.writeShellScriptBin else pkgs.writeShellScript;
 
       # Using sudo to elevate the script
@@ -98,7 +98,7 @@ rec {
     writeScriptWithDeps (
       args
       // {
-        bashShebang = false;
+        addBashShebang = false;
         text =
           if file == null then
             ''
