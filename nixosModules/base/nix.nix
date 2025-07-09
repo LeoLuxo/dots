@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -15,4 +15,9 @@
       "root"
     ];
   };
+
+  # Alias for convenience and abstraction
+  imports = [
+    (lib.mkAliasOptionModule [ "my" "packages" ] [ "environment" "systemPackages" ])
+  ];
 }
