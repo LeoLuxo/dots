@@ -29,6 +29,7 @@
       notifyOnFail = true;
 
       periodicChecks = {
+        enable = true;
         timer = "0/2:00"; # every two hours
         randomDelay = "2h";
         readData = "5G";
