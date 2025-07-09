@@ -87,5 +87,7 @@ in
         };
       };
     };
+
+    # TODO: Add devices here with hostname/ip and syncthing id
   };
 }
