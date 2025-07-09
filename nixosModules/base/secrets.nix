@@ -74,6 +74,7 @@ in
         # Add the edit-secret command
         (mkIf cfg.editSecretsCommand.enable (writeScriptWithDeps {
           name = "edit-secret";
+
           text = ''
             pushd ${cfg.editSecretsCommand.path}/secrets 1>/dev/null
 
@@ -83,6 +84,10 @@ in
 
             popd 1>/dev/null
           '';
+
+          # Needs elevation because the host key is root-protected
+          elevate = true;
+
           addBashShebang = true;
           deps = [ pkgs.nano ];
         }))
