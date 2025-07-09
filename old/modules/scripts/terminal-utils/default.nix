@@ -64,6 +64,12 @@ in
         tree
       ];
     })
+
+    (writeScriptWithDeps {
+      name = "_qq-internals";
+      file = ./qq.sh;
+      deps = [ ];
+    })
   ];
 
   home-manager.users.${config.my.user.name} = {
@@ -77,8 +83,7 @@ in
 
       "." = "q .";
 
-      "qq" =
-        ''if [[ -e "$(cat /tmp/Q_LAST_DIR_$(id -u))" ]]; then cd $(cat /tmp/Q_LAST_DIR_$(id -u)); else echo "No directory to cd to."; fi'';
+      "qq" = ''eval "$(_qq-internals)"'';
 
       ".." = "cd ..";
       "..." = "cd ../..";

@@ -15,14 +15,16 @@ QFILE="/tmp/Q_LAST_DIR_$(id -u)"
 touch "$QFILE"
 chmod 600 "$QFILE"
 
-checkfile() {
-	echo -e "${FILE}Permissions ${INFO}$(stat -c %A "$1")${RESET}"
+perms() {
+	echo "${2}Permissions ${INFO}$(stat -c %A "$1")  ${2}Owner ${INFO}$(stat -c "%U (%G)" "$1")${RESET}"
+}
 
+checkfile() {
 	mime="$(file "$1" --mime)"
 
 	if echo $mime | grep -q "charset=binary"; then
 		# IS binary file, show file info
-		echo -e "${FILE}Binary file ${INFO}$(realpath "$1")${RESET}\n"
+		echo -e "${FILE}Binary file ${INFO}$(realpath "$1")  $(perms "$1" $FILE)\n"
 		file "$1"
 
 		if echo $mime | grep -q "image"; then
@@ -31,7 +33,7 @@ checkfile() {
 		fi
 	else
 		# Is text, show contents
-		echo -e "${FILE}Text file ${INFO}$(realpath "$1")${RESET}\n"
+		echo -e "${FILE}Text file ${INFO}$(realpath "$1")  $(perms "$1" $FILE)\n"
 		highlight -O ansi --force "$1"
 	fi
 
@@ -40,8 +42,8 @@ checkfile() {
 }
 
 checkdir() {
-	echo -e "${DIR}Permissions ${INFO}$(stat -c %A "$1")${RESET}"
-	echo -e "${DIR}Directory ${INFO}$(realpath "$1")${RESET}\n"
+	echo -e ""
+	echo -e "${DIR}Directory ${INFO}$(realpath "$1")  $(perms "$1" $DIR)\n"
 
 	# Show directory tree
 	tree -a -L $depth --dirsfirst -h -v "$1" -C
