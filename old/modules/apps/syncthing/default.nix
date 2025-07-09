@@ -88,7 +88,7 @@ in
       };
 
     # Setup ignore patterns
-    systemd.services.syncthing-init.postStart = concatMapAttrsStringSep "\n" (
+    systemd.user.services.syncthing-init.postStart = concatMapAttrsStringSep "\n" (
       name: value:
       if (strings.stringLength value.ignorePatterns) > 0 then
         ''
