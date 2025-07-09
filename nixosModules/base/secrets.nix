@@ -48,6 +48,12 @@ in
           description = "the path to the secrets repo";
           type = types.path;
         };
+
+        key = mkOption {
+          description = "the key/identify file to give agenix to decrypt secrets";
+          type = types.path;
+          default = config.my.keys.host.private;
+        };
       };
     };
 
@@ -80,12 +86,12 @@ in
 
             export EDITOR=nano
             export RULES="${cfg.editSecretsCommand.path}/secrets.nix"
-            agenix --edit $@
+            agenix --identity "${cfg.editSecretsCommand.key}" --edit $@
 
             popd 1>/dev/null
           '';
 
-          # Needs elevation because the host key is root-protected
+          # Needs elevation because the given key (for example host key) might be root-protected
           elevate = true;
 
           addBashShebang = true;
