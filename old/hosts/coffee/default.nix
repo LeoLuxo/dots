@@ -44,4 +44,9 @@ in
       nixosRepo = "/etc/nixos/dots";
     };
   };
+
+  boot.kernelModules = [
+    "hid_sony"
+    "hid_playstation"
+  ];
 }
