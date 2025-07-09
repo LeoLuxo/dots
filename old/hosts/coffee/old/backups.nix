@@ -37,8 +37,8 @@
 
       backups = {
         "home" = {
-          timer = "hourly";
-          randomDelay = "15m";
+          timer = "daily";
+          randomDelay = "2h";
 
           label = "Home";
           path = "${config.my.paths.home}";
