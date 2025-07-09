@@ -142,7 +142,7 @@ in
             let
               cleanupStaleLocksCommand =
                 if cfg.cleanupStaleLocks then
-                  ''restic --repo "${cfgRestic.repo} "--password-file "${cfgRestic.passwordFile}" unlock''
+                  ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" unlock''
                 else
                   "";
 
