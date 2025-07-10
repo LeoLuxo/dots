@@ -29,6 +29,7 @@
       };
 
       # Don't care that the device ids end up in cleartext on the nix store
+      # TODO move those somewhere common
       devices = {
         "strobery".id = "BH4QRX3-AXCRBBK-32KWW2A-33XYEMB-CKDONYH-4KLE4QA-NXE5LIX-QB4Q5AN";
         "pancake".id = "DS5FS25-BYJYFF2-TKBNJ4S-6RHZTEK-F4QS4EM-BNOPAPU-ULRHUA7-ORVTNA7";

@@ -20,7 +20,7 @@ let
     mkSubmodule
     ;
 
-  cfg = config.my.nx;
+  cfg = config.my.scripts.nx;
   cfgPaths = config.my.paths;
 in
 
@@ -49,7 +49,7 @@ in
   ];
 
   options = {
-    my.nx = {
+    my.scripts.nx = {
       enable = mkEnableOption "nix utilities";
 
       rebuild = mkSubmodule {
@@ -132,7 +132,7 @@ in
       programs.nix-index.enable = false;
 
       # Add some post-build actions
-      my.nx.rebuild.postRebuildActions = mkIf (cfgPaths.dconfDiff != null) ''
+      my.scripts.nx.rebuild.postRebuildActions = mkIf (cfgPaths.dconfDiff != null) ''
         # Save current dconf settings (for nx-dconf-diff)
         echo "Dumping dconf"
         mkdir --parents "$(dirname "${cfgPaths.dconfDiff}")" && touch "${cfgPaths.dconfDiff}"

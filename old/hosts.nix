@@ -5,16 +5,12 @@
   "coffee" =
     mkHost
       [
-        newModules
-        ./hosts/coffee
+        ./../nixosConfigurations/coffee
       ]
       {
         # user = "lili";
         hostname = "coffee";
         system = "x86_64-linux";
-
-        resticRepoHot = "/stuff/Restic/repo";
-        resticRepoCold = "/backup/Restic/repo";
       };
 
   # Laptop (Surface Pro 7)
@@ -28,7 +24,5 @@
         # user = "lili";
         hostname = "pancake";
         system = "x86_64-linux";
-
-        resticRepoHot = "/stuff/Restic/repo";
       };
 }

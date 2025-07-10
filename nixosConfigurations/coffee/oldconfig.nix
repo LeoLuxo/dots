@@ -1,11 +1,11 @@
 {
-  pkgs,
   nixosModulesOld,
   inputs,
+  pkgs,
   ...
 }:
-
 {
+
   # Include global modules
   imports = with nixosModulesOld; [
     rices.peppy
@@ -99,10 +99,45 @@
     };
   };
 
-  # Auto-update wallpaper repo
-  my.nx.rebuild.preRebuildActions = ''
-    echo "Updating wallpaper flake"
-    nix flake update wallpapers --allow-dirty
-    git add flake.lock
-  '';
+  programs.gamescope.enable = true;
+
+  desktop.gnome = {
+    enable = true;
+
+    power = {
+      buttonAction = "power off";
+      confirmShutdown = false;
+
+      screenIdle = {
+        enable = true;
+        delay = 600;
+      };
+
+      suspendIdle.enable = false;
+    };
+  };
+
+  # Add strobery as a local host
+  networking.hosts = {
+    "192.168.0.37" = [ "strobery" ];
+  };
+
+  # Enable and configure the X11 windowing system.
+  services.xserver = {
+    enable = true;
+
+    # Configure keymap in X11
+    xkb = {
+      layout = "us";
+      variant = "altgr-intl";
+    };
+  };
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "24.05"; # Did you read the comment?
 }

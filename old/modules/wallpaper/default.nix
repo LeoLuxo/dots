@@ -173,7 +173,7 @@ in
         wantedBy = [ "graphical-session.target" ];
       };
 
-      my.nx.rebuild.postRebuildActions =
+      my.scripts.nx.rebuild.postRebuildActions =
         if cfg.isTimed then
           ''
             # Reload the wallpaper to avoid having to logout
