@@ -1,23 +1,28 @@
-{ lib, ... }:
+{
+  lib,
+  ...
+}:
 
 let
-
   inherit (lib.my) enabled;
 in
 {
-  # Include local modules
-  imports = [
-    ./audio.nix
+  # 1TB SSD
+  fileSystems."/stuff" = {
+    device = "/dev/disk/by-label/stuff";
+    fsType = "ext4";
+  };
 
-    ./old/software.nix
-    ./old/hardware.nix
-    ./old/system.nix
-    ./old/syncthing.nix
-    ./old/backups.nix
-  ];
+  # 4TB HDD
+  fileSystems."/backup" = {
+    device = "/dev/disk/by-label/backup";
+    fsType = "ntfs";
+  };
 
   my = {
-    user.name = "lili";
+    suites.pc.desktop = enabled // {
+      username = "lili";
+    };
 
     secretManagement = {
       enable = true;
@@ -36,8 +41,6 @@ in
       xdgData."sudachi" = "/stuff/games/roms/switch/data/yuzu";
       xdgData."yuzu" = "/stuff/games/roms/switch/data/yuzu";
     };
-
-    nx = enabled;
 
     system.pinKernel = enabled;
 

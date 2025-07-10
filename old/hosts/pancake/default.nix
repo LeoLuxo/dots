@@ -20,7 +20,7 @@ in
     secretManagement = enabled;
     symlinks = enabled;
 
-    nx = enabled;
+    scripts.nx = enabled;
 
     desktop.defaultAppsShortcuts = enabled;
 
