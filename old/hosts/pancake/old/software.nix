@@ -57,7 +57,7 @@
   shell.default = "fish";
 
   # Auto-update wallpaper repo
-  my.nx.rebuild.preRebuildActions = ''
+  my.scripts.nx.rebuild.preRebuildActions = ''
     echo "Updating wallpaper flake"
     nix flake update wallpapers --allow-dirty
     git add flake.lock

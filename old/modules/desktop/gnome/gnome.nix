@@ -78,6 +78,11 @@ in
       ];
       environment.pathsToLink = [ "share/thumbnailers" ];
 
+      # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+      # (even with autologin disabled I need this otherwise nixos-rebuild crashes gnome??)
+      systemd.services."getty@tty1".enable = false;
+      systemd.services."autovt@tty1".enable = false;
+
       # Enable the GNOME Desktop Environment.
       services.xserver = {
         displayManager.gdm = {
