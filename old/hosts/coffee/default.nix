@@ -51,10 +51,9 @@ in
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
       nixosRepo = "/etc/nixos/dots";
     };
+
+    hardware.gpu.amd = enabled;
+    hardware.controller.playstation = enabled;
   };
 
-  boot.kernelModules = [
-    "hid_sony"
-    "hid_playstation"
-  ];
 }
