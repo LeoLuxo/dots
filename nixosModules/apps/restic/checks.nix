@@ -36,7 +36,7 @@ in
     };
 
     cleanupCache = mkEnableOption "automatically clean up the cache while checking";
-    cleanupStaleLocks = mkEnableOption "automatically clean up stale locks after checking" // {
+    cleanupStaleLocks = mkEnableOption "automatically clean up stale locks before checking" // {
       default = true;
     };
   };
@@ -65,9 +65,9 @@ in
               "";
         in
         ''
-          restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${cleanupCache}
-
           ${cleanupStaleLocks}
+
+          restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${cleanupCache}
         '';
 
       onFailure = mkIf cfgRestic.notifyOnFail [ "restic-checks-failed.service" ];
