@@ -2,6 +2,7 @@
   config,
   pkgs,
   inputs,
+  lib,
   ...
 }:
 
@@ -24,7 +25,10 @@
 
   my.keybinds =
     let
-      getIdForDevice = device: "pw-cli ls \"${device}\" | grep -Poi '(?<=id )\\d+' ";
+      getIdForDevice =
+        device:
+        ''pw-dump | ${lib.getExe pkgs.jq} '.[] | select(.type == "PipeWire:Interface:Node") | select(.info.props."node.nick" == "${device}" and .info.props."media.class" == "Audio/Sink") | .id' '';
+
       setDefaultOutputDevice = device: ''
         id=$(${getIdForDevice device})
         wpctl set-default $id
@@ -49,7 +53,7 @@
         binding = "XF86Launch6"; # F15
         command = ''
           # Set default output device to speakers using wireplumber
-          ${setDefaultOutputDevice "alsa_output.usb-Focusrite_Scarlett_2i2_USB_Y8DBJHF253DDF2-00.HiFi__Line1__sink"}
+          ${setDefaultOutputDevice "Scarlett 2i2 USB"}
 
           # Link guitarix and outputs via pipewire directly
           ${linkGX "Scarlett 2i2 USB"}
@@ -61,7 +65,7 @@
         binding = "XF86Launch5"; # F14
         command = ''
           # Set default output device to headphones using wireplumber
-          ${setDefaultOutputDevice "alsa_output.pci-0000_0c_00.6.analog-stereo"}
+          ${setDefaultOutputDevice "ALC1220 Analog"}
 
           # Link guitarix and outputs via pipewire directly
           ${linkGX "ALC1220 Analog"}
