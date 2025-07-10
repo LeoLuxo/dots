@@ -99,6 +99,12 @@ in
           type = types.nullOr types.path;
           default = null;
         };
+
+        strictHostKeyChecking = mkOption {
+          description = "whether to enable strict host key checking when connecting to the remote (will fail if true and the host key isn't in ssh's known_hosts)";
+          type = types.bool;
+          default = true;
+        };
       };
     };
 
@@ -148,7 +154,7 @@ in
 
               checkCommand =
                 if cfg.performFullCheck || cfg.performQuickCheck then
-                  ''restic --retry-lock 5m --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
+                  ''restic --retry-lock 10m --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
                   + (if cfg.performFullCheck then " --read-data" else "")
                 else
                   "";
@@ -161,13 +167,13 @@ in
               remoteCopiesCommands = lib.mapAttrsToList (
                 name: remoteRepo:
                 let
-
                   specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
                   specifiedPort =
                     if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
+                  strictHostKeyChecking = if remoteRepo.strictHostKeyChecking then "yes" else "no";
                 in
                 ''
-                  restic --retry-lock 10m --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=no' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
+                  restic --retry-lock 10m --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
                 ''
               ) cfg.remoteRepos;
 
@@ -176,7 +182,7 @@ in
                   cfgf = cfg.forget;
                 in
                 if cfgf.enable then
-                  ''restic --retry-lock 5m --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
+                  ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
                   + (if cfgf.prune then " --prune" else "")
                   + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
                   + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")

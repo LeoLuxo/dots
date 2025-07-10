@@ -148,6 +148,8 @@
           passwordFile = repoPassword;
           remoteAddressFile = config.my.secrets."restic/storage-box-addr";
           # Don't specify key and let ssh find the right key/identity to connect with
+
+          strictHostKeyChecking = false; # TODO: make true by configuring known_hosts
         };
 
         forget = {
