@@ -76,7 +76,7 @@
 
   musnix = {
     enable = true;
-    # kernel.realtime = true;
+    kernel.realtime = true;
   };
 
   home-manager.users.${config.my.user.name} = {
@@ -90,7 +90,7 @@
 
   services.pulseaudio.enable = false;
 
-  # security.rtkit.enable = true;
+  security.rtkit.enable = true;
 
   services.pipewire = {
     enable = true;
