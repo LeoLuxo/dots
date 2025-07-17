@@ -6,6 +6,9 @@
   ...
 }:
 
+let
+  inherit (lib.my) enabled;
+in
 {
   imports = [
     inputs.musnix.nixosModules.musnix
@@ -77,6 +80,7 @@
   musnix = {
     enable = true;
     kernel.realtime = true;
+    rtcqs = enabled;
   };
 
   home-manager.users.${config.my.user.name} = {
