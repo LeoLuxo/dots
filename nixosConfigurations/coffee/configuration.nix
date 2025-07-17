@@ -42,7 +42,7 @@ in
       xdgData."yuzu" = "/stuff/games/roms/switch/data/yuzu";
     };
 
-    system.pinKernel = enabled;
+    # system.pinKernel = enabled;
 
     desktop.defaultAppsShortcuts = enabled;
 
