@@ -6,9 +6,6 @@
   ...
 }:
 
-let
-  inherit (lib.my) enabled;
-in
 {
   imports = [
     inputs.musnix.nixosModules.musnix
@@ -79,8 +76,7 @@ in
 
   musnix = {
     enable = true;
-    kernel.realtime = true;
-    rtcqs = enabled;
+    # kernel.realtime = true;
   };
 
   home-manager.users.${config.my.user.name} = {
@@ -94,7 +90,7 @@ in
 
   services.pulseaudio.enable = false;
 
-  security.rtkit.enable = true;
+  # security.rtkit.enable = true;
 
   services.pipewire = {
     enable = true;
