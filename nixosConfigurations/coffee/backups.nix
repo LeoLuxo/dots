@@ -106,14 +106,16 @@
           tags = [ "music" ];
         };
 
-        "roms" = {
-          timer = "hourly";
-          randomDelay = "15m";
+        # "roms" = {
+        #   timer = "hourly";
+        #   randomDelay = "15m";
 
-          label = "Roms";
-          path = "/stuff/games/roms";
-          tags = [ "roms" ];
-        };
+        #   label = "Roms";
+        #   path = "/stuff/games/roms";
+        #   tags = [ "roms" ];
+        #   glob = [
+        #   ];
+        # };
       };
 
       backupPresets = {
@@ -148,8 +150,7 @@
           passwordFile = repoPassword;
           remoteAddressFile = config.my.secrets."restic/storage-box-addr";
           # Don't specify key and let ssh find the right key/identity to connect with
-
-          strictHostKeyChecking = false; # TODO: make true by configuring known_hosts
+          strictHostKeyChecking = false; # TODO: make true by configuring known_hosts correctly
         };
 
         forget = {

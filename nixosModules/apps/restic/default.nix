@@ -126,7 +126,7 @@ in
               iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
             in
             ''
-              rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --skip-identical-parent --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+              rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
             '';
 
           onFailure = mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed.service" ];
