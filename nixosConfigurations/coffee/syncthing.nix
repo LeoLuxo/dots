@@ -97,6 +97,51 @@
           ];
           inherit versioning;
         };
+
+        "Incoming DCIM" = {
+          id = "88xc-tg0v3";
+          path = "/stuff/incoming/dcim";
+          devices = [
+            "celestia"
+          ];
+          type = "receiveonly";
+        };
+
+        "Incoming Pictures" = {
+          id = "0nx82-i39nu";
+          path = "/stuff/incoming/pictures";
+          devices = [
+            "celestia"
+          ];
+          type = "receiveonly";
+        };
+
+        "Incoming Videos" = {
+          id = "gnaop-121mq";
+          path = "/stuff/incoming/videos";
+          devices = [
+            "celestia"
+          ];
+          type = "receiveonly";
+        };
+
+        "Incoming Signal Backups" = {
+          id = "vs5o5-tw8yg";
+          path = "/stuff/incoming/signal";
+          devices = [
+            "celestia"
+          ];
+          type = "receiveonly";
+        };
+
+        "Incoming WhatsApp Backups" = {
+          id = "3lrkm-4t7wl";
+          path = "/stuff/incoming/whatsapp";
+          devices = [
+            "celestia"
+          ];
+          type = "receiveonly";
+        };
       };
     };
 }
