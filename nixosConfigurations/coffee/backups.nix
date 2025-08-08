@@ -106,16 +106,14 @@
           tags = [ "music" ];
         };
 
-        # "roms" = {
-        #   timer = "hourly";
-        #   randomDelay = "15m";
+        "emu" = {
+          timer = "hourly";
+          randomDelay = "15m";
 
-        #   label = "Roms";
-        #   path = "/stuff/games/roms";
-        #   tags = [ "roms" ];
-        #   glob = [
-        #   ];
-        # };
+          label = "Emu";
+          path = "/stuff/games/emu";
+          tags = [ "emu" ];
+        };
       };
 
       backupPresets = {
