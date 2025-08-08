@@ -59,6 +59,7 @@
           devices = [
             "strobery"
             "pancake"
+            "celestia"
           ];
           inherit versioning;
         };
@@ -99,7 +100,7 @@
         };
 
         "Incoming DCIM" = {
-          id = "88xc-tg0v3";
+          id = "88xc3-tg0v3";
           path = "/stuff/incoming/dcim";
           devices = [
             "celestia"
@@ -108,7 +109,7 @@
         };
 
         "Incoming Pictures" = {
-          id = "0nx82-i39nu";
+          id = "0nx82-l39nu";
           path = "/stuff/incoming/pictures";
           devices = [
             "celestia"
