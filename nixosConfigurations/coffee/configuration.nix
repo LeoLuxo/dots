@@ -36,10 +36,10 @@ in
     symlinks = {
       enable = true;
 
-      xdgConfig."Ryujinx" = "/stuff/games/roms/switch/data/ryujinx";
-      xdgConfig."steam-rom-manager/userData" = "/stuff/games/roms/.srm/userData";
-      xdgData."sudachi" = "/stuff/games/roms/switch/data/yuzu";
-      xdgData."yuzu" = "/stuff/games/roms/switch/data/yuzu";
+      xdgConfig."Ryujinx" = "/stuff/games/emu/switch/ryujinx";
+      xdgConfig."steam-rom-manager/userData" = "/stuff/games/emu/steamRomManager/userData";
+      xdgData."sudachi" = "/stuff/games/emu/switch/yuzu";
+      xdgData."yuzu" = "/stuff/games/emu/switch/yuzu";
     };
 
     system.pinKernel = enabled;

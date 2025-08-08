@@ -45,7 +45,7 @@ in
             | items {|game, info|
               let paths = $info.files | columns
 
-              rustic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags --skip-identical-parent
+              rustic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags
               
               $game
             }
