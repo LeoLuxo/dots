@@ -105,7 +105,7 @@ in
           globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
           iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
         in
-        ''
+        pkgs.writeShellScript label ''
           rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
         '';
     in
@@ -124,12 +124,12 @@ in
               restic-main = ''${lib.getExe pkgs.restic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
               rustic-main = ''${lib.getExe pkgs.rustic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
               restic-main-autobackup-ALL = lib.concatMapAttrsStringSep "\n" (
-                _: backup: ''${makeScript backup}''
+                _: backup: "${makeScript backup}"
               ) cfg.backups;
             }
           ]
           ++ (lib.mapAttrsToList (name: backup: {
-            "restic-main-autobackup-${name}" = makeScript backup;
+            "restic-main-autobackup-${name}" = "${makeScript backup}";
           }) cfg.backups)
         );
       };
@@ -142,7 +142,7 @@ in
               pkgs.rustic
             ];
 
-            script = makeScript backup;
+            serviceConfig.ExecStart = makeScript backup;
 
             onFailure = mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed.service" ];
           };
