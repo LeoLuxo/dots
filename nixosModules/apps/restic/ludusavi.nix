@@ -32,53 +32,64 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    systemd.user.services."restic-ludusavi" = {
-      serviceConfig = {
-        ExecStart = writeNushellScript {
-          name = "ludusavi-restic";
-          text = ''
-            # Running as user is required here as otherwise ludusavi can't find any games
-            ludusavi backup --preview --api
-            | from json
-            | get games
-            | items {|game, info|
-              let paths = $info.files | columns
+  config = mkIf cfg.enable (
+    let
+      script = writeNushellScript {
+        name = "ludusavi-restic";
+        text = ''
+          # Running as user is required here as otherwise ludusavi can't find any games
+          ludusavi backup --preview --api
+          | from json
+          | get games
+          | items {|game, info|
+            let paths = $info.files | columns
 
-              rustic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags
-              
-              $game
-            }
-          '';
+            rustic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags
+            
+            $game
+          }
+        '';
 
-          deps = [
-            pkgs.ludusavi
-            pkgs.rustic
-          ];
+        deps = [
+          pkgs.ludusavi
+          pkgs.rustic
+        ];
 
-          binFolder = false;
+        binFolder = false;
+      };
+    in
+    {
+      home-manager.users.${config.my.user.name} = {
+        home.shellAliases = {
+          restic-main-ludusavi = "${script}";
         };
       };
 
-      onFailure = mkIf cfgRestic.notifyOnFail [ "restic-ludusavi-failed.service" ];
-    };
+      systemd.user.services."restic-ludusavi" = {
+        serviceConfig = {
+          ExecStart = script;
+        };
 
-    systemd.user.timers."restic-ludusavi" = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = cfg.timer;
-        Persistent = true;
-        Unit = "restic-ludusavi.service";
-        RandomizedDelaySec = mkIf (cfg.randomDelay != null) cfg.randomDelay;
+        onFailure = mkIf cfgRestic.notifyOnFail [ "restic-ludusavi-failed.service" ];
       };
-    };
 
-    systemd.user.services."restic-ludusavi-failed" = mkIf cfgRestic.notifyOnFail {
-      script = ''
-        ${pkgs.libnotify}/bin/notify-send --urgency=critical \
-          "Restic ludusavi backup failed" \
-          "$(journalctl -u restic-ludusavi-failed -n 5 -o cat)"
-      '';
-    };
-  };
+      systemd.user.timers."restic-ludusavi" = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = cfg.timer;
+          Persistent = true;
+          Unit = "restic-ludusavi.service";
+          RandomizedDelaySec = mkIf (cfg.randomDelay != null) cfg.randomDelay;
+        };
+      };
+
+      systemd.user.services."restic-ludusavi-failed" = mkIf cfgRestic.notifyOnFail {
+        script = ''
+          ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+            "Restic ludusavi backup failed" \
+            "$(journalctl -u restic-ludusavi-failed -n 5 -o cat)"
+        '';
+      };
+    }
+  );
 }

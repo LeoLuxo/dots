@@ -94,65 +94,81 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    my.packages = with pkgs; [
-      sshpass
-      restic
-      rustic
-    ];
+  config = mkIf cfg.enable (
+    let
+      makeScript =
+        backup:
+        let
+          tags = lib.concatMapStringsSep " " (x: ''--tag "${x}"'') backup.tags;
+          displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
+          label = if backup.label != null then ''--label "${backup.label}"'' else "";
+          globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
+          iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
+        in
+        ''
+          rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+        '';
+    in
+    {
+      my.packages = with pkgs; [
+        sshpass
+        restic
+        rustic
+      ];
 
-    home-manager.users.${config.my.user.name} = {
-      home.shellAliases = {
-        # Add aliases for the main repo
-        restic-main = ''${lib.getExe pkgs.restic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
-        rustic-main = ''${lib.getExe pkgs.rustic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
+      home-manager.users.${config.my.user.name} = {
+        home.shellAliases = lib.mkMerge (
+          [
+            {
+              # Add aliases for the main repo
+              restic-main = ''${lib.getExe pkgs.restic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
+              rustic-main = ''${lib.getExe pkgs.rustic} --repo "${cfg.repo}" --password-file "${cfg.passwordFile}"'';
+              restic-main-autobackup-ALL = lib.concatMapAttrsStringSep "\n" (
+                _: backup: ''${makeScript backup}''
+              ) cfg.backups;
+            }
+          ]
+          ++ (lib.mapAttrsToList (name: backup: {
+            "restic-main-autobackup-${name}" = makeScript backup;
+          }) cfg.backups)
+        );
       };
-    };
 
-    systemd.user = lib.mkMerge (
-      lib.mapAttrsToList (name: backup: {
-        # Services for each of the local backups
-        services."restic-autobackup-${name}" = {
-          path = [
-            pkgs.rustic
-          ];
+      systemd.user = lib.mkMerge (
+        lib.mapAttrsToList (name: backup: {
+          # Services for each of the local backups
+          services."restic-autobackup-${name}" = {
+            path = [
+              pkgs.rustic
+            ];
 
-          script =
-            let
-              tags = lib.concatMapStringsSep " " (x: ''--tag "${x}"'') backup.tags;
-              displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
-              label = if backup.label != null then ''--label "${backup.label}"'' else "";
-              globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
-              iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
-            in
-            ''
-              rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
-            '';
+            script = makeScript backup;
 
-          onFailure = mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed.service" ];
-        };
-
-        # Timers for each of the local backups
-        timers."restic-autobackup-${name}" = {
-          wantedBy = [ "timers.target" ];
-          timerConfig = {
-            OnCalendar = backup.timer;
-            Persistent = true;
-            Unit = "restic-autobackup-${name}.service";
-            RandomizedDelaySec = mkIf (backup.randomDelay != null) backup.randomDelay;
+            onFailure = mkIf cfg.notifyOnFail [ "restic-autobackup-${name}-failed.service" ];
           };
-        };
 
-        # Notification services in case of failure for each of the local backups
-        services."restic-autobackup-${name}-failed" = mkIf cfg.notifyOnFail {
-          script = ''
-            ${pkgs.libnotify}/bin/notify-send --urgency=critical \
-              "Backup failed for '${name}'" \
-              "$(journalctl -u restic-autobackup-${name} -n 5 -o cat)"
-          '';
-        };
+          # Timers for each of the local backups
+          timers."restic-autobackup-${name}" = {
+            wantedBy = [ "timers.target" ];
+            timerConfig = {
+              OnCalendar = backup.timer;
+              Persistent = true;
+              Unit = "restic-autobackup-${name}.service";
+              RandomizedDelaySec = mkIf (backup.randomDelay != null) backup.randomDelay;
+            };
+          };
 
-      }) cfg.backups
-    );
-  };
+          # Notification services in case of failure for each of the local backups
+          services."restic-autobackup-${name}-failed" = mkIf cfg.notifyOnFail {
+            script = ''
+              ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+                "Backup failed for '${name}'" \
+                "$(journalctl -u restic-autobackup-${name} -n 5 -o cat)"
+            '';
+          };
+
+        }) cfg.backups
+      );
+    }
+  );
 }
