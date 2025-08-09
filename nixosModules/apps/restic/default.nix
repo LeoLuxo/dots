@@ -98,16 +98,18 @@ in
     let
       makeScript =
         backup:
-        let
-          tags = lib.concatMapStringsSep " " (x: ''--tag "${x}"'') backup.tags;
-          displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
-          label = if backup.label != null then ''--label "${backup.label}"'' else "";
-          globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
-          iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
-        in
-        pkgs.writeShellScript label ''
-          rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
-        '';
+        pkgs.writeShellScript backup.label (
+          let
+            tags = lib.concatMapStringsSep " " (x: ''--tag "${x}"'') backup.tags;
+            displayPath = if backup.displayPath != null then ''--as-path "${backup.displayPath}"'' else "";
+            label = if backup.label != null then ''--label "${backup.label}"'' else "";
+            globs = lib.concatMapStringsSep " " (x: ''--glob "${x}"'') backup.glob;
+            iglobs = lib.concatMapStringsSep " " (x: ''--iglob "${x}"'') backup.iglob;
+          in
+          ''
+            rustic --no-progress --repo "${cfg.repo}" --password-file "${cfg.passwordFile}" backup ${backup.path} ${tags} ${displayPath} ${label} ${globs} ${iglobs} --group-by host,tags --exclude-if-present CACHEDIR.TAG --iglob "!.direnv"
+          ''
+        );
     in
     {
       my.packages = with pkgs; [
