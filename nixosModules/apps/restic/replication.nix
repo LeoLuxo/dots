@@ -154,14 +154,14 @@ in
 
               checkCommand =
                 if cfg.performFullCheck || cfg.performQuickCheck then
-                  ''restic --retry-lock 30m --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
+                  ''restic --retry-lock 2h --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
                   + (if cfg.performFullCheck then " --read-data" else "")
                 else
                   "";
 
               localCopiesCommands = lib.mapAttrsToList (
                 name: localRepo:
-                ''restic --retry-lock 30m --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
+                ''restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
               ) cfg.localRepos;
 
               remoteCopiesCommands = lib.mapAttrsToList (
@@ -173,7 +173,7 @@ in
                   strictHostKeyChecking = if remoteRepo.strictHostKeyChecking then "yes" else "no";
                 in
                 ''
-                  restic --retry-lock 30m --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
+                  restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
                 ''
               ) cfg.remoteRepos;
 

@@ -67,7 +67,7 @@ in
         ''
           ${cleanupStaleLocks}
 
-          restic --retry-lock 30m --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${cleanupCache}
+          restic --retry-lock 2h --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${cleanupCache}
         '';
 
       onFailure = mkIf cfgRestic.notifyOnFail [ "restic-checks-failed.service" ];
