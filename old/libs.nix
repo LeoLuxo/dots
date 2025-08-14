@@ -53,20 +53,6 @@ rec {
     in
     strings.replaceStrings (varNames1 ++ varNames2) (varValues ++ varValues) script;
 
-  # Apply one or more patches to a package without having to create an entire overlay for it
-  mkQuickPatch =
-    { package, patches }:
-    { ... }:
-    {
-      nixpkgs.overlays = [
-        (final: prev: {
-          ${package} = prev.${package}.overrideAttrs (
-            finalAttrs: oldAttrs: { patches = (prev.patches or [ ]) ++ patches; }
-          );
-        })
-      ];
-    };
-
   # Options shortcut for a string option
   mkEmptyString = lib.options.mkOption {
     type = lib.types.str;
