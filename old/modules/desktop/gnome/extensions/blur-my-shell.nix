@@ -3,23 +3,23 @@
   pkgs,
   lib,
   lib2,
-  extraLib,
   ...
 }:
 
 let
-
-  inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse;
   inherit (lib2) mkSubmodule;
   inherit (lib) options types;
 in
 
 {
   options.gnome.blur-my-shell = {
-    enable = mkBoolDefaultTrue;
+    enable = lib.mkOption {
+      type = types.bool;
+      default = true;
+    };
 
     app-blur = mkSubmodule {
-      enable = mkBoolDefaultFalse;
+      enable = options.mkEnableOption "enable app blur";
     };
 
     hacks-level = options.mkOption {

@@ -3,7 +3,6 @@
   config,
   inputs,
   system,
-  extraLib,
   lib2,
   pkgs,
   ...
@@ -77,25 +76,27 @@ in
         inputs.agenix.packages.${system}.default
 
         # Add the edit-secret command
-        (mkIf cfg.editSecretsCommand.enable (pkgs.writeScriptWithDeps {
-          name = "edit-secret";
+        (mkIf cfg.editSecretsCommand.enable (
+          pkgs.writeScriptWithDeps {
+            name = "edit-secret";
 
-          text = ''
-            pushd ${cfg.editSecretsCommand.path}/secrets 1>/dev/null
+            text = ''
+              pushd ${cfg.editSecretsCommand.path}/secrets 1>/dev/null
 
-            export EDITOR=nano
-            export RULES="${cfg.editSecretsCommand.path}/secrets.nix"
-            agenix --identity "${cfg.editSecretsCommand.key}" --edit $@
+              export EDITOR=nano
+              export RULES="${cfg.editSecretsCommand.path}/secrets.nix"
+              agenix --identity "${cfg.editSecretsCommand.key}" --edit $@
 
-            popd 1>/dev/null
-          '';
+              popd 1>/dev/null
+            '';
 
-          # Needs elevation because the given key (for example host key) might be root-protected
-          elevate = true;
+            # Needs elevation because the given key (for example host key) might be root-protected
+            elevate = true;
 
-          addBashShebang = true;
-          deps = [ pkgs.nano ];
-        }))
+            addBashShebang = true;
+            deps = [ pkgs.nano ];
+          }
+        ))
       ];
 
       age = {

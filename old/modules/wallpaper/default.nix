@@ -2,14 +2,12 @@
   pkgs,
   config,
   lib,
-  extraLib,
   lib2,
   ...
 }:
 
 let
   inherit (lib2) sanitizePath mkQuickPatch;
-  inherit (extraLib) mkBoolDefaultTrue;
   inherit (lib)
     options
     filesystem
@@ -84,7 +82,10 @@ in
       default = cfg.isHeic || cfg.isStw || cfg.isStwDir;
     };
 
-    refreshOnUnlock = mkBoolDefaultTrue;
+    refreshOnUnlock = lib.mkOption {
+      type = types.bool;
+      default = true;
+    };
   };
 
   config =
