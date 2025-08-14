@@ -7,7 +7,7 @@
 
 let
   inherit (lib) types;
-  inherit (lib.my) mkAttrs';
+  inherit (pkgs.lib2) mkAttrs';
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
 
