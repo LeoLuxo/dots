@@ -1,16 +1,15 @@
 {
   config,
   lib,
+  lib2,
   pkgs,
   constants,
-  extraLib,
   ...
 }:
 
 let
   inherit (lib) options types;
-
-  inherit (extraLib) toPascalCase;
+  inherit (lib2) toPascalCase;
 in
 
 {

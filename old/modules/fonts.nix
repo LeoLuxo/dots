@@ -2,18 +2,19 @@
   config,
   pkgs,
   lib,
-  extraLib,
   ...
 }:
 
 let
-  inherit (lib) modules;
-  inherit (extraLib) mkBoolDefaultTrue;
+  inherit (lib) modules types;
 in
 
 {
   options.fonts = {
-    enable = mkBoolDefaultTrue;
+    enable = lib.mkOption {
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = modules.mkIf config.fonts.enable {

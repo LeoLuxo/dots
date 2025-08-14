@@ -2,7 +2,6 @@
   config,
   lib,
   lib2,
-  extraLib,
   nixosModulesOld,
   ...
 }:
@@ -10,17 +9,21 @@
 let
   inherit (lib) options types;
   inherit (lib2) mkSubmodule;
-
-  inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse;
 in
 
 {
   options.rice.peppy = {
     blur = {
-      enable = mkBoolDefaultTrue;
+      enable = lib.mkOption {
+        type = types.bool;
+        default = true;
+      };
 
       app-blur = mkSubmodule {
-        enable = mkBoolDefaultFalse;
+        enable = lib.mkOption {
+          type = types.bool;
+          default = false;
+        };
       };
 
       hacks-level = options.mkOption {
