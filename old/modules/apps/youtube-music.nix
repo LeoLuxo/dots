@@ -1,11 +1,10 @@
 {
   pkgs,
-  config,
-  extraLib,
+  lib2,
   ...
 }:
 let
-  inherit (extraLib) mkSyncedPath mkJSONMerge;
+  inherit (lib2) mkSyncedPath;
 in
 {
   my.packages = with pkgs; [
@@ -16,11 +15,6 @@ in
     (mkSyncedPath {
       xdgPath = "YouTube Music/config.json";
       cfgPath = "youtube-music/config.json";
-      merge = mkJSONMerge {
-        defaultOverrides = {
-          options.themes = [ ];
-        };
-      };
     })
   ];
 }
