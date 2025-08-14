@@ -7,8 +7,8 @@
 }:
 
 let
-
-  inherit (extraLib) mkShellHistoryAlias writeScriptWithDeps;
+  inherit (pkgs.lib2) writeScriptWithDeps;
+  inherit (extraLib) mkShellHistoryAlias;
 in
 
 {

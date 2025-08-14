@@ -9,11 +9,9 @@
 }:
 let
   inherit (lib) types;
-  inherit (pkgs.lib2) mkSubmodule;
+  inherit (pkgs.lib2) mkSubmodule writeScriptWithDeps;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
-
-  inherit (extraLib) writeScriptWithDeps;
 
   cfg = config.my.secretManagement;
 in

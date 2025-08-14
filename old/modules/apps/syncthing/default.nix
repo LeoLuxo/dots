@@ -3,11 +3,13 @@
   config,
   lib,
   hostname,
+  pkgs,
   ...
 }:
 
 let
-  inherit (extraLib) mkDesktopItem mkEmptyLines;
+  inherit (pkgs.lib2) mkDesktopItem;
+  inherit (extraLib) mkEmptyLines;
   inherit (lib) types options strings;
 
   # TODO: Remove when I update nixpkgs
@@ -17,18 +19,6 @@ let
 in
 
 {
-  imports = [
-    (mkDesktopItem {
-      name = "syncthing";
-      exec = "firefox \"http://127.0.0.1:8384/\"";
-      icon = "${./syncthing.png}";
-      categories = [
-        "Network"
-        "FileTransfer"
-        "P2P"
-      ];
-    })
-  ];
 
   options = {
     # Overriding the attsOf of the folders options is enough to let us add an extra option, the module system will take care of merging all the options
@@ -100,5 +90,18 @@ in
       else
         ""
     ) config.services.syncthing.settings.folders;
+
+    my.packages = [
+      (mkDesktopItem {
+        name = "syncthing";
+        exec = "firefox \"http://127.0.0.1:8384/\"";
+        icon = "${./syncthing.png}";
+        categories = [
+          "Network"
+          "FileTransfer"
+          "P2P"
+        ];
+      })
+    ];
   };
 }
