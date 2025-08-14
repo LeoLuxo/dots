@@ -8,14 +8,14 @@
       system:
 
       let
-        # A quick instance of pkgs that I can pass around where needed
-        pkgs = nixpkgs.legacyPackages.${system};
-        # Same for the default lib
-        lib = pkgs.lib;
+        # The default lib just so I can pass it around where needed
+        lib = nixpkgs.legacyPackages.${system}.lib;
       in
+
       {
-        nixosConfigurations = import ./nixosConfigurations { inherit inputs lib pkgs; };
-        nixosModules = import ./nixosModules { inherit inputs lib pkgs; };
+        nixosConfigurations = import ./nixosConfigurations { inherit inputs lib; };
+
+        nixosModules = import ./nixosModules { inherit inputs lib; };
       }
     );
 
