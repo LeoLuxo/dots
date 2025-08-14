@@ -18,6 +18,13 @@ let
 in
 
 rec {
+  sanitizePath =
+    path:
+    builtins.path {
+      inherit path;
+      name = strings.sanitizeDerivationName (builtins.baseNameOf path);
+    };
+
   # Capitalize first letter
   toUpperCaseFirstLetter =
     string:
