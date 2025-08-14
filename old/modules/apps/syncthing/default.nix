@@ -11,11 +11,6 @@ let
   inherit (pkgs.lib2) mkDesktopItem;
   inherit (extraLib) mkEmptyLines;
   inherit (lib) types options strings;
-
-  # TODO: Remove when I update nixpkgs
-  concatMapAttrsStringSep =
-    sep: f: attrs:
-    strings.concatStringsSep sep (lib.attrValues (lib.mapAttrs f attrs));
 in
 
 {
@@ -78,7 +73,7 @@ in
       };
 
     # Setup ignore patterns
-    systemd.user.services.syncthing-init.postStart = concatMapAttrsStringSep "\n" (
+    systemd.user.services.syncthing-init.postStart = strings.concatMapAttrsStringSep "\n" (
       name: value:
       if (strings.stringLength value.ignorePatterns) > 0 then
         ''
