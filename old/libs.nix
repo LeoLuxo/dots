@@ -53,57 +53,6 @@ rec {
     in
     strings.replaceStrings (varNames1 ++ varNames2) (varValues ++ varValues) script;
 
-
-  # Utility to easily create a new global keybind.
-  # Currently only implemented for Gnome
-  # mkGlobalKeybind =
-  #   {
-  #     name,
-  #     binding,
-  #     command,
-  #   }:
-  #   (
-  #     let
-  #       id = strings.toLower (strings.sanitizeDerivationName name);
-  #       scriptName = "keybind-${id}";
-  #     in
-  #     # Module to be imported
-  #     {
-  #       config,
-  #       pkgs,
-  #       constants,
-  #       ...
-  #     }:
-  #     {
-  #       programs.dconf.enable = true;
-
-  #       # Create an extra script for the keybind, this avoids a bunch of weird issues
-  #       my.packages = [
-  #         (pkgs.writeShellScriptBin scriptName command)
-  #       ];
-
-  #       home-manager.users.${config.my.user.name} = {
-  #         # Add the keybind to dconf
-  #         dconf.settings =
-  #           if config.desktop.gnome.enable then
-  #             {
-  #               "org/gnome/settings-daemon/plugins/media-keys" = {
-  #                 custom-keybindings = [
-  #                   "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
-  #                 ];
-  #               };
-
-  #               "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
-  #                 inherit binding name;
-  #                 command = scriptName;
-  #               };
-  #             }
-  #           else
-  #             (builtins.abort "gnome disabled, cannot create keybind!");
-  #       };
-  #     }
-  #   );
-
   # Synchronize files/directories between this dots repo and a system xdg path
   # Destination changes take priority (when changed through a UI for example).
   #
@@ -247,32 +196,6 @@ rec {
       fromNix = builtins.toJSON;
       fallback = "{}";
       inherit defaultOverrides;
-    };
-
-  # Create a shell alias that is shell-agnostic but still capable of looking up past commands
-  mkShellHistoryAlias =
-    {
-      name,
-      command,
-    }:
-    let
-      historyCommands = {
-        fish = ''$history[1]'';
-        bash = ''$(fc -ln -1)'';
-        zsh = ''''${history[@][1]}'';
-      };
-
-      mappedCommands = builtins.mapAttrs (
-        _: lastCommand: command { inherit lastCommand; }
-      ) historyCommands;
-    in
-    { constants, config, ... }:
-    {
-      home-manager.users.${config.my.user.name} = {
-        programs.bash.shellAliases.${name} = mappedCommands.bash;
-        programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
-        programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
-      };
     };
 
 

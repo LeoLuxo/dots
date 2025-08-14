@@ -1,22 +1,19 @@
 {
   pkgs,
   config,
-  constants,
-  extraLib,
   ...
 }:
 
 let
-  inherit (pkgs.lib2) writeScriptWithDeps;
-  inherit (extraLib) mkShellHistoryAlias;
+  inherit (pkgs.lib2) writeScriptWithDeps mkShellHistoryAlias;
 in
 
 {
   imports = [
-    (mkShellHistoryAlias {
-      name = "please";
-      command = { lastCommand }: ''sudo ${lastCommand}'';
-    })
+    # (mkShellHistoryAlias {
+    #   name = "please";
+    #   command = { lastCommand }: ''sudo ${lastCommand}'';
+    # })
   ];
 
   my.packages = with pkgs; [
