@@ -2,12 +2,13 @@
   lib,
   config,
   pkgs,
+  lib2,
   ...
 }:
 
 let
   inherit (lib) types;
-  inherit (pkgs.lib2) enabled;
+  inherit (lib2) enabled;
   inherit (lib.options) mkOption;
 
   cfg = config.my.suites.pc.desktop;

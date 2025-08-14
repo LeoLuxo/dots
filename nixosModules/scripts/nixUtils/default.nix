@@ -4,16 +4,16 @@
   config,
   inputs,
   extraLib,
+  lib2,
   ...
 }:
 
 let
 
   inherit (lib) types;
-  inherit (pkgs.lib2)
+  inherit (lib2)
     writeFile
     notNullOr
-    writeScriptWithDeps
     mkShellHistoryAlias
     ;
   inherit (lib.options) mkOption mkEnableOption;
@@ -46,10 +46,10 @@ in
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
 
-    # (mkShellHistoryAlias {
-    #   name = ",,";
-    #   command = { lastCommand }: '', ${lastCommand}'';
-    # })
+    (mkShellHistoryAlias {
+      name = ",,";
+      command = { lastCommand }: '', ${lastCommand}'';
+    })
   ];
 
   options = {
@@ -150,52 +150,62 @@ in
         nurl
         nix-init
 
-        (writeScriptWithDeps {
+        (pkgs.writeScriptWithDeps {
           name = "nx-cleanup";
           file = ./scripts/nx-cleanup.sh;
           deps = [ nh ];
           replaceVariables = variables;
         })
 
-        (mkIf (cfgPaths.nixosRepo != null) (writeScriptWithDeps {
-          name = "nx-rebuild";
-          file = ./scripts/nx-rebuild.sh;
-          deps = [
-            dconf
-            git
-            nixfmt-rfc-style
-            nh
-          ];
-          replaceVariables = variables;
-        }))
+        (mkIf (cfgPaths.nixosRepo != null) (
+          pkgs.writeScriptWithDeps {
+            name = "nx-rebuild";
+            file = ./scripts/nx-rebuild.sh;
+            deps = [
+              dconf
+              git
+              nixfmt-rfc-style
+              nh
+            ];
+            replaceVariables = variables;
+          }
+        ))
 
-        (mkIf (cfgPaths.nixosRepo != null) (writeScriptWithDeps {
-          name = "nx-code";
-          file = ./scripts/nx-code.sh;
-          replaceVariables = variables;
-        }))
+        (mkIf (cfgPaths.nixosRepo != null) (
+          pkgs.writeScriptWithDeps {
+            name = "nx-code";
+            file = ./scripts/nx-code.sh;
+            replaceVariables = variables;
+          }
+        ))
 
-        (mkIf (cfgPaths.nixosRepo != null) (writeScriptWithDeps {
-          name = "nx-template";
-          file = ./scripts/nx-template.sh;
-          replaceVariables = variables;
-        }))
+        (mkIf (cfgPaths.nixosRepo != null) (
+          pkgs.writeScriptWithDeps {
+            name = "nx-template";
+            file = ./scripts/nx-template.sh;
+            replaceVariables = variables;
+          }
+        ))
 
-        (mkIf (cfgPaths.nixosTodo != null) (writeScriptWithDeps {
-          name = "nx-todo";
-          file = ./scripts/nx-todo.sh;
-          replaceVariables = variables;
-        }))
+        (mkIf (cfgPaths.nixosTodo != null) (
+          pkgs.writeScriptWithDeps {
+            name = "nx-todo";
+            file = ./scripts/nx-todo.sh;
+            replaceVariables = variables;
+          }
+        ))
 
-        (mkIf (cfgPaths.dconfDiff != null) (writeScriptWithDeps {
-          name = "nx-dconf-diff";
-          file = ./scripts/nx-dconf-diff.sh;
-          deps = [
-            dconf
-            difftastic
-          ];
-          replaceVariables = variables;
-        }))
+        (mkIf (cfgPaths.dconfDiff != null) (
+          pkgs.writeScriptWithDeps {
+            name = "nx-dconf-diff";
+            file = ./scripts/nx-dconf-diff.sh;
+            deps = [
+              dconf
+              difftastic
+            ];
+            replaceVariables = variables;
+          }
+        ))
       ];
 
       my.keybinds = {

@@ -8,7 +8,6 @@
 }:
 
 let
-  inherit (pkgs.lib2) mkDesktopItem;
   inherit (extraLib) mkEmptyLines;
   inherit (lib) types options strings;
 in
@@ -86,7 +85,7 @@ in
     ) config.services.syncthing.settings.folders;
 
     my.packages = [
-      (mkDesktopItem {
+      (pkgs.mkDesktopItem {
         name = "syncthing";
         exec = "firefox \"http://127.0.0.1:8384/\"";
         icon = "${./syncthing.png}";
