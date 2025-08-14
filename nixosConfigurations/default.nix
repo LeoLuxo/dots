@@ -161,11 +161,7 @@ let
             ;
 
           # TODO remove
-          inherit
-            nixosModulesOld
-            constants
-            system
-            ;
+          inherit nixosModulesOld system;
         };
       }
     );
