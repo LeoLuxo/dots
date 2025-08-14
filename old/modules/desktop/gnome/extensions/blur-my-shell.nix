@@ -1,15 +1,16 @@
 {
   config,
   pkgs,
-  constants,
   lib,
+  lib2,
   extraLib,
   ...
 }:
 
 let
 
-  inherit (extraLib) mkBoolDefaultTrue mkSubmodule mkBoolDefaultFalse;
+  inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse;
+  inherit (lib2) mkSubmodule;
   inherit (lib) options types;
 in
 

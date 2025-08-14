@@ -77,14 +77,4 @@ rec {
     default = true;
   };
 
-  # Options shortcut for a submodule
-  mkSubmodule =
-    options:
-    lib.options.mkOption {
-      type = lib.types.submodule {
-        inherit options;
-      };
-      default = { };
-    };
-
 }

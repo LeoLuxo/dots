@@ -1,5 +1,6 @@
 {
   lib,
+  lib2,
   nixosModulesOld,
   extraLib,
   config,
@@ -8,8 +9,9 @@
 }:
 
 let
-  inherit (extraLib) mkSubmodule mkBoolDefaultTrue mkBoolDefaultFalse;
+  inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse;
   inherit (lib) options types modules;
+  inherit (lib2) mkSubmodule;
 in
 
 {
