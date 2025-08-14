@@ -10,7 +10,7 @@
 let
 
   inherit (lib) types;
-  inherit (lib.my) writeFile notNullOr;
+  inherit (pkgs.lib2) writeFile notNullOr;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
 
