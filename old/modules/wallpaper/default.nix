@@ -2,13 +2,14 @@
   pkgs,
   config,
   lib,
-  extraLib,lib2,
+  extraLib,
+  lib2,
   ...
 }:
 
 let
-  inherit (lib2) sanitizePath;
-  inherit (extraLib) mkQuickPatch mkBoolDefaultTrue;
+  inherit (lib2) sanitizePath mkQuickPatch;
+  inherit (extraLib) mkBoolDefaultTrue;
   inherit (lib)
     options
     filesystem

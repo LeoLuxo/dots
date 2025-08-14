@@ -29,6 +29,20 @@ rec {
       EOF
     '';
 
+  # Apply one or more patches to a package without having to create an entire overlay for it
+  mkQuickPatch =
+    { package, patches }:
+    { ... }:
+    {
+      nixpkgs.overlays = [
+        (final: prev: {
+          ${package} = prev.${package}.overrideAttrs (
+            finalAttrs: oldAttrs: { patches = (prev.patches or [ ]) ++ patches; }
+          );
+        })
+      ];
+    };
+
   /*
     --------------------------------------------------------------------------------
     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
