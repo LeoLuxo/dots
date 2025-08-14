@@ -14,7 +14,6 @@ let
 in
 
 {
-
   options = {
     # Overriding the attsOf of the folders options is enough to let us add an extra option, the module system will take care of merging all the options
     services.syncthing.settings.folders = options.mkOption {

@@ -24,4 +24,31 @@
       ${text}
       EOF
     '';
+
+  # Create a shell alias that is shell-agnostic but can look up past commands
+  mkShellHistoryAlias =
+    {
+      name,
+      command,
+    }:
+    { };
+  # let
+  #   historyCommands = {
+  #     fish = ''$history[1]'';
+  #     bash = ''$(fc -ln -1)'';
+  #     zsh = ''''${history[@][1]}'';
+  #   };
+
+  #   mappedCommands = builtins.mapAttrs (
+  #     _: lastCommand: command { inherit lastCommand; }
+  #   ) historyCommands;
+  # in
+  # { constants, config, ... }:
+  # {
+  #   home-manager.users.${config.my.user.name} = {
+  #     programs.bash.shellAliases.${name} = mappedCommands.bash;
+  #     programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
+  #     programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
+  #   };
+  # };
 }

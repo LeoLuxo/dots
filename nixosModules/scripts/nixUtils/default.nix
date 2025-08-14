@@ -10,12 +10,17 @@
 let
 
   inherit (lib) types;
-  inherit (pkgs.lib2) writeFile notNullOr writeScriptWithDeps;
+  inherit (pkgs.lib2)
+    writeFile
+    notNullOr
+    writeScriptWithDeps
+    mkShellHistoryAlias
+    ;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
 
   inherit (extraLib)
-    mkShellHistoryAlias
+
     mkSubmodule
     ;
 
@@ -41,10 +46,10 @@ in
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
 
-    (mkShellHistoryAlias {
-      name = ",,";
-      command = { lastCommand }: '', ${lastCommand}'';
-    })
+    # (mkShellHistoryAlias {
+    #   name = ",,";
+    #   command = { lastCommand }: '', ${lastCommand}'';
+    # })
   ];
 
   options = {
