@@ -10,12 +10,13 @@
       let
         # The default lib just so I can pass it around where needed
         lib = nixpkgs.legacyPackages.${system}.lib;
+        lib2 = import ./lib.nix { inherit lib; };
       in
 
       {
-        nixosConfigurations = import ./nixosConfigurations { inherit inputs lib; };
+        nixosConfigurations = import ./nixosConfigurations { inherit inputs lib lib2; };
 
-        nixosModules = import ./nixosModules { inherit inputs lib; };
+        nixosModules = import ./nixosModules { inherit inputs lib lib2; };
       }
     );
 

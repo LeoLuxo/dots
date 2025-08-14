@@ -4,10 +4,6 @@
 }:
 
 let
-  inherit (pkgs.lib2) writeScriptWithDeps;
-in
-
-let
   package = pkgs.beets.override {
     pluginOverrides = {
       # fetchartist = {
@@ -19,7 +15,7 @@ let
 in
 {
   my.packages = [
-    (writeScriptWithDeps {
+    (pkgs.writeScriptWithDeps {
       name = "beet";
 
       deps = [ package ];

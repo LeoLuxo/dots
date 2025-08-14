@@ -1,4 +1,9 @@
-{ inputs, lib, ... }:
+{
+  inputs,
+  lib,
+  lib2,
+  ...
+}:
 let
   mkPkgsOverlay =
     name: nixpkgs:
@@ -22,13 +27,14 @@ let
     (mkPkgsOverlay "24-11" inputs.nixpkgs-24-11)
     (mkPkgsOverlay "24-05" inputs.nixpkgs-24-05)
 
-    # Add my custom libs, accessible under `pkgs.lib2`
-    (final: prev: {
-      lib2 = import ../lib {
-        lib = prev.lib;
+    # Add my custom builders, accessible under `pkgs.<builder>`
+    (
+      final: prev:
+      import ../builders.nix {
+        inherit lib lib2;
         pkgs = prev;
-      };
-    })
+      }
+    )
   ];
 
   mkHost =
@@ -151,7 +157,12 @@ let
 
         # Additional args passed to the modules
         specialArgs = {
-          inherit inputs hostname user;
+          inherit
+            inputs
+            lib2
+            hostname
+            user
+            ;
 
           # TODO remove
           inherit

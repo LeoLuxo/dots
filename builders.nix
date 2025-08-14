@@ -1,14 +1,13 @@
 {
-  lib,
   pkgs,
-  strings,
+  lib,
+  lib2,
 }:
 
 let
-  inherit (strings) replaceScriptVariables toPascalCaseWithSpaces;
+  inherit (lib2) replaceScriptVariables toPascalCaseWithSpaces;
 in
 rec {
-
   # Write a script just like pkgs.writeShellScriptBin and pkgs.writeScriptBin, but optionally add some dependencies.
   # Is automatically wrapped in another script with the deps on the PATH.
   writeScriptWithDeps =

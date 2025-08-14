@@ -2,12 +2,12 @@
   pkgs,
   config,
   lib,
-  extraLib,
+  extraLib,lib2,
   ...
 }:
 
 let
-  inherit (pkgs.lib2) sanitizePath;
+  inherit (lib2) sanitizePath;
   inherit (extraLib) mkQuickPatch mkBoolDefaultTrue;
   inherit (lib)
     options

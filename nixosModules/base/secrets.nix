@@ -4,12 +4,13 @@
   inputs,
   system,
   extraLib,
+  lib2,
   pkgs,
   ...
 }:
 let
   inherit (lib) types;
-  inherit (pkgs.lib2) mkSubmodule writeScriptWithDeps;
+  inherit (lib2) mkSubmodule;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
 
@@ -76,7 +77,7 @@ in
         inputs.agenix.packages.${system}.default
 
         # Add the edit-secret command
-        (mkIf cfg.editSecretsCommand.enable (writeScriptWithDeps {
+        (mkIf cfg.editSecretsCommand.enable (pkgs.writeScriptWithDeps {
           name = "edit-secret";
 
           text = ''

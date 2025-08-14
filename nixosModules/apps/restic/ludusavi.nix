@@ -9,7 +9,6 @@ let
   inherit (lib) types;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
-  inherit (pkgs.lib2) writeNushellScript;
 
   cfg = config.my.apps.restic.backupPresets.ludusavi;
   cfgRestic = config.my.apps.restic;
@@ -33,7 +32,7 @@ in
 
   config = mkIf cfg.enable (
     let
-      script = writeNushellScript {
+      script = pkgs.writeNushellScript {
         name = "ludusavi-restic";
         text = ''
           # Running as user is required here as otherwise ludusavi can't find any games

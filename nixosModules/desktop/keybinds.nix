@@ -2,12 +2,13 @@
   lib,
   config,
   pkgs,
+  lib2,
   ...
 }:
 
 let
   inherit (lib) types;
-  inherit (pkgs.lib2) mkAttrs';
+  inherit (lib2) mkAttrs';
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
 

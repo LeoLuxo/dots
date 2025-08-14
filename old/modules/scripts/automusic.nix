@@ -4,17 +4,13 @@
   ...
 }:
 
-let
-  inherit (pkgs.lib2) writeScriptWithDeps;
-in
-
 {
   imports = with nixosModulesOld; [
     apps.beets
   ];
 
   my.packages = [
-    (writeScriptWithDeps {
+    (pkgs.writeScriptWithDeps {
       name = "automusic";
 
       deps = [ ];

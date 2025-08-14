@@ -3,13 +3,9 @@
   ...
 }:
 
-let
-  inherit (pkgs.lib2) writeScriptWithDeps;
-in
-
 {
   my.packages = [
-    (writeScriptWithDeps {
+    (pkgs.writeScriptWithDeps {
       name = "snip";
       file = ./snip.sh;
       deps = [
