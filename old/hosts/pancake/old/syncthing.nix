@@ -1,10 +1,11 @@
 {
+  nixosModulesOld,
   ...
 }:
 
 {
-  imports = [
-    ../../modules/apps/syncthing
+  imports = with nixosModulesOld; [
+    apps.syncthing
   ];
 
   services.syncthing.settings =
@@ -28,10 +29,9 @@
       };
 
       # Don't care that the device ids end up in cleartext on the nix store
-      # TODO move those somewhere common
       devices = {
         "strobery".id = "BH4QRX3-AXCRBBK-32KWW2A-33XYEMB-CKDONYH-4KLE4QA-NXE5LIX-QB4Q5AN";
-        "pancake".id = "DS5FS25-BYJYFF2-TKBNJ4S-6RHZTEK-F4QS4EM-BNOPAPU-ULRHUA7-ORVTNA7";
+        "coffee".id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
         "celestia".id = "2DPZ3IR-YH4YGS3-SGEZMRY-PMJNDZ4-3PBAE4D-V3IT5CA-4R4KVB5-MFH2WAL";
       };
 
@@ -42,7 +42,7 @@
           path = "/stuff/obsidian";
           devices = [
             "strobery"
-            "pancake"
+            "coffee"
             "celestia"
           ];
           ignorePatterns = ''
@@ -57,7 +57,7 @@
           path = "/stuff/importantDocs";
           devices = [
             "strobery"
-            "pancake"
+            "coffee"
             "celestia"
           ];
           inherit versioning;
@@ -68,7 +68,7 @@
           path = "/stuff/share";
           devices = [
             "strobery"
-            "pancake"
+            "coffee"
           ];
           inherit versioning;
         };
@@ -78,7 +78,7 @@
           path = "/stuff/uniCourses";
           devices = [
             "strobery"
-            "pancake"
+            "coffee"
           ];
           ignorePatterns = ''
             bachelor*/
@@ -93,55 +93,11 @@
           path = "/stuff/vault";
           devices = [
             "strobery"
-            "pancake"
+            "coffee"
           ];
           inherit versioning;
         };
-
-        "Incoming DCIM" = {
-          id = "88xc3-tg0v3";
-          path = "/stuff/incoming/dcim";
-          devices = [
-            "celestia"
-          ];
-          type = "receiveonly";
-        };
-
-        "Incoming Pictures" = {
-          id = "0nx82-l39nu";
-          path = "/stuff/incoming/pictures";
-          devices = [
-            "celestia"
-          ];
-          type = "receiveonly";
-        };
-
-        "Incoming Videos" = {
-          id = "gnaop-121mq";
-          path = "/stuff/incoming/videos";
-          devices = [
-            "celestia"
-          ];
-          type = "receiveonly";
-        };
-
-        "Incoming Signal Backups" = {
-          id = "vs5o5-tw8yg";
-          path = "/stuff/incoming/signal";
-          devices = [
-            "celestia"
-          ];
-          type = "receiveonly";
-        };
-
-        "Incoming WhatsApp Backups" = {
-          id = "3lrkm-4t7wl";
-          path = "/stuff/incoming/whatsapp";
-          devices = [
-            "celestia"
-          ];
-          type = "receiveonly";
-        };
       };
     };
+
 }
