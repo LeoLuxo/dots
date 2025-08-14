@@ -1,14 +1,13 @@
 {
   lib,
   pkgs,
-  extraLib,
+  lib2,
   ...
 }:
 
 let
-  inherit (extraLib)
+  inherit (lib2)
     # mkQuickPatch
-    mkJSONMerge
     mkSyncedPath
     ;
 in
@@ -41,17 +40,11 @@ in
     (mkSyncedPath {
       xdgPath = "vesktop/settings/settings.json";
       cfgPath = "vesktop/vencord.json";
-      merge = mkJSONMerge {
-        defaultOverrides = {
-          themeLinks = [ ];
-        };
-      };
     })
 
     (mkSyncedPath {
       xdgPath = "vesktop/settings.json";
       cfgPath = "vesktop/vesktop.json";
-      merge = mkJSONMerge { };
     })
   ];
 
