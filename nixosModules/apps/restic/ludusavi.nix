@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  extraLib,
   ...
 }:
 
@@ -10,7 +9,7 @@ let
   inherit (lib) types;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
-  inherit (extraLib) writeNushellScript;
+  inherit (pkgs.lib2) writeNushellScript;
 
   cfg = config.my.apps.restic.backupPresets.ludusavi;
   cfgRestic = config.my.apps.restic;

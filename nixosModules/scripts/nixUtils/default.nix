@@ -10,13 +10,12 @@
 let
 
   inherit (lib) types;
-  inherit (pkgs.lib2) writeFile notNullOr;
+  inherit (pkgs.lib2) writeFile notNullOr writeScriptWithDeps;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
 
   inherit (extraLib)
     mkShellHistoryAlias
-    writeScriptWithDeps
     mkSubmodule
     ;
 
