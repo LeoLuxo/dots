@@ -10,7 +10,7 @@
     ./oldconfig.nix
 
     inputs.self.nixosModules.default
-
-    { system.stateVersion = "24.05"; }
   ];
+
+  system.stateVersion = "24.05";
 }

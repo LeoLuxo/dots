@@ -1,14 +1,13 @@
 {
   lib,
   pkgs,
-  nixosModulesOld,
   ...
 }:
 
 {
-  imports = with nixosModulesOld; [
+  imports = [
     # Require fonts
-    fonts
+    ../../modules/fonts.nix
   ];
 
   my.defaultApps.notes = lib.mkDefault "obsidian";
