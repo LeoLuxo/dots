@@ -1,21 +1,52 @@
 {
   description = "My NixOS configuration :)";
 
-  # https://nixos.wiki/wiki/flakes#Flake_schema
   outputs =
     { nixpkgs, flake-utils, ... }@inputs:
     flake-utils.lib.eachDefaultSystemPassThrough (
       system:
-
       let
-        # The default lib just so I can pass it around where needed
-        lib = nixpkgs.legacyPackages.${system}.lib;
+
+        # The config for each of the nixpkgs instances
+        nixpkgsConfig = {
+          inherit system;
+          config = {
+            allowUnfree = true;
+          };
+        };
+
+        pkgs = import inputs.nixpkgs nixpkgsConfig;
+        otherPkgs = {
+          pkgs-stable = import inputs.nixpkgs-stable nixpkgsConfig;
+          pkgs-unstable = import inputs.nixpkgs-unstable nixpkgsConfig;
+
+          pkgs-25-05 = import inputs.nixpkgs-25-05 nixpkgsConfig;
+          pkgs-24-11 = import inputs.nixpkgs-24-11 nixpkgsConfig;
+          pkgs-24-05 = import inputs.nixpkgs-24-05 nixpkgsConfig;
+        };
+
+        # Set up nixpks lib + my custom lib
+        lib = pkgs.lib // {
+          my = import ./lib {
+            lib = pkgs.lib;
+            inherit pkgs;
+          };
+        };
+
+        importArgs = {
+          inherit
+            lib
+            inputs
+            pkgs
+            otherPkgs
+            ;
+        };
       in
-
       {
-        nixosConfigurations = import ./nixosConfigurations { inherit inputs lib; };
+        # Use a compatibility layer until I've transferred all the old modules to the new module system
+        nixosConfigurations = import ./oldCompat.nix importArgs;
 
-        nixosModules = import ./nixosModules { inherit inputs lib; };
+        nixosModules = import ./nixosModules importArgs;
       }
     );
 

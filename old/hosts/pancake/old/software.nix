@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  nixosModulesOld,
   constants,
   inputs,
   ...
@@ -8,28 +9,28 @@
 
 {
   # Include global modules
-  imports = [
-    ../../modules/rices/peppy
+  imports = with nixosModulesOld; [
+    rices.peppy
 
-    ../../modules/shell/bash
-    ../../modules/shell/fish
-    # ../../modules/shell/nushell
+    shell.bash
+    shell.fish
+    # shell.nushell
 
-    ../../modules/scripts/snip
-    ../../modules/scripts/terminal-utils
-    ../../modules/scripts/clipboard
+    scripts.snip
+    scripts.terminal-utils
+    scripts.clipboard
 
-    # ../../modules/apps/deepl
-    ../../modules/apps/youtube-music
-    ../../modules/apps/gnome-dialect
-    ../../modules/apps/obsidian
-    ../../modules/apps/firefox
-    ../../modules/apps/discord
-    ../../modules/apps/vscode
-    ../../modules/apps/git
-    ../../modules/apps/steam
-    ../../modules/apps/bitwarden
-    ../../modules/apps/upscaler
+    # apps.deepl
+    apps.youtube-music
+    apps.gnome-dialect
+    apps.obsidian
+    apps.firefox
+    apps.discord
+    apps.vscode
+    apps.git
+    apps.steam
+    apps.bitwarden
+    apps.upscaler
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module

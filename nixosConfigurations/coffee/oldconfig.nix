@@ -1,5 +1,5 @@
 {
-
+  nixosModulesOld,
   inputs,
   pkgs,
   ...
@@ -7,39 +7,39 @@
 {
 
   # Include global modules
-  imports = [
-    ../../modules/rices/peppy
+  imports = with nixosModulesOld; [
+    rices.peppy
 
-    ../../modules/shell/bash
-    ../../modules/shell/fish
-    # ../../modules/shell/nushell
+    shell.bash
+    shell.fish
+    # shell.nushell
 
-    ../../modules/scripts/snip
-    ../../modules/scripts/terminal-utils
-    ../../modules/scripts/clipboard
-    ../../modules/scripts/boot-windows
-    ../../modules/scripts/automusic
+    scripts.snip
+    scripts.terminal-utils
+    scripts.clipboard
+    scripts.boot-windows
+    scripts.automusic
 
-    ../../modules/apps/youtube-music
-    ../../modules/apps/obsidian
-    ../../modules/apps/firefox
-    ../../modules/apps/discord
-    ../../modules/apps/vscode
-    ../../modules/apps/git
-    ../../modules/apps/steam
-    ../../modules/apps/qmk
-    ../../modules/apps/bitwarden
-    ../../modules/apps/llm
-    ../../modules/apps/upscaler
+    apps.youtube-music
+    apps.obsidian
+    apps.firefox
+    apps.discord
+    apps.vscode
+    apps.git
+    apps.steam
+    apps.qmk
+    apps.bitwarden
+    apps.llm
+    apps.upscaler
 
-    ../../modules/apps/distrobox
-    ../../modules/apps/nicotine-plus
-    ../../modules/apps/sldl
+    apps.distrobox
+    apps.nicotine-plus
+    apps.sldl
 
-    # ../../modules/apps/sudachi
-    ../../modules/apps/steamRomManager
-    ../../modules/apps/yuzu
-    ../../modules/apps/ryujinx
+    # apps.sudachi
+    apps.steamRomManager
+    apps.yuzu
+    apps.ryujinx
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
