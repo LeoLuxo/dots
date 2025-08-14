@@ -7,7 +7,8 @@
 }:
 
 let
-  inherit (extraLib) mkQuickPatch mkBoolDefaultTrue sanitizePath;
+  inherit (pkgs.lib2) sanitizePath;
+  inherit (extraLib) mkQuickPatch mkBoolDefaultTrue;
   inherit (lib)
     options
     filesystem
