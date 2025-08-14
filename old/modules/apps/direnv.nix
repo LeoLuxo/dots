@@ -1,4 +1,4 @@
-{ constants, config, ... }:
+{ config, ... }:
 {
   programs.direnv = {
     enable = true;
