@@ -1,12 +1,10 @@
 {
   pkgs,
-  config,
-  extraLib,
   ...
 }:
 
 let
-  inherit (extraLib) mkDesktopItem writeScriptWithDeps;
+  inherit (pkgs.lib2) writeScriptWithDeps mkDesktopItem;
 in
 
 let
@@ -22,7 +20,9 @@ let
   );
 in
 {
-  imports = [
+  my.packages = [
+    package
+
     (mkDesktopItem {
       desktopName = "Boot into Windows";
       icon = "${./windows7.png}";
@@ -30,9 +30,5 @@ in
 
       inherit package;
     })
-  ];
-
-  my.packages = [
-    package
   ];
 }

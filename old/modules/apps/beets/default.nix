@@ -1,12 +1,10 @@
 {
   pkgs,
-  config,
-  extraLib,
   ...
 }:
 
 let
-  inherit (extraLib) writeScriptWithDeps;
+  inherit (pkgs.lib2) writeScriptWithDeps;
 in
 
 let
