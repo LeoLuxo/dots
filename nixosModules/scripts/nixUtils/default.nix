@@ -3,7 +3,6 @@
   lib,
   config,
   inputs,
-  extraLib,
   lib2,
   ...
 }:
@@ -15,14 +14,10 @@ let
     writeFile
     notNullOr
     mkShellHistoryAlias
+    mkSubmodule
     ;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.modules) mkIf;
-
-  inherit (extraLib)
-
-    mkSubmodule
-    ;
 
   cfg = config.my.scripts.nx;
   cfgPaths = config.my.paths;

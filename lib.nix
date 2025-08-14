@@ -132,6 +132,7 @@ rec {
       type = types.submodule {
         options = opts;
       };
+      default = { };
     };
 
   mkAttrs =
