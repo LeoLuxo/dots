@@ -41,21 +41,6 @@ let
     user: hostname: module:
     inputs.nixpkgs.lib.nixosSystem (
       let
-        # TODO remove
-        system = "x86_64-linux";
-
-        defaultConstants = rec {
-          # userHome = "/home/${user}";
-          nixosPath = "/etc/nixos";
-          secretsPath = "/home/lili/misc/secrets";
-
-          nixosRepoPath = (nixosPath + "/dots");
-        };
-
-        constants = defaultConstants // {
-          inherit hostname system;
-        };
-
         # Sanitize a path so that it doesn't cause problems in the nix store
         sanitizePath =
 
@@ -161,7 +146,7 @@ let
             ;
 
           # TODO remove
-          inherit nixosModulesOld system;
+          inherit nixosModulesOld;
         };
       }
     );

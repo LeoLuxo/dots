@@ -2,7 +2,6 @@
   lib,
   config,
   inputs,
-  system,
   lib2,
   pkgs,
   ...
@@ -73,7 +72,7 @@ in
     {
       my.packages = [
         # Install agenix CLI
-        inputs.agenix.packages.${system}.default
+        inputs.agenix.packages.${pkgs.system}.default
 
         # Add the edit-secret command
         (mkIf cfg.editSecretsCommand.enable (
