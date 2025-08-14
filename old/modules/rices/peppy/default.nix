@@ -94,23 +94,23 @@ in
       };
 
       # Apply catppuccin to certain apps
-      syncedFiles.overrides = {
-        "youtube-music/config.json" = {
-          options.themes = [ "${./assets/yt-music.css}" ];
-        };
+      # syncedFiles.overrides = {
+      #   "youtube-music/config.json" = {
+      #     options.themes = [ "${./assets/yt-music.css}" ];
+      #   };
 
-        "vesktop/vencord.json" = {
-          themeLinks = [
-            "https://catppuccin.github.io/discord/dist/catppuccin-${flavor}-${accent}.theme.css"
-          ];
-        };
+      #   "vesktop/vencord.json" = {
+      #     themeLinks = [
+      #       "https://catppuccin.github.io/discord/dist/catppuccin-${flavor}-${accent}.theme.css"
+      #     ];
+      #   };
 
-        "vscode/settings.json" = {
-          "workbench.colorTheme" = "Catppuccin Frappé";
-          "catppuccin.accentColor" = "lavender";
-          "workbench.iconTheme" = "material-icon-theme";
-        };
-      };
+      #   "vscode/settings.json" = {
+      #     "workbench.colorTheme" = "Catppuccin Frappé";
+      #     "catppuccin.accentColor" = "lavender";
+      #     "workbench.iconTheme" = "material-icon-theme";
+      #   };
+      # };
 
       # Install catppuccin extensions to vscode
       # home-manager.users.${config.my.user.name} = {

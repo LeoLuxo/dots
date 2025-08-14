@@ -3,14 +3,12 @@
   lib,
   pkgs,
   nixosModulesOld,
-  constants,
-  extraLib,
+  lib2,
   ...
 }:
 
 let
-
-  inherit (extraLib) mkSyncedPath mkJSONMerge;
+  inherit (lib2) mkSyncedPath;
 in
 
 {
@@ -23,11 +21,6 @@ in
     (mkSyncedPath {
       xdgPath = "Code/User/settings.json";
       cfgPath = "vscode/settings.json";
-      merge = mkJSONMerge {
-        defaultOverrides = {
-          "workbench.colorTheme" = "";
-        };
-      };
     })
 
     (mkSyncedPath {
