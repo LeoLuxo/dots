@@ -2,12 +2,13 @@
   lib,
   config,
   pkgs,
+  lib2,
   ...
 }:
 
 let
 
-  inherit (pkgs.lib2) enabled;
+  inherit (lib2) enabled;
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf;
 

@@ -1,8 +1,13 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  lib2,
+  ...
+}:
 
 let
 
-  inherit (pkgs.lib2) enabled;
+  inherit (lib2) enabled;
 in
 {
   # Include local modules
