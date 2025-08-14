@@ -2,21 +2,19 @@
   lib,
   lib2,
   nixosModulesOld,
-  extraLib,
   config,
   pkgs,
   ...
 }:
 
 let
-  inherit (extraLib) mkBoolDefaultTrue mkBoolDefaultFalse;
   inherit (lib) options types modules;
   inherit (lib2) mkSubmodule;
 in
 
 {
   options.desktop.gnome = {
-    enable = mkBoolDefaultFalse;
+    enable = options.mkEnableOption "enable the GNOME Desktop Environment";
 
     power = mkSubmodule {
       buttonAction = options.mkOption {
@@ -29,10 +27,16 @@ in
         default = "power off";
       };
 
-      confirmShutdown = mkBoolDefaultTrue;
+      confirmShutdown = lib.mkOption {
+        type = types.bool;
+        default = true;
+      };
 
       screenIdle = mkSubmodule {
-        enable = mkBoolDefaultTrue;
+        enable = lib.mkOption {
+          type = types.bool;
+          default = true;
+        };
 
         delay = options.mkOption {
           type = types.ints.unsigned;
@@ -41,7 +45,10 @@ in
       };
 
       suspendIdle = mkSubmodule {
-        enable = mkBoolDefaultFalse;
+        enable = lib.mkOption {
+          type = types.bool;
+          default = false;
+        };
 
         delay = options.mkOption {
           type = types.ints.unsigned;

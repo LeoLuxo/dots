@@ -1,5 +1,4 @@
 {
-  extraLib,
   config,
   lib,
   hostname,
@@ -8,7 +7,6 @@
 }:
 
 let
-  inherit (extraLib) mkEmptyLines;
   inherit (lib) types options strings;
 in
 
@@ -21,7 +19,10 @@ in
           { name, ... }:
           {
             options = {
-              ignorePatterns = mkEmptyLines;
+              ignorePatterns = lib.mkOption {
+                type = types.lines;
+                default = "";
+              };
             };
           }
         )

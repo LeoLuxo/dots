@@ -2,15 +2,12 @@
   nixosModulesOld,
   lib,
   config,
-  extraLib,
   inputs,
-  constants,
   ...
 }:
 
 let
   inherit (lib) mkDefault options types;
-  inherit (extraLib) mkBoolDefaultFalse;
 
 in
 
@@ -30,7 +27,10 @@ in
   ];
 
   options.rice.peppy = {
-    enable = mkBoolDefaultFalse;
+    enable = lib.mkOption {
+      type = types.bool;
+      default = false;
+    };
 
     theme = {
       flavor = options.mkOption {

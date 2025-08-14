@@ -56,10 +56,6 @@ let
           inherit hostname system;
         };
 
-        extraLib = import ../old/libs.nix {
-          inherit inputs constants;
-        };
-
         # Sanitize a path so that it doesn't cause problems in the nix store
         sanitizePath =
 
@@ -166,7 +162,6 @@ let
 
           # TODO remove
           inherit
-            extraLib
             nixosModulesOld
             constants
             system
