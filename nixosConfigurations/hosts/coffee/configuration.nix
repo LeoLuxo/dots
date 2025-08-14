@@ -1,10 +1,11 @@
 {
   lib,
+  pkgs,
   ...
 }:
 
 let
-  inherit (lib.my) enabled;
+  inherit (pkgs.lib2) enabled;
 in
 {
   # 1TB SSD

@@ -22,14 +22,11 @@ let
     (mkPkgsOverlay "24-11" inputs.nixpkgs-24-11)
     (mkPkgsOverlay "24-05" inputs.nixpkgs-24-05)
 
-    # Merge my custom libs with the normal nixpkgs.lib
+    # Add my custom libs, accessible under `pkgs.lib2`
     (final: prev: {
-      lib = prev.lib // {
-        # TODO rename lib.my to something else
-        my = import ../lib {
-          lib = prev.lib;
-          pkgs = prev;
-        };
+      lib2 = import ../lib {
+        lib = prev.lib;
+        pkgs = prev;
       };
     })
   ];
@@ -58,7 +55,7 @@ let
         };
 
         nixosModulesOld = extraLib.findFiles {
-          dir = ./old/modules;
+          dir = ../old/modules;
           extensions = [ "nix" ];
           defaultFiles = [ "default.nix" ];
         };

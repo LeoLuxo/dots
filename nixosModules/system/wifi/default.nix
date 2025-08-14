@@ -1,12 +1,13 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
 let
   inherit (lib) types;
-  inherit (lib.my) enabled;
+  inherit (pkgs.lib2) enabled;
   inherit (lib.options) mkOption;
 
   cfg = config.my.system.wifi;

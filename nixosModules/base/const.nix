@@ -1,12 +1,13 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 
 let
   inherit (lib) types;
-  inherit (lib.my) notNullOr mkAttrs;
+  inherit (pkgs.lib2) notNullOr mkAttrs;
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
 in
