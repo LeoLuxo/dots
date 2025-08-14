@@ -1,3 +1,5 @@
+# These extra libs are accessible in nixos modules under `pkgs.lib2`
+
 libArgs:
 
 let
