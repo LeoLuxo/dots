@@ -2,6 +2,7 @@
   constants,
   config,
   pkgs,
+  nixosModulesOld,
   ...
 }:
 
@@ -37,7 +38,7 @@ let
     };
 in
 {
-  imports = [ ../../modules/apps/joycons.nix ];
+  imports = [ nixosModulesOld.apps.joycons ];
 
   my.packages = [
     (pkgs.callPackage package { })

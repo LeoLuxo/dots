@@ -1,5 +1,6 @@
 {
   lib,
+  nixosModulesOld,
   extraLib,
   config,
   pkgs,
@@ -44,11 +45,11 @@ in
           type = types.ints.unsigned;
           default = 1800;
         };
-      };                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+      };
     };
   };
 
-  imports = [
+  imports = with nixosModulesOld; [
     # Triple buffering fork thing
     # ./triple-buffering.nix
 
@@ -59,10 +60,10 @@ in
     ./settings.nix
 
     # Base extensions that should be included by default
-    ./extensions/just-perfection.nix
-    ./extensions/removable-drive-menu.nix
-    ./extensions/appindicator.nix
-    ./extensions/bluetooth-quick-connect.nix
+    desktop.gnome.extensions.just-perfection
+    desktop.gnome.extensions.removable-drive-menu
+    desktop.gnome.extensions.appindicator
+    desktop.gnome.extensions.bluetooth-quick-connect
   ];
 
   config =

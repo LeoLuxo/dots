@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  nixosModulesOld,
   constants,
   extraLib,
   ...
@@ -13,31 +14,31 @@ let
 in
 
 {
-  imports = [
+  imports = with nixosModulesOld; [
     # Require fonts for vscode
-    ../../modules/fonts.nix
+    fonts
 
-    ../../modules/apps/direnv.nix
+    apps.direnv
 
-    # (mkSyncedPath {
-    #   xdgPath = "Code/User/settings.json";
-    #   cfgPath = "vscode/settings.json";
-    #   merge = mkJSONMerge {
-    #     defaultOverrides = {
-    #       "workbench.colorTheme" = "";
-    #     };
-    #   };
-    # })
+    (mkSyncedPath {
+      xdgPath = "Code/User/settings.json";
+      cfgPath = "vscode/settings.json";
+      merge = mkJSONMerge {
+        defaultOverrides = {
+          "workbench.colorTheme" = "";
+        };
+      };
+    })
 
-    # (mkSyncedPath {
-    #   xdgPath = "Code/User/keybindings.json";
-    #   cfgPath = "vscode/keybindings.json";
-    # })
+    (mkSyncedPath {
+      xdgPath = "Code/User/keybindings.json";
+      cfgPath = "vscode/keybindings.json";
+    })
 
-    # (mkSyncedPath {
-    #   xdgPath = "Code/User/snippets";
-    #   cfgPath = "vscode/snippets";
-    # })
+    (mkSyncedPath {
+      xdgPath = "Code/User/snippets";
+      cfgPath = "vscode/snippets";
+    })
 
     # Profiles are a bit fucky
     # (mkSyncedPath {
