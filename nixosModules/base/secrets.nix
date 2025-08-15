@@ -22,12 +22,31 @@ in
     inputs.agenix.nixosModules.default
 
     # Alias for abstraction, so clients of these modules don't have to think about age specifically
-    (lib.mkAliasOptionModule [ "my" "secretManagement" "secrets" ] [ "age" "secrets" ])
+    (lib.mkAliasOptionModule
+      [
+        "my"
+        "secretManagement"
+        "secrets"
+      ]
+      [
+        "age"
+        "secrets"
+      ]
+    )
 
     # Alias to map from the other paths option to the specific path for secretManagement
     (lib.mkAliasOptionModule
-      [ "my" "paths" "secrets" ]
-      [ "my" "secretManagement" "editSecretsCommand" "path" ]
+      [
+        "my"
+        "paths"
+        "secrets"
+      ]
+      [
+        "my"
+        "secretManagement"
+        "editSecretsCommand"
+        "path"
+      ]
     )
   ];
 

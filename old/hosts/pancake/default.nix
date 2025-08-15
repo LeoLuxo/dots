@@ -24,11 +24,13 @@ in
 
     desktop.defaultAppsShortcuts = enabled;
 
-    system.pinKernel = enabled;
+    # system.pinKernel = enabled;
 
     paths = {
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
       nixosRepo = "/etc/nixos/dots";
     };
   };
+
+  hardware.microsoft-surface.kernelVersion = "longterm";
 }
