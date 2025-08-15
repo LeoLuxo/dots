@@ -15,7 +15,17 @@ in
 {
   # Alias for convenience
   imports = [
-    (lib.mkAliasOptionModule [ "my" "user" ] [ "my" "system" "user" ])
+    (lib.mkAliasOptionModule
+      [
+        "my"
+        "user"
+      ]
+      [
+        "my"
+        "system"
+        "user"
+      ]
+    )
   ];
 
   options.my.system.user = {

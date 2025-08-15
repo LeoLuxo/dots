@@ -242,11 +242,9 @@ in
         home-manager.users.${config.my.user.name}.home.shellAliases = lib.mkMerge (
           # Add aliases for each of the extra local repos
           (lib.mapAttrsToList (name: localRepo: {
-            "restic-local-${name}" =
-              ''${lib.getExe pkgs.restic} --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}"'';
+            "restic-local-${name}" = ''${lib.getExe pkgs.restic} --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}"'';
 
-            "rustic-local-${name}" =
-              ''${lib.getExe pkgs.rustic} --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}"'';
+            "rustic-local-${name}" = ''${lib.getExe pkgs.rustic} --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}"'';
           }) cfg.localRepos)
 
           # Add aliases for each of the extra remote repos
@@ -258,8 +256,7 @@ in
                 if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
             in
             {
-              "restic-remote-${name}" =
-                ''restic --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" --option sftp.args='${specifiedPort} ${specifiedPrivateKey}  -o StrictHostKeyChecking=no' '';
+              "restic-remote-${name}" = ''restic --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" --option sftp.args='${specifiedPort} ${specifiedPrivateKey}  -o StrictHostKeyChecking=no' '';
 
               # Can't have rustic alias as it doesn't have the --option flag afaik
             }
