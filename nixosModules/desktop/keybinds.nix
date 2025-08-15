@@ -16,7 +16,17 @@ in
 {
   # Alias for convenience
   imports = [
-    (lib.mkAliasOptionModule [ "my" "keybinds" ] [ "my" "desktop" "keybinds" ])
+    (lib.mkAliasOptionModule
+      [
+        "my"
+        "keybinds"
+      ]
+      [
+        "my"
+        "desktop"
+        "keybinds"
+      ]
+    )
   ];
 
   options.my.desktop.keybinds = mkAttrs' "the desktop keybinds to configure" (

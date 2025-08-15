@@ -13,6 +13,8 @@ in
     enable = lib.mkEnableOption "the server suite";
   };
 
-  config = lib.mkIf cfg.enable {
-  };
+  config =
+    lib.mkIf cfg.enable
+      {
+      };
 }
