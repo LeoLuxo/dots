@@ -1,11 +1,11 @@
 {
   pkgs,
-  nixosModulesOld,
+  nixosModules,
   ...
 }:
 
 {
-  imports = with nixosModulesOld; [
+  imports = with nixosModules; [
     apps.beets
   ];
 

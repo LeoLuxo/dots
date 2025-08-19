@@ -2,7 +2,7 @@
   config,
   lib,
   lib2,
-  nixosModulesOld,
+  nixosModules,
   ...
 }:
 
@@ -37,7 +37,7 @@ in
     };
   };
 
-  imports = with nixosModulesOld; [
+  imports = with nixosModules; [
     desktop.gnome.gnome
     desktop.gnome.extensions.blur-my-shell
     desktop.gnome.extensions.clipboard-indicator
