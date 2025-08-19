@@ -1,15 +1,109 @@
 {
   pkgs,
-  config,
+  nixosModules,
+  lib,
+  lib2,
   inputs,
   ...
 }:
 
+let
+  inherit (lib2) enabled;
+in
 {
   imports = [
+    ./hardwareConfiguration.nix
+    ./syncthing.nix
+    ./wifi.nix
+
+    # TODO: Remove
+    (import "${inputs.self}/oldNewNixosModules" { inherit lib; }).default
+
     # Include hardware stuff and kernel patches for surface pro 7
     inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
+
+    nixosModules.rices.peppy
+
+    nixosModules.shell.bash
+    nixosModules.shell.fish
+    # nixosModules.shell.nushell
+
+    nixosModules.scripts.snip
+    nixosModules.scripts.terminal-utils
+    nixosModules.scripts.clipboard
+
+    # nixosModules.apps.deepl
+    nixosModules.apps.youtube-music
+    nixosModules.apps.gnome-dialect
+    nixosModules.apps.obsidian
+    nixosModules.apps.firefox
+    nixosModules.apps.discord
+    nixosModules.apps.vscode
+    nixosModules.apps.git
+    nixosModules.apps.steam
+    nixosModules.apps.bitwarden
+    nixosModules.apps.upscaler
+    nixosModules.apps.zoxide
   ];
+
+  my = {
+    user.name = "lili";
+    secretManagement = {
+      enable = true;
+
+      editSecretsCommand = {
+        enable = true;
+        path = "/etc/nixos/secrets";
+      };
+    };
+
+    symlinks = enabled;
+
+    scripts.nx = {
+      enable = true;
+    };
+
+    desktop.defaultAppsShortcuts = enabled;
+
+    # system.pinKernel = enabled;
+
+    paths = {
+      nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
+      nixosRepo = "/etc/nixos/dots";
+    };
+  };
+
+  hardware.microsoft-surface.kernelVersion = "longterm";
+
+  # Extra packages that don't necessarily need an entire dedicated module
+  my.packages = with pkgs; [
+    textpieces # A developer’s scratchpad that lets you quickly experiment with and transform text.
+    hieroglyphic # An application that helps you locate and select LaTeX symbols by drawing or sketching them.
+    impression # A utility for creating bootable USB drives from disk images.
+    switcheroo # A tool for converting and manipulating images (for example, resizing or reformatting them).
+    video-trimmer # A simple app designed to quickly trim and edit video clips.
+    warp # A fast, secure file transfer utility for moving files efficiently between systems.
+    gnome-2048 # A GNOME-native implementation of the popular 2048 puzzle game.
+    teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
+    eyedropper # A simple color picker tool that allows you to select a color from anywhere on the screen.
+  ];
+
+  wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
+
+  rice.peppy = {
+    enable = true;
+    cursor.size = 32;
+  };
+
+  # Set default shell
+  shell.default = "fish";
+
+  # Auto-update wallpaper repo
+  my.scripts.nx.rebuild.preRebuildActions = ''
+    echo "Updating wallpaper flake"
+    nix flake update wallpapers --allow-dirty
+    git add flake.lock
+  '';
 
   desktop.gnome = {
     enable = true;
