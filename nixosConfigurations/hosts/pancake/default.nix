@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   pkgs,
   lib2,
@@ -18,6 +19,8 @@ in
     ./old/syncthing.nix
 
     ./old/wifi.nix
+
+    inputs.self.nixosModules.default
   ];
 
   my = {
