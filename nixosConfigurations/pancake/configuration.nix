@@ -1,7 +1,6 @@
 {
   pkgs,
   nixosModules,
-  lib,
   lib2,
   inputs,
   ...
