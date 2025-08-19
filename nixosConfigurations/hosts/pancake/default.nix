@@ -20,7 +20,7 @@ in
 
     ./old/wifi.nix
 
-    inputs.self.nixosModules.default
+    (import "${inputs.self}/oldNewNixosModules" { inherit lib; }).default
   ];
 
   my = {
