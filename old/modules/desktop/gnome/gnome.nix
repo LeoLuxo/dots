@@ -56,6 +56,13 @@ in
         };
       };
     };
+
+    display = mkSubmodule {
+      textScalingPercent = options.mkOption {
+        type = types.ints.unsigned;
+        default = 100;
+      };
+    };
   };
 
   imports = with nixosModulesOld; [
