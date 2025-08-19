@@ -10,12 +10,12 @@ let
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.apps.restic.periodicChecks;
-  cfgRestic = config.my.apps.restic;
+  cfg = config.restic.periodicChecks;
+  cfgRestic = config.restic;
 in
 
 {
-  options.my.apps.restic.periodicChecks = {
+  options.restic.periodicChecks = {
     enable = mkEnableOption "automatic and periodic checking of the repo's health";
 
     timer = mkOption {
