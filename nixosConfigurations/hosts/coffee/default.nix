@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   imports = [
     ./audio.nix
@@ -9,7 +9,7 @@
 
     ./oldconfig.nix
 
-    inputs.self.nixosModules.default
+    (import "${inputs.self}/oldNewNixosModules" { inherit lib; }).default
 
     { system.stateVersion = "24.05"; }
   ];
