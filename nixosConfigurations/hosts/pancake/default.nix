@@ -14,7 +14,7 @@ in
   # Include local modules
   imports = [
     ./old/software.nix
-    ./old/hardware.nix
+    ./old/hardwareConfiguration.nix
     ./old/system.nix
     ./old/syncthing.nix
 
