@@ -20,7 +20,7 @@
 
       screenIdle = {
         enable = true;
-        delay = 150;
+        delay = 300;
       };
 
       suspendIdle = {
@@ -28,6 +28,7 @@
         delay = 300;
       };
     };
+
   };
 
   # SD Card
