@@ -1,12 +1,12 @@
 {
   lib,
   pkgs,
-  nixosModulesOld,
+  nixosModules,
   ...
 }:
 
 {
-  imports = with nixosModulesOld; [
+  imports = with nixosModules; [
     # Require fonts
     fonts
   ];

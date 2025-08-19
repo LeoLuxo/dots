@@ -1,5 +1,5 @@
 {
-  nixosModulesOld,
+  nixosModules,
   inputs,
   pkgs,
   ...
@@ -7,7 +7,7 @@
 {
 
   # Include global modules
-  imports = with nixosModulesOld; [
+  imports = with nixosModules; [
 
     rices.peppy
 

@@ -1,7 +1,7 @@
 {
   pkgs,
   config,
-  nixosModulesOld,
+  nixosModules,
 
   inputs,
   ...
@@ -9,7 +9,7 @@
 
 {
   # Include global modules
-  imports = with nixosModulesOld; [
+  imports = with nixosModules; [
     rices.peppy
 
     shell.bash
