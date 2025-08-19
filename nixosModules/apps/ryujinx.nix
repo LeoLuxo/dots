@@ -1,11 +1,11 @@
 {
   pkgs,
-  nixosModulesOld,
+  nixosModules,
   ...
 }:
 
 {
-  imports = [ nixosModulesOld.apps.joycons ];
+  imports = [ nixosModules.apps.joycons ];
 
   my.packages = [
     pkgs.ryubing

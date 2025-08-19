@@ -1,5 +1,5 @@
 {
-  nixosModulesOld,
+  nixosModules,
   lib,
   config,
   inputs,
@@ -12,7 +12,7 @@ let
 in
 
 {
-  imports = with nixosModulesOld; [
+  imports = with nixosModules; [
     inputs.catppuccin.nixosModules.catppuccin
 
     wallpaper

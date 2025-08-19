@@ -2,7 +2,7 @@
   config,
   lib,
   pkgs,
-  nixosModulesOld,
+  nixosModules,
   lib2,
   ...
 }:
@@ -12,7 +12,7 @@ let
 in
 
 {
-  imports = with nixosModulesOld; [
+  imports = with nixosModules; [
     # Require fonts for vscode
     fonts
 
