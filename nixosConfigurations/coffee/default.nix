@@ -9,6 +9,7 @@
 
     ./oldconfig.nix
 
+    # TODO: Remove
     (import "${inputs.self}/oldNewNixosModules" { inherit lib; }).default
 
     { system.stateVersion = "24.05"; }

@@ -5,13 +5,13 @@ mkHost:
   coffee = mkHost {
     hostname = "coffee";
     user = "lili";
-    module = ./coffee;
+    module = ./coffee/configuration.nix;
   };
 
   # Surface Pro 7 laptop
   pancake = mkHost {
     hostname = "pancake";
     user = "lili";
-    module = ./pancake;
+    module = ./pancake/configuration.nix;
   };
 }
