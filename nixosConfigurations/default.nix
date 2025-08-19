@@ -41,94 +41,96 @@ let
     user: hostname: module:
     inputs.nixpkgs.lib.nixosSystem (
       let
-        # Sanitize a path so that it doesn't cause problems in the nix store
-        sanitizePath =
+        #   # Sanitize a path so that it doesn't cause problems in the nix store
+        #   sanitizePath =
 
-          path:
-          let
-            inherit (lib) strings;
-          in
-          builtins.path {
-            inherit path;
-            name = strings.sanitizeDerivationName (builtins.baseNameOf path);
-          };
+        #     path:
+        #     let
+        #       inherit (lib) strings;
+        #     in
+        #     builtins.path {
+        #       inherit path;
+        #       name = strings.sanitizeDerivationName (builtins.baseNameOf path);
+        #     };
 
-        # Recursively find modules in a given directory and map them to a logical set:
-        # dir/a/b/file.ext         => .a.b.file
-        # dir/a/b/file/default.nix => .a.b.file
-        findFiles =
-          {
-            dir,
-            extensions,
-            defaultFiles ? [ ],
-          }:
-          let
-            inherit (lib) strings attrsets;
+        #   # Recursively find modules in a given directory and map them to a logical set:
+        #   # dir/a/b/file.ext         => .a.b.file
+        #   # dir/a/b/file/default.nix => .a.b.file
+        #   findFiles =
+        #     {
+        #       dir,
+        #       extensions,
+        #       defaultFiles ? [ ],
+        #     }:
+        #     let
+        #       inherit (lib) strings attrsets;
 
-            extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
-            ignore = name: {
-              name = "";
-              value = null;
-            };
+        #       extRegex = "(${strings.concatStrings (strings.intersperse "|" extensions)})";
+        #       ignore = name: {
+        #         name = "";
+        #         value = null;
+        #       };
 
-            findFilesRecursive =
-              dir:
-              attrsets.filterAttrs
-                # filter out ignored files/dirs
-                (n: v: v != null)
-                (
-                  attrsets.mapAttrs' (
-                    fileName: type:
-                    let
-                      extMatch = builtins.match "(.*)\\.${extRegex}" fileName;
-                      filePath = dir + "/${fileName}";
-                    in
-                    # If regular file, then add it to the file list only if the extension regex matches
-                    if type == "regular" then
-                      if extMatch == null then
-                        ignore fileName
-                      else
-                        {
-                          # Filename without the extension
-                          name = builtins.elemAt extMatch 0;
-                          value = filePath;
-                        }
-                    # If directory, ...
-                    else if type == "directory" then
-                      let
-                        # ... then search for a default file (ie. default.nix, ...)
-                        files = builtins.readDir filePath;
-                        hasDefault = builtins.any (defaultFile: files ? ${defaultFile}) defaultFiles; # builtins.any returns false given an empty list
-                      in
-                      # if a default file exists, add the directory to our file list
-                      if hasDefault then
-                        {
-                          name = fileName;
-                          value = filePath;
-                        }
-                      else
-                        # otherwise search recursively in the directory,
-                        # and map the results to a nested set with the name of the folder as top key.
-                        # Also add the base directory path under the _dir key
-                        {
-                          name = fileName;
-                          value = findFilesRecursive filePath // {
-                            _dir = filePath;
-                          };
-                        }
-                    else
-                      # any other file types we ignore (i.e. symlink and unknown)
-                      ignore fileName
-                  ) (builtins.readDir dir)
-                );
-          in
-          findFilesRecursive (sanitizePath dir);
+        #       findFilesRecursive =
+        #         dir:
+        #         attrsets.filterAttrs
+        #           # filter out ignored files/dirs
+        #           (n: v: v != null)
+        #           (
+        #             attrsets.mapAttrs' (
+        #               fileName: type:
+        #               let
+        #                 extMatch = builtins.match "(.*)\\.${extRegex}" fileName;
+        #                 filePath = dir + "/${fileName}";
+        #               in
+        #               # If regular file, then add it to the file list only if the extension regex matches
+        #               if type == "regular" then
+        #                 if extMatch == null then
+        #                   ignore fileName
+        #                 else
+        #                   {
+        #                     # Filename without the extension
+        #                     name = builtins.elemAt extMatch 0;
+        #                     value = filePath;
+        #                   }
+        #               # If directory, ...
+        #               else if type == "directory" then
+        #                 let
+        #                   # ... then search for a default file (ie. default.nix, ...)
+        #                   files = builtins.readDir filePath;
+        #                   hasDefault = builtins.any (defaultFile: files ? ${defaultFile}) defaultFiles; # builtins.any returns false given an empty list
+        #                 in
+        #                 # if a default file exists, add the directory to our file list
+        #                 if hasDefault then
+        #                   {
+        #                     name = fileName;
+        #                     value = filePath;
+        #                   }
+        #                 else
+        #                   # otherwise search recursively in the directory,
+        #                   # and map the results to a nested set with the name of the folder as top key.
+        #                   # Also add the base directory path under the _dir key
+        #                   {
+        #                     name = fileName;
+        #                     value = findFilesRecursive filePath // {
+        #                       _dir = filePath;
+        #                     };
+        #                   }
+        #               else
+        #                 # any other file types we ignore (i.e. symlink and unknown)
+        #                 ignore fileName
+        #             ) (builtins.readDir dir)
+        #           );
+        #     in
+        #     findFilesRecursive (sanitizePath dir);
 
-        nixosModulesOld = findFiles {
-          dir = ../old/modules;
-          extensions = [ "nix" ];
-          defaultFiles = [ "default.nix" ];
-        };
+        #   nixosModulesOld = findFiles {
+        #     dir = ../old/modules;
+        #     extensions = [ "nix" ];
+        #     defaultFiles = [ "default.nix" ];
+        #   };
+
+        nixosModulesOld = inputs.self.nixosModules;
       in
       {
         modules = [
