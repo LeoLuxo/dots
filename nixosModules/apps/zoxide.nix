@@ -12,18 +12,18 @@ let
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.apps.zoxide;
+  cfg = config.zoxide;
 in
-{
-  options.my.apps.zoxide = {
-    enable = mkEnableOption "zoxide, the smarter cd command";
 
+# zoxide, the smarter `cd` command
+{
+  options.zoxide = {
     enableAlias = mkEnableOption "the cd='z' alias" // {
       default = true;
     };
   };
 
-  config = mkIf cfg.enable {
+  config = {
     programs.zoxide = enabled;
 
     home-manager.users.${config.my.user.name}.home.shellAliases = mkIf cfg.enableAlias {

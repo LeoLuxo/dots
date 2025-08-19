@@ -8,6 +8,7 @@
 
   # Include global modules
   imports = with nixosModulesOld; [
+
     rices.peppy
 
     shell.bash
@@ -31,6 +32,7 @@
     apps.bitwarden
     apps.llm
     apps.upscaler
+    apps.zoxide
 
     apps.distrobox
     apps.nicotine-plus

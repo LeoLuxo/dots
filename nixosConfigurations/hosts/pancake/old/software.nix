@@ -31,6 +31,7 @@
     apps.steam
     apps.bitwarden
     apps.upscaler
+    apps.zoxide
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
