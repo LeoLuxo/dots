@@ -115,6 +115,8 @@
 
       suspendIdle.enable = false;
     };
+
+    display.textScalingPercent = 150;
   };
 
   # Add strobery as a local host

@@ -22,18 +22,28 @@ in
 
   my = {
     user.name = "lili";
-    secretManagement = enabled;
+    secretManagement = {
+      enable = true;
+
+      editSecretsCommand = {
+        enable = true;
+        path = "/etc/nixos/secrets";
+      };
+    };
+
     symlinks = enabled;
 
     scripts.nx = enabled;
 
     desktop.defaultAppsShortcuts = enabled;
 
-    system.pinKernel = enabled;
+    # system.pinKernel = enabled;
 
     paths = {
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
       nixosRepo = "/etc/nixos/dots";
     };
   };
+
+  hardware.microsoft-surface.kernelVersion = "longterm";
 }
