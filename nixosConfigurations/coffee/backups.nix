@@ -1,9 +1,12 @@
 {
   config,
   hostname,
+  nixosModules,
   ...
 }:
 {
+  imports = [ nixosModules.apps.restic ];
+
   my.secretManagement.secrets =
     let
       userPerms = {
@@ -18,7 +21,7 @@
     };
 
   # Setup my auto backups
-  my.apps.restic =
+  restic =
     let
       repoPassword = config.my.secrets."restic/${hostname}-pwd";
     in

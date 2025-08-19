@@ -13,8 +13,8 @@ let
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.apps.restic.replication;
-  cfgRestic = config.my.apps.restic;
+  cfg = config.restic.replication;
+  cfgRestic = config.restic;
 in
 
 let
@@ -28,7 +28,7 @@ let
 in
 
 {
-  options.my.apps.restic.replication = {
+  options.restic.replication = {
     enable = mkEnableOption "automatic replication of the repo to other repos";
 
     timer = mkOption {
