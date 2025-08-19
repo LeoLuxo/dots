@@ -7,8 +7,6 @@
     ./hardwareConfiguration.nix
     ./syncthing.nix
 
-    ./oldconfig.nix
-
     # TODO: Remove
     (import "${inputs.self}/oldNewNixosModules" { inherit lib; }).default
 
