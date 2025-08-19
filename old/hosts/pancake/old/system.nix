@@ -20,12 +20,12 @@
 
       screenIdle = {
         enable = true;
-        delay = 150;
+        delay = 300;
       };
 
       suspendIdle = {
         enable = true;
-        delay = 300;
+        delay = 600;
       };
     };
   };

@@ -35,6 +35,8 @@ in
 
           sleep-inactive-ac-type = if cfg.power.suspendIdle.enable then "suspend" else "nothing";
           sleep-inactive-ac-timeout = cfg.power.suspendIdle.delay;
+
+          ambient-enabled = false; # Whether to adapt the screen brightness to the environment
         };
 
         "org/gnome/gnome-session" = {
@@ -110,7 +112,7 @@ in
         # Desktop settings
         "org/gnome/desktop/interface" = {
           enable-hot-corners = false;
-          text-scaling-factor = 1.5;
+          text-scaling-factor = cfg.display.textScalingPercent / 100;
         };
 
         "org/gnome/mutter" = {
