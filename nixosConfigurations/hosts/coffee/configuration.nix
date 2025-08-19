@@ -48,10 +48,6 @@ in
 
     desktop.defaultAppsShortcuts = enabled;
 
-    apps = {
-      zoxide = enabled;
-    };
-
     paths = {
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
       nixosRepo = "/etc/nixos/dots";
