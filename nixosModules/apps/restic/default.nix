@@ -12,7 +12,7 @@ let
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.apps.restic;
+  cfg = config.restic;
 in
 
 {
@@ -22,8 +22,10 @@ in
     ./replication.nix
   ];
 
-  options.my.apps.restic = {
-    enable = mkEnableOption "restic backup management";
+  options.restic = {
+    enable = mkEnableOption "restic backup management" // {
+      default = true;
+    };
 
     repo = mkOption {
       description = "the path to the restic repo";

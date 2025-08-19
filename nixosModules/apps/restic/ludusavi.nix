@@ -10,12 +10,12 @@ let
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.modules) mkIf;
 
-  cfg = config.my.apps.restic.backupPresets.ludusavi;
-  cfgRestic = config.my.apps.restic;
+  cfg = config.restic.backupPresets.ludusavi;
+  cfgRestic = config.restic;
 in
 
 {
-  options.my.apps.restic.backupPresets.ludusavi = {
+  options.restic.backupPresets.ludusavi = {
     enable = mkEnableOption "automatic backups of all game saves through ludusavi";
 
     timer = mkOption {
