@@ -11,11 +11,14 @@ in
 
 {
   config.fonts.packages = with pkgs; [
+    atkinson-hyperlegible-next
+
     # Install certain nerd fonts
     nerd-fonts.fantasque-sans-mono
     nerd-fonts.mononoki
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
+    nerd-fonts.atkynson-mono
 
     # Install the Iosevka font
     # https://typeof.net/Iosevka/customizer
