@@ -112,7 +112,7 @@ in
         # Desktop settings
         "org/gnome/desktop/interface" = {
           enable-hot-corners = false;
-          text-scaling-factor = cfg.display.textScalingPercent / 100;
+          text-scaling-factor = cfg.display.textScalingPercent / 100.0;
         };
 
         "org/gnome/mutter" = {
