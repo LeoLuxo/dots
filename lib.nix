@@ -43,6 +43,54 @@ rec {
       ];
     };
 
+  recursivelyImportDir =
+    {
+      path,
+      args ? null,
+    }:
+    lib.concatMapAttrs (
+      name: type:
+      let
+        attrName = lib.removePrefix "_" (lib.removeSuffix ".nix" name);
+        fullPath = path + "/${name}";
+        isDefault = name == "default.nix";
+        isFile = type == "regular";
+        isDirWithDefault = type == "directory" && lib.pathExists (fullPath + "/default.nix");
+      in
+      if isDefault then
+        # The path itself is a default.nix file: don't import anything (it should be imported as a directory instead)
+        { }
+      else if isFile && !lib.hasSuffix ".nix" name then
+        # The path is not a nix file
+        { }
+      else if isFile || isDirWithDefault then
+        # Either the path is a file or it is a directory which contains a default.nix file: directly import it as a module
+        lib.trace "file or default: ${attrName}" {
+          ${attrName} = if args == null then import fullPath else import fullPath args;
+        }
+      else
+        # The path is a simple directory: recursively import its contents
+        lib.trace "dir: ${attrName}" {
+          ${attrName} = recursivelyImportDir {
+            path = fullPath;
+            inherit args;
+          };
+        }
+
+    ) (builtins.readDir path);
+
+  filterMap =
+    attrName: attrs:
+    lib.concatMapAttrs (
+      name: value:
+      if value ? attrName then
+        {
+          ${name} = value.${attrName};
+        }
+      else
+        { }
+    ) (lib.traceVal attrs);
+
   /*
     --------------------------------------------------------------------------------
     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
