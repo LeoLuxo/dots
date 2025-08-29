@@ -1,11 +1,12 @@
 { inputs, lib2, ... }:
 inputs.nixpkgs.lib.nixosSystem ({
   modules = [
-    ./hardwareConfiguration.nix
+    # ./hardwareConfiguration.nix
 
     {
       # nixpkgs.overlays = inputs.self.overlays;
-      system.stateVersion = "24.05";
+      # system.stateVersion = "24.05";
+      nixpkgs.hostPlatform = "x86_64-linux";
     }
   ];
 

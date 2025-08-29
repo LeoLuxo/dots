@@ -14,8 +14,7 @@
 
         args = { inherit inputs lib lib2; };
 
-        hosts = lib.traceValSeq (import ./hosts args);
-
+        hosts = import ./hosts args;
       in
       {
 
@@ -27,11 +26,8 @@
           "builders" = import ./builders.nix args;
         };
 
-        nixosConfigurations = {
-          coffee = hosts.coffee.nixos;
-        };
-        # nixosConfigurations = lib2.filterMap "nixos" hosts;
-        # homeConfigurations = lib2.filterMap "home" hosts;
+        nixosConfigurations = lib.mapAttrs (_: v: v args) (lib2.filterGetAttr "nixos" hosts);
+        homeConfigurations = lib.mapAttrs (_: v: v args) (lib2.filterGetAttr "home" hosts);
       }
     );
 

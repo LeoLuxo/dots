@@ -1,3 +1,3 @@
 { lib2, ... }:
 
-lib2.recursivelyImportDir { path = ./.; }
+lib2.recursivelyImportDir ./.
