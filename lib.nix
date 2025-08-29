@@ -44,10 +44,7 @@ rec {
     };
 
   recursivelyImportDir =
-    {
-      path,
-      args ? null,
-    }:
+    path:
     lib.concatMapAttrs (
       name: type:
       let
@@ -65,31 +62,28 @@ rec {
         { }
       else if isFile || isDirWithDefault then
         # Either the path is a file or it is a directory which contains a default.nix file: directly import it as a module
-        lib.trace "file or default: ${attrName}" {
-          ${attrName} = if args == null then import fullPath else import fullPath args;
+        {
+          ${attrName} = import fullPath;
         }
       else
         # The path is a simple directory: recursively import its contents
-        lib.trace "dir: ${attrName}" {
-          ${attrName} = recursivelyImportDir {
-            path = fullPath;
-            inherit args;
-          };
+        {
+          ${attrName} = recursivelyImportDir fullPath;
         }
 
     ) (builtins.readDir path);
 
-  filterMap =
+  filterGetAttr =
     attrName: attrs:
     lib.concatMapAttrs (
       name: value:
-      if value ? attrName then
+      if value ? "${attrName}" then
         {
           ${name} = value.${attrName};
         }
       else
         { }
-    ) (lib.traceVal attrs);
+    ) attrs;
 
   /*
     --------------------------------------------------------------------------------
