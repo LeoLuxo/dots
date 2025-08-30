@@ -24,7 +24,10 @@ in
   };
 
   config = {
-    programs.zoxide = enabled;
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
 
     home-manager.users.${config.my.user.name}.home.shellAliases = mkIf cfg.enableAlias {
       cd = "z";
