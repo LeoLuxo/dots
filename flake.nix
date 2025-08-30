@@ -17,17 +17,26 @@
         hosts = import ./hosts args;
       in
       {
-
-        nixosModules = import ./modules/nixos args;
-        homeModules = import ./modules/home args;
-
         overlays = {
           "pkgs" = import ./pkgs.nix args;
           "builders" = import ./builders.nix args;
         };
 
-        nixosConfigurations = lib.mapAttrs (_: v: v args) (lib2.filterGetAttr "nixos" hosts);
-        homeConfigurations = lib.mapAttrs (_: v: v args) (lib2.filterGetAttr "home" hosts);
+        homeModules = import ./modules/home args;
+        nixosModules = import ./modules/nixos args;
+
+        homeConfigurations = {
+          # Personal desktop computer
+          "lili@coffee" = hosts.coffee.home args;
+
+          # Surface Pro 7 laptop
+          "lili@pancake" = hosts.pancake.home args;
+        };
+
+        nixosConfigurations = {
+          "coffee" = hosts.coffee.nixos args;
+          "pancake" = hosts.pancake.nixos args;
+        };
       }
     );
 
