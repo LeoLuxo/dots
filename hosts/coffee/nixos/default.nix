@@ -1,6 +1,7 @@
 { inputs, lib2, ... }:
 inputs.nixpkgs.lib.nixosSystem ({
   modules = [
+    ./configuration.nix
     ./hardwareConfiguration.nix
 
     {
@@ -16,7 +17,7 @@ inputs.nixpkgs.lib.nixosSystem ({
   # Additional args passed to the modules
   specialArgs = {
     inherit inputs lib2;
-    inherit (inputs.self) nixosModules;
+    inherit (inputs.self) nixos;
 
     hostname = "coffee";
     user = "lili";

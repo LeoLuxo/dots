@@ -17,26 +17,28 @@
         hosts = import ./hosts args;
       in
       {
+        # Recognized flake outputs
         overlays = {
           "pkgs" = import ./pkgs.nix args;
           "builders" = import ./builders.nix args;
         };
-
-        homeModules = import ./modules/home args;
-        nixosModules = import ./modules/nixos args;
 
         homeConfigurations = {
           # Personal desktop computer
           "lili@coffee" = hosts.coffee.home args;
 
           # Surface Pro 7 laptop
-          "lili@pancake" = hosts.pancake.home args;
+          # "lili@pancake" = hosts.pancake.home args;
         };
 
         nixosConfigurations = {
           "coffee" = hosts.coffee.nixos args;
-          "pancake" = hosts.pancake.nixos args;
+          # "pancake" = hosts.pancake.nixos args;
         };
+
+        # My custom outputs
+        home = import ./home args;
+        nixos = import ./nixos args;
       }
     );
 
