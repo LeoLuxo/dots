@@ -80,7 +80,7 @@ in
             name = "edit-secret";
 
             text = ''
-              pushd ${cfg.editSecretsCommand.path}/secrets 1>/dev/null
+              pushd ${cfg.editSecretsCommand.path} 1>/dev/null
 
               export EDITOR=nano
               export RULES="${cfg.editSecretsCommand.path}/secrets.nix"
@@ -100,7 +100,9 @@ in
 
       age = {
         # Use the host key OR user key
-        identityPaths = cfg.keys;
+        identityPaths = [
+          "/etc/ssh/agenix_ed25519"
+        ];
 
         # Add secrets from the flake to agenix config
         secrets = secretsFlake.ageSecrets;
@@ -114,7 +116,7 @@ in
 
       # Add fish shell completions for edit-secret
       programs.fish.interactiveShellInit = mkIf cfg.editSecretsCommand.enable ''
-        complete -c edit-secret -a '(pushd ${cfg.editSecretsCommand.path}/secrets; __fish_complete_path (commandline -ct); popd)'
+        complete -c edit-secret -a '(pushd ${cfg.editSecretsCommand.path}; __fish_complete_path (commandline -ct); popd)'
       '';
     }
   );
