@@ -1,6 +1,7 @@
 {
   lib,
   lib2,
+  inputs,
   ...
 }:
 

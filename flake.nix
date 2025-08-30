@@ -10,26 +10,29 @@
       let
         # The default lib just so I can pass it around where needed
         lib = nixpkgs.legacyPackages.${system}.lib;
-        lib2 = import ./lib.nix { inherit lib; };
+        lib2 = import ./lib.nix { inherit inputs lib; };
 
         args = { inherit inputs lib lib2; };
 
-        hosts = import ./hosts args;
+        mkSystem = (import ./mkSystem.nix args) // args;
+
         nixos = import ./nixos args;
         home = import ./home args;
       in
       {
         nixosConfigurations = {
-          "coffee" = hosts.coffee.nixos args;
-          # "pancake" = hosts.pancake.nixos args;
+          # Personal desktop computer
+          "coffee" = import ./hosts/coffee mkSystem;
+
+          # Surface Pro 7 laptop
+          # "pancake" = import ./hosts/pancake mkSystem;
         };
 
         nixosModules = nixos.modules;
         nixosProfiles = nixos.profiles; # Not a recognized flake output
 
         homeManagerConfigurations = {
-          "lili@coffee" = hosts.coffee.home args;
-          # "lili@pancake" = hosts.pancake.home args;
+          # "turnip" = hosts.coffee.home args;
         };
 
         homeModules = home.modules; # Not a recognized flake output (the correct one would be homeManagerModules)
