@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   inputs,
   user,
@@ -6,14 +7,35 @@
   ...
 }:
 {
-  # === Enable boot loading
+
+  environment.systemPackages = with pkgs; [
+    # Essential system packages
+    nano
+    wget
+    curl
+    git
+
+    # Install agenix CLI
+    inputs.agenix.packages.${config.nixpkgs.hostPlatform}.default
+  ];
+
+  # Set the hostname
+  networking.hostName = hostname;
+
+  # Enable boot loading
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # === Enable CUPS to print documents.
+  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # === Define the default user account.
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  # Define the default user account.
   users = {
     mutableUsers = false;
 
@@ -36,15 +58,16 @@
     ];
   };
 
-  # === Handle agenix secrets
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  # Handle agenix secrets
   imports = [
     # Include agenix module
     inputs.agenix.nixosModules.default
-  ];
-
-  environment.systemPackages = [
-    # Install agenix CLI
-    inputs.agenix.packages.${config.nixpkgs.hostPlatform}.default
   ];
 
   age = {
@@ -62,6 +85,31 @@
         flake = builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets";
       in
       flake.ageSecrets;
+  };
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  # Set the time zone and locale
+  time.timeZone = "Europe/Copenhagen";
+
+  # Select internationalisation properties.
+  # A good choice would also be english-(Ireland); see:
+  # https://unix.stackexchange.com/questions/62316/why-is-there-no-euro-english-locale
+  i18n.defaultLocale = "en_DK.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_TIME = "en_IE.UTF-8";
+    # LC_ADDRESS = "en_IE.UTF-8";
+    # LC_IDENTIFICATION = "en_IE.UTF-8";
+    # LC_MEASUREMENT = "en_IE.UTF-8";
+    # LC_MONETARY = "en_IE.UTF-8";
+    # LC_NAME = "en_IE.UTF-8";
+    # LC_NUMERIC = "en_IE.UTF-8";
+    # LC_PAPER = "en_IE.UTF-8";
+    # LC_TELEPHONE = "en_IE.UTF-8";
   };
 
 }
