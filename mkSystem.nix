@@ -35,6 +35,10 @@
             extraSpecialArgs = specialArgs // {
               inherit (inputs.self) homeModules homeProfiles;
             };
+
+            users.${user} = {
+              imports = homeModules;
+            };
           };
         }
       ];
