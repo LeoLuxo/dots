@@ -1,5 +1,15 @@
 { inputs, lib2, ... }:
+
 inputs.nixpkgs.lib.nixosSystem ({
+  # Additional args passed to the modules
+  specialArgs = {
+    inherit inputs lib2;
+    inherit (inputs.self) nixosModules nixosProfiles;
+
+    hostname = "coffee";
+    user = "lili";
+  };
+
   modules = [
     ./configuration.nix
     ./hardwareConfiguration.nix
@@ -13,13 +23,4 @@ inputs.nixpkgs.lib.nixosSystem ({
       system.stateVersion = "24.05";
     }
   ];
-
-  # Additional args passed to the modules
-  specialArgs = {
-    inherit inputs lib2;
-    inherit (inputs.self) nixos;
-
-    hostname = "coffee";
-    user = "lili";
-  };
 })

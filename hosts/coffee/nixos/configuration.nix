@@ -1,6 +1,6 @@
-{ nixos, ... }:
+{ nixosProfiles, ... }:
 {
   imports = [
-    nixos.profiles.base
+    nixosProfiles.base
   ];
 }
