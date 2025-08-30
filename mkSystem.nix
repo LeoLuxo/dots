@@ -1,4 +1,9 @@
-{ inputs, lib2, ... }:
+{
+  inputs,
+  lib,
+  lib2,
+  ...
+}:
 {
   mkHost =
     {
@@ -20,28 +25,36 @@
         inherit (inputs.self) nixosModules nixosProfiles;
       };
 
-      modules = nixosModules ++ [
-        inputs.home-manager.nixosModules.home-manager
+      modules =
+        nixosModules
+        # Auto-include all custom nixos modules
+        ++ (lib.attrValues inputs.self.nixosModules)
+        # Include home-manager and its modules
+        ++ [
+          inputs.home-manager.nixosModules.home-manager
 
-        {
-          nixpkgs.overlays = [
-            inputs.self.overlays.pkgs
-            inputs.self.overlays.builders
-          ];
+          {
+            nixpkgs.overlays = [
+              inputs.self.overlays.pkgs
+              inputs.self.overlays.builders
+            ];
 
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            extraSpecialArgs = specialArgs // {
-              inherit (inputs.self) homeModules homeProfiles;
+            home-manager = {
+              # useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = specialArgs // {
+                inherit (inputs.self) homeModules homeProfiles;
+              };
+
+              users.${user} = {
+                imports =
+                  homeModules
+                  # Auto-include all custom home-manager modules
+                  ++ (lib.attrValues inputs.self.homeModules);
+              };
             };
-
-            users.${user} = {
-              imports = homeModules;
-            };
-          };
-        }
-      ];
+          }
+        ];
     });
 
   mkHome =
@@ -61,8 +74,13 @@
         inherit hostname user;
       };
 
-      modules = modules ++ [
-        inputs.self.homeProfiles.nonNixos
-      ];
+      modules =
+        modules
+        # Auto-include the profile for non-nixos machines
+        ++ [
+          inputs.self.homeProfiles.nonNixos
+        ]
+        # Auto-include all custom home-manager modules
+        ++ (lib.attrValues inputs.self.homeModules);
     };
 }

@@ -104,95 +104,101 @@ in
 
       # Handle static wallpapers
       systemd.user.services."wallutils-static" = modules.mkIf (!cfg.isTimed) {
-        unitConfig = {
-          Description = "Wallutils static wallpaper service";
+        Unit = {
+          Description = "Wallutils static wallpaper changer";
           PartOf = [ "graphical-session.target" ];
           After = [ "graphical-session.target" ];
+
+          X-SwitchMethod = "stop-start";
+          X-Restart-Triggers = [
+            cfg.mode
+            finalImage
+          ];
         };
-        # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
-        path = [ "/run/current-system/sw" ];
-        serviceConfig = {
+
+        Service = {
           Type = "oneshot";
           ExecStart = ''
             ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${finalImage}
           '';
+
         };
-        restartIfChanged = true;
-        restartTriggers = [
-          cfg.mode
-          finalImage
-        ];
-        wantedBy = [ "graphical-session.target" ];
+
+        Install.WantedBy = [ "graphical-session.target" ];
       };
 
       # Handle dynamic wallpapers
       # Run wallutils settimed as a systemd service
       systemd.user.services."wallutils-timed" = modules.mkIf cfg.isTimed {
-        unitConfig = {
-          Description = "Wallutils timed wallpaper service";
+        Unit = {
+          Description = "Wallutils timed wallpaper changer";
           PartOf = [ "graphical-session.target" ];
           After = [ "graphical-session.target" ];
+
+          X-SwitchMethod = "restart";
+          X-Restart-Triggers = [
+            cfg.mode
+            finalImage
+          ];
         };
-        # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
-        path = [ "/run/current-system/sw" ];
-        serviceConfig = {
+
+        Service = {
           Type = "simple";
-          ExecStart = (
-            pkgs.writeShellScript "wallutils-timed" ''
-              pushd "${builtins.dirOf finalImage}"
-              ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${finalImage}"
-            ''
-          );
+          ExecStart = pkgs.writeShellScript "wallutils-timed" ''
+            pushd "${builtins.dirOf finalImage}"
+            ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${finalImage}"
+          '';
+
+          # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
+          Environment = "PATH=/run/current-system/sw";
         };
-        restartIfChanged = true;
-        restartTriggers = [
-          cfg.mode
-          finalImage
-        ];
-        wantedBy = [ "graphical-session.target" ];
+
+        Install.WantedBy = [ "graphical-session.target" ];
       };
 
       # Sends a refresh signal to the wallutils service when an unlock is detected
       systemd.user.services."wallutils-refresh" = modules.mkIf (cfg.isTimed && cfg.refreshOnUnlock) {
-        unitConfig = {
+        Unit = {
           Description = "Wallutils refresher";
           PartOf = [ "graphical-session.target" ];
           After = [ "graphical-session.target" ];
         };
-        path = [ "/run/current-system/sw" ];
-        serviceConfig = {
+
+        Service = {
           Type = "simple";
-          ExecStart = (
-            pkgs.writeShellScript "wallutils-refresh" ''
-              gdbus monitor -y -d org.freedesktop.login1 |
-                grep --line-buffered -o 'Session.Unlock ()' |
-                while read -r; do
-                  echo "Unlock detected"
-                  pkill settimed -USR1
-                done
-            ''
-          );
-        };
-        wantedBy = [ "graphical-session.target" ];
-      };
-
-      my.scripts.nx.rebuild.postRebuildActions =
-        if cfg.isTimed then
-          ''
-            # Reload the wallpaper to avoid having to logout
-            echo "Reloading dynamic wallpaper"
-            systemctl --user restart wallutils-timed.service
-          ''
-        else
-          ''
-            # Stop any timed services that might still be running
-            systemctl --user stop wallutils-timed.service >/dev/null 2>&1 || true
-            systemctl --user stop wallutils-refresh.service >/dev/null 2>&1 || true
-
-            # Reload the wallpaper to avoid having to logout
-            echo "Reloading static wallpaper"
-            systemctl --user restart wallutils-static.service
+          ExecStart = pkgs.writeShellScript "wallutils-refresh" ''
+            gdbus monitor -y -d org.freedesktop.login1 |
+              grep --line-buffered -o 'Session.Unlock ()' |
+              while read -r; do
+                echo "Unlock detected"
+                pkill settimed -USR1
+              done
           '';
 
+          # The additional path is needed because wallutils looks at the programs currently in the path to decide how to set wallpapers
+          Environment = "PATH=/run/current-system/sw";
+        };
+
+        Install.WantedBy = [ "graphical-session.target" ];
+      };
+
+      # TODO
+      # my.scripts.nx.rebuild.postRebuildActions =
+      #   if cfg.isTimed then
+      #     ''
+      #       # Reload the wallpaper to avoid having to logout
+      #       echo "Reloading dynamic wallpaper"
+      #       systemctl --user restart wallutils-timed.service
+      #     ''
+      #   else
+      #     ''
+      #       # Stop any timed services that might still be running
+      #       systemctl --user stop wallutils-timed.service >/dev/null 2>&1 || true
+      #       systemctl --user stop wallutils-refresh.service >/dev/null 2>&1 || true
+
+      #       # Reload the wallpaper to avoid having to logout
+      #       echo "Reloading static wallpaper"
+      #       systemctl --user restart wallutils-static.service
+      #     '';
     };
 }
