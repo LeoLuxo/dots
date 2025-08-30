@@ -16,7 +16,7 @@
     git
 
     # Install agenix CLI
-    inputs.agenix.packages.${config.nixpkgs.hostPlatform}.default
+    inputs.agenix.packages.${system}.default
   ];
 
   # Set the hostname
@@ -44,7 +44,7 @@
       description = "the default user '${user}'";
       isNormalUser = true;
 
-      hashedPasswordFile = config.age.secrets."userpws/${hostname}".path;
+      hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
       extraGroups = [ "wheel" ];
 
       # Not setting the uid will make it choose one that's available
