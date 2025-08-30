@@ -15,30 +15,30 @@
         args = { inherit inputs lib lib2; };
 
         hosts = import ./hosts args;
+        nixos = import ./nixos args;
+        home = import ./home args;
       in
       {
-        # Recognized flake outputs
-        overlays = {
-          "pkgs" = import ./pkgs.nix args;
-          "builders" = import ./builders.nix args;
-        };
-
-        homeConfigurations = {
-          # Personal desktop computer
-          "lili@coffee" = hosts.coffee.home args;
-
-          # Surface Pro 7 laptop
-          # "lili@pancake" = hosts.pancake.home args;
-        };
-
         nixosConfigurations = {
           "coffee" = hosts.coffee.nixos args;
           # "pancake" = hosts.pancake.nixos args;
         };
 
-        # My custom outputs
-        home = import ./home args;
-        nixos = import ./nixos args;
+        nixosModules = nixos.modules;
+        nixosProfiles = nixos.profiles; # Not a recognized flake output
+
+        homeManagerConfigurations = {
+          "lili@coffee" = hosts.coffee.home args;
+          # "lili@pancake" = hosts.pancake.home args;
+        };
+
+        homeModules = home.modules; # Not a recognized flake output (the correct one would be homeManagerModules)
+        homeProfiles = home.profiles; # Not a recognized flake output
+
+        overlays = {
+          "pkgs" = import ./pkgs.nix args;
+          "builders" = import ./builders.nix args;
+        };
       }
     );
 
