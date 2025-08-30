@@ -1,4 +1,6 @@
 { homeProfiles, ... }:
 {
-  imports = [ homeProfiles.base ];
+  imports = [
+    homeProfiles.pc
+  ];
 }
