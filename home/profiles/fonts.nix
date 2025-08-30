@@ -1,19 +1,14 @@
+{ pkgs, ... }:
 {
-  config,
-  pkgs,
-  lib,
-  ...
-}:
 
-let
-  inherit (lib) modules types;
-in
+  # Required to autoload fonts from packages installed via Home Manager
+  fonts.fontconfig.enable = true;
 
-{
-  config.fonts.packages = with pkgs; [
+  home.packages = with pkgs; [
+    # Regular fonts
     atkinson-hyperlegible-next
 
-    # Install certain nerd fonts
+    # Nerd fonts
     nerd-fonts.fantasque-sans-mono
     nerd-fonts.mononoki
     nerd-fonts.fira-code
