@@ -50,6 +50,8 @@ in
     --------------------------------------------------------------------------------
   */
 
+  nixpkgs.config.allowUnfree = true;
+
   nix.settings = {
     # Enable the new nix cli tool and flakes
     experimental-features = [
