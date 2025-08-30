@@ -16,7 +16,7 @@ touch "$QFILE"
 chmod 600 "$QFILE"
 
 perms() {
-	echo "${2}Permissions ${COLOR_INFO}$(stat -c %A "$1")  ${2}Owner ${COLOR_INFO}$(stat -c "%U (%G)" "$1")${COLOR_RESET}"
+	echo "${2}Permissions ${COLOR_INFO}$(stat -c %A "$1") ($(stat -c %a "$1"))  ${2}Owner ${COLOR_INFO}$(stat -c "%U (%G)" "$1")${COLOR_RESET}"
 }
 
 checkfile() {
