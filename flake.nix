@@ -20,6 +20,7 @@
         home = import ./home args;
       in
       {
+        # My NixOS machines
         nixosConfigurations = {
           # Personal desktop computer
           "coffee" = import ./hosts/coffee mkSystem;
@@ -28,12 +29,13 @@
           # "pancake" = import ./hosts/pancake mkSystem;
         };
 
-        nixosModules = nixos.modules;
-        nixosProfiles = nixos.profiles; # Not a recognized flake output
-
+        # My non-NixOS machines
         homeManagerConfigurations = {
           # "turnip" = hosts.coffee.home args;
         };
+
+        nixosModules = nixos.modules;
+        nixosProfiles = nixos.profiles; # Not a recognized flake output
 
         homeModules = home.modules; # Not a recognized flake output (the correct one would be homeManagerModules)
         homeProfiles = home.profiles; # Not a recognized flake output
