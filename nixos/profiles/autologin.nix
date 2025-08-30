@@ -1,9 +1,4 @@
-{
-
-  config,
-  ...
-}:
-
+{ config, ... }:
 {
   # Enable automatic login for the user.
   services.displayManager.autoLogin = {
