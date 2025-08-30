@@ -1,14 +1,10 @@
 {
   lib,
   config,
-  pkgs,
-  lib2,
   ...
 }:
 
 let
-
-  inherit (lib2) enabled;
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf;
 
@@ -29,12 +25,10 @@ in
       enableFishIntegration = true;
     };
 
-    # home-manager.users.${config.my.user.name}.home.shellAliases = mkIf cfg.enableAlias {
-    #   cd = "z";
-    # };
-
     home-manager.users.${config.my.user.name}.programs.fish.functions = mkIf cfg.enableAlias {
       cd = ''
+        # If the 'z' command exists, use it, otherwise fall back to builtin cd
+        # (For reason my vscode builtin terminal doesn't have accesss to 'z')
         if type -q z
             z $argv
         else
