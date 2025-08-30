@@ -1,10 +1,18 @@
-{ user, ... }:
+{ user, lib, ... }:
 
 let
   home = "/home/${user}";
 in
 {
-  imports = [ ./agenix.nix ];
+  imports = [
+    ./agenix.nix
+  ];
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
 
   # Do not change
   home.stateVersion = "24.05";
@@ -12,7 +20,7 @@ in
   # Home Manager needs a bit of information about you and the paths it should manage.
   home = {
     username = user;
-    homeDirectory = home;
+    homeDirectory = lib.mkForce home;
   };
 
   # Let Home Manager install and manage itself.
@@ -34,5 +42,25 @@ in
 
     templates = null;
     publicShare = null;
+  };
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  nix.settings = {
+    # Enable the new nix cli tool and flakes
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+
+    # A list of names of users that have additional rights when connecting to the Nix daemon, such as the ability to specify additional binary caches, or to import unsigned NARs.
+    trusted-users = [
+      "root"
+      user
+    ];
   };
 }
