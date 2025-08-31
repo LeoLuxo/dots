@@ -1,8 +1,10 @@
 {
   nixosProfiles,
+  lib,
   pkgs,
+  inputs,
   config,
-  user,
+  users,
   hostname,
   ...
 }:
@@ -24,6 +26,12 @@ in
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Add our custom overlays
+  nixpkgs.overlays = [
+    inputs.self.overlays.pkgs
+    inputs.self.overlays.builders
+  ];
+
   nix.settings = {
     # Enable the new nix cli tool and flakes
     experimental-features = [
@@ -32,10 +40,12 @@ in
     ];
 
     # A list of names of users that have additional rights when connecting to the Nix daemon, such as the ability to specify additional binary caches, or to import unsigned NARs.
-    trusted-users = [
-      "root"
-      user
-    ];
+    trusted-users =
+      [
+        "root"
+      ]
+      # Add all manually-defined users
+      ++ (lib.mapAttrsToList (username: _: username) users);
   };
 
   /*
@@ -68,24 +78,25 @@ in
     --------------------------------------------------------------------------------
   */
 
-  # Define the default user account.
+  # Define and set up all the manually-defined users
   users = {
     mutableUsers = false;
 
-    users.${user} = {
-      home = "/home/user";
-      description = "the default user '${user}'";
-      isNormalUser = true;
+    users = lib.concatMapAttrs (username: userCfg: {
+      ${username} = {
+        home = "/home/${username}";
+        description = "the default user '${username}'";
+        isNormalUser = true;
 
-      hashedPasswordFile = config.age.secrets."userpwds/${hostname}".path;
-      extraGroups = [ "wheel" ];
+        hashedPasswordFile = config.age.secrets."userpwds/${hostname}/${username}".path;
+        extraGroups = [ "wheel" ];
 
-      # Not setting the uid will make it choose one that's available
-      # uid = 1000;
+        uid = userCfg.uid;
 
-      # Set default shell (can't be done in home-manager afaik)
-      shell = pkgs.${defaultShell};
-    };
+        # Set default shell (can't be done in home-manager afaik)
+        shell = pkgs.${defaultShell};
+      };
+    }) users;
   };
 
   # Install default shell
