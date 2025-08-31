@@ -6,7 +6,7 @@ mkHost {
 
   nixosModules = [
     ./nixos/configuration.nix
-    ./nixos/hardwareConfiguration.nix
+    ./nixos/hardware.nix
 
     {
       system.stateVersion = "24.05";
