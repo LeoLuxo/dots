@@ -65,6 +65,30 @@ in
         ++ (lib.attrValues nixos.modules);
     };
 
+  mkHomeManagerConfigs =
+    users:
+    lib.concatMapAttrs (username: userCfg: {
+      # Additional args passed to home-manager modules
+      extraSpecialArgs = {
+        inherit (inputs.self) homeModules homeProfiles;
+        inherit inputs lib2;
+      };
+
+      modules =
+        [
+          # Include the main module for the user
+          userCfg.module
+
+          # Auto-include the profile for non-nixos machines
+          inputs.self.homeProfiles.nonNixos
+
+          { home.username = username; }
+        ]
+
+        # Auto-include all custom home-manager modules
+        ++ (lib.attrValues inputs.self.homeModules);
+    }) users;
+
   # mkHost =
   #   {
   #     hostname,
