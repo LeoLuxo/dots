@@ -22,7 +22,12 @@ in
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs lib2;
-        inherit hostname users autologin;
+        inherit
+          hostname
+          users
+          autologin
+          hosts
+          ;
         nixosProfiles = nixos.profiles;
       };
 
