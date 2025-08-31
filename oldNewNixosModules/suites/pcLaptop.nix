@@ -35,7 +35,7 @@ in
           "Isabella"
           "Parents"
           "AU Eduroam"
-          "Philipp"
+          "Michi"
           "Nadja"
         ];
       };
