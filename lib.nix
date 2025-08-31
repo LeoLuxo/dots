@@ -4,14 +4,6 @@ let
 in
 
 rec {
-  enabled = {
-    enable = true;
-  };
-
-  disabled = {
-    enable = false;
-  };
-
   notNullOr = value: fallback: if value != null then value else fallback;
 
   writeFile =
@@ -72,9 +64,6 @@ rec {
         }
 
     ) (builtins.readDir path);
-
-
-
 
   /*
     --------------------------------------------------------------------------------

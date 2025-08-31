@@ -1,13 +1,18 @@
 {
+  nixosProfiles,
   pkgs,
   config,
   user,
   hostname,
   ...
 }:
+
+let
+  defaultShell = "fish";
+in
 {
   imports = [
-    ./agenix.nix
+    nixosProfiles.common.agenix
   ];
 
   /*
@@ -77,8 +82,14 @@
 
       # Not setting the uid will make it choose one that's available
       # uid = 1000;
+
+      # Set default shell (can't be done in home-manager afaik)
+      shell = pkgs.${defaultShell};
     };
   };
+
+  # Install default shell
+  programs.${defaultShell}.enable = true;
 
   /*
     --------------------------------------------------------------------------------
@@ -104,5 +115,11 @@
     # LC_PAPER = "en_IE.UTF-8";
     # LC_TELEPHONE = "en_IE.UTF-8";
   };
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
 
 }
