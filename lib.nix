@@ -65,6 +65,18 @@ rec {
 
     ) (builtins.readDir path);
 
+  filterGetAttr =
+    attrName: attrs:
+    lib.concatMapAttrs (
+      name: value:
+      if value ? "${attrName}" then
+        {
+          ${name} = value.${attrName};
+        }
+      else
+        { }
+    ) attrs;
+
   /*
     --------------------------------------------------------------------------------
     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
