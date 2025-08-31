@@ -1,11 +1,25 @@
-{ user, lib, ... }:
+{
+  homeProfiles,
+  user,
+  lib,
+  ...
+}:
 
 let
   home = "/home/${user}";
 in
 {
   imports = [
-    ./agenix.nix
+    homeProfiles.common.agenix
+
+    homeProfiles.shells.bash
+    homeProfiles.shells.fish
+    # homeProfiles.shells.zsh
+    
+    homeProfiles.shells.prompts.starship
+    # homeProfiles.shells.prompts.ohmyposh
+
+
   ];
 
   /*
