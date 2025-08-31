@@ -19,14 +19,28 @@
           inherit hosts;
         };
 
-        inherit (import ./mkConfigs.nix args) mkNixosConfig;
+        inherit (import ./mkConfigs.nix args) mkNixosConfig mkHomeManagerConfig;
       in
       {
-        nixosConfigurations = lib.mapAttrs (_: v: mkNixosConfig v) (lib2.filterGetAttr "nixosConfig" hosts);
+        # Create nixos configurations for all hosts that have a `nixosConfig` attr and the OS "nixos"
+        nixosConfigurations = lib.concatMapAttrs (
+          name: host:
+          if (host.os or null) == "nixos" && host ? "nixosConfig" then
+            { ${name} = mkNixosConfig host; }
+          else
+            { }
+        ) hosts;
 
-        homeManagerConfigurations = {
-          # "turnip" = hosts.coffee.home args;
-        };
+        # Create home-manager configurations for all hosts that have `users` (regardless of OS)
+        homeManagerConfigurations = lib.concatMapAttrs (
+          hostNickame: host:
+          if host ? "users" then
+            lib.mapAttrs' (
+              username: user: lib.nameValuePair "${username}@${hostNickame}" (mkHomeManagerConfig username user)
+            ) host.users
+          else
+            { }
+        ) hosts;
 
         overlays = {
           "pkgs" = import ./pkgs.nix args;
