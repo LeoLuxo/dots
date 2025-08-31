@@ -109,7 +109,7 @@
     };
   };
 
-  "Philipp" = {
+  "Michi" = {
     connection = {
       id = "Wifi26E0";
       interface-name = "wlp0s20f3";
@@ -131,7 +131,7 @@
     wifi-security = {
       auth-alg = "open";
       key-mgmt = "wpa-psk";
-      psk = "$PHILIPP_PSK";
+      psk = "$MICHI_PSK";
     };
   };
 
