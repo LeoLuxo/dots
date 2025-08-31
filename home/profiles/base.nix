@@ -1,13 +1,9 @@
 {
   homeProfiles,
-  user,
-  lib,
+  config,
   ...
 }:
 
-let
-  home = "/home/${user}";
-in
 {
   imports = [
     homeProfiles.common.agenix
@@ -15,10 +11,9 @@ in
     homeProfiles.shells.bash
     homeProfiles.shells.fish
     # homeProfiles.shells.zsh
-    
+
     homeProfiles.shells.prompts.starship
     # homeProfiles.shells.prompts.ohmyposh
-
 
   ];
 
@@ -31,32 +26,32 @@ in
   # Do not change
   home.stateVersion = "24.05";
 
-  # Home Manager needs a bit of information about you and the paths it should manage.
-  home = {
-    username = user;
-    homeDirectory = lib.mkForce home;
-  };
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  home.homeDirectory = "/home/${config.home.username}";
+
   # Customize default directories
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = true;
+  xdg.userDirs =
+    let
+      home = config.home.homeDirectory;
+    in
+    {
+      enable = true;
+      createDirectories = true;
 
-    download = "${home}/downloads";
+      download = "${home}/downloads";
 
-    music = "${home}/media";
-    pictures = "${home}/media";
-    videos = "${home}/media";
+      music = "${home}/media";
+      pictures = "${home}/media";
+      videos = "${home}/media";
 
-    desktop = "${home}/misc";
-    documents = "${home}/misc";
+      desktop = "${home}/misc";
+      documents = "${home}/misc";
 
-    templates = null;
-    publicShare = null;
-  };
+      templates = null;
+      publicShare = null;
+    };
 
   /*
     --------------------------------------------------------------------------------
@@ -76,7 +71,7 @@ in
     # A list of names of users that have additional rights when connecting to the Nix daemon, such as the ability to specify additional binary caches, or to import unsigned NARs.
     trusted-users = [
       "root"
-      user
+      config.home.username
     ];
   };
 }
