@@ -14,31 +14,17 @@
 
         args = { inherit inputs lib lib2; };
 
-        mkSystem = (import ./mkSystem.nix args) // args;
-
-        nixos = import ./nixos args;
-        home = import ./home args;
+        hosts = import ./hosts.nix args;
       in
       {
-        # My NixOS machines
+        # nixosConfigurations = lib2.filterGetAttr "nixosConfig" hosts;
         nixosConfigurations = {
-          # Personal desktop computer
-          "coffee" = import ./hosts/coffee mkSystem;
-
-          # Surface Pro 7 laptop
-          # "pancake" = import ./hosts/pancake mkSystem;
+          "coffee" = hosts.coffee.nixosConfig;
         };
 
-        # My non-NixOS machines
         homeManagerConfigurations = {
           # "turnip" = hosts.coffee.home args;
         };
-
-        nixosModules = nixos.modules;
-        nixosProfiles = nixos.profiles; # Not a recognized flake output
-
-        homeModules = home.modules; # Not a recognized flake output (the correct one would be homeManagerModules)
-        homeProfiles = home.profiles; # Not a recognized flake output
 
         overlays = {
           "pkgs" = import ./pkgs.nix args;
