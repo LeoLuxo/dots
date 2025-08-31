@@ -13,7 +13,6 @@
     };
 
     ip.local = "192.168.0.88";
-
     ssh.user = "lili";
 
     syncthing.id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
@@ -29,9 +28,16 @@
   "pancake" = {
     hostname = "pancake";
     os = "nixos";
+    nixosConfig = import ./configs/pancake/nixos;
+
+    users = {
+      "lili" = {
+        uid = 1000;
+        homeConfig = import ./configs/pancake/home.nix;
+      };
+    };
 
     ip.local = "192.168.0.173";
-
     ssh.user = "lili";
 
     syncthing.id = "DS5FS25-BYJYFF2-TKBNJ4S-6RHZTEK-F4QS4EM-BNOPAPU-ULRHUA7-ORVTNA7";
@@ -49,7 +55,6 @@
     os = "raspbian";
 
     ip.local = "192.168.0.37";
-
     ssh.user = "cake";
 
     syncthing.id = "BH4QRX3-AXCRBBK-32KWW2A-33XYEMB-CKDONYH-4KLE4QA-NXE5LIX-QB4Q5AN";
