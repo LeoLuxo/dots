@@ -19,14 +19,15 @@ in
     }:
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit hostname users;
+        inherit inputs lib2;
+        inherit hostname users autologin;
         nixosProfiles = nixos.profiles;
       };
 
       modules =
         [
           # Include the main module
-          # module
+          module
 
           inputs.home-manager.nixosModules.home-manager
 
@@ -36,6 +37,7 @@ in
               useGlobalPkgs = false;
               useUserPackages = true;
               extraSpecialArgs = {
+                inherit inputs lib2;
                 inherit hostname;
                 homeProfiles = home.profiles;
               };
@@ -44,8 +46,13 @@ in
               users = lib.concatMapAttrs (username: userCfg: {
                 ${username} = {
                   imports =
-                    # Include the main module for the user
-                    [ userCfg.module ]
+                    [
+                      # Include the main module for the user
+                      userCfg.module
+
+                      # Set up the current user for home-manager, as there's not really any way to pass along the current user to modules other than `config.home.username`
+                      { home.username = username; }
+                    ]
                     # Auto-include all custom home-manager modules
                     ++ (lib.attrValues home.modules);
                 };
@@ -55,22 +62,7 @@ in
         ]
 
         # Auto-include all custom nixos modules
-        ++ (lib.attrValues nixos.modules)
-
-        # Enable autologin if relevant
-        ++ (
-          if autologin != null then
-            [
-              {
-                services.displayManager.autoLogin = {
-                  enable = true;
-                  user = autologin;
-                };
-              }
-            ]
-          else
-            [ ]
-        );
+        ++ (lib.attrValues nixos.modules);
     };
 
   # mkHost =

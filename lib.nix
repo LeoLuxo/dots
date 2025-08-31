@@ -1,4 +1,4 @@
-{ inputs, lib }:
+{ lib }:
 let
   inherit (lib) types;
 in

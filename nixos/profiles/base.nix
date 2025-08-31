@@ -6,6 +6,7 @@
   config,
   users,
   hostname,
+  autologin,
   ...
 }:
 
@@ -101,6 +102,12 @@ in
 
   # Install default shell
   programs.${defaultShell}.enable = true;
+
+  # Enable autologin if relevant
+  services.displayManager.autoLogin = lib.mkIf (autologin != null) {
+    enable = true;
+    user = autologin;
+  };
 
   /*
     --------------------------------------------------------------------------------
