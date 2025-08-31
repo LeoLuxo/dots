@@ -168,6 +168,10 @@ in
           remove-old-temp-files = true;
           remove-old-trash-files = true;
         };
+
+        "org/gnome/desktop/calendar" = {
+          show-weekdate = true;
+        };
       };
     };
 }
