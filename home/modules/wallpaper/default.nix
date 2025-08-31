@@ -182,23 +182,27 @@ in
         Install.WantedBy = [ "graphical-session.target" ];
       };
 
-      # TODO
-      # my.scripts.nx.rebuild.postRebuildActions =
-      #   if cfg.isTimed then
-      #     ''
-      #       # Reload the wallpaper to avoid having to logout
-      #       echo "Reloading dynamic wallpaper"
-      #       systemctl --user restart wallutils-timed.service
-      #     ''
-      #   else
-      #     ''
-      #       # Stop any timed services that might still be running
-      #       systemctl --user stop wallutils-timed.service >/dev/null 2>&1 || true
-      #       systemctl --user stop wallutils-refresh.service >/dev/null 2>&1 || true
+      # TODO: check that it works
+      home.activation = {
+        # Has observable side effects, thus must come after `writeBoundary`
+        refreshWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+          if cfg.isTimed then
+            ''
+              # Reload the wallpaper to avoid having to logout
+              echo "Reloading dynamic wallpaper"
+              run systemctl --user restart wallutils-timed.service
+            ''
+          else
+            ''
+              # Stop any timed services that might still be running
+              run systemctl --user stop wallutils-timed.service >/dev/null 2>&1 || true
+              run systemctl --user stop wallutils-refresh.service >/dev/null 2>&1 || true
 
-      #       # Reload the wallpaper to avoid having to logout
-      #       echo "Reloading static wallpaper"
-      #       systemctl --user restart wallutils-static.service
-      #     '';
+              # Reload the wallpaper to avoid having to logout
+              echo "Reloading static wallpaper"
+              run systemctl --user restart wallutils-static.service
+            ''
+        );
+      };
     };
 }
