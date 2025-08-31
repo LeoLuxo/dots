@@ -24,9 +24,6 @@ if [[ $1 == "--pull" ]]; then
 fi
 
 rebuild() {
-	echo "Updating wallpaper flake"
-	nix flake update wallpapers --allow-dirty
-
 	# Nix can't see non-git added files
 	git add .
 
@@ -36,24 +33,31 @@ rebuild() {
 	)
 	echo -e "${INFO}Files changed:${RESET}\n${changes}"
 
+	# Run pre-rebuild actions
+	echo -e "${INFO}Running pre-rebuild actions...${RESET}"
+	source $NX_PRE_REBUILD
+
 	echo -e "${INFO}NixOS Rebuilding...${RESET}"
 	# Rebuild, and if errors occur make sure to exit
 	# tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
 	# warn dirty disables the goddamn git dirty tree message
-	# --no-nom \
-	nh os switch . \
+	nh os switch . --no-nom \
 		-- --impure \
 		--option tarball-ttl 0 \
 		--option warn-dirty false \
 		"$@" ||
 		return 1
 
+	# Run post-rebuild actions
+	echo -e "${INFO}Running post-rebuild actions...${RESET}"
+	source $NX_POST_REBUILD
+
 	# Get current generation metadata
 	current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
 	echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
 
 	# RE-add any auto-generated files
-	git add ./sync
+	git add ./config
 
 	# Early return if no changes are detected
 	if git diff --staged --quiet .; then

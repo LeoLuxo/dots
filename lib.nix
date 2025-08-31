@@ -132,27 +132,74 @@ rec {
       name,
       command,
     }:
-    let
-      historyCommands = {
-        fish = ''$history[1]'';
-        bash = ''$(fc -ln -1)'';
-        zsh = ''''${history[@][1]}'';
-      };
+    { };
+  # let
+  #   historyCommands = {
+  #     fish = ''$history[1]'';
+  #     bash = ''$(fc -ln -1)'';
+  #     zsh = ''''${history[@][1]}'';
+  #   };
 
-      mappedCommands = builtins.mapAttrs (
-        _: lastCommand: command { inherit lastCommand; }
-      ) historyCommands;
-    in
-    { config, ... }:
-    {
-      home-manager.users.${config.my.user.name} = {
-        programs.bash.shellAliases.${name} = mappedCommands.bash;
-        programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
-        programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
-      };
-    };
+  #   mappedCommands = builtins.mapAttrs (
+  #     _: lastCommand: command { inherit lastCommand; }
+  #   ) historyCommands;
+  # in
+  # { config, ... }:
+  # {
+  #   home-manager.users.${config.my.user.name} = {
+  #     programs.bash.shellAliases.${name} = mappedCommands.bash;
+  #     programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
+  #     programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
+  #   };
+  # };
 
   mkSyncedPath = { ... }: { };
+
+  # Utility to easily create a new global keybind.
+  # Currently only implemented for Gnome, ONLY ON HOME-MANAGER
+  mkGlobalKeybind =
+    {
+      name,
+      binding,
+      command,
+    }:
+    (
+      let
+        id = lib.strings.toLower (lib.strings.sanitizeDerivationName name);
+        scriptName = "keybind-${id}";
+      in
+      # Home manager module to be imported
+      {
+        config,
+        pkgs,
+        ...
+      }:
+      {
+        # Create an extra script for the keybind, this avoids a bunch of weird issues
+        home.packages = [
+          (pkgs.writeShellScriptBin scriptName command)
+        ];
+
+        # Add the keybind to dconf
+        dconf.settings =
+          if config.desktop.gnome.enable then
+            {
+              "org/gnome/settings-daemon/plugins/media-keys" = {
+                custom-keybindings = [
+                  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
+                ];
+              };
+
+              "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
+                inherit binding name;
+                command = scriptName;
+              };
+            }
+          else
+            (builtins.abort "gnome disabled, cannot create keybind!");
+
+      }
+    );
 
   /*
     --------------------------------------------------------------------------------
