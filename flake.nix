@@ -8,19 +8,21 @@
       system:
 
       let
+        hosts = import ./hosts.nix;
+
         # The default lib just so I can pass it around where needed
         lib = nixpkgs.legacyPackages.${system}.lib;
         lib2 = import ./lib.nix { inherit lib; };
 
-        args = { inherit inputs lib lib2; };
+        args = {
+          inherit inputs lib lib2;
+          inherit hosts;
+        };
 
-        hosts = import ./hosts.nix args;
+        inherit (import ./mkConfigs.nix args) mkNixosConfig;
       in
       {
-        # nixosConfigurations = lib2.filterGetAttr "nixosConfig" hosts;
-        nixosConfigurations = {
-          "coffee" = hosts.coffee.nixosConfig;
-        };
+        nixosConfigurations = lib.mapAttrs (_: v: mkNixosConfig v) (lib2.filterGetAttr "nixosConfig" hosts);
 
         homeManagerConfigurations = {
           # "turnip" = hosts.coffee.home args;
