@@ -1,31 +1,16 @@
-args:
-
-let
-  mkConfigs = import ./mkConfigs.nix args;
-  inherit (mkConfigs) mkNixosConfig mkHomeManagerConfig;
-
-  cfgs = import ./configs args;
-in
 {
-
-  /*
-    --------------------------------------------------------------------------------
-    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-    --------------------------------------------------------------------------------
-  */
-
   # Personal desktop computer
   "coffee" = {
     os = "nixos";
 
-    nixosConfig = mkNixosConfig {
+    nixosConfig = {
       hostname = "coffee";
-      module = cfgs.coffee.nixos;
+      module = import ./configs/coffee/nixos;
 
       users = {
         "lili" = {
           uid = 1000;
-          module = cfgs.coffee.home;
+          module = import ./configs/coffee/home.nix;
         };
       };
     };
