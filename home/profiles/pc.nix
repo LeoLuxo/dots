@@ -1,7 +1,7 @@
-{ ... }:
+{ homeProfiles, ... }:
 {
   imports = [
-    ./base.nix
-    ./fonts.nix
+    homeProfiles.common.base
+    homeProfiles.common.fonts
   ];
 }

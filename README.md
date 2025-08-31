@@ -27,3 +27,6 @@ Essentially **Public Domain**!
 For all I care, use this code for whatever, whenever, wherever.
 Frankly I'd be honored if these dotfiles were useful to anyone.
 
+
+
+TODO: add nx-refresh-hardware which re-generates hardwareConfiguration and copies it into here
