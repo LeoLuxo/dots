@@ -61,35 +61,5 @@ in
       };
     };
 
-    # Key pairs
-    keys = mkAttrs {
-      description = "key pairs available on the machine and accessible to the other nixos modules";
-
-      options = {
-        public = mkOption {
-          description = "the path of this pair's public key";
-          type = types.path;
-        };
-        private = mkOption {
-          description = "the path of this pair's private key";
-          type = types.path;
-        };
-      };
-
-      default = {
-        # TODO: Move this to presets
-        user = mkIf (config.my.user != null) {
-          private = "${config.my.user.home}/.ssh/id_ed25519";
-          public = "${config.my.user.home}/.ssh/id_ed25519.pub";
-        };
-
-        host = {
-          private = "/etc/ssh/ssh_host_ed25519_key";
-          public = "/etc/ssh/ssh_host_ed25519_key.pub";
-        };
-      };
-    };
-
-    # TODO: Add devices here with hostname/ip and syncthing id
   };
 }

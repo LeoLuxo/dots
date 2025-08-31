@@ -22,21 +22,23 @@
         inherit (import ./mkConfigs.nix args) mkNixosConfig mkHomeManagerConfig;
       in
       {
-        # Create nixos configurations for all hosts that have a `nixosConfig` attr and the OS "nixos"
+        # Create nixos configurations for all hosts that have a `nixosConfig`
         nixosConfigurations = lib.concatMapAttrs (
-          name: host:
-          if (host.os or null) == "nixos" && host ? "nixosConfig" then
-            { ${name} = mkNixosConfig host; }
-          else
-            { }
+          name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig host; } else { }
         ) hosts;
 
-        # Create home-manager configurations for all hosts that have `users` (regardless of OS)
+        # Create home-manager configurations for all hosts that have `users` with each a `homeConfig` (regardless of OS)
         homeManagerConfigurations = lib.concatMapAttrs (
           hostNickame: host:
           if host ? "users" then
-            lib.mapAttrs' (
-              username: user: lib.nameValuePair "${username}@${hostNickame}" (mkHomeManagerConfig username user)
+            lib.concatMapAttrs (
+              username: user:
+              if user ? homeConfig then
+                {
+                  ${"${username}@${hostNickame}"} = mkHomeManagerConfig username user;
+                }
+              else
+                { }
             ) host.users
           else
             { }
