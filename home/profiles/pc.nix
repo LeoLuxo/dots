@@ -1,7 +1,8 @@
 { homeProfiles, ... }:
 {
   imports = [
-    homeProfiles.common.base
+    homeProfiles.base
+
     homeProfiles.common.fonts
   ];
 }

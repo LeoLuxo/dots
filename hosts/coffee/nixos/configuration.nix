@@ -1,6 +1,6 @@
 { nixosProfiles, ... }:
 {
   imports = [
-    nixosProfiles.common.base
+    nixosProfiles.base
   ];
 }
