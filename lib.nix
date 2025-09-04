@@ -181,23 +181,18 @@ rec {
         ];
 
         # Add the keybind to dconf
-        dconf.settings =
-          if config.desktop.gnome.enable then
-            {
-              "org/gnome/settings-daemon/plugins/media-keys" = {
-                custom-keybindings = [
-                  "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
-                ];
-              };
+        dconf.settings = {
+          "org/gnome/settings-daemon/plugins/media-keys" = {
+            custom-keybindings = [
+              "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
+            ];
+          };
 
-              "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
-                inherit binding name;
-                command = scriptName;
-              };
-            }
-          else
-            (builtins.abort "gnome disabled, cannot create keybind!");
-
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
+            inherit binding name;
+            command = scriptName;
+          };
+        };
       }
     );
 

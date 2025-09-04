@@ -29,6 +29,7 @@ in
           hosts
           ;
         nixosProfiles = nixos.profiles;
+        host = hosts.${hostname};
       };
 
       modules =
@@ -47,6 +48,7 @@ in
                 inherit inputs lib2;
                 inherit hostname hosts;
                 homeProfiles = home.profiles;
+                host = hosts.${hostname};
               };
 
               # Set up all the manually-defined users into home manager
