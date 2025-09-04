@@ -1,10 +1,19 @@
 {
   pkgs,
+  lib2,
   ...
 }:
 
 {
-  my.packages = [
+  imports = [
+    (lib2.mkGlobalKeybind {
+      name = "Instant screenshot";
+      binding = "<Super>s";
+      command = "snip";
+    })
+  ];
+
+  home.packages = [
     (pkgs.writeScriptWithDeps {
       name = "snip";
       file = ./snip.sh;
@@ -14,9 +23,4 @@
       ];
     })
   ];
-
-  my.keybinds."Instant screenshot" = {
-    binding = "<Super>s";
-    command = "snip";
-  };
 }
