@@ -14,7 +14,7 @@ let
   };
 in
 {
-  my.packages = [
+  home.packages = [
     (pkgs.writeScriptWithDeps {
       name = "beet";
 

@@ -17,6 +17,7 @@
     # homeProfiles.shells.prompts.ohmyposh
 
     homeProfiles.scripts.nixUtils
+    homeProfiles.scripts.terminalUtils
   ];
 
   /*
