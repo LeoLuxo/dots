@@ -1,4 +1,5 @@
 {
+  inputs,
   homeProfiles,
   config,
   ...
@@ -15,6 +16,7 @@
     homeProfiles.shells.prompts.starship
     # homeProfiles.shells.prompts.ohmyposh
 
+    homeProfiles.scripts.nixUtils
   ];
 
   /*
@@ -59,7 +61,14 @@
     --------------------------------------------------------------------------------
   */
 
+  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Add our custom overlays
+  nixpkgs.overlays = [
+    inputs.self.overlays.pkgs
+    inputs.self.overlays.builders
+  ];
 
   nix.settings = {
     # Enable the new nix cli tool and flakes

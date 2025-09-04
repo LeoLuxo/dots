@@ -182,6 +182,13 @@ in
         Install.WantedBy = [ "graphical-session.target" ];
       };
 
+      # Auto-update wallpaper repo
+      nx.preRebuildActions = ''
+        echo Updating wallpaper flake
+        nix flake update wallpapers --allow-dirty
+        git add flake.lock
+      '';
+
       # TODO: check that it works
       home.activation = {
         # Has observable side effects, thus must come after `writeBoundary`

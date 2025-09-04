@@ -26,6 +26,9 @@
     };
 
     syncthing.id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
+
+    dots = "/etc/nixos/dots";
+    dotsTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
   };
 
   /*
