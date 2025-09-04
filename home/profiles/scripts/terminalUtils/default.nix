@@ -1,23 +1,18 @@
 {
   pkgs,
-  config,
   lib2,
   ...
 }:
 
-let
-  inherit (lib2) mkShellHistoryAlias;
-in
-
 {
   imports = [
-    (mkShellHistoryAlias {
+    (lib2.mkShellHistoryAlias {
       name = "please";
       command = { lastCommand }: ''sudo ${lastCommand}'';
     })
   ];
 
-  my.packages = with pkgs; [
+  home.packages = with pkgs; [
     # To query the filetype of files
     file
 
@@ -35,8 +30,8 @@ in
     (pkgs.writeScriptWithDeps {
       name = "extract";
       file = ./extract.sh;
-      # All the archive extractors used in the script
       deps = [
+        # All the archive extractors used in the script
         gnutar
         rar
         unzip
@@ -70,29 +65,26 @@ in
     })
   ];
 
-  home-manager.users.${config.my.user.name} = {
-    # Add aliases
-    home.shellAliases = {
-      pls = "please";
+  # Add aliases
+  home.shellAliases = {
+    pls = "please";
 
-      l = "ls -Fhsla";
+    l = "ls -Fhsla";
 
-      c = "$EDITOR .";
+    c = "$EDITOR .";
 
-      "." = "q .";
+    "." = "q .";
 
-      "qq" = ''eval "$(_qq-internals)"'';
+    "qq" = ''eval "$(_qq-internals)"'';
 
-      ".." = "cd ..";
-      "..." = "cd ../..";
-      "...." = "cd ../../..";
-      "....." = "cd ../../../..";
-      "......" = "cd ../../../../..";
-      "......." = "cd ../../../../../..";
-      "........" = "cd ../../../../../../..";
-      "........." = "cd ../../../../../../../..";
-      ".........." = "cd ../../../../../../../../..";
-    };
+    ".." = "cd ..";
+    "..." = "cd ../..";
+    "...." = "cd ../../..";
+    "....." = "cd ../../../..";
+    "......" = "cd ../../../../..";
+    "......." = "cd ../../../../../..";
+    "........" = "cd ../../../../../../..";
+    "........." = "cd ../../../../../../../..";
+    ".........." = "cd ../../../../../../../../..";
   };
-
 }

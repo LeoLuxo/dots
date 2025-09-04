@@ -1,15 +1,15 @@
 {
   pkgs,
-  nixosModules,
+  homeProfiles,
   ...
 }:
 
 {
-  imports = with nixosModules; [
-    apps.beets
+  imports = [
+    homeProfiles.apps.beets
   ];
 
-  my.packages = [
+  home.packages = [
     (pkgs.writeScriptWithDeps {
       name = "automusic";
 
