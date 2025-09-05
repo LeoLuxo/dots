@@ -18,6 +18,8 @@
 
     homeProfiles.scripts.nixUtils
     homeProfiles.scripts.terminalUtils
+
+    homeProfiles.apps.zoxide
   ];
 
   /*
@@ -84,4 +86,5 @@
       config.home.username
     ];
   };
+
 }
