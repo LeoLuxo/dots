@@ -1,4 +1,9 @@
-{ homeProfiles, lib2, ... }:
+{
+  pkgs,
+  homeProfiles,
+  lib2,
+  ...
+}:
 
 let
   inherit (lib2) mkGlobalKeybind;
@@ -60,5 +65,9 @@ in
   home.sessionVariables = {
     "EDITOR" = "code";
   };
+
+  home.packages = [
+    pkgs.bitwarden-desktop
+  ];
 
 }
