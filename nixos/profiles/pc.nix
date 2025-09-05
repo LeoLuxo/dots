@@ -2,6 +2,7 @@
 {
   imports = [
     nixosProfiles.base
+    nixosProfiles.gnome
   ];
 
   # Setup the boot menu

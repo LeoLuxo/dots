@@ -84,11 +84,6 @@ in
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
-  rice.peppy = {
-    enable = true;
-    cursor.size = 32;
-  };
-
   # Set default shell
   shell.default = "fish";
 
@@ -98,25 +93,6 @@ in
     nix flake update wallpapers --allow-dirty
     git add flake.lock
   '';
-
-  desktop.gnome = {
-    enable = true;
-
-    power = {
-      buttonAction = "suspend";
-      confirmShutdown = true;
-
-      screenIdle = {
-        enable = true;
-        delay = 600;
-      };
-
-      suspendIdle = {
-        enable = true;
-        delay = 900;
-      };
-    };
-  };
 
   # SD Card
   fileSystems."/stuff" = {
