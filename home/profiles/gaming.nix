@@ -1,9 +1,11 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   home.packages = [
     # Switch emulator
     inputs.self.packages.yuzu
+    pkgs.ryubing # fork of ryujinx
     # inputs.self.packages.sudachi
+
   ];
 
   xdg.dataFile."sudachi".target = "/stuff/games/emu/switch/yuzu";

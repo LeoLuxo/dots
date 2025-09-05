@@ -4,6 +4,7 @@
     enable = true;
     # KDE Connect implementation for Gnome Shell.
     package = pkgs.gnomeExtensions.gsconnect;
+    # indicator = false;
   };
 
   dconf.settings = {
