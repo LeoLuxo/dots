@@ -10,8 +10,11 @@
       let
         hosts = import ./hosts.nix;
 
-        # The default lib just so I can pass it around where needed
-        lib = nixpkgs.legacyPackages.${system}.lib;
+        # The default pkgs and lib just so I can pass them around where needed
+        pkgs = nixpkgs.legacyPackages.${system};
+        lib = pkgs.lib;
+
+        # My custom libs
         lib2 = import ./lib.nix { inherit lib; };
 
         args = {
@@ -45,8 +48,13 @@
         ) hosts;
 
         overlays = {
-          "pkgs" = import ./pkgs.nix args;
+          "extraPkgs" = import ./extraPkgs.nix args;
           "builders" = import ./builders.nix args;
+        };
+
+        packages = lib.packagesFromDirectoryRecursive {
+          inherit (pkgs) callPackage;
+          directory = ./packages;
         };
       }
     );
