@@ -6,6 +6,7 @@ in
 {
   imports = [
     homeProfiles.base
+    homeProfiles.gnome
 
     homeProfiles.common.fonts
 
