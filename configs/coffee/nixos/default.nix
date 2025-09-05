@@ -3,7 +3,7 @@
   imports = [
     ./hardware.nix
 
-    nixosProfiles.base
+    nixosProfiles.pc
     nixosProfiles.gpu.amd
   ];
 
