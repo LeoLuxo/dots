@@ -29,7 +29,7 @@ in
 
   # Add our custom overlays
   nixpkgs.overlays = [
-    inputs.self.overlays.pkgs
+    inputs.self.overlays.extraPkgs
     inputs.self.overlays.builders
   ];
 
