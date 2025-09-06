@@ -15,7 +15,7 @@
     APP_NOTES = lib.mkDefault "obsidian";
   };
 
-  my.packages = with pkgs; [
+  home.packages = with pkgs; [
     obsidian
   ];
 }

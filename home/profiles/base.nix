@@ -20,7 +20,6 @@
     homeProfiles.scripts.terminalUtils
 
     homeProfiles.apps.zoxide
-    homeProfiles.apps.vscode
     homeProfiles.apps.direnv
   ];
 
