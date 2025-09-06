@@ -153,6 +153,28 @@ rec {
   #   };
   # };
 
+  mkSymlink =
+    {
+      xdgDir,
+      target,
+      destination,
+      name ? target,
+    }:
+    assert lib.assertOneOf "xdgDir" xdgDir [
+      "config" # ~/.config
+      "cache" # ~/.cache
+      "data" # ~/.local/share
+      "state" # ~/.local/state
+    ];
+
+    { config, ... }:
+    {
+      xdg.${"${xdgDir}File"}.${name} = {
+        inherit target;
+        source = config.lib.file.mkOutOfStoreSymlink destination;
+      };
+    };
+
   mkSyncedPath = { ... }: { };
 
   # Utility to easily create a new global keybind.

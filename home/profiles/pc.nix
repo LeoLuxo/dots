@@ -22,6 +22,12 @@ in
     homeProfiles.scripts.dotsTodo
     homeProfiles.scripts.dconfDiff
 
+    homeProfiles.apps.direnv
+    homeProfiles.apps.firefox
+    homeProfiles.apps.obsidian
+    homeProfiles.apps.vscode
+    homeProfiles.apps.zoxide
+
     (mkGlobalKeybind {
       name = "Open terminal";
       binding = "<Super>grave";
@@ -57,10 +63,16 @@ in
       binding = "<Super>F4";
       command = "$APP_COMMUNICATION";
     })
+
+    # (mkSyncedPath {
+    #   xdgPath = "YouTube Music/config.json";
+    #   cfgPath = "youtube-music/config.json";
+    # })
   ];
 
   home.packages = [
     pkgs.bitwarden-desktop
+    pkgs.youtube-music
   ];
 
 }
