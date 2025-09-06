@@ -25,46 +25,39 @@ in
     (mkGlobalKeybind {
       name = "Open terminal";
       binding = "<Super>grave";
-      # Makes ddterm appear
-      command = "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
+      command = "$APP_TERMINAL";
     })
 
     (mkGlobalKeybind {
       name = "Open backup terminal";
       binding = "<Super>t";
-      # Default gnome console
-      command = "kgx";
+      command = "$APP_TERMINAL_BACKUP";
     })
 
     (mkGlobalKeybind {
       name = "Open web browser";
       binding = "<Super>F1";
-      command = "firefox";
+      command = "$APP_BROWSER";
     })
 
     (mkGlobalKeybind {
       name = "Open notes";
       binding = "<Super>F2";
-      command = "obsidian";
+      command = "$APP_NOTES";
     })
 
     (mkGlobalKeybind {
       name = "Open code editor";
       binding = "<Super>F3";
-      command = "code";
+      command = "$APP_CODE_EDITOR";
     })
 
     (mkGlobalKeybind {
       name = "Open communication";
       binding = "<Super>F4";
-      command = "vesktop";
+      command = "$APP_COMMUNICATION";
     })
   ];
-
-  # Set VSCode as default text editor
-  home.sessionVariables = {
-    "EDITOR" = "code";
-  };
 
   home.packages = [
     pkgs.bitwarden-desktop

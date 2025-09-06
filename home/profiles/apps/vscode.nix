@@ -1,4 +1,9 @@
-{ pkgs, homeProfiles, ... }:
+{
+  pkgs,
+  lib,
+  homeProfiles,
+  ...
+}:
 {
   imports = [
     # Require fonts for vscode
@@ -27,8 +32,10 @@
     # })
   ];
 
+  # Set VSCode as default visual editor
   home.sessionVariables = {
-    EDITOR = "code";
+    VISUAL = lib.mkDefault "code";
+    APP_CODE_EDITOR = lib.mkDefault "code";
   };
 
   programs.vscode = {
