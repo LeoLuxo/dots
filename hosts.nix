@@ -3,12 +3,12 @@
   "coffee" = {
     hostname = "coffee";
     os = "nixos";
-    nixosConfig = import ./configs/coffee/nixos.nix;
+    nixosConfig = import ./configs/coffee/nixos;
 
     users = {
       "lili" = {
         uid = 1000;
-        homeConfig = import ./configs/coffee/home.nix;
+        homeConfig = import ./configs/coffee/home;
 
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmKoOObf4uFjChrVj7UNEiHU5uxhNNY+rxSLoZvDy+t lili@coffee"
@@ -41,12 +41,12 @@
   "pancake" = {
     hostname = "pancake";
     os = "nixos";
-    nixosConfig = import ./configs/pancake/nixos.nix;
+    nixosConfig = import ./configs/pancake/nixos;
 
     users = {
       "lili" = {
         uid = 1000;
-        homeConfig = import ./configs/pancake/home.nix;
+        homeConfig = import ./configs/pancake/home;
 
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEuGccJyHZWCVDChXj3UUxTFLfU8fCM+vUYViYF+o6JF lili@pancake"

@@ -1,11 +1,11 @@
 {
-  nixosModules,
+  homeProfiles,
   ...
 }:
 
 {
-  imports = with nixosModules; [
-    apps.syncthing
+  imports = [
+    homeProfiles.apps.syncthing
   ];
 
   services.syncthing.settings =
@@ -26,13 +26,6 @@
         # Don't care that it's public in the nix store
         user = "qwe";
         password = "qwe";
-      };
-
-      # Don't care that the device ids end up in cleartext on the nix store
-      devices = {
-        "strobery".id = "BH4QRX3-AXCRBBK-32KWW2A-33XYEMB-CKDONYH-4KLE4QA-NXE5LIX-QB4Q5AN";
-        "coffee".id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
-        "celestia".id = "2DPZ3IR-YH4YGS3-SGEZMRY-PMJNDZ4-3PBAE4D-V3IT5CA-4R4KVB5-MFH2WAL";
       };
 
       # Folders
