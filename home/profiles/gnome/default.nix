@@ -161,6 +161,9 @@ in
 
     home.sessionVariables = {
       XCURSOR_SIZE = cfg.cursorSize;
+
+      APP_TERMINAL = lib.mkOverride 1050 "kgx"; # Even lower priority than mkDefault (smaller = higher priority)
+      APP_TERMINAL_BACKUP = lib.mkDefault "kgx"; # Priority 1000
     };
 
     dconf.settings = {
