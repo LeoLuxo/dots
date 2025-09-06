@@ -8,6 +8,7 @@
 
     nixosProfiles.apps.nicotinePlus
     nixosProfiles.apps.qmk
+    nixosProfiles.apps.syncthing
   ];
 
   system.stateVersion = "24.05";
