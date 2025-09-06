@@ -20,6 +20,8 @@
     homeProfiles.scripts.terminalUtils
 
     homeProfiles.apps.zoxide
+    homeProfiles.apps.vscode
+    homeProfiles.apps.direnv
   ];
 
   /*
@@ -63,6 +65,11 @@
     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     --------------------------------------------------------------------------------
   */
+
+  home.sessionVariables = {
+    # Suppress the "git tree is dirty" warnings
+    NIX_CONFIG = "warn-dirty = false";
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
