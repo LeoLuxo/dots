@@ -12,7 +12,7 @@ let
 in
 {
   imports = [
-    (lib2.mkGlobalKeybind {
+    (lib2.hm.mkGlobalKeybind {
       name = "Open dots-todo";
       binding = "<Super>F10";
       command = "dots-todo";

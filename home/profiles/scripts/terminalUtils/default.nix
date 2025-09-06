@@ -6,7 +6,7 @@
 
 {
   imports = [
-    (lib2.mkShellHistoryAlias {
+    (lib2.hm.mkShellHistoryAlias {
       name = "please";
       command = { lastCommand }: ''sudo ${lastCommand}'';
     })
