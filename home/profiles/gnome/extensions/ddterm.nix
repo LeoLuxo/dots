@@ -1,8 +1,13 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   home.packages = with pkgs; [
     gnomeExtensions.ddterm
   ];
+
+  home.sessionVariables = {
+    # Opens the ddterm overlay
+    APP_TERMINAL = lib.mkDefault "gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/ddterm --method com.github.amezin.ddterm.Extension.Toggle";
+  };
 
   dconf.settings = {
     "org/gnome/shell" = {

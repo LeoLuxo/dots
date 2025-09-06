@@ -69,6 +69,8 @@
   home.sessionVariables = {
     # Suppress the "git tree is dirty" warnings
     NIX_CONFIG = "warn-dirty = false";
+
+    EDITOR = "nano";
   };
 
   # Allow unfree packages
