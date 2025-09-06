@@ -5,6 +5,9 @@
 
     nixosProfiles.pc
     nixosProfiles.gpu.amd
+
+    nixosProfiles.apps.nicotinePlus
+    nixosProfiles.apps.qmk
   ];
 
   system.stateVersion = "24.05";
