@@ -6,7 +6,7 @@
 
 {
   imports = [
-    (lib2.mkGlobalKeybind {
+    (lib2.hm.mkGlobalKeybind {
       name = "Instant screenshot";
       binding = "<Super>s";
       command = "snip";

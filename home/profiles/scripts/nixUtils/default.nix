@@ -7,15 +7,11 @@
   ...
 }:
 
-let
-  inherit (lib2) mkShellHistoryAlias replaceScriptVariables;
-in
-
 {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
 
-    (mkShellHistoryAlias {
+    (lib2.hm.mkShellHistoryAlias {
       name = ",,";
       command = { lastCommand }: '', ${lastCommand}'';
     })
@@ -52,7 +48,7 @@ in
       programs.nix-index.enable = false;
 
       # Add some post-build actions
-      nx.postRebuildActions = replaceScriptVariables ''
+      nx.postRebuildActions = lib2.replaceScriptVariables ''
         # Save current dconf settings (for nx-dconf-diff)
         echo "Dumping dconf"
         mkdir --parents "$(dirname "$NX_DCONF_DIFF")" && touch "$NX_DCONF_DIFF"

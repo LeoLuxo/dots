@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (lib2) mkSymlink;
+  inherit (lib2.hm) mkSymlink;
 in
 {
   imports = [
