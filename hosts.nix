@@ -3,7 +3,7 @@
   "coffee" = {
     hostname = "coffee";
     os = "nixos";
-    nixosConfig = import ./configs/coffee/nixos;
+    nixosConfig = import ./configs/coffee/nixos.nix;
 
     users = {
       "lili" = {
@@ -41,7 +41,7 @@
   "pancake" = {
     hostname = "pancake";
     os = "nixos";
-    nixosConfig = import ./configs/pancake/nixos;
+    nixosConfig = import ./configs/pancake/nixos.nix;
 
     users = {
       "lili" = {
