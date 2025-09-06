@@ -2,6 +2,8 @@
 {
   imports = [
     homeProfiles.pc
+    homeProfiles.gaming
+    homeProfiles.emulation
 
     homeProfiles.scripts.bootWindows
     homeProfiles.scripts.autoMusic

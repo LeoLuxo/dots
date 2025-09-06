@@ -2,6 +2,7 @@
 {
   imports = [
     homeProfiles.pc
+    homeProfiles.gaming
   ];
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
