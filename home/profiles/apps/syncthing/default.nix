@@ -3,6 +3,8 @@
   lib,
   hostname,
   pkgs,
+  lib2,
+  hosts,
   ...
 }:
 
@@ -31,37 +33,22 @@ in
   };
 
   config = {
-    services.syncthing =
-      let
-        syncthingFolder = "${config.my.paths.home}/.config/syncthing";
-      in
-      {
-        enable = true;
+    services.syncthing = {
+      enable = true;
 
-        # By default if syncthing.user is not set, a user named "syncthing" will be created whose home directory is dataDir, and it will run under a group "syncthing".
-        user = config.my.user.name;
-        group = "users";
+      # Together, the key and cert define the device id
+      key = config.age.secrets."syncthing/${hostname}/key.pem".path;
+      cert = config.age.secrets."syncthing/${hostname}/cert.pem".path;
 
-        # Together, the key and cert define the device id
-        key = config.my.secrets."syncthing/${hostname}/key.pem";
-        cert = config.my.secrets."syncthing/${hostname}/cert.pem";
+      # Overrides any devices/folders added or deleted through the WebUI
+      overrideDevices = true;
+      overrideFolders = true;
 
-        # The path where default synchronised directories will be put.
-        dataDir = syncthingFolder;
-        # The path where the settings and keys (if not set expicitly) will be checked for.
-        configDir = syncthingFolder;
+      settings = {
+        # Automatically get all device ids from hosts
+        devices = lib2.filterGetAttr "syncthing" hosts;
 
-        # Overrides any devices/folders added or deleted through the WebUI
-        overrideDevices = true;
-        overrideFolders = true;
-
-        # Open firewall ports
-        openDefaultPorts = true;
-
-        # Whether to auto-launch Syncthing as a system service.
-        # systemService = true;
-
-        settings.options = {
+        options = {
           # Anonymous data usage
           # I would accept it but for some reason values 1 or 2 don't work
           urAccepted = -1;
@@ -70,9 +57,10 @@ in
           relaysEnabled = true;
         };
       };
+    };
 
     # Setup ignore patterns
-    systemd.user.services.syncthing-init.postStart = strings.concatMapAttrsStringSep "\n" (
+    systemd.user.services.syncthing-init.Service.ExecStartPost = strings.concatMapAttrsStringSep "\n" (
       name: value:
       if (strings.stringLength value.ignorePatterns) > 0 then
         ''
@@ -85,7 +73,7 @@ in
         ""
     ) config.services.syncthing.settings.folders;
 
-    my.packages = [
+    home.packages = [
       (pkgs.mkDesktopItem {
         name = "syncthing";
         exec = "firefox \"http://127.0.0.1:8384/\"";

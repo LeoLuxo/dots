@@ -1,6 +1,8 @@
 { inputs, homeProfiles, ... }:
 {
   imports = [
+    ./syncthing.nix
+
     homeProfiles.pc
     homeProfiles.gaming
   ];
