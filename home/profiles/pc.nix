@@ -73,6 +73,13 @@ in
   home.packages = [
     pkgs.bitwarden-desktop
     pkgs.youtube-music
+
+    # Gnome circles commit editor
+    pkgs.commit
+
   ];
+
+  # Set the commit editor to gnome commit
+  programs.git.extraConfig.core.editor = "re.sonny.Commit";
 
 }
