@@ -4,6 +4,7 @@
     ./syncthing.nix
 
     homeProfiles.pc
+    homeProfiles.personal
     homeProfiles.gaming
     homeProfiles.emulation
 

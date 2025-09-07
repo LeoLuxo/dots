@@ -19,6 +19,7 @@
     homeProfiles.scripts.nixUtils
     homeProfiles.scripts.terminalUtils
 
+    homeProfiles.apps.git
     homeProfiles.apps.zoxide
     homeProfiles.apps.direnv
   ];
