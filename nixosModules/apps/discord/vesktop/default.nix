@@ -13,8 +13,8 @@ let
 in
 
 let
-  vencord = pkgs.callPackage ./vencord.nix { };
-  vesktop = pkgs.callPackage ./vesktop.nix { inherit vencord; };
+  # vencord = pkgs.callPackage ./vencord.nix { };
+  vesktop = pkgs.callPackage ./vesktop.nix { };
 in
 
 {
@@ -102,7 +102,7 @@ in
     #   withSystemVencord = true;
     #   inherit vencord;
     # })
-
+    vesktop
   ];
 
   # my.keybinds = {
