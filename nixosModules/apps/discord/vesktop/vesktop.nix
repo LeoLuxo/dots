@@ -11,6 +11,9 @@
   electron,
   libicns,
   pipewire,
+  libxkbcommon,
+  libX11,
+  libXtst,
   libpulseaudio,
   autoPatchelfHook,
   pnpm_10,
@@ -61,6 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
       # and needs to be patched
       autoPatchelfHook
       copyDesktopItems
+
       # we use a script wrapper here for environment variable expansion at runtime
       # https://github.com/NixOS/nixpkgs/issues/172583
       makeWrapper
@@ -74,6 +78,10 @@ stdenv.mkDerivation (finalAttrs: {
     libpulseaudio
     pipewire
     (lib.getLib stdenv.cc.cc)
+
+    libxkbcommon
+    libX11
+    libXtst
   ];
 
   patches = [
@@ -82,10 +90,10 @@ stdenv.mkDerivation (finalAttrs: {
     # ./patches/globalShortcuts.patch
   ];
   # ++ lib.optional withSystemVencord (
-  #   replaceVars ./use_system_vencord.patch {
+  #   replaceVars ./patches/useSystemVencord.patch {
   #     inherit vencord;
   #   }
-  # )
+  # );
 
   env = {
     ELECTRON_SKIP_BINARY_DOWNLOAD = 1;
