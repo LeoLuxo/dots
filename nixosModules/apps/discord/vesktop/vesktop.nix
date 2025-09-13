@@ -79,6 +79,7 @@ stdenv.mkDerivation (finalAttrs: {
     pipewire
     (lib.getLib stdenv.cc.cc)
 
+    # Needed for the globalShortcuts patch
     libxkbcommon
     libX11
     libXtst
@@ -87,7 +88,6 @@ stdenv.mkDerivation (finalAttrs: {
   patches = [
     ./patches/disableUpdateChecking.patch
     # ./patches/fixReadOnlySettings.patch
-    # ./patches/globalShortcuts.patch
   ];
   # ++ lib.optional withSystemVencord (
   #   replaceVars ./patches/useSystemVencord.patch {
