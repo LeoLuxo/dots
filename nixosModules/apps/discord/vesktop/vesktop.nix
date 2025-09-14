@@ -106,10 +106,21 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   # electron builds must be writable on darwin
-  preBuild = lib.optionalString stdenv.hostPlatform.isDarwin ''
-    cp -r ${electron.dist}/Electron.app .
-    chmod -R u+w Electron.app
-  '';
+  preBuild =
+    lib.optionalString stdenv.hostPlatform.isDarwin ''
+      cp -r ${electron.dist}/Electron.app .
+      chmod -R u+w Electron.app
+
+    ''
+    + ''
+      cp -f "${./assets/discord.png}" build/Icon.png
+
+      cp -f "${./assets/discord.png}" static/icon.png
+      cp -f "${./assets/discord.ico}" static/icon.ico
+
+      # Dancing anime gif
+      cp -f "${./assets/bongo-cat.gif}" static/shiggy.gif
+    '';
 
   buildPhase = ''
     runHook preBuild
@@ -128,6 +139,11 @@ stdenv.mkDerivation (finalAttrs: {
     pushd build
     ${libicns}/bin/icns2png -x icon.icns
     popd
+  '';
+
+  preInstall = ''
+    rm build/icon_*x32.png
+    cp "${./assets/discord.png}" build/icon_512x512x32.png
   '';
 
   installPhase =
@@ -168,14 +184,15 @@ stdenv.mkDerivation (finalAttrs: {
 
   desktopItems = lib.optional stdenv.hostPlatform.isLinux (makeDesktopItem {
     name = "vesktop";
-    desktopName = "Vesktop";
+    desktopName = "Discord";
     exec = "vesktop %U";
     icon = "vesktop";
-    startupWMClass = "Vesktop";
+    startupWMClass = "Discord";
     genericName = "Internet Messenger";
     keywords = [
       "discord"
       "vencord"
+      "vesktop"
       "electron"
       "chat"
     ];
