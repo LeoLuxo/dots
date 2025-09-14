@@ -14,8 +14,6 @@ in
 
 {
   imports = [
-    ./customIconsAndName.nix
-
     # (mkSyncedPath {
     #   xdgPath = "vesktop/settings/settings.json";
     #   cfgPath = "vesktop/vencord.json";
