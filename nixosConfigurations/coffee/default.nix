@@ -2,7 +2,7 @@
 {
   imports = [
     ./audio.nix
-    ./backups.nix
+    # ./backups.nix
     ./configuration.nix
     ./hardwareConfiguration.nix
     ./syncthing.nix
