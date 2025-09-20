@@ -1,4 +1,4 @@
-{ lib }:
+{ inputs, lib }:
 let
   inherit (lib) types;
 in
@@ -176,7 +176,7 @@ rec {
   */
 
   # Home-manager -specific libs (because they return a hm module meant to be imported)
-  hm = {
+  hm = rec {
     # Create a shell alias that is shell-agnostic but can look up past commands
     mkShellHistoryAlias =
       {
@@ -223,8 +223,17 @@ rec {
         };
       };
 
-    # TODO: fix mkSyncedPath
-    mkSyncedPath = { ... }: { };
+    mkSyncedPath =
+      {
+        xdgDir,
+        target,
+        syncName,
+      }:
+      mkSymlink {
+        inherit xdgDir target;
+        destination = "${inputs.self}/sync/${syncName}";
+        name = syncName;
+      };
 
     # Utility to easily create a new global keybind.
     # Currently only implemented for Gnome, ONLY ON HOME-MANAGER

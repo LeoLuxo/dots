@@ -4,7 +4,7 @@
   ...
 }:
 let
-  inherit (lib2) mkSyncedPath;
+  inherit (lib2.hm) mkSyncedPath;
 in
 
 # Relevant issues:
@@ -13,15 +13,17 @@ in
 
 {
   imports = [
-    # (mkSyncedPath {
-    #   xdgPath = "vesktop/settings/settings.json";
-    #   cfgPath = "vesktop/vencord.json";
-    # })
+    (mkSyncedPath {
+      xdgDir = "config";
+      target = "vesktop/settings/settings.json";
+      syncName = "vesktop/vencord.json";
+    })
 
-    # (mkSyncedPath {
-    #   xdgPath = "vesktop/settings.json";
-    #   cfgPath = "vesktop/vesktop.json";
-    # })
+    (mkSyncedPath {
+      xdgDir = "config";
+      target = "vesktop/settings.json";
+      syncName = "vesktop/vesktop.json";
+    })
   ];
 
   home.packages = [

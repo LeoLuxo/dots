@@ -64,16 +64,10 @@ in
       binding = "<Super>F4";
       command = "$APP_COMMUNICATION";
     })
-
-    # (mkSyncedPath {
-    #   xdgPath = "YouTube Music/config.json";
-    #   cfgPath = "youtube-music/config.json";
-    # })
   ];
 
   home.packages = [
     pkgs.bitwarden-desktop
-    pkgs.youtube-music
 
     # Gnome circles commit editor
     pkgs.commit

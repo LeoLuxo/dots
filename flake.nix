@@ -15,7 +15,7 @@
         lib = pkgs.lib;
 
         # My custom libs
-        lib2 = import ./lib.nix { inherit lib; };
+        lib2 = import ./lib.nix { inherit inputs lib; };
 
         args = {
           inherit inputs lib lib2;
