@@ -2,6 +2,7 @@
 {
   imports = [
     ./hardware.nix
+    ./audio.nix
 
     nixosProfiles.pc
     nixosProfiles.gpu.amd
