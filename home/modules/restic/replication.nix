@@ -65,7 +65,7 @@ in
 
         passwordFile = mkOption {
           description = "the password of the local repo";
-          type = types.path;
+          type = types.str;
         };
       };
     };
@@ -81,12 +81,12 @@ in
 
         passwordFile = mkOption {
           description = "the password of the remote repo";
-          type = types.path;
+          type = types.str;
         };
 
         remoteAddressFile = mkOption {
           description = "the path to a file containing the address of the remote";
-          type = types.path;
+          type = types.str;
         };
 
         remotePort = mkOption {
@@ -139,108 +139,111 @@ in
       # Replication: periodically do checks & copy to other repos & forget old snapshots
       {
         systemd.user.services."restic-replication" = {
-          path = [
-            pkgs.restic
-            pkgs.sshpass
-            pkgs.openssh
-          ];
+          Service = {
+            Environment = "PATH=${lib.getExe pkgs.restic}:${lib.getExe pkgs.sshpass}:${lib.getExe pkgs.openssh}";
 
-          script =
-            let
-              cleanupStaleLocksCommand =
-                if cfg.cleanupStaleLocks then
-                  ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" unlock''
-                else
-                  "";
+            ExecStart =
+              let
+                cleanupStaleLocksCommand =
+                  if cfg.cleanupStaleLocks then
+                    ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" unlock''
+                  else
+                    "";
 
-              checkCommand =
-                if cfg.performFullCheck || cfg.performQuickCheck then
-                  ''restic --retry-lock 2h --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
-                  + (if cfg.performFullCheck then " --read-data" else "")
-                else
-                  "";
+                checkCommand =
+                  if cfg.performFullCheck || cfg.performQuickCheck then
+                    ''restic --retry-lock 2h --repo ${cfgRestic.repo} --password-file "${cfgRestic.passwordFile}" check''
+                    + (if cfg.performFullCheck then " --read-data" else "")
+                  else
+                    "";
 
-              localCopiesCommands = lib.mapAttrsToList (
-                name: localRepo:
-                ''restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
-              ) cfg.localRepos;
+                localCopiesCommands = lib.mapAttrsToList (
+                  name: localRepo:
+                  ''restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
+                ) cfg.localRepos;
 
-              remoteCopiesCommands = lib.mapAttrsToList (
-                name: remoteRepo:
-                let
-                  specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
-                  specifiedPort =
-                    if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
-                  strictHostKeyChecking = if remoteRepo.strictHostKeyChecking then "yes" else "no";
-                in
-                ''
-                  restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
-                ''
-              ) cfg.remoteRepos;
+                remoteCopiesCommands = lib.mapAttrsToList (
+                  name: remoteRepo:
+                  let
+                    specifiedPrivateKey = if remoteRepo.privateKey != null then "-i ${remoteRepo.privateKey}" else "";
+                    specifiedPort =
+                      if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
+                    strictHostKeyChecking = if remoteRepo.strictHostKeyChecking then "yes" else "no";
+                  in
+                  ''
+                    restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
+                  ''
+                ) cfg.remoteRepos;
 
-              forgetCommand =
-                let
-                  cfgf = cfg.forget;
-                in
-                if cfgf.enable then
-                  ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
-                  + (if cfgf.prune then " --prune" else "")
-                  + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
-                  + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
-                  + (if cfgf.keepDaily != null then " --keep-daily ${cfgf.keepDaily}" else "")
-                  + (if cfgf.keepWeekly != null then " --keep-weekly ${cfgf.keepWeekly}" else "")
-                  + (if cfgf.keepMonthly != null then " --keep-monthly ${cfgf.keepMonthly}" else "")
-                  + (if cfgf.keepYearly != null then " --keep-yearly ${cfgf.keepYearly}" else "")
-                  + (if cfgf.keepWithin != null then " --keep-within ${cfgf.keepWithin}" else "")
-                  + (if cfgf.keepWithinHourly != null then " --keep-within-hourly ${cfgf.keepWithinHourly}" else "")
-                  + (if cfgf.keepWithinDaily != null then " --keep-within-daily ${cfgf.keepWithinDaily}" else "")
-                  + (if cfgf.keepWithinWeekly != null then " --keep-within-weekly ${cfgf.keepWithinWeekly}" else "")
-                  + (
-                    if cfgf.keepWithinMonthly != null then " --keep-within-monthly ${cfgf.keepWithinMonthly}" else ""
-                  )
-                  + (if cfgf.keepWithinYearly != null then " --keep-within-yearly ${cfgf.keepWithinYearly}" else "")
-                else
-                  "";
-            in
-            ''
-              echo Removing stale locks
-              ${cleanupStaleLocksCommand}
+                forgetCommand =
+                  let
+                    cfgf = cfg.forget;
+                  in
+                  if cfgf.enable then
+                    ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
+                    + (if cfgf.prune then " --prune" else "")
+                    + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
+                    + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
+                    + (if cfgf.keepDaily != null then " --keep-daily ${cfgf.keepDaily}" else "")
+                    + (if cfgf.keepWeekly != null then " --keep-weekly ${cfgf.keepWeekly}" else "")
+                    + (if cfgf.keepMonthly != null then " --keep-monthly ${cfgf.keepMonthly}" else "")
+                    + (if cfgf.keepYearly != null then " --keep-yearly ${cfgf.keepYearly}" else "")
+                    + (if cfgf.keepWithin != null then " --keep-within ${cfgf.keepWithin}" else "")
+                    + (if cfgf.keepWithinHourly != null then " --keep-within-hourly ${cfgf.keepWithinHourly}" else "")
+                    + (if cfgf.keepWithinDaily != null then " --keep-within-daily ${cfgf.keepWithinDaily}" else "")
+                    + (if cfgf.keepWithinWeekly != null then " --keep-within-weekly ${cfgf.keepWithinWeekly}" else "")
+                    + (
+                      if cfgf.keepWithinMonthly != null then " --keep-within-monthly ${cfgf.keepWithinMonthly}" else ""
+                    )
+                    + (if cfgf.keepWithinYearly != null then " --keep-within-yearly ${cfgf.keepWithinYearly}" else "")
+                  else
+                    "";
+              in
+              ''
+                echo Removing stale locks
+                ${cleanupStaleLocksCommand}
 
-              echo Performing checks
-              ${checkCommand}
+                echo Performing checks
+                ${checkCommand}
 
-              echo Performing local copies
-              ${lib.concatStringsSep "\n" localCopiesCommands}
+                echo Performing local copies
+                ${lib.concatStringsSep "\n" localCopiesCommands}
 
-              echo Performing remote copies
-              ${lib.concatStringsSep "\n" remoteCopiesCommands}
+                echo Performing remote copies
+                ${lib.concatStringsSep "\n" remoteCopiesCommands}
 
-              echo Forgetting snapshots
-              ${forgetCommand}
-            '';
+                echo Forgetting snapshots
+                ${forgetCommand}
+              '';
+          };
 
-          onFailure = mkIf cfgRestic.notifyOnFail [ "restic-replication-failed.service" ];
+          Unit.OnFailure = mkIf cfgRestic.notifyOnFail [ "restic-replication-failed.service" ];
         };
 
         systemd.user.timers."restic-replication" = {
-          wantedBy = [ "timers.target" ];
-          timerConfig = {
+          Timer = {
             OnCalendar = cfg.timer;
             Persistent = true;
             Unit = "restic-replication.service";
             RandomizedDelaySec = mkIf (cfg.randomDelay != null) cfg.randomDelay;
           };
+
+          Install.WantedBy = [ "timers.target" ];
         };
 
         systemd.user.services."restic-replication-failed" = mkIf cfgRestic.notifyOnFail {
-          script = ''
-            ${pkgs.libnotify}/bin/notify-send --urgency=critical \
-              "Restic replication failed" \
-              "$(journalctl -u restic-replication-failed -n 5 -o cat)"
-          '';
+          Service = {
+            ExecStart = ''
+              ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+                "Restic replication failed" \
+                "$(journalctl -u restic-replication-failed -n 5 -o cat)"
+            '';
+
+            Type = "oneshot";
+          };
         };
 
-        home-manager.users.${config.my.user.name}.home.shellAliases = lib.mkMerge (
+        home.shellAliases = lib.mkMerge (
           # Add aliases for each of the extra local repos
           (lib.mapAttrsToList (name: localRepo: {
             "restic-local-${name}" =

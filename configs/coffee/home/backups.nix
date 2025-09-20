@@ -1,29 +1,13 @@
 {
   config,
   hostname,
-  nixosModules,
   ...
 }:
-{
-  imports = [ nixosModules.apps.restic ];
-
-  my.secretManagement.secrets =
-    let
-      userPerms = {
-        owner = config.my.user.name;
-        group = "users";
-        mode = "400"; # read-only for owner
-      };
-    in
-    {
-      "restic/${hostname}-pwd" = userPerms;
-      "restic/storage-box-addr" = userPerms;
-    };
-
+{ 
   # Setup my auto backups
   restic =
     let
-      repoPassword = config.my.secrets."restic/${hostname}-pwd";
+      repoPassword = config.age.secrets."restic/${hostname}-pwd".path;
     in
     {
       enable = true;
@@ -45,7 +29,7 @@
           randomDelay = "2h";
 
           label = "Home";
-          path = "${config.my.paths.home}";
+          path = "${config.home.homeDirectory}";
           glob = [
             "!/home/*/downloads"
             "!/home/*/.steam"
@@ -130,9 +114,9 @@
         #   enable = true;
         #   timer = "daily";
         #   randomDelay = "1h";
-        #   bwClientIDFile = config.my.secrets."bitwarden/client-id";
-        #   bwClientSecretFile = config.my.secrets."bitwarden/client-secret";
-        #   bwPasswordFile = config.my.secrets."bitwarden/password";
+        #   bwClientIDFile = config.age.secrets."bitwarden/client-id".path;
+        #   bwClientSecretFile = config.age.secrets."bitwarden/client-secret".path;
+        #   bwPasswordFile = config.age.secrets."bitwarden/password".path;
         # };
       };
 
@@ -149,9 +133,11 @@
         remoteRepos."hetzner-storage-box" = {
           path = "restic/coffee";
           passwordFile = repoPassword;
-          remoteAddressFile = config.my.secrets."restic/storage-box-addr";
+          remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
           # Don't specify key and let ssh find the right key/identity to connect with
           strictHostKeyChecking = false; # TODO: make true by configuring known_hosts correctly
+
+          # TODO: add forget+prune to replicated repos too
         };
 
         forget = {

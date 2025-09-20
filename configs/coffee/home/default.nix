@@ -2,6 +2,7 @@
 {
   imports = [
     ./syncthing.nix
+    ./backups.nix
 
     homeProfiles.pc
     homeProfiles.personal

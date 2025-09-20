@@ -74,29 +74,29 @@ in
         ++ (lib.attrValues nixos.modules);
     };
 
-  mkHomeManagerConfig =
-    username:
-    { homeConfig, ... }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      # Additional args passed to home-manager modules
-      extraSpecialArgs = {
-        inherit (inputs.self) homeModules homeProfiles;
-        inherit inputs lib2;
-        inherit hosts;
-      };
+  # mkHomeManagerConfig =
+  #   username:
+  #   { homeConfig, ... }:
+  #   inputs.home-manager.lib.homeManagerConfiguration {
+  #     # Additional args passed to home-manager modules
+  #     extraSpecialArgs = {
+  #       inherit (inputs.self) homeModules homeProfiles;
+  #       inherit inputs lib2;
+  #       inherit hosts;
+  #     };
 
-      modules =
-        [
-          # Include the main module for the user
-          homeConfig
+  #     modules =
+  #       [
+  #         # Include the main module for the user
+  #         homeConfig
 
-          # Auto-include the profile for non-nixos machines
-          inputs.self.homeProfiles.nonNixos
+  #         # Auto-include the profile for non-nixos machines
+  #         inputs.self.homeProfiles.nonNixos
 
-          { home.username = username; }
-        ]
+  #         { home.username = username; }
+  #       ]
 
-        # Auto-include all custom home-manager modules
-        ++ (lib.attrValues inputs.self.homeModules);
-    };
+  #       # Auto-include all custom home-manager modules
+  #       ++ (lib.attrValues inputs.self.homeModules);
+  #   };
 }
