@@ -11,13 +11,13 @@
 
     homeProfiles.pc
     homeProfiles.personal
-
+    homeProfiles.music
+    
     homeProfiles.gaming.base
     homeProfiles.gaming.emulation
     homeProfiles.gaming.minecraft
-
+    
     homeProfiles.scripts.bootWindows
-    homeProfiles.scripts.autoMusic
   ];
 
   home.packages = [
