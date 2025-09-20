@@ -223,6 +223,7 @@ rec {
         };
       };
 
+    # TODO: fix mkSyncedPath
     mkSyncedPath = { ... }: { };
 
     # Utility to easily create a new global keybind.
