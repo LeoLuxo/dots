@@ -201,7 +201,7 @@ rec {
         programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
       };
 
-    mkSymlink =
+    mkHomeSymlink =
       {
         xdgDir,
         target,
@@ -225,14 +225,25 @@ rec {
 
     mkSyncedPath =
       {
-        xdgDir,
         target,
         syncName,
       }:
-      mkSymlink {
-        inherit xdgDir target;
-        destination = "${inputs.self}/sync/${syncName}";
-        name = syncName;
+
+      { lib, config, ... }:
+      let
+        realTarget = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ] target;
+        syncTarget = "${inputs.self}/sync/${syncName}";
+      in
+      {
+        home.activation."sync-${syncName}" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          if [[ ! -e "${syncTarget}" ]]; then
+            echo Copying '${syncName}' to sync
+            cp ${realTarget} ${syncTarget}
+            mv ${realTarget} ${realTarget}.bak --force
+          fi
+
+          run ln -s $VERBOSE_ARG ${syncTarget} ${realTarget}
+        '';
       };
 
     # Utility to easily create a new global keybind.
