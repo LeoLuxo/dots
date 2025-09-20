@@ -25,10 +25,6 @@ This config is currently ongoing a major rewrite. It still works (the rewrite is
 Essentially **Public Domain**!
 
 For all I care, use this code for whatever, whenever, wherever.
-Frankly I'd be honored if these dotfiles were useful to anyone.
+I'd be honored if these dotfiles were useful to anyone!
 
 
-
-TODO: add nx-refresh-hardware which re-generates hardwareConfiguration and copies it into here
-TODO: super+L to lock
-TODO: do this https://github.com/colemickens/nixcfg/blob/72cabd1433f809d16ff7537cecff8f1f70ebbb0a/mixins/ssh.nix#L40
