@@ -1,4 +1,4 @@
-{ inputs, lib }:
+{ lib }:
 let
   inherit (lib) types;
 in
@@ -229,10 +229,10 @@ rec {
         syncName,
       }:
 
-      { lib, config, ... }:
+      { lib, config, host, ... }:
       let
         realTarget = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ] target;
-        syncTarget = "${inputs.self}/sync/${syncName}";
+        syncTarget = "${host.dots}/sync/${syncName}";
       in
       {
         home.activation."sync-${syncName}" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
