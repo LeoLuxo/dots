@@ -43,11 +43,7 @@ in
 
   config = mkIf cfg.enable {
     systemd.user.services."restic-checks" = {
-      path = [
-        pkgs.restic
-      ];
-
-      script =
+      Service.ExecStart =
         let
           readData =
             if lib.isString cfg.readData then
@@ -60,35 +56,40 @@ in
 
           cleanupStaleLocks =
             if cfg.cleanupStaleLocks then
-              ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" unlock''
+              ''${lib.getExe pkgs.restic} --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" unlock''
             else
               "";
         in
         ''
           ${cleanupStaleLocks}
 
-          restic --retry-lock 2h --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${cleanupCache}
+          ${lib.getExe pkgs.restic} --retry-lock 2h --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" check ${readData} ${cleanupCache}
         '';
 
-      onFailure = mkIf cfgRestic.notifyOnFail [ "restic-checks-failed.service" ];
+      Unit.OnFailure = mkIf cfgRestic.notifyOnFail [ "restic-checks-failed.service" ];
     };
 
     systemd.user.timers."restic-checks" = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
+      Timer = {
         OnCalendar = cfg.timer;
         Persistent = true;
         Unit = "restic-checks.service";
         RandomizedDelaySec = mkIf (cfg.randomDelay != null) cfg.randomDelay;
       };
+
+      Install.WantedBy = [ "timers.target" ];
     };
 
     systemd.user.services."restic-checks-failed" = mkIf cfgRestic.notifyOnFail {
-      script = ''
-        ${pkgs.libnotify}/bin/notify-send --urgency=critical \
-          "Restic periodic checks failed" \
-          "$(journalctl -u restic-checks-failed -n 5 -o cat)"
-      '';
+      Service = {
+        ExecStart = ''
+          ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+            "Restic periodic checks failed" \
+            "$(journalctl -u restic-checks-failed -n 5 -o cat)"
+        '';
+
+        Type = "oneshot";
+      };
     };
   };
 }

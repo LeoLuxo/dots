@@ -57,36 +57,36 @@ in
       };
     in
     {
-      home-manager.users.${config.my.user.name} = {
-        home.shellAliases = {
-          restic-main-ludusavi = "${script}";
-        };
+      home.shellAliases = {
+        restic-main-ludusavi = "${script}";
       };
 
       systemd.user.services."restic-ludusavi" = {
-        serviceConfig = {
-          ExecStart = script;
-        };
-
-        onFailure = mkIf cfgRestic.notifyOnFail [ "restic-ludusavi-failed.service" ];
+        Service.ExecStart = script;
+        Unit.OnFailure = mkIf cfgRestic.notifyOnFail [ "restic-ludusavi-failed.service" ];
       };
 
       systemd.user.timers."restic-ludusavi" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
+        Timer = {
           OnCalendar = cfg.timer;
           Persistent = true;
           Unit = "restic-ludusavi.service";
           RandomizedDelaySec = mkIf (cfg.randomDelay != null) cfg.randomDelay;
         };
+
+        Install.WantedBy = [ "timers.target" ];
       };
 
       systemd.user.services."restic-ludusavi-failed" = mkIf cfgRestic.notifyOnFail {
-        script = ''
-          ${pkgs.libnotify}/bin/notify-send --urgency=critical \
-            "Restic ludusavi backup failed" \
-            "$(journalctl -u restic-ludusavi-failed -n 5 -o cat)"
-        '';
+        Service = {
+          ExecStart = ''
+            ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+              "Restic ludusavi backup failed" \
+              "$(journalctl -u restic-ludusavi-failed -n 5 -o cat)"
+          '';
+
+          Type = "oneshot";
+        };
       };
     }
   );
