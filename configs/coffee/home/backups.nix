@@ -3,7 +3,7 @@
   hostname,
   ...
 }:
-{ 
+{
   # Setup my auto backups
   restic =
     let
