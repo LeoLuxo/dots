@@ -37,5 +37,7 @@
         # beet fetchartist
       '';
     })
+
+    # TODO fetch artist somehow
   ];
 }
