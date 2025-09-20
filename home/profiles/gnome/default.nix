@@ -134,22 +134,10 @@ in
         enable = true;
         accent = "dark";
       };
+
+      # Disable vscode because it tries and overrides the settings
+      vscode.enable = false;
     };
-
-    # Add catppuccin for gtk
-    # gtk = {
-    #   enable = true;
-    #   catppuccin = {
-    #     enable = true;
-    #     size = "standard";
-    #     tweaks = [ "normal" ];
-    #   };
-
-    #   cursorTheme = {
-    #     name = cursorName;
-    #     package = cusorPackage;
-    #   };
-    # };
 
     home.pointerCursor = {
       # Catppuccin automatically sets `name` and `package`

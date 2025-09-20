@@ -49,7 +49,6 @@ in
                 inherit hostname hosts;
                 homeProfiles = home.profiles;
                 host = hosts.${hostname};
-                
               };
 
               # Set up all the manually-defined users into home manager

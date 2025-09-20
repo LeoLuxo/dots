@@ -189,24 +189,22 @@ in
         git add flake.lock
       '';
 
-      # TODO: check that it works
       nx.postRebuildActions = 
-        # Has observable side effects, thus must come after `writeBoundary`
           if cfg.isTimed then
             ''
               # Reload the wallpaper to avoid having to logout
               echo "Reloading dynamic wallpaper"
-              run systemctl --user restart wallutils-timed.service
+              systemctl --user restart wallutils-timed.service
             ''
           else
             ''
               # Stop any timed services that might still be running
-              run systemctl --user stop wallutils-timed.service >/dev/null 2>&1 || true
-              run systemctl --user stop wallutils-refresh.service >/dev/null 2>&1 || true
+              systemctl --user stop wallutils-timed.service >/dev/null 2>&1 || true
+              systemctl --user stop wallutils-refresh.service >/dev/null 2>&1 || true
 
               # Reload the wallpaper to avoid having to logout
               echo "Reloading static wallpaper"
-              run systemctl --user restart wallutils-static.service
+              systemctl --user restart wallutils-static.service
             '';
     };
 }
