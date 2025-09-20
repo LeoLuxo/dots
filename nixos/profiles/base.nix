@@ -124,10 +124,10 @@ in
     --------------------------------------------------------------------------------
   */
 
-  # Set the time zone and locale
+  # Set the time zone
   time.timeZone = "Europe/Copenhagen";
 
-  # Select internationalisation properties.
+  # Select internationalisation/locale properties.
   # A good choice would also be english-(Ireland); see:
   # https://unix.stackexchange.com/questions/62316/why-is-there-no-euro-english-locale
   i18n.defaultLocale = "en_DK.UTF-8";
