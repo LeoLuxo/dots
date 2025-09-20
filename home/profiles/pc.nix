@@ -23,11 +23,11 @@ in
     homeProfiles.scripts.dconfDiff
 
     homeProfiles.apps.direnv
+    homeProfiles.apps.discord
     homeProfiles.apps.firefox
     homeProfiles.apps.obsidian
+    homeProfiles.apps.upscaler
     homeProfiles.apps.vscode
-    homeProfiles.apps.zoxide
-    homeProfiles.apps.discord
 
     (mkGlobalKeybind {
       name = "Open terminal";
@@ -67,11 +67,20 @@ in
   ];
 
   home.packages = [
-    pkgs.bitwarden-desktop
+    pkgs.bitwarden-desktop # Deskstop app for bitwarden
+    pkgs.commit # Gnome commit editor
+    pkgs.textpieces # A developer’s scratchpad that lets you quickly experiment with and transform text.
+    pkgs.hieroglyphic # An application that helps you locate and select LaTeX symbols by drawing or sketching them.
+    pkgs.impression # A utility for creating bootable USB drives from disk images.
+    pkgs.switcheroo # A tool for converting and manipulating images (for example, resizing or reformatting them).
+    pkgs.video-trimmer # A simple app designed to quickly trim and edit video clips.
+    pkgs.warp # A fast, secure file transfer utility for moving files efficiently between systems.
+    pkgs.upscaler # An application that enhances image resolution by upscaling photos using advanced processing (designed in the GNOME spirit).
+    pkgs.eyedropper # A simple color picker tool that allows you to select a color from anywhere on the screen.
+    pkgs.celluloid # A simple video player
 
-    # Gnome circles commit editor
-    pkgs.commit
-
+    # pkgs.teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
+    # pkgs.gnome-2048 # A GNOME-native implementation of the popular 2048 puzzle game.
   ];
 
   # Set the commit editor to gnome commit

@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib2,
+  homeProfiles,
   ...
 }:
 
@@ -10,6 +11,8 @@ let
 in
 {
   imports = [
+    homeProfiles.gaming.base
+
     (mkSymlink {
       xdgDir = "data";
       target = "sudachi";
@@ -36,11 +39,18 @@ in
   ];
 
   home.packages = [
-    # Switch emulator
-    inputs.self.packages.yuzu
-    pkgs.ryubing # fork of ryujinx
-    # inputs.self.packages.sudachi
+    # Emulators
+    inputs.self.packages.yuzu # Switch
+    pkgs.ryubing # Switch (fork of ryujinx)
+    pkgs.snes9x # SNES
+    pkgs.snes9x-gtk # SNES
+    pkgs.melonDS # Nintendo DS
 
+    # inputs.self.packages.sudachi # Switch (fork of yuzu)
+    # pkgs.higan # NES, SNES, GB, GBC, GBA, ...
+
+    # To manage emulators & games
+    # pkgs.lutris
     pkgs.steam-rom-manager
   ];
 }

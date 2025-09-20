@@ -66,6 +66,11 @@ in
   # Set the hostname
   networking.hostName = hostname;
 
+  # Add hosts with an ip to the networking hosts map
+  networking.hosts = {
+    
+   };
+
   # Enable boot loading
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
