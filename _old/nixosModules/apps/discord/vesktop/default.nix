@@ -12,60 +12,39 @@ let
     ;
 in
 
+# Relevant issues:
+# https://github.com/Vencord/Vesktop/pull/609/
+# https://github.com/Vencord/Vesktop/pull/326
+
 {
   imports = [
-    ./overlays/customIconsAndName.nix
-    ./overlays/globalKeybinds.nix
-
-    # (mkQuickPatch {
-    #   package = "vencord";
-    #   patches = [
-    #     ./patches/vencord-disable-update-check.patch
-    #   ];
+    # (mkSyncedPath {
+    #   xdgPath = "vesktop/settings/settings.json";
+    #   cfgPath = "vesktop/vencord.json";
     # })
 
-    # (mkQuickPatch {
-    #   package = "vesktop";
-    #   patches = [
-    #     ./patches/vesktop-disable-update-check.patch
-
-    #     # Vencord is being a little annoying so use our custom vencord and patch that to disable updates
-    #     # (pkgs.substituteAll {
-    #     #   src = ./patches/use-custom-vencord.patch;
-    #     #   inherit (pkgs) vencord;
-    #     # })
-    #   ];
+    # (mkSyncedPath {
+    #   xdgPath = "vesktop/settings.json";
+    #   cfgPath = "vesktop/vesktop.json";
     # })
 
-    (mkSyncedPath {
-      xdgPath = "vesktop/settings/settings.json";
-      cfgPath = "vesktop/vencord.json";
-    })
-
-    (mkSyncedPath {
-      xdgPath = "vesktop/settings.json";
-      cfgPath = "vesktop/vesktop.json";
-    })
   ];
 
   my.defaultApps.communication = lib.mkDefault "vesktop";
 
-  my.packages = with pkgs; [
-    (vesktop.override {
-      withSystemVencord = true;
-      inherit vencord;
-    })
+  my.packages = [
+    (pkgs.callPackage ./vesktop.nix { })
   ];
 
-  my.keybinds = {
-    "Discord mute" = {
-      binding = "<Super>m";
-      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    };
+  # my.keybinds = {
+  #   "Discord mute" = {
+  #     binding = "<Super>m";
+  #     command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+  #   };
 
-    "Discord deafen" = {
-      binding = "<Super><Shift>m";
-      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    };
-  };
+  #   "Discord deafen" = {
+  #     binding = "<Super><Shift>m";
+  #     command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+  #   };
+  # };
 }
