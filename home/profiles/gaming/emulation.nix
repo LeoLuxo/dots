@@ -7,31 +7,31 @@
 }:
 
 let
-  inherit (lib2.hm) mkSymlink;
+  inherit (lib2.hm) mkHomeSymlink;
 in
 {
   imports = [
     homeProfiles.gaming.base
 
-    (mkSymlink {
+    (mkHomeSymlink {
       xdgDir = "data";
       target = "sudachi";
       destination = "/stuff/games/emu/switch/yuzu";
     })
 
-    (mkSymlink {
+    (mkHomeSymlink {
       xdgDir = "data";
       target = "yuzu";
       destination = "/stuff/games/emu/switch/yuzu";
     })
 
-    (mkSymlink {
+    (mkHomeSymlink {
       xdgDir = "config";
       target = "Ryujinx";
       destination = "/stuff/games/emu/switch/ryujinx";
     })
 
-    (mkSymlink {
+    (mkHomeSymlink {
       xdgDir = "config";
       target = "steam-rom-manager/userData";
       destination = "/stuff/games/emu/steamRomManager/userData";

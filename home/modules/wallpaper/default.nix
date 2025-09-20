@@ -190,9 +190,8 @@ in
       '';
 
       # TODO: check that it works
-      home.activation = {
+      nx.postRebuildActions = 
         # Has observable side effects, thus must come after `writeBoundary`
-        refreshWallpaper = lib.hm.dag.entryAfter [ "writeBoundary" ] (
           if cfg.isTimed then
             ''
               # Reload the wallpaper to avoid having to logout
@@ -208,8 +207,6 @@ in
               # Reload the wallpaper to avoid having to logout
               echo "Reloading static wallpaper"
               run systemctl --user restart wallutils-static.service
-            ''
-        );
-      };
+            '';
     };
 }
