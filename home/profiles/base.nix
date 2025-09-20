@@ -12,6 +12,7 @@
     homeProfiles.shells.bash
     homeProfiles.shells.fish
     # homeProfiles.shells.zsh
+    # homeProfiles.shells.nushell
 
     homeProfiles.shells.prompts.starship
     # homeProfiles.shells.prompts.ohmyposh

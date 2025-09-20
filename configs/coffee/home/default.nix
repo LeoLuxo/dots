@@ -1,4 +1,9 @@
-{ inputs, homeProfiles, ... }:
+{
+  pkgs,
+  inputs,
+  homeProfiles,
+  ...
+}:
 {
   imports = [
     ./syncthing.nix
@@ -6,11 +11,17 @@
 
     homeProfiles.pc
     homeProfiles.personal
-    homeProfiles.gaming
-    homeProfiles.emulation
+
+    homeProfiles.gaming.base
+    homeProfiles.gaming.emulation
+    homeProfiles.gaming.minecraft
 
     homeProfiles.scripts.bootWindows
     homeProfiles.scripts.autoMusic
+  ];
+
+  home.packages = [
+    pkgs.guitarix # A virtual guitar amplifier for use with Linux.
   ];
 
   wallpaper.image = inputs.wallpapers.static."lofiJapan";

@@ -29,4 +29,6 @@
     # Add the gamescope compositor, which enables features such as resolution upscaling and stretched aspect ratios (such as 4:3)
     gamescopeSession.enable = true;
   };
+
+  programs.gamescope.enable = true;
 }
