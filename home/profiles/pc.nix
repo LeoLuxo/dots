@@ -27,6 +27,7 @@ in
     homeProfiles.apps.obsidian
     homeProfiles.apps.vscode
     homeProfiles.apps.zoxide
+    homeProfiles.apps.discord
 
     (mkGlobalKeybind {
       name = "Open terminal";
