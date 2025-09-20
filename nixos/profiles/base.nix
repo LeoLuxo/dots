@@ -5,6 +5,7 @@
   inputs,
   config,
   users,
+  hosts,
   hostname,
   autologin,
   ...
@@ -66,10 +67,13 @@ in
   # Set the hostname
   networking.hostName = hostname;
 
-  # Add hosts with an ip to the networking hosts map
-  networking.hosts = {
-    
-   };
+  # Add all IPs defined in my hosts list to the networking hosts map
+  networking.hosts = lib.concatMapAttrs (
+    name: hostCfg:
+    lib.concatMapAttrs (_: ip: {
+      "${ip}" = [ name ];
+    }) (hostCfg.ip or { })
+  ) hosts;
 
   # Enable boot loading
   boot.loader.systemd-boot.enable = true;

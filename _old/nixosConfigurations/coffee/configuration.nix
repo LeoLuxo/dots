@@ -10,12 +10,6 @@ let
   inherit (lib2) enabled;
 in
 {
-
-  # Add strobery as a local host
-  networking.hosts = {
-    "192.168.0.37" = [ "strobery" ];
-  };
-
   # Enable and configure the X11 windowing system.
   services.xserver = {
     enable = true;
