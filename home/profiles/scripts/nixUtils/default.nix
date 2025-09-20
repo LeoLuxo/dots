@@ -56,8 +56,14 @@
       '' variables;
 
       # Set up pre- and post actions for nx-rebuild
-      home.file.".nx/pre_rebuild.sh".text = config.nx.preRebuildActions;
-      home.file.".nx/post_rebuild.sh".text = config.nx.postRebuildActions;
+      home.file.".nx/pre_rebuild.sh" = {
+        text = config.nx.preRebuildActions;
+        force = true;
+      };
+      home.file.".nx/post_rebuild.sh" = {
+        text = config.nx.postRebuildActions;
+        force = true;
+      };
 
       # Add aliases
       home.shellAliases = {

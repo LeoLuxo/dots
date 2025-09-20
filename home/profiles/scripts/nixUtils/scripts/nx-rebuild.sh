@@ -57,7 +57,7 @@ rebuild() {
 	echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
 
 	# RE-add any auto-generated files
-	git add ./config
+	git add ./sync
 
 	# Early return if no changes are detected
 	if git diff --staged --quiet .; then

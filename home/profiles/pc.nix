@@ -22,7 +22,6 @@ in
     homeProfiles.scripts.dotsTodo
     homeProfiles.scripts.dconfDiff
 
-    homeProfiles.apps.direnv
     homeProfiles.apps.discord
     homeProfiles.apps.firefox
     homeProfiles.apps.obsidian

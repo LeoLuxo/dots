@@ -2,8 +2,7 @@
 {
   imports = [
     (lib2.hm.mkSyncedPath {
-      xdgDir = "data";
-      target = "PrismLauncher/prismlauncher.cfg";
+      target = "~/.local/share/PrismLauncher/prismlauncher.cfg";
       syncName = "prismlauncher/settings.cfg";
     })
   ];

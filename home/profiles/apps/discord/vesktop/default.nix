@@ -14,14 +14,12 @@ in
 {
   imports = [
     (mkSyncedPath {
-      xdgDir = "config";
-      target = "vesktop/settings/settings.json";
+      target = "~/.config/vesktop/settings/settings.json";
       syncName = "vesktop/vencord.json";
     })
 
     (mkSyncedPath {
-      xdgDir = "config";
-      target = "vesktop/settings.json";
+      target = "~/.config/vesktop/settings.json";
       syncName = "vesktop/vesktop.json";
     })
   ];
