@@ -64,7 +64,7 @@
 
           text = ''
             #!/usr/bin/env bash
-            systemctl --user start monado.service
+            systemctl --user restart monado.service
             eval "wlx-overlay-s" &>/dev/null &
           '';
         })
