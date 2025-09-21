@@ -6,7 +6,7 @@
     ./configuration.nix
     ./hardwareConfiguration.nix
     ./syncthing.nix
-    ./vr.nix
+    # ./vr.nix
 
     # TODO: Remove
     (import "${inputs.self}/oldNewNixosModules" { inherit lib; }).default
