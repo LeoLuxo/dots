@@ -40,18 +40,23 @@
     pkgs.opencomposite
     pkgs.bs-manager
     pkgs.wlx-overlay-s
+
+    (pkgs.writeScriptWithDeps {
+      name = "beet";
+
+      deps = [ ];
+
+      text = ''
+        #!/usr/bin/env bash
+        systemctl --user start monado.service
+        wlx-overlay-s --replace
+      '';
+    })
   ];
 
   home-manager.users.${config.my.user.name} =
     { config, ... }:
     {
-      home.shellAliases = {
-        vr = ''
-          systemctl --user start monado.service
-          wlx-overlay-s --replace
-        '';
-      };
-
       xdg.configFile."openxr/1/active_runtime.json".source =
         "${pkgs.monado}/share/openxr/1/openxr_monado.json";
 
