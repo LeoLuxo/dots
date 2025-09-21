@@ -42,7 +42,7 @@
     pkgs.wlx-overlay-s
 
     (pkgs.writeScriptWithDeps {
-      name = "beet";
+      name = "vr";
 
       deps = [ ];
 
