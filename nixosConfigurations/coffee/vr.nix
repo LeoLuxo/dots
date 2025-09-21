@@ -31,8 +31,18 @@
     fi
   '';
 
+  # To do the quick room setup when steamVR is being a bitch:
+  # Go into X11 (steamVR doesn't work on gnome-wayland)
+  # Maybe start steamvr if the next step is not working
+  # Put the headset and controllers in the center of your play space.
+  # Next, open two terminal windows with /home/user/.local/share/Steam/steamapps/common/SteamVR/bin/linux64 as the working directory. In one window, run the following command. This command will start the SteamVR server and generate pose data.
+  # LD_LIBRARY_PATH=$(pwd) steam-run ./vrcmd --pollposes
+  # In the second terminal window, run the following command. This command will perform a similar function to the Quick Calibration method described above.
+  # LD_LIBRARY_PATH=$(pwd) steam-run ./vrcmd --resetroomsetup
+  # Use Ctrl+C in the first terminal window to stop the SteamVR server.
+
   systemd.user.services.monado.environment = {
-    STEAMVR_LH_ENABLE = "0";
+    STEAMVR_LH_ENABLE = "1";
     XRT_COMPOSITOR_COMPUTE = "1";
   };
 
