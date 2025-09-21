@@ -32,7 +32,7 @@
   '';
 
   systemd.user.services.monado.environment = {
-    # STEAMVR_LH_ENABLE = "1";
+    STEAMVR_LH_ENABLE = "0";
     XRT_COMPOSITOR_COMPUTE = "1";
   };
 
@@ -43,8 +43,6 @@
     { config, ... }:
     {
       home.packages = [
-        pkgs.opencomposite
-
         pkgs.opencomposite
         pkgs.bs-manager
         pkgs.wlx-overlay-s
@@ -57,7 +55,7 @@
           text = ''
             #!/usr/bin/env bash
             systemctl --user start monado.service
-            # wlx-overlay-s --replace
+            wlx-overlay-s &
           '';
         })
       ];
