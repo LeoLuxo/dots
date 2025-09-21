@@ -229,7 +229,12 @@ rec {
         syncName,
       }:
 
-      { lib, config, host, ... }:
+      {
+        lib,
+        config,
+        host,
+        ...
+      }:
       let
         realTarget = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ] target;
         syncTarget = "${host.dots}/sync/${syncName}";
@@ -238,6 +243,7 @@ rec {
         home.activation."sync-${syncName}" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           if [[ ! -e "${syncTarget}" ]]; then
             echo Copying '${syncName}' to sync
+            mkdir --parents $(dirname ${syncTarget})
             cp ${realTarget} ${syncTarget}
             mv ${realTarget} ${realTarget}.bak --force
           fi
