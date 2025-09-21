@@ -36,47 +36,43 @@
     XRT_COMPOSITOR_COMPUTE = "1";
   };
 
-  environment.systemPackages = [
-    pkgs.opencomposite
-    pkgs.bs-manager
-    pkgs.wlx-overlay-s
-
-    (pkgs.writeScriptWithDeps {
-      name = "vr";
-
-      deps = [ ];
-
-      text = ''
-        #!/usr/bin/env bash
-        systemctl --user start monado.service
-        # wlx-overlay-s --replace
-      '';
-    })
-  ];
+  # environment.systemPackages = [
+  # ];
 
   home-manager.users.${config.my.user.name} =
     { config, ... }:
     {
+      home.packages = [
+        pkgs.opencomposite
+
+        pkgs.opencomposite
+        pkgs.bs-manager
+        pkgs.wlx-overlay-s
+
+        (pkgs.writeScriptWithDeps {
+          name = "vr";
+
+          deps = [ ];
+
+          text = ''
+            #!/usr/bin/env bash
+            systemctl --user start monado.service
+            # wlx-overlay-s --replace
+          '';
+        })
+      ];
+
       xdg.configFile."openxr/1/active_runtime.json".source =
         "${pkgs.monado}/share/openxr/1/openxr_monado.json";
 
       xdg.configFile."openvr/openvrpaths.vrpath".text = ''
         {
-          "config" :
-          [
-            "${config.xdg.dataHome}/Steam/config"
-          ],
-          "external_drivers" : null,
-          "jsonid" : "vrpathreg",
-          "log" :
-          [
-            "${config.xdg.dataHome}/Steam/logs"
-          ],
-          "runtime" :
-          [
-            "${pkgs.opencomposite}/lib/opencomposite"
-          ],
-          "version" : 1
+          "config": [ "${config.xdg.dataHome}/Steam/config" ],
+          "external_drivers": null,
+          "jsonid": "vrpathreg",
+          "log": [ "${config.xdg.dataHome}/Steam/logs" ],
+          "runtime": [ "${pkgs.opencomposite}/lib/opencomposite" ],
+          "version": 1
         }
       '';
     };
