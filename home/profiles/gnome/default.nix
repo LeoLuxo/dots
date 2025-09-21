@@ -122,7 +122,7 @@ in
 
     # Enable catppuccin for everything
     catppuccin = {
-      enable = true;
+      enable = false;
 
       # One of: latte, frappe, macchiato, mocha
       flavor = "frappe";
