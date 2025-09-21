@@ -22,7 +22,7 @@
   };
 
   my.scripts.nx.rebuild.postRebuildActions = ''
-    if [[! -e ~/.local/share/monado/hand-tracking-models ]]; then
+    if [[ ! -e ~/.local/share/monado/hand-tracking-models ]]; then
       echo Fixing hand tracking for monado VR
       mkdir -p ~/.local/share/monado
       cd ~/.local/share/monado
@@ -39,6 +39,7 @@
   environment.systemPackages = [
     pkgs.opencomposite
     pkgs.bs-manager
+    pkgs.wlx-overlay-s
   ];
 
   home-manager.users.${config.my.user.name} =
