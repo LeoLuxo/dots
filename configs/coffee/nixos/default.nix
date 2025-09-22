@@ -1,15 +1,15 @@
-{ nixosProfiles, ... }:
+{ profiles, ... }:
 {
   imports = [
     ./hardware.nix
     ./audio.nix
 
-    nixosProfiles.pc
-    nixosProfiles.gpu.amd
+    profiles.pc
+    profiles.gpu.amd
 
-    nixosProfiles.apps.nicotinePlus
-    nixosProfiles.apps.qmk
-    nixosProfiles.apps.syncthing
+    profiles.apps.nicotinePlus
+    profiles.apps.qmk
+    profiles.apps.syncthing
   ];
 
   # 1TB SSD

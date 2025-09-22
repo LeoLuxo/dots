@@ -1,10 +1,10 @@
-{ nixosProfiles, ... }:
+{ profiles, ... }:
 {
   imports = [
-    nixosProfiles.base
-    nixosProfiles.gnome
+    profiles.base
+    profiles.gnome
 
-    nixosProfiles.distrobox
+    profiles.distrobox
   ];
 
   /*

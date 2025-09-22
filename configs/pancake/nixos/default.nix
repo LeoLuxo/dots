@@ -1,6 +1,6 @@
 {
   inputs,
-  nixosProfiles,
+  profiles,
   pkgs,
   ...
 }:
@@ -11,10 +11,10 @@
     # Include hardware stuff and kernel patches for surface pro 7
     inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
 
-    nixosProfiles.base
-    nixosProfiles.wifi
+    profiles.base
+    profiles.wifi
 
-    nixosProfiles.apps.syncthing
+    profiles.apps.syncthing
   ];
 
   # Pin the kernel with nixos-hardware
