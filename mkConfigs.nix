@@ -9,6 +9,7 @@ args@{
 let
   modules = import ./modules args;
   profiles = import ./profiles args;
+
   home = import ./home args;
 in
 {
@@ -29,7 +30,7 @@ in
           autologin
           hosts
           ;
-        nixosProfiles = profiles;
+        inherit profiles;
         host = hosts.${hostname};
       };
 
