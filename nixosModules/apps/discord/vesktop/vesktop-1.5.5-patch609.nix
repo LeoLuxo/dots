@@ -30,7 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "PolisanTheEasyNick";
     repo = "Vesktop";
     rev = "99a74cf328a864d395bec0b52bd09427433d7aea";
-    hash = "";
+    hash = "sha256-ai2CdTUJGbcdFRR2AxkEFga30a3Cy1DrVdHQs/F1Ak0=";
   };
 
   pnpmDeps = pnpm_9.fetchDeps {
@@ -40,7 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
       src
       patches
       ;
-    hash = "";
+    hash = "sha256-xn3yE2S6hfCijV+Edx3PYgGro8eF76/GqarOIRj9Tbg=";
   };
 
   nativeBuildInputs =
@@ -70,11 +70,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   patches =
     [
-      ./disable_update_checking.patch
-      ./fix_read_only_settings.patch
+      # ./patches/disableUpdateChecking.patch
+      # ./patches/fixReadOnlySettings.patch
     ]
     ++ lib.optional withSystemVencord (
-      replaceVars ./use_system_vencord.patch {
+      replaceVars ./patches/useSystemVencord.patch {
         inherit vencord;
       }
     );
