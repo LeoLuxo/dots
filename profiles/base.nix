@@ -1,5 +1,5 @@
 {
-  nixosProfiles,
+  profiles,
   lib,
   pkgs,
   inputs,
@@ -16,7 +16,7 @@ let
 in
 {
   imports = [
-    nixosProfiles.agenix
+    profiles.agenix
   ];
 
   /*
