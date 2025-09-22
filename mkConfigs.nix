@@ -7,7 +7,8 @@ args@{
 }:
 
 let
-  nixos = import ./nixos args;
+  modules = import ./modules args;
+  profiles = import ./profiles args;
   home = import ./home args;
 in
 {
@@ -28,7 +29,7 @@ in
           autologin
           hosts
           ;
-        nixosProfiles = nixos.profiles;
+        nixosProfiles = profiles;
         host = hosts.${hostname};
       };
 
@@ -71,7 +72,7 @@ in
         ]
 
         # Auto-include all custom nixos modules
-        ++ (lib.attrValues nixos.modules);
+        ++ (lib.attrValues modules);
     };
 
   # mkHomeManagerConfig =
