@@ -4,7 +4,7 @@
     nixosProfiles.base
     nixosProfiles.gnome
 
-    nixosProfiles.common.distrobox
+    nixosProfiles.distrobox
   ];
 
   /*

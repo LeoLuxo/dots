@@ -16,7 +16,7 @@ let
 in
 {
   imports = [
-    nixosProfiles.common.agenix
+    nixosProfiles.agenix
   ];
 
   /*
