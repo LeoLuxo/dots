@@ -32,6 +32,8 @@ in
 
   my.defaultApps.communication = lib.mkDefault "vesktop";
 
+  my.packages = [ pkgs.vesktop ];
+
   nixpkgs.overlays = [
     (final: prev: {
       # vesktop = (prev.callPackage ./vesktop-1.5.8-patch326.nix { });
