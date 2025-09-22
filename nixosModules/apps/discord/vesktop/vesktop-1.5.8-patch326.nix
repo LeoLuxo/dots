@@ -11,9 +11,6 @@
   electron,
   libicns,
   pipewire,
-  libxkbcommon,
-  libX11,
-  libXtst,
   libpulseaudio,
   autoPatchelfHook,
   pnpm_10,
@@ -28,13 +25,6 @@
 stdenv.mkDerivation (finalAttrs: {
   pname = "vesktop";
   version = "1.5.8";
-
-  # src = fetchFromGitHub {
-  #   owner = "Vencord";
-  #   repo = "Vesktop";
-  #   rev = "v${finalAttrs.version}";
-  #   hash = "sha256-9wYIg1TGcntUMMp6SqYrgDRl3P41eeOqt76OMjSAi5M=";
-  # };
 
   src = fetchFromGitHub {
     owner = "tuxinal";
@@ -64,7 +54,6 @@ stdenv.mkDerivation (finalAttrs: {
       # and needs to be patched
       autoPatchelfHook
       copyDesktopItems
-
       # we use a script wrapper here for environment variable expansion at runtime
       # https://github.com/NixOS/nixpkgs/issues/172583
       makeWrapper
@@ -78,22 +67,18 @@ stdenv.mkDerivation (finalAttrs: {
     libpulseaudio
     pipewire
     (lib.getLib stdenv.cc.cc)
-
-    # Needed for the globalShortcuts patch
-    libxkbcommon
-    libX11
-    libXtst
   ];
 
-  patches = [
-    ./patches/disableUpdateChecking.patch
-    # ./patches/fixReadOnlySettings.patch
-  ];
-  # ++ lib.optional withSystemVencord (
-  #   replaceVars ./patches/useSystemVencord.patch {
-  #     inherit vencord;
-  #   }
-  # );
+  patches =
+    [
+      ./patches/disableUpdateChecking.patch
+      ./patches/fixReadOnlySettings.patch
+    ]
+    ++ lib.optional withSystemVencord (
+      replaceVars ./patches/useSystemVencord.patch {
+        inherit vencord;
+      }
+    );
 
   env = {
     ELECTRON_SKIP_BINARY_DOWNLOAD = 1;
@@ -106,21 +91,10 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   # electron builds must be writable on darwin
-  preBuild =
-    lib.optionalString stdenv.hostPlatform.isDarwin ''
-      cp -r ${electron.dist}/Electron.app .
-      chmod -R u+w Electron.app
-
-    ''
-    + ''
-      cp -f "${./assets/discord.png}" build/Icon.png
-
-      cp -f "${./assets/discord.png}" static/icon.png
-      cp -f "${./assets/discord.ico}" static/icon.ico
-
-      # Dancing anime gif
-      cp -f "${./assets/bongo-cat.gif}" static/shiggy.gif
-    '';
+  preBuild = lib.optionalString stdenv.hostPlatform.isDarwin ''
+    cp -r ${electron.dist}/Electron.app .
+    chmod -R u+w Electron.app
+  '';
 
   buildPhase = ''
     runHook preBuild
@@ -139,11 +113,6 @@ stdenv.mkDerivation (finalAttrs: {
     pushd build
     ${libicns}/bin/icns2png -x icon.icns
     popd
-  '';
-
-  preInstall = ''
-    rm build/icon_*x32.png
-    cp "${./assets/discord.png}" build/icon_512x512x32.png
   '';
 
   installPhase =
@@ -184,15 +153,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   desktopItems = lib.optional stdenv.hostPlatform.isLinux (makeDesktopItem {
     name = "vesktop";
-    desktopName = "Discord";
+    desktopName = "Vesktop";
     exec = "vesktop %U";
     icon = "vesktop";
-    startupWMClass = "Discord";
+    startupWMClass = "Vesktop";
     genericName = "Internet Messenger";
     keywords = [
       "discord"
       "vencord"
-      "vesktop"
       "electron"
       "chat"
     ];
