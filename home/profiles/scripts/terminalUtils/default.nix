@@ -45,7 +45,7 @@
       file = ./q.sh;
       deps = [
         # To highlight source code
-        highlight
+        bat
 
         # To query the filetype of files
         file
