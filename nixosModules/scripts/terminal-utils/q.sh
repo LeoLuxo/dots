@@ -34,7 +34,7 @@ checkfile() {
 	else
 		# Is text, show contents
 		echo -e "${COLOR_FILE}Text file ${COLOR_INFO}$(realpath "$1")  $(perms "$1" $COLOR_FILE)\n"
-		highlight -O ansi --force "$1"
+		bat --paging=never --style="numbers" "$1"
 	fi
 
 	# Set last dir for qq alias
