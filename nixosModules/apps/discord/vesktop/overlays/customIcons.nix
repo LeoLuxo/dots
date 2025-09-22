@@ -29,13 +29,13 @@
       preBuild =
         (oldAttrs.preBuild or "")
         + ''
-          cp -f "${./assets/discord.png}" build/Icon.png
+          cp -f "${./../assets/discord.png}" build/Icon.png
 
-          cp -f "${./assets/discord.png}" static/icon.png
-          cp -f "${./assets/discord.ico}" static/icon.ico
+          cp -f "${./../assets/discord.png}" static/icon.png
+          cp -f "${./../assets/discord.ico}" static/icon.ico
 
           # Dancing anime gif
-          cp -f "${./assets/bongo-cat.gif}" static/shiggy.gif
+          cp -f "${./../assets/bongo-cat.gif}" static/shiggy.gif
         '';
 
       # Add a preinstall action to overwrite the desktop icon
@@ -43,7 +43,7 @@
         (oldAttrs.preInstall or "")
         + ''
           rm build/icon_*x32.png
-          cp "${./assets/discord.png}" build/icon_512x512x32.png
+          cp "${./../assets/discord.png}" build/icon_512x512x32.png
         '';
     }
   );
