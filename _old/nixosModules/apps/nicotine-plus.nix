@@ -4,7 +4,7 @@
   ...
 }:
 {
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     nicotine-plus # A client for the Soulseek peer-to-peer file sharing network.
   ];
 

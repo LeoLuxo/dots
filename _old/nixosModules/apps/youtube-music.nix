@@ -7,7 +7,7 @@ let
   inherit (lib2) mkSyncedPath;
 in
 {
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     youtube-music
   ];
 

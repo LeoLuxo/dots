@@ -85,7 +85,7 @@ in
         ""
     ) config.services.syncthing.settings.folders;
 
-    my.packages = [
+    environment.systemPackages = [
       (pkgs.mkDesktopItem {
         name = "syncthing";
         exec = "firefox \"http://127.0.0.1:8384/\"";

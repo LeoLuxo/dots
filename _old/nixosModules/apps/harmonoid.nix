@@ -120,7 +120,7 @@ let
     };
 in
 {
-  my.packages = [
+  environment.systemPackages = [
     (pkgs.callPackage package { })
   ];
 }

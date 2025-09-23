@@ -4,7 +4,7 @@
 }:
 
 {
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     # Gnome circles translator app
     dialect
   ];
