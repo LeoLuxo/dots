@@ -8,7 +8,7 @@
 {
   programs.dconf.enable = true;
 
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     gnomeExtensions.burn-my-windows
   ];
   home-manager.users.${config.my.user.name} =

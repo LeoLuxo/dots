@@ -4,5 +4,5 @@
   ...
 }:
 {
-  my.packages = with pkgs; [ bitwarden-desktop ];
+  environment.systemPackages = with pkgs; [ bitwarden-desktop ];
 }

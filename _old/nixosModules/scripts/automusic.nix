@@ -9,7 +9,7 @@
     apps.beets
   ];
 
-  my.packages = [
+  environment.systemPackages = [
     (pkgs.writeScriptWithDeps {
       name = "automusic";
 

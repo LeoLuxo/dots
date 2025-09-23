@@ -11,7 +11,7 @@
     inputs.musnix.nixosModules.musnix
   ];
 
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     playerctl
     pulsemixer
     qpwgraph

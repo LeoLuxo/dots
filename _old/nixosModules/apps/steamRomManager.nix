@@ -6,7 +6,7 @@
 }:
 
 {
-  my.packages = [
+  environment.systemPackages = [
     pkgs.steam-rom-manager
   ];
 }

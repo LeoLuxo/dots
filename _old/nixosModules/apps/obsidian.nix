@@ -13,7 +13,7 @@
 
   my.defaultApps.notes = lib.mkDefault "obsidian";
 
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     obsidian
   ];
 }

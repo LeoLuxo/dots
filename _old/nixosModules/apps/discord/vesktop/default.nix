@@ -32,7 +32,7 @@ in
 
   my.defaultApps.communication = lib.mkDefault "vesktop";
 
-  my.packages = [ pkgs.vesktop ];
+  environment.systemPackages = [ pkgs.vesktop ];
 
   nixpkgs.overlays = [
     (final: prev: {

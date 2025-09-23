@@ -115,7 +115,7 @@ in
         );
     in
     {
-      my.packages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         sshpass
         restic
         rustic

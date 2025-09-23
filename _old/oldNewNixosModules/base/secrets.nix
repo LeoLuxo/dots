@@ -70,7 +70,7 @@ in
       secretsFlake = builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets";
     in
     {
-      my.packages = [
+      environment.systemPackages = [
         # Install agenix CLI
         inputs.agenix.packages.${pkgs.system}.default
 

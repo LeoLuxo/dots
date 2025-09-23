@@ -14,7 +14,7 @@ let
   };
 in
 {
-  my.packages = [
+  environment.systemPackages = [
     package
 
     (pkgs.mkDesktopItem {

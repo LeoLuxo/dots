@@ -9,7 +9,7 @@
   programs.dconf.enable = true;
 
   # Needs to be installed on system for everything to work
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     gnomeExtensions.just-perfection
   ];
 

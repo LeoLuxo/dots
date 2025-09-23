@@ -5,7 +5,7 @@
 }:
 
 {
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     guake
   ];
 
