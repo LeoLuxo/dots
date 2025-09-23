@@ -175,6 +175,7 @@ in
       xdgConfig."steam-rom-manager/userData" = "/stuff/games/emu/steamRomManager/userData";
       xdgData."sudachi" = "/stuff/games/emu/switch/yuzu";
       xdgData."yuzu" = "/stuff/games/emu/switch/yuzu";
+      xdgData."Cemu" = "/stuff/games/emu/wiiu/Cemu";
     };
 
     system.pinKernel = enabled;
