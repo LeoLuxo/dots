@@ -12,4 +12,10 @@
 
     { system.stateVersion = "24.05"; }
   ];
+
+  # Add our custom overlays
+  nixpkgs.overlays = [
+    inputs.self.overlays.extraPkgs
+    inputs.self.overlays.builders
+  ];
 }
