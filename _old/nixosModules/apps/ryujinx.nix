@@ -7,7 +7,7 @@
 {
   imports = [ nixosModules.apps.joycons ];
 
-  my.packages = [
+  environment.systemPackages = [
     pkgs.ryubing
   ];
 }

@@ -4,7 +4,7 @@
 }:
 
 {
-  my.packages = [
+  environment.systemPackages = [
     (pkgs.writeScriptWithDeps {
       name = "snip";
       file = ./snip.sh;

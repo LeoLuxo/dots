@@ -13,7 +13,7 @@
   services.geoclue2.enable = true;
   location.provider = "geoclue2";
 
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     gnomeExtensions.openweather-refined
   ];
 

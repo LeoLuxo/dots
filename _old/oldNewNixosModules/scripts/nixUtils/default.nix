@@ -139,7 +139,7 @@ in
       '';
 
       # Add nx scripts and other packages
-      my.packages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         # Nix helper utilities
         nh
         nurl

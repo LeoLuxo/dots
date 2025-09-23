@@ -5,7 +5,7 @@
 }:
 
 {
-  my.packages = [
+  environment.systemPackages = [
     pkgs.joycond-cemuhook
   ];
 

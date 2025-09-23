@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  # my.packages = [
+  # environment.systemPackages = [
   #   (pkgs.alpaca.override {
   #     ollama = pkgs.ollama-cuda;
   #   })

@@ -39,7 +39,7 @@ in
     {
       programs.dconf.enable = true;
 
-      my.packages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         gnomeExtensions.blur-my-shell
       ];
       home-manager.users.${config.my.user.name} =

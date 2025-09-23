@@ -40,7 +40,7 @@ in
 {
   imports = [ nixosModules.apps.joycons ];
 
-  my.packages = [
+  environment.systemPackages = [
     (pkgs.callPackage package { })
   ];
 }

@@ -7,7 +7,7 @@
 {
   imports = [ ./gitignore.nix ];
 
-  my.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     # Gnome circles commit editor
     commit
   ];

@@ -55,7 +55,7 @@ in
     # This here is split up and ugly because of mkMerge and false infinite recursion because of `config.my`
 
     # Generic config
-    my.packages = lib.mapAttrsToList (
+    environment.systemPackages = lib.mapAttrsToList (
       _: keybind: pkgs.writeShellScriptBin keybind.scriptName keybind.command
     ) cfg;
 
