@@ -14,9 +14,9 @@
       in
 
       {
-        nixosConfigurations = import ./nixosConfigurations { inherit inputs lib lib2; };
+        nixosConfigurations = import ./_old/nixosConfigurations { inherit inputs lib lib2; };
 
-        nixosModules = import ./nixosModules { inherit inputs lib lib2; };
+        nixosModules = import ./_old/nixosModules { inherit inputs lib lib2; };
       }
     );
 

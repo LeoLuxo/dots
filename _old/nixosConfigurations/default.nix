@@ -30,7 +30,7 @@ let
     # Add my custom builders, accessible under `pkgs.<builder>`
     (
       final: prev:
-      import ../builders.nix {
+      import ../../builders.nix {
         inherit lib lib2;
         pkgs = prev;
       }
