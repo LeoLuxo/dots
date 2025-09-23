@@ -1,8 +1,14 @@
 {
-  pkgs,
   lib,
   lib2,
+  inputs,
+  ...
 }:
+
+final: prev:
+let
+  pkgs = prev;
+in
 
 let
   inherit (lib2) replaceScriptVariables toPascalCaseWithSpaces;

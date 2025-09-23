@@ -8,15 +8,41 @@
       system:
 
       let
-        # The default lib just so I can pass it around where needed
-        lib = nixpkgs.legacyPackages.${system}.lib;
+        hosts = import ./hosts.nix;
+
+        # The default pkgs and lib just so I can pass them around where needed
+        pkgs = nixpkgs.legacyPackages.${system};
+        lib = pkgs.lib;
+
+        # My custom libs
         lib2 = import ./lib.nix { inherit lib; };
+
+        args = {
+          inherit inputs lib lib2;
+          inherit hosts;
+        };
+
+        inherit (import ./mkConfigs.nix args) mkNixosConfig;
       in
 
       {
-        nixosConfigurations = import ./_old/nixosConfigurations { inherit inputs lib lib2; };
+        # nixosConfigurations = import ./_old/nixosConfigurations { inherit inputs lib lib2; };
+        # nixosModules = import ./_old/nixosModules { inherit inputs lib lib2; };
 
-        nixosModules = import ./_old/nixosModules { inherit inputs lib lib2; };
+        # Create nixos configurations for all hosts that have a `nixosConfig`
+        nixosConfigurations = lib.concatMapAttrs (
+          name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig host; } else { }
+        ) hosts;
+
+        overlays = {
+          "extraPkgs" = import ./extraPkgs.nix args;
+          "builders" = import ./builders.nix args;
+        };
+
+        packages = lib.packagesFromDirectoryRecursive {
+          inherit (pkgs) callPackage;
+          directory = ./packages;
+        };
       }
     );
 
