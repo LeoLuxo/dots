@@ -22,10 +22,10 @@ rustPlatform.buildRustPackage (finalAttrs: {
     owner = "GingerAvalanche";
     repo = "ukmm";
     tag = "v${finalAttrs.version}";
-    hash = "";
+    hash = "sha256-jnZJXWni8UpdnEvYff1rtAQPrc3l7c/VLoyLGUrQTU4=";
   };
 
-  cargoHash = "sha256-eDYCF+bYh0T/SSrQKjCqZvSd28CSxvGkpHgmBCHLoig=";
+  cargoHash = "sha256-vNpKaFMeKO2EM7XQ4rgVRJwgVBQueMrJ5xN8eD3EQNk=";
 
   nativeBuildInputs = [
     cmake
