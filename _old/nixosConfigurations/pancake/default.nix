@@ -3,7 +3,6 @@
   imports = [
     ./configuration.nix
 
-    ./syncthing.nix
     ./wifi.nix
 
     # TODO: Remove

@@ -3,6 +3,9 @@
   lib,
   hostname,
   pkgs,
+  lib2,
+  hosts,
+  user,
   ...
 }:
 
@@ -31,6 +34,16 @@ in
   };
 
   config = {
+    # Open the firewall ports for syncthing
+    # Not needed if using option openDefaultPorts=true
+    # networking.firewall = {
+    #   allowedTCPPorts = [ 22000 ];
+    #   allowedUDPPorts = [
+    #     21027
+    #     22000
+    #   ];
+    # };
+
     services.syncthing =
       let
         syncthingFolder = "${config.my.paths.home}/.config/syncthing";
@@ -39,12 +52,12 @@ in
         enable = true;
 
         # By default if syncthing.user is not set, a user named "syncthing" will be created whose home directory is dataDir, and it will run under a group "syncthing".
-        user = config.my.user.name;
+        inherit user;
         group = "users";
 
         # Together, the key and cert define the device id
-        key = config.my.secrets."syncthing/${hostname}/key.pem";
-        cert = config.my.secrets."syncthing/${hostname}/cert.pem";
+        key = config.age.secrets."syncthing/${hostname}/key.pem".path;
+        cert = config.age.secrets."syncthing/${hostname}/cert.pem".path;
 
         # The path where default synchronised directories will be put.
         dataDir = syncthingFolder;
@@ -58,20 +71,23 @@ in
         # Open firewall ports
         openDefaultPorts = true;
 
-        # Whether to auto-launch Syncthing as a system service.
-        # systemService = true;
+        settings = {
+          # Automatically get all device ids from hosts
+          devices = lib2.filterGetAttr "syncthing" hosts;
 
-        settings.options = {
-          # Anonymous data usage
-          # I would accept it but for some reason values 1 or 2 don't work
-          urAccepted = -1;
+          options = {
+            # Anonymous data usage
+            # I would accept it but for some reason values 1 or 2 don't work
+            urAccepted = -1;
 
-          # Relay servers
-          relaysEnabled = true;
+            # Relay servers
+            relaysEnabled = true;
+          };
         };
       };
 
     # Setup ignore patterns
+    # systemd.user.services.syncthing-init.Service.ExecStartPost = strings.concatMapAttrsStringSep "\n" (
     systemd.user.services.syncthing-init.postStart = strings.concatMapAttrsStringSep "\n" (
       name: value:
       if (strings.stringLength value.ignorePatterns) > 0 then

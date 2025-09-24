@@ -5,7 +5,6 @@
     ./backups.nix
     ./configuration.nix
     # ./hardwareConfiguration.nix
-    ./syncthing.nix
     # ./vr.nix
 
     # TODO: Remove
