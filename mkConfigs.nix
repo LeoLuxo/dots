@@ -33,24 +33,29 @@ in
       } // extras;
 
       modules =
-        # Include the main module
-        [ nixosConfig ]
+        [
+          # Include the main nixos module for this config
+          nixosConfig
 
-        # Auto-include all custom nixos modules
-        ++ (lib.attrValues modules)
-
-        # Special module to map all instances of the `hm` (nixos) setting to all users in home-manager
-        ++ [
+          # Special module to map all instances of the `hm` (nixos) setting to all users in home-manager
           (
-            { users, config, ... }:
             {
-              options.hm = lib.mkOption { default = { }; };
+              users,
+              config,
+              options,
+              ...
+            }:
+            {
+              options.hm = lib.mkOption {
+                default = { };
+                # Steal the home manager module type (doesn' work, so currently `config.hm` can only accept attrSets)
+                # type = options.home-manager.users.type.nestedTypes.elemType;
+              };
 
               config = {
                 home-manager.users = lib.concatMapAttrs (username: _: {
                   ${username} = {
                     imports = [
-                      # Call the hm lib function with the supplied args
                       config.hm
                     ];
                   };
@@ -58,6 +63,9 @@ in
               };
             }
           )
-        ];
+        ]
+        # Auto-include all custom nixos modules
+        ++ (lib.attrValues modules);
+
     };
 }

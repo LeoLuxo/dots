@@ -334,20 +334,7 @@ rec {
 
   # Nixos-specific libs (because they return a nixos module meant to be imported)
   nixos =
-    {
-      # perHmUser =
-      #   hmModule:
-      #   { users, ... }:
-      #   {
-      #     home-manager.users = lib.concatMapAttrs (username: _: {
-      #       ${username} = {
-      #         imports = [
-      #           hmModule
-      #         ];
-      #       };
-      #     }) users;
-      #   };
-    }
+    { }
     # Nixos module wrapper for all the hm-specific libs, acts on all users
     // (lib.mapAttrs (
       _: libFunc:
