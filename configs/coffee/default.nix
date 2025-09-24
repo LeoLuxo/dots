@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ pkgs, inputs, ... }:
 {
   system.stateVersion = "24.05";
 
@@ -9,14 +9,28 @@
     ./audio.nix
     ./hardware.nix
     ./syncthing.nix
+    # ./backups.nix
 
     # profiles.pc
+    # profiles.personal
+    # profiles.music
+    # profiles.gaming.base
+    # profiles.gaming.emulation
+    # profiles.gaming.minecraft
     # profiles.gpu.amd
 
     # profiles.apps.nicotinePlus
     # profiles.apps.qmk
     # profiles.apps.syncthing
+
+    # profiles.scripts.bootWindows
   ];
+
+  environment.systemPackages = [
+    pkgs.guitarix # A virtual guitar amplifier for use with Linux.
+  ];
+
+  wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
   # 1TB SSD
   fileSystems."/stuff" = {
@@ -33,4 +47,31 @@
   pinKernel = {
     enable = true;
   };
+
+  # gnome = {
+  #   power = {
+  #     buttonAction = "power off";
+  #     confirmShutdown = false;
+
+  #     screenIdle = {
+  #       enable = true;
+  #       delay = 600;
+  #     };
+
+  #     suspendIdlePluggedIn.enable = false;
+  #   };
+
+  #   textScalingPercent = 150;
+
+  #   cursorSize = 16;
+
+  #   blur = {
+  #     enable = true;
+  #     # Enable blur for all applications
+  #     # appBlur.enable = true;
+
+  #     # Set hacks to best looking
+  #     hacksLevel = "no artifact";
+  #   };
+  # };
 }
