@@ -1,4 +1,10 @@
-{ inputs, ... }:
+{
+  options,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   system.stateVersion = "24.05";
 
@@ -32,4 +38,18 @@
   pinKernel = {
     enable = true;
   };
+
+  hm =
+    #  lib.traceSeqN 1 options.home-manager.users.type.nestedTypes.elemType
+    (
+      # { ... }:
+      {
+        home.packages = [
+          (pkgs.writeScriptWithDeps {
+            name = "test123";
+            text = "echo it works!";
+          })
+        ];
+      }
+    );
 }
