@@ -49,15 +49,19 @@ in
       };
     };
 
-    symlinks = enabled;
+    symlinks = {
+      enable = true;
+    };
 
     scripts.nx = {
       enable = true;
     };
 
-    desktop.defaultAppsShortcuts = enabled;
+    desktop.defaultAppsShortcuts = {
+      enable = true;
+    };
 
-    # system.pinKernel = enabled;
+    # system.pinKernel = {enable = true;};
 
     paths = {
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";

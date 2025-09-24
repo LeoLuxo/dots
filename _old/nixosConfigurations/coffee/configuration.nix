@@ -155,9 +155,13 @@ in
   # };
 
   my = {
-    suites.pc.desktop = enabled // {
-      username = "lili";
-    };
+    suites.pc.desktop =
+      {
+        enable = true;
+      }
+      // {
+        username = "lili";
+      };
 
     secretManagement = {
       enable = true;
@@ -179,17 +183,23 @@ in
       xdgData."ukmm" = "/stuff/games/emu/wiiu/ukmm";
     };
 
-    # system.pinKernel = enabled;
+    # system.pinKernel = {enable = true;};
 
-    desktop.defaultAppsShortcuts = enabled;
+    desktop.defaultAppsShortcuts = {
+      enable = true;
+    };
 
     paths = {
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
       nixosRepo = "/etc/nixos/dots";
     };
 
-    hardware.gpu.amd = enabled;
-    hardware.controller.playstation = enabled;
+    hardware.gpu.amd = {
+      enable = true;
+    };
+    hardware.controller.playstation = {
+      enable = true;
+    };
   };
 
 }

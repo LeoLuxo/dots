@@ -25,20 +25,28 @@ in
 
   config = lib.mkIf cfg.enable {
     my = {
-      suites.pc = enabled // {
-        username = cfg.username;
-      };
+      suites.pc =
+        {
+          enable = true;
+        }
+        // {
+          username = cfg.username;
+        };
 
-      system.wifi = enabled // {
-        enabledNetworks = [
-          "Home"
-          "Isabella"
-          "Parents"
-          "AU Eduroam"
-          "Michi"
-          "Nadja"
-        ];
-      };
+      system.wifi =
+        {
+          enable = true;
+        }
+        // {
+          enabledNetworks = [
+            "Home"
+            "Isabella"
+            "Parents"
+            "AU Eduroam"
+            "Michi"
+            "Nadja"
+          ];
+        };
     };
   };
 }
