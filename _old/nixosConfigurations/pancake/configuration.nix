@@ -12,7 +12,7 @@ in
 {
   imports = [
     # Include hardware stuff and kernel patches for surface pro 7
-    inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
+    # inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
 
     nixosModules.rices.peppy
 
@@ -65,7 +65,7 @@ in
     };
   };
 
-  hardware.microsoft-surface.kernelVersion = "longterm";
+  # hardware.microsoft-surface.kernelVersion = "longterm";
 
   # Extra packages that don't necessarily need an entire dedicated module
   environment.systemPackages = with pkgs; [
@@ -119,10 +119,10 @@ in
   };
 
   # SD Card
-  fileSystems."/stuff" = {
-    device = "/dev/disk/by-label/stuff";
-    fsType = "btrfs";
-  };
+  # fileSystems."/stuff" = {
+  #   device = "/dev/disk/by-label/stuff";
+  #   fsType = "btrfs";
+  # };
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -163,12 +163,12 @@ in
     };
 
     # Touchscreen support
-    modules = [ pkgs.xf86_input_wacom ];
-    wacom.enable = true;
+    # modules = [ pkgs.xf86_input_wacom ];
+    # wacom.enable = true;
   };
 
   # Also for touchscreen support (or maybe touchpad? unsure)
-  services.libinput.enable = true;
+  # services.libinput.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

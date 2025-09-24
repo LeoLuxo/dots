@@ -2,7 +2,6 @@
 {
   imports = [
     ./configuration.nix
-    ./hardwareConfiguration.nix
 
     ./syncthing.nix
     ./wifi.nix

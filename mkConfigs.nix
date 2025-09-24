@@ -13,28 +13,24 @@ in
 {
   mkNixosConfig =
     {
-      hostname,
       nixosConfig,
+      hostname,
       users ? { },
       autologin ? null,
       ...
-    }:
+    }@extras:
+    # If a `user` is specified, that user must be defined in `users`
+    assert !extras ? "user" || users ? ${extras.user};
+
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
         inherit inputs lib2;
-        inherit
-          hostname
-          users
-          autologin
-          hosts
-          ;
         inherit profiles;
         host = hosts.${hostname};
-        user = (lib.elemAt users 0).username;
 
         # TODO: remove
         nixosModules = import ./_old/nixosModules { inherit inputs lib lib2; };
-      };
+      } // extras;
 
       modules =
         [

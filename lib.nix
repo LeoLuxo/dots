@@ -122,6 +122,7 @@ rec {
     --------------------------------------------------------------------------------
   */
 
+  # TODO: remove
   # Create a shell alias that is shell-agnostic but can look up past commands
   mkShellHistoryAlias =
     {
@@ -148,6 +149,7 @@ rec {
       };
     };
 
+  # TODO: remove
   mkSyncedPath = { ... }: { };
 
   /*
@@ -198,5 +200,156 @@ rec {
       inherit description options;
       default = { };
     };
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  # Home-manager -specific libs (because they return a hm module meant to be imported)
+  hm = {
+    # Create a shell alias that is shell-agnostic but can look up past commands
+    mkShellHistoryAlias =
+      {
+        name,
+        command,
+      }:
+      let
+        historyCommands = {
+          fish = ''$history[1]'';
+          bash = ''$(fc -ln -1)'';
+          zsh = ''''${history[@][1]}'';
+        };
+
+        mappedCommands = builtins.mapAttrs (
+          _: lastCommand: command { inherit lastCommand; }
+        ) historyCommands;
+      in
+      { config, ... }:
+      {
+        programs.bash.shellAliases.${name} = mappedCommands.bash;
+        programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
+        programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
+      };
+
+    mkHomeSymlink =
+      {
+        xdgDir,
+        target,
+        destination,
+        name ? target,
+      }:
+      assert lib.assertOneOf "xdgDir" xdgDir [
+        "config" # ~/.config
+        "cache" # ~/.cache
+        "data" # ~/.local/share
+        "state" # ~/.local/state
+      ];
+
+      { config, ... }:
+      {
+        xdg.${"${xdgDir}File"}.${name} = {
+          inherit target;
+          source = config.lib.file.mkOutOfStoreSymlink destination;
+        };
+      };
+
+    mkSyncedPath =
+      {
+        target,
+        syncName,
+      }:
+
+      {
+        lib,
+        config,
+        host,
+        ...
+      }:
+      let
+        realTarget = lib.replaceStrings [ "~" ] [ config.home.homeDirectory ] target;
+        syncTarget = "${host.dots}/sync/${syncName}";
+      in
+      {
+        home.activation."sync-${syncName}" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          if [[ ! -e "${syncTarget}" ]]; then
+            echo Copying '${syncName}' to sync
+            mkdir --parents $(dirname ${syncTarget})
+            cp ${realTarget} ${syncTarget}
+            mv ${realTarget} ${realTarget}.bak --force
+          fi
+
+          run ln -s $VERBOSE_ARG ${syncTarget} ${realTarget}
+        '';
+      };
+
+    # Utility to easily create a new global keybind.
+    # Currently only implemented for Gnome.
+    mkGlobalKeybind =
+      {
+        name,
+        binding,
+        command,
+      }:
+      (
+        let
+          id = lib.strings.toLower (lib.strings.sanitizeDerivationName name);
+          scriptName = "keybind-${id}";
+        in
+        # Home manager module to be imported
+        {
+          config,
+          pkgs,
+          ...
+        }:
+        {
+          # Create an extra script for the keybind, this avoids a bunch of weird issues
+          home.packages = [
+            (pkgs.writeShellScriptBin scriptName command)
+          ];
+
+          # Add the keybind to dconf
+          dconf.settings = {
+            "org/gnome/settings-daemon/plugins/media-keys" = {
+              custom-keybindings = [
+                "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}/"
+              ];
+            };
+
+            "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${id}" = {
+              inherit binding name;
+              command = scriptName;
+            };
+          };
+        }
+      );
+  };
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  # Nixos module wrapper for all the hm-specific libs, acts on all users
+  nixos = lib.mapAttrs (
+    _: libFunc:
+    # Args supplied by the client meant for the lib function
+    libArgs:
+
+    # The nixos module to be imported
+    { users, ... }:
+    {
+      home-manager.users = lib.concatMapAttrs (username: _: {
+        ${username} = {
+          imports = [
+            # Call the hm lib function with the supplied args
+            (libFunc libArgs)
+          ];
+        };
+      }) users;
+    }
+  ) hm;
 
 }
