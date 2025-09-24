@@ -286,7 +286,7 @@ rec {
 
     # Utility to easily create a new global keybind.
     # Currently only implemented for Gnome.
-    mkGlobalKeybind =
+    mkKeybind =
       {
         name,
         binding,
