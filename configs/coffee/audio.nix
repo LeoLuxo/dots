@@ -8,7 +8,7 @@
 }:
 
 let
-  # inherit (lib2.nixos) mkGlobalKeybind;
+  inherit (lib2.nixos) mkKeybind;
 
   getIdForDevice =
     device:
@@ -34,6 +34,33 @@ in
 {
   imports = [
     inputs.musnix.nixosModules.musnix
+
+    # I got the binding "ids" from here: https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/
+    (mkKeybind {
+      name = "Toggle audio to speakers";
+      binding = "XF86Launch6"; # F15
+      command = ''
+        # Set default output device to speakers using wireplumber
+        ${setDefaultOutputDevice "Scarlett 2i2 USB"}
+
+        # Link guitarix and outputs via pipewire directly
+        ${linkGX "Scarlett 2i2 USB"}
+        ${unlinkGX "ALC1220 Analog"}
+      '';
+    })
+
+    (mkKeybind {
+      name = "Toggle audio to headphones";
+      binding = "XF86Launch5"; # F14
+      command = ''
+        # Set default output device to headphones using wireplumber
+        ${setDefaultOutputDevice "ALC1220 Analog"}
+
+        # Link guitarix and outputs via pipewire directly
+        ${linkGX "ALC1220 Analog"}
+        ${unlinkGX "Scarlett 2i2 USB"}
+      '';
+    })
   ];
 
   environment.systemPackages = with pkgs; [
@@ -59,36 +86,6 @@ in
 
   home-manager.users = lib.concatMapAttrs (username: _: {
     ${username} = {
-      imports = [
-        # I got the binding "ids" from here: https://www.reddit.com/r/linuxquestions/comments/r9w8yh/disable_function_keys_beyond_f12/
-
-        # (mkGlobalKeybind {
-        #   name = "Toggle audio to speakers";
-        #   binding = "XF86Launch6"; # F15
-        #   command = ''
-        #     # Set default output device to speakers using wireplumber
-        #     ${setDefaultOutputDevice "Scarlett 2i2 USB"}
-
-        #     # Link guitarix and outputs via pipewire directly
-        #     ${linkGX "Scarlett 2i2 USB"}
-        #     ${unlinkGX "ALC1220 Analog"}
-        #   '';
-        # })
-
-        # (mkGlobalKeybind {
-        #   name = "Toggle audio to headphones";
-        #   binding = "XF86Launch5"; # F14
-        #   command = ''
-        #     # Set default output device to headphones using wireplumber
-        #     ${setDefaultOutputDevice "ALC1220 Analog"}
-
-        #     # Link guitarix and outputs via pipewire directly
-        #     ${linkGX "ALC1220 Analog"}
-        #     ${unlinkGX "Scarlett 2i2 USB"}
-        #   '';
-        # })
-      ];
-
       services = {
         playerctld.enable = true;
         # easyeffects = {
