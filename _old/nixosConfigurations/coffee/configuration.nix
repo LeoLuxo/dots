@@ -176,6 +176,7 @@ in
       xdgData."sudachi" = "/stuff/games/emu/switch/yuzu";
       xdgData."yuzu" = "/stuff/games/emu/switch/yuzu";
       xdgData."Cemu" = "/stuff/games/emu/wiiu/Cemu";
+      xdgData."ukmm" = "/stuff/games/emu/wiiu/ukmm";
     };
 
     # system.pinKernel = enabled;
