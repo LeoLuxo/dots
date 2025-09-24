@@ -25,7 +25,7 @@
 
     # profiles.scripts.bootWindows
 
-    # inputs.self.packages.yuzu
+    # pkgs.ukmm
   ];
 
   environment.systemPackages = [
