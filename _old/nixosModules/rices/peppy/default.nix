@@ -15,7 +15,7 @@ in
   imports = with nixosModules; [
     inputs.catppuccin.nixosModules.catppuccin
 
-    wallpaper
+    # wallpaper
     fonts
 
     ./gnome.nix
@@ -80,10 +80,10 @@ in
       # Disable catppuccin for the bootloader
       boot.plymouth.catppuccin.enable = false;
 
-      wallpaper = {
-        enable = mkDefault true;
-        image = mkDefault ./assets/NixOSCatppuccin.svg;
-      };
+      # wallpaper = {
+      #   enable = mkDefault true;
+      #   image = mkDefault ./assets/NixOSCatppuccin.svg;
+      # };
 
       catppuccin = {
         # Enable the theme for all compatible apps

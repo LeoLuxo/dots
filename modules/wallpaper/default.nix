@@ -176,6 +176,13 @@ in
         wantedBy = [ "graphical-session.target" ];
       };
 
+      # Auto-update wallpaper repo
+      my.scripts.nx.rebuild.preRebuildActions = ''
+        echo "Updating wallpaper flake"
+        nix flake update wallpapers --allow-dirty
+        git add flake.lock
+      '';
+
       my.scripts.nx.rebuild.postRebuildActions =
         if cfg.isTimed then
           ''
