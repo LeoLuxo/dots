@@ -86,7 +86,7 @@ in
     styluslabs-write
   ];
 
-  wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
+  # wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
   rice.peppy = {
     enable = true;
@@ -95,13 +95,6 @@ in
 
   # Set default shell
   shell.default = "fish";
-
-  # Auto-update wallpaper repo
-  my.scripts.nx.rebuild.preRebuildActions = ''
-    echo "Updating wallpaper flake"
-    nix flake update wallpapers --allow-dirty
-    git add flake.lock
-  '';
 
   desktop.gnome = {
     enable = true;
