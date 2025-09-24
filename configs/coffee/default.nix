@@ -24,6 +24,8 @@
     # profiles.apps.syncthing
 
     # profiles.scripts.bootWindows
+
+    # inputs.self.packages.yuzu
   ];
 
   environment.systemPackages = [
