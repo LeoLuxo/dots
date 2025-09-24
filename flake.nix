@@ -38,8 +38,15 @@
           "extraPkgs" = import ./extraPkgs.nix args;
           "builders" = import ./builders.nix args;
         };
-
-        packages = lib.packagesFromDirectoryRecursive {
+      }
+    )
+    // inputs.flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in
+      {
+        packages = pkgs.lib.packagesFromDirectoryRecursive {
           inherit (pkgs) callPackage;
           directory = ./packages;
         };
