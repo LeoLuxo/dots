@@ -142,17 +142,17 @@ in
     };
   };
 
-  # 1TB SSD
-  fileSystems."/stuff" = {
-    device = "/dev/disk/by-label/stuff";
-    fsType = "ext4";
-  };
+  # # 1TB SSD
+  # fileSystems."/stuff" = {
+  #   device = "/dev/disk/by-label/stuff";
+  #   fsType = "ext4";
+  # };
 
-  # 4TB HDD
-  fileSystems."/backup" = {
-    device = "/dev/disk/by-label/backup";
-    fsType = "ntfs";
-  };
+  # # 4TB HDD
+  # fileSystems."/backup" = {
+  #   device = "/dev/disk/by-label/backup";
+  #   fsType = "ntfs";
+  # };
 
   my = {
     suites.pc.desktop = enabled // {
@@ -178,7 +178,7 @@ in
       xdgData."Cemu" = "/stuff/games/emu/wiiu/Cemu";
     };
 
-    system.pinKernel = enabled;
+    # system.pinKernel = enabled;
 
     desktop.defaultAppsShortcuts = enabled;
 

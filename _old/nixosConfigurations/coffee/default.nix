@@ -1,10 +1,10 @@
 { inputs, lib, ... }:
 {
   imports = [
-    ./audio.nix
+    # ./audio.nix
     ./backups.nix
     ./configuration.nix
-    ./hardwareConfiguration.nix
+    # ./hardwareConfiguration.nix
     ./syncthing.nix
     # ./vr.nix
 
@@ -14,6 +14,7 @@
     { system.stateVersion = "24.05"; }
   ];
 
+  # TODO: move
   # Add our custom overlays
   nixpkgs.overlays = [
     inputs.self.overlays.extraPkgs
