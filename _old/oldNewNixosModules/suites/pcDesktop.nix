@@ -24,8 +24,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    my.suites.pc = enabled // {
-      username = cfg.username;
-    };
+    my.suites.pc =
+      {
+        enable = true;
+      }
+      // {
+        username = cfg.username;
+      };
   };
 }
