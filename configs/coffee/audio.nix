@@ -102,7 +102,7 @@ in
   hm = {
     home.packages = [
       (pkgs.writeScriptWithDeps {
-        name = "test";
+        name = "test123";
         text = "echo it works!";
       })
     ];
