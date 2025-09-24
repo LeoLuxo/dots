@@ -27,14 +27,22 @@ in
     my = {
       system = {
         user.name = cfg.username;
-        boot = enabled;
-        locale = enabled;
-        printing = enabled;
+        boot = {
+          enable = true;
+        };
+        locale = {
+          enable = true;
+        };
+        printing = {
+          enable = true;
+        };
       };
 
       desktop = {
-        defaultAppsShortcuts = enabled;
-        # fonts = enabled;
+        defaultAppsShortcuts = {
+          enable = true;
+        };
+        # fonts = {enable = true;};
       };
       scripts = {
         nx = {
@@ -48,10 +56,10 @@ in
           '';
         };
 
-        # terminalUtils = enabled;
+        # terminalUtils = {enable = true;};
 
-        # snip = enabled;
-        # clipboard = enabled;
+        # snip = {enable = true;};
+        # clipboard = {enable = true;};
       };
     };
   };
