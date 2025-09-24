@@ -6,8 +6,9 @@
     # TODO: remove
     (import "${inputs.self}/_old/nixosConfigurations/coffee")
 
-    ./hardware.nix
     ./audio.nix
+    ./hardware.nix
+    ./syncthing.nix
 
     # profiles.pc
     # profiles.gpu.amd
