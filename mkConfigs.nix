@@ -39,12 +39,7 @@ in
 
           # Special module to map all instances of the `hm` (nixos) setting to all users in home-manager
           (
-            {
-              users,
-              config,
-              options,
-              ...
-            }:
+            { users, config, ... }:
             {
               options.hm = lib.mkOption {
                 default = { };
