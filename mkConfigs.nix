@@ -26,6 +26,7 @@ in
       specialArgs = {
         inherit inputs lib2;
         inherit profiles;
+        inherit hosts;
         host = hosts.${hostname};
 
         # TODO: remove

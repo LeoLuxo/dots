@@ -11,6 +11,7 @@
     (import "${inputs.self}/_old/nixosConfigurations/pancake")
 
     ./hardware.nix
+    ./syncthing.nix
 
     # Include hardware stuff and kernel patches for surface pro 7
     inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
