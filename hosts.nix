@@ -3,17 +3,17 @@
   "coffee" = {
     hostname = "coffee";
     os = "nixos";
-    nixosConfig = import ./_old/nixosConfigurations/coffee;
+    nixosConfig = import ./configs/coffee;
 
-    users = [
-      {
-        username = "lili";
+    user = "lili";
+    users = {
+      "lili" = {
         uid = 1000;
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmKoOObf4uFjChrVj7UNEiHU5uxhNNY+rxSLoZvDy+t lili@coffee"
         ];
-      }
-    ];
+      };
+    };
 
     ip.local = "192.168.0.88";
 
@@ -40,7 +40,7 @@
   "pancake" = {
     hostname = "pancake";
     os = "nixos";
-    nixosConfig = import ./_old/nixosConfigurations/pancake;
+    nixosConfig = import ./configs/pancake;
 
     users = [
       {
