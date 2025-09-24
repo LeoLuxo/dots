@@ -332,24 +332,40 @@ rec {
     --------------------------------------------------------------------------------
   */
 
-  # Nixos module wrapper for all the hm-specific libs, acts on all users
-  nixos = lib.mapAttrs (
-    _: libFunc:
-    # Args supplied by the client meant for the lib function
-    libArgs:
-
-    # The nixos module to be imported
-    { users, ... }:
+  # Nixos-specific libs (because they return a nixos module meant to be imported)
+  nixos =
     {
-      home-manager.users = lib.concatMapAttrs (username: _: {
-        ${username} = {
-          imports = [
-            # Call the hm lib function with the supplied args
-            (libFunc libArgs)
-          ];
-        };
-      }) users;
+      # perHmUser =
+      #   hmModule:
+      #   { users, ... }:
+      #   {
+      #     home-manager.users = lib.concatMapAttrs (username: _: {
+      #       ${username} = {
+      #         imports = [
+      #           hmModule
+      #         ];
+      #       };
+      #     }) users;
+      #   };
     }
-  ) hm;
+    # Nixos module wrapper for all the hm-specific libs, acts on all users
+    // (lib.mapAttrs (
+      _: libFunc:
+      # Args supplied by the client meant for the lib function
+      libArgs:
+
+      # The nixos module to be imported
+      { users, ... }:
+      {
+        home-manager.users = lib.concatMapAttrs (username: _: {
+          ${username} = {
+            imports = [
+              # Call the hm lib function with the supplied args
+              (libFunc libArgs)
+            ];
+          };
+        }) users;
+      }
+    ) hm);
 
 }

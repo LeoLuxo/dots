@@ -8,7 +8,7 @@
 }:
 
 let
-  inherit (lib2.nixos) mkKeybind;
+  inherit (lib2.nixos) mkKeybind perHmUser;
 
   getIdForDevice =
     device:
@@ -61,6 +61,15 @@ in
         ${unlinkGX "Scarlett 2i2 USB"}
       '';
     })
+
+    # (perHmUser {
+    #   services = {
+    #     playerctld.enable = true;
+    #     # easyeffects = {
+    #     #   enable = true;
+    #     # };
+    #   };
+    # })
   ];
 
   environment.systemPackages = with pkgs; [
@@ -84,16 +93,27 @@ in
     # kernel.realtime = true;
   };
 
-  home-manager.users = lib.concatMapAttrs (username: _: {
-    ${username} = {
-      services = {
-        playerctld.enable = true;
-        # easyeffects = {
-        #   enable = true;
-        # };
-      };
+  # home-manager.users = lib.concatMapAttrs (username: _: {
+  #   ${username} = {
+
+  #   };
+  # }) users;
+
+  hm = {
+    home.packages = [
+      (pkgs.writeScriptWithDeps {
+        name = "test";
+        text = "echo it works!";
+      })
+    ];
+
+    services = {
+      playerctld.enable = true;
+      # easyeffects = {
+      #   enable = true;
+      # };
     };
-  }) users;
+  };
 
   services.pulseaudio.enable = false;
 
