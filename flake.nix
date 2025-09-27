@@ -37,6 +37,13 @@
         overlays = {
           "extraPkgs" = import ./extraPkgs.nix args;
           "builders" = import ./builders.nix args;
+          "packages" = (
+            final: prev:
+            prev.lib.packagesFromDirectoryRecursive {
+              inherit (prev) callPackage;
+              directory = ./packages;
+            }
+          );
         };
       }
     )
