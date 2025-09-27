@@ -39,6 +39,7 @@ in
           nixosConfig
 
           # Special module to map all instances of the `hm` (nixos) setting to all users in home-manager
+          # TODO: move somewhere else
           (
             { users, config, ... }:
             {

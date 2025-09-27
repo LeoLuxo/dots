@@ -18,5 +18,6 @@
   nixpkgs.overlays = [
     inputs.self.overlays.extraPkgs
     inputs.self.overlays.builders
+    inputs.self.overlays.packages
   ];
 }
