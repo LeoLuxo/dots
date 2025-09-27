@@ -10,7 +10,7 @@ let
 
   src = fetchurl {
     url = "https://github.com/Xpl0itU/WiiUDownloader/releases/download/v${version}/WiiUDownloader-Linux-x86_64.AppImage";
-    hash = "";
+    hash = "sha256-4j1v026MLwRXLDgzSqJc939LTp59XXAA/+tizx2Dza0=";
   };
   appimageContents = appimageTools.extract {
     inherit pname version src;
