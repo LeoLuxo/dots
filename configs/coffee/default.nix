@@ -25,7 +25,8 @@
 
     # profiles.scripts.bootWindows
 
-    # pkgs.ukmm
+    # pkgs.wiiuDownloader
+    # pkgs.unstable.firefox
   ];
 
   environment.systemPackages = [
