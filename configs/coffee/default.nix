@@ -29,6 +29,18 @@
     # pkgs.ukmm
   ];
 
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+
+    # Optional: preload models, see https://ollama.com/library
+    loadModels = [
+      "qwen2.5-coder:32b"
+      "deepseek-coder:33b"
+      "deepseek-r1:32b"
+    ];
+  };
+
   environment.systemPackages = [
     pkgs.guitarix # A virtual guitar amplifier for use with Linux.
   ];
