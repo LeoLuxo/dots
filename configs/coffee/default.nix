@@ -35,9 +35,9 @@
 
     # Optional: preload models, see https://ollama.com/library
     loadModels = [
-      "qwen2.5-coder:32b"
-      "deepseek-coder:33b"
-      "deepseek-r1:32b"
+      # "qwen2.5-coder:32b"
+      # "deepseek-coder:33b"
+      # "deepseek-r1:32b"
     ];
   };
   # services.open-webui.enable = true;
