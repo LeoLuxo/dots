@@ -1,4 +1,8 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  ...
+}:
 {
   system.stateVersion = "24.05";
 
@@ -26,7 +30,8 @@
     # profiles.scripts.bootWindows
 
     # pkgs.wiiuDownloader
-    # pkgs.ukmm
+    # (pkgs.callPackage "${inputs.self}/packages/yuzu.nix" { })
+    # customPkgs.ukmm
   ];
 
   services.ollama = {

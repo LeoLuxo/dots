@@ -25,17 +25,9 @@
         modules = import ./modules args;
         profiles = import ./profiles args;
 
-        myPackages =
-          pkgs:
-          pkgs.lib.packagesFromDirectoryRecursive {
-            inherit (pkgs) callPackage;
-            directory = ./packages;
-          };
-
         overlays = {
           "extraPkgs" = import ./extraPkgs.nix args;
           "builders" = import ./builders.nix args;
-          "packages" = (final: prev: myPackages prev);
         };
 
         mkNixosConfig =
@@ -54,6 +46,7 @@
               inherit inputs lib2;
               inherit profiles;
               inherit hosts;
+              # inherit customPkgs;
               host = hosts.${hostname};
 
               # TODO: remove
@@ -107,10 +100,6 @@
         nixosConfigurations = lib.concatMapAttrs (
           name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig host; } else { }
         ) hosts;
-
-        overlays = overlays;
-
-        packages.${system} = myPackages pkgs;
       }
     );
 
