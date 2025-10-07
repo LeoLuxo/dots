@@ -158,12 +158,10 @@
           enable = true;
           prune = true;
 
-          keepWithin = "1d";
-          keepWithinHourly = "3d";
-          keepWithinDaily = "10d";
+          keepWithin = "2h";
+          keepWithinHourly = "1d";
+          keepWithinDaily = "7d";
           keepWithinWeekly = "1m";
-          keepWithinMonthly = "1y";
-          keepYearly = "unlimited";
         };
       };
     };
