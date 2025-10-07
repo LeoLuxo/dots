@@ -3,6 +3,7 @@
   lib2,
   nixosModules,
   config,
+  user,
   pkgs,
   ...
 }:

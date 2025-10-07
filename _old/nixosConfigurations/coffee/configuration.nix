@@ -163,15 +163,6 @@ in
         username = "lili";
       };
 
-    secretManagement = {
-      enable = true;
-
-      editSecretsCommand = {
-        enable = true;
-        path = "/etc/nixos/secrets";
-      };
-    };
-
     symlinks = {
       enable = true;
 
@@ -187,11 +178,6 @@ in
 
     desktop.defaultAppsShortcuts = {
       enable = true;
-    };
-
-    paths = {
-      nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
-      nixosRepo = "/etc/nixos/dots";
     };
 
     hardware.gpu.amd = {

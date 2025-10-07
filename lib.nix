@@ -144,9 +144,9 @@ rec {
         _: lastCommand: command { inherit lastCommand; }
       ) historyCommands;
     in
-    { config, ... }:
+    { config, user, ... }:
     {
-      home-manager.users.${config.my.user.name} = {
+      hm = {
         programs.bash.shellAliases.${name} = mappedCommands.bash;
         programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
         programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
@@ -177,7 +177,7 @@ rec {
       {
         type = types.attrsOf (
           types.submodule (
-            { config, ... }@submoduleArgs:
+            { config, user, ... }@submoduleArgs:
             {
               options =
                 if lib.isAttrs options then
@@ -230,7 +230,7 @@ rec {
           _: lastCommand: command { inherit lastCommand; }
         ) historyCommands;
       in
-      { config, ... }:
+      { config, user, ... }:
       {
         programs.bash.shellAliases.${name} = mappedCommands.bash;
         programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
@@ -251,7 +251,7 @@ rec {
         "state" # ~/.local/state
       ];
 
-      { config, ... }:
+      { config, user, ... }:
       {
         xdg.${"${xdgDir}File"}.${name} = {
           inherit target;
@@ -268,6 +268,7 @@ rec {
       {
         lib,
         config,
+        user,
         host,
         ...
       }:
@@ -304,6 +305,7 @@ rec {
         # Home manager module to be imported
         {
           config,
+          user,
           pkgs,
           ...
         }:

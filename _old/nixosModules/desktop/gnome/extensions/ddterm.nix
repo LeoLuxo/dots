@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  user,
 
   lib,
   ...
@@ -15,7 +16,7 @@
     gnomeExtensions.ddterm
   ];
 
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     {
 

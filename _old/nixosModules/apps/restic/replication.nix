@@ -1,5 +1,6 @@
 {
   config,
+  user,
   pkgs,
   lib,
   lib2,
@@ -240,7 +241,7 @@ in
           '';
         };
 
-        home-manager.users.${config.my.user.name}.home.shellAliases = lib.mkMerge (
+        hm.home.shellAliases = lib.mkMerge (
           # Add aliases for each of the extra local repos
           (lib.mapAttrsToList (name: localRepo: {
             "restic-local-${name}" =

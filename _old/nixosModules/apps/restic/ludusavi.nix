@@ -1,5 +1,6 @@
 {
   config,
+  user,
   pkgs,
   lib,
   ...
@@ -57,7 +58,7 @@ in
       };
     in
     {
-      home-manager.users.${config.my.user.name} = {
+      hm = {
         home.shellAliases = {
           restic-main-ludusavi = "${script}";
         };

@@ -45,8 +45,7 @@
             specialArgs = {
               inherit inputs lib2;
               inherit profiles;
-              inherit hosts;
-              # inherit customPkgs;
+              inherit hosts users autologin;
               host = hosts.${hostname};
 
               # TODO: remove
@@ -58,6 +57,8 @@
                 # Include the main nixos module for this config
                 nixosConfig
 
+                inputs.home-manager.nixosModules.home-manager
+
                 # Add our overlays
                 {
                   nixpkgs.overlays = lib.attrValues overlays;
@@ -66,7 +67,12 @@
                 # Special module to map all instances of the `hm` (nixos) setting to all users in home-manager
                 # TODO: move somewhere else
                 (
-                  { users, config, ... }:
+                  {
+                    users,
+                    config,
+                    user,
+                    ...
+                  }:
                   {
                     options.hm = lib.mkOption {
                       default = { };

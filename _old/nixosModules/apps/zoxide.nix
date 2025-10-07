@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  user,
   pkgs,
   lib2,
   ...
@@ -29,11 +30,11 @@ in
       enableFishIntegration = true;
     };
 
-    # home-manager.users.${config.my.user.name}.home.shellAliases = mkIf cfg.enableAlias {
+    # hm.home.shellAliases = mkIf cfg.enableAlias {
     #   cd = "z";
     # };
 
-    home-manager.users.${config.my.user.name}.programs.fish.functions = mkIf cfg.enableAlias {
+    hm.programs.fish.functions = mkIf cfg.enableAlias {
       cd = ''
         if type -q z
             z $argv

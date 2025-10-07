@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  user,
+  pkgs,
+  ...
+}:
 {
   boot.kernelPatches = [
     {
@@ -21,7 +26,7 @@
     lfs.enable = true;
   };
 
-  my.scripts.nx.rebuild.postRebuildActions = ''
+  nx.rebuild.postRebuildActions = ''
     if [[ ! -e ~/.local/share/monado/hand-tracking-models ]]; then
       echo Fixing hand tracking for monado VR
       mkdir -p ~/.local/share/monado
@@ -49,8 +54,8 @@
   # environment.systemPackages = [
   # ];
 
-  home-manager.users.${config.my.user.name} =
-    { config, ... }:
+  home-manager.users.${user} =
+    { config, user, ... }:
     {
       home.packages = [
         pkgs.opencomposite

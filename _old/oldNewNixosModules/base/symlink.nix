@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  user,
   ...
 }:
 
@@ -12,7 +13,7 @@ let
   cfg = config.my.symlinks;
 
   symlinkAttrType = types.submodule (
-    { config, ... }:
+    { config, user, ... }:
     {
       options = {
         target = mkOption {
@@ -50,9 +51,9 @@ in
     home = mkSymlinkOption "link a path relative to the home directory ($HOME aka /home/<user>)";
   };
 
-  config.my.hm = mkIf cfg.enable (
+  config.home-manager.users.${user} = mkIf cfg.enable (
     # `config` below is home-manager's config
-    { config, ... }:
+    { config, user, ... }:
     let
       mapAttrsToSymlink = lib.mapAttrs (
         name: link:

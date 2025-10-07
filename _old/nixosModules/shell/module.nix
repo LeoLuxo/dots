@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  user,
   lib,
 
   ...
@@ -27,6 +28,6 @@ in
   };
 
   config = {
-    users.users.${config.my.user.name}.shell = pkgs.${config.shell.default};
+    # users.users.${user}.shell = pkgs.${config.shell.default};
   };
 }

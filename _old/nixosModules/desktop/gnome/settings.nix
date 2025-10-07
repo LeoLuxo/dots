@@ -1,5 +1,6 @@
 {
   config,
+  user,
 
   ...
 }:
@@ -10,7 +11,7 @@ in
 {
   programs.dconf.enable = true;
 
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkUint32;

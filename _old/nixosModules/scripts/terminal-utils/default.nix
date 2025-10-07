@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  user,
   lib2,
   ...
 }:
@@ -70,7 +71,7 @@ in
     })
   ];
 
-  home-manager.users.${config.my.user.name} = {
+  hm = {
     # Add aliases
     home.shellAliases = {
       pls = "please";

@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  user,
   pkgs,
   lib2,
   ...
@@ -59,8 +60,8 @@ in
       _: keybind: pkgs.writeShellScriptBin keybind.scriptName keybind.command
     ) cfg;
 
-    # Gnome-specific config, add the keybind to dconf
-    my.hm.dconf.settings = mkIf config.desktop.gnome.enable (
+    # Gnome-specific config, user, add the keybind to dconf
+    hm.dconf.settings = mkIf config.desktop.gnome.enable (
       lib.mkMerge (
         lib.mapAttrsToList (name: keybind: {
           "org/gnome/settings-daemon/plugins/media-keys" = {

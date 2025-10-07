@@ -1,11 +1,12 @@
 {
 
   config,
+  user,
   ...
 }:
 
 {
-  home-manager.users.${config.my.user.name} = {
+  hm = {
     services.kdeconnect = {
       enable = true;
       indicator = true;

@@ -4,7 +4,7 @@
 }:
 
 {
-  home-manager.users.${config.my.user.name} = {
+  hm = {
     programs.oh-my-posh = {
       enable = true;
       settings = import ./theme.nix;

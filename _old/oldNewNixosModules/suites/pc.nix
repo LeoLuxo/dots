@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  user,
   pkgs,
   lib2,
   ...
@@ -26,7 +27,6 @@ in
   config = lib.mkIf cfg.enable {
     my = {
       system = {
-        user.name = cfg.username;
         boot = {
           enable = true;
         };
@@ -43,23 +43,6 @@ in
           enable = true;
         };
         # fonts = {enable = true;};
-      };
-      scripts = {
-        nx = {
-          enable = true;
-
-          # Auto-update wallpaper repo
-          # rebuild.preRebuildActions = ''
-          #   echo "Updating wallpaper flake"
-          #   nix flake update wallpapers --allow-dirty
-          #   git add flake.lock
-          # '';
-        };
-
-        # terminalUtils = {enable = true;};
-
-        # snip = {enable = true;};
-        # clipboard = {enable = true;};
       };
     };
   };

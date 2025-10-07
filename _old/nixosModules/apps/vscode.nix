@@ -1,5 +1,6 @@
 {
   config,
+  user,
   lib,
   pkgs,
   nixosModules,
@@ -47,7 +48,7 @@ in
     EDITOR = "code";
   };
 
-  home-manager.users.${config.my.user.name} = {
+  hm = {
     programs.vscode = {
       enable = true;
       # FHS is vscode but repackaged to run in a FHS environment to make plugin compatibility better

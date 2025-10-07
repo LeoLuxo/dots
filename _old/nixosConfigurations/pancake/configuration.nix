@@ -39,21 +39,7 @@ in
   ];
 
   my = {
-    user.name = "lili";
-    secretManagement = {
-      enable = true;
-
-      editSecretsCommand = {
-        enable = true;
-        path = "/etc/nixos/secrets";
-      };
-    };
-
     symlinks = {
-      enable = true;
-    };
-
-    scripts.nx = {
       enable = true;
     };
 

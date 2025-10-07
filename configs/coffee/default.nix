@@ -16,7 +16,8 @@
     ./syncthing.nix
     # ./backups.nix
 
-    # profiles.pc
+    profiles.base
+    profiles.pc
     # profiles.personal
     # profiles.music
     # profiles.gaming.base
@@ -31,10 +32,6 @@
     profiles.apps.wiiuDownloader
 
     # profiles.scripts.bootWindows
-
-    # pkgs.wiiuDownloader
-    # (pkgs.callPackage "${inputs.self}/packages/yuzu.nix" { })
-    # customPkgs.ukmm
   ];
 
   services.ollama = {
