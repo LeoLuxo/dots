@@ -1,4 +1,5 @@
 {
+  profiles,
   inputs,
   pkgs,
   ...
@@ -16,6 +17,7 @@
     # Include hardware stuff and kernel patches for surface pro 7
     inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
 
+    profiles.base
     # profiles.pc
     # profiles.gaming
 
