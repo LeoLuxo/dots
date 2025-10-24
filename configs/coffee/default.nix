@@ -17,7 +17,7 @@
     # ./backups.nix
 
     profiles.base
-    # profiles.pc
+    profiles.pc
     # profiles.personal
     # profiles.music
     # profiles.gaming.base
