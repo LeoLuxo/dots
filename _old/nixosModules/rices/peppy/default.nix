@@ -16,12 +16,8 @@ in
   imports = with nixosModules; [
     inputs.catppuccin.nixosModules.catppuccin
 
-    # wallpaper
-    # fonts
-
     ./gnome.nix
     ./cursor.nix
-    ./bootscreen.nix
 
     terminal.ddterm
     shell.prompt.starship
