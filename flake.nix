@@ -47,7 +47,7 @@
               inherit profiles;
               inherit hosts;
               inherit autologin;
-              # inherit customPkgs;
+
               host = hosts.${hostname};
 
               # TODO: remove
