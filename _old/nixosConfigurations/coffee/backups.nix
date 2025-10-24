@@ -169,7 +169,7 @@
             prune = true;
 
             keepWithinHourly = "3d";
-            keepWithinDaily = "15d";
+            keepWithinDaily = "1m";
             keepWithinWeekly = "6m";
             keepWithinMonthly = "2y";
             keepYearly = "unlimited";
