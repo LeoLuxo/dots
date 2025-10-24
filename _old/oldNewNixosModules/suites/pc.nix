@@ -26,11 +26,6 @@ in
 
   config = lib.mkIf cfg.enable {
     my = {
-      system = {
-        locale = {
-          enable = true;
-        };
-      };
 
       desktop = {
         defaultAppsShortcuts = {
