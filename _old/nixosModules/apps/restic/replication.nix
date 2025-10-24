@@ -25,6 +25,24 @@ let
       type = types.nullOr types.str;
       default = null;
     };
+
+  forgetOptions = mkSubmodule {
+    enable = mkEnableOption "automatically forget snapshots after replicating";
+    prune = mkEnableOption "automatically prune (i.e. delete and clean up) unused files from forgotten snapshots after replicating";
+
+    keepLast = mkKeepOption "keep the last n snapshots (use 'unlimited' to keep all snapshots)";
+    keepHourly = mkKeepOption "keep the last n hourly snapshots (use 'unlimited' to keep all hourly snapshots)";
+    keepDaily = mkKeepOption "keep the last n daily snapshots (use 'unlimited' to keep all daily snapshots)";
+    keepWeekly = mkKeepOption "keep the last n weekly snapshots (use 'unlimited' to keep all weekly snapshots)";
+    keepMonthly = mkKeepOption "keep the last n monthly snapshots (use 'unlimited' to keep all monthly snapshots)";
+    keepYearly = mkKeepOption "keep the last n yearly snapshots (use 'unlimited' to keep all yearly snapshots)";
+    keepWithin = mkKeepOption "keep snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+    keepWithinHourly = mkKeepOption "keep hourly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+    keepWithinDaily = mkKeepOption "keep daily snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+    keepWithinWeekly = mkKeepOption "keep weekly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+    keepWithinMonthly = mkKeepOption "keep monthly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+    keepWithinYearly = mkKeepOption "keep yearly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
+  };
 in
 
 {
@@ -67,6 +85,8 @@ in
           description = "the password of the local repo";
           type = types.path;
         };
+
+        forget = forgetOptions;
       };
     };
 
@@ -106,26 +126,12 @@ in
           type = types.bool;
           default = true;
         };
+
+        forget = forgetOptions;
       };
     };
 
-    forget = mkSubmodule {
-      enable = mkEnableOption "automatically forget snapshots after replicating";
-      prune = mkEnableOption "automatically prune (i.e. delete and clean up) unused files from forgotten snapshots after replicating";
-
-      keepLast = mkKeepOption "keep the last n snapshots (use 'unlimited' to keep all snapshots)";
-      keepHourly = mkKeepOption "keep the last n hourly snapshots (use 'unlimited' to keep all hourly snapshots)";
-      keepDaily = mkKeepOption "keep the last n daily snapshots (use 'unlimited' to keep all daily snapshots)";
-      keepWeekly = mkKeepOption "keep the last n weekly snapshots (use 'unlimited' to keep all weekly snapshots)";
-      keepMonthly = mkKeepOption "keep the last n monthly snapshots (use 'unlimited' to keep all monthly snapshots)";
-      keepYearly = mkKeepOption "keep the last n yearly snapshots (use 'unlimited' to keep all yearly snapshots)";
-      keepWithin = mkKeepOption "keep snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-      keepWithinHourly = mkKeepOption "keep hourly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-      keepWithinDaily = mkKeepOption "keep daily snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-      keepWithinWeekly = mkKeepOption "keep weekly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-      keepWithinMonthly = mkKeepOption "keep monthly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-      keepWithinYearly = mkKeepOption "keep yearly snapshots that are newer than duration (eg. 1y5m7d2h) relative to the latest snapshot";
-    };
+    forget = forgetOptions;
 
     cleanupStaleLocks =
       mkEnableOption "automatically clean up stale locks before performing replication"
@@ -147,6 +153,24 @@ in
 
           script =
             let
+              forgetCommandArgs =
+                cfgf:
+                (if cfgf.prune then " --prune" else "")
+                + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
+                + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
+                + (if cfgf.keepDaily != null then " --keep-daily ${cfgf.keepDaily}" else "")
+                + (if cfgf.keepWeekly != null then " --keep-weekly ${cfgf.keepWeekly}" else "")
+                + (if cfgf.keepMonthly != null then " --keep-monthly ${cfgf.keepMonthly}" else "")
+                + (if cfgf.keepYearly != null then " --keep-yearly ${cfgf.keepYearly}" else "")
+                + (if cfgf.keepWithin != null then " --keep-within ${cfgf.keepWithin}" else "")
+                + (if cfgf.keepWithinHourly != null then " --keep-within-hourly ${cfgf.keepWithinHourly}" else "")
+                + (if cfgf.keepWithinDaily != null then " --keep-within-daily ${cfgf.keepWithinDaily}" else "")
+                + (if cfgf.keepWithinWeekly != null then " --keep-within-weekly ${cfgf.keepWithinWeekly}" else "")
+                + (
+                  if cfgf.keepWithinMonthly != null then " --keep-within-monthly ${cfgf.keepWithinMonthly}" else ""
+                )
+                + (if cfgf.keepWithinYearly != null then " --keep-within-yearly ${cfgf.keepWithinYearly}" else "");
+
               cleanupStaleLocksCommand =
                 if cfg.cleanupStaleLocks then
                   ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" unlock''
@@ -162,7 +186,18 @@ in
 
               localCopiesCommands = lib.mapAttrsToList (
                 name: localRepo:
-                ''restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"''
+                ''
+                  restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
+                ''
+                + (
+                  if localRepo.forget.enable then
+                    ''
+                      restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" forget --group-by host,tags "
+                    ''
+                    + (forgetCommandArgs localRepo.forget)
+                  else
+                    ""
+                )
               ) cfg.localRepos;
 
               remoteCopiesCommands = lib.mapAttrsToList (
@@ -176,29 +211,21 @@ in
                 ''
                   restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
                 ''
+                + (
+                  if remoteRepo.forget.enable then
+                    ''
+                      restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" forget --group-by host,tags "
+                    ''
+                    + (forgetCommandArgs remoteRepo.forget)
+                  else
+                    ""
+                )
               ) cfg.remoteRepos;
 
               forgetCommand =
-                let
-                  cfgf = cfg.forget;
-                in
-                if cfgf.enable then
-                  ''restic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
-                  + (if cfgf.prune then " --prune" else "")
-                  + (if cfgf.keepHourly != null then " --keep-hourly ${cfgf.keepHourly}" else "")
-                  + (if cfgf.keepLast != null then " --keep-last ${cfgf.keepLast}" else "")
-                  + (if cfgf.keepDaily != null then " --keep-daily ${cfgf.keepDaily}" else "")
-                  + (if cfgf.keepWeekly != null then " --keep-weekly ${cfgf.keepWeekly}" else "")
-                  + (if cfgf.keepMonthly != null then " --keep-monthly ${cfgf.keepMonthly}" else "")
-                  + (if cfgf.keepYearly != null then " --keep-yearly ${cfgf.keepYearly}" else "")
-                  + (if cfgf.keepWithin != null then " --keep-within ${cfgf.keepWithin}" else "")
-                  + (if cfgf.keepWithinHourly != null then " --keep-within-hourly ${cfgf.keepWithinHourly}" else "")
-                  + (if cfgf.keepWithinDaily != null then " --keep-within-daily ${cfgf.keepWithinDaily}" else "")
-                  + (if cfgf.keepWithinWeekly != null then " --keep-within-weekly ${cfgf.keepWithinWeekly}" else "")
-                  + (
-                    if cfgf.keepWithinMonthly != null then " --keep-within-monthly ${cfgf.keepWithinMonthly}" else ""
-                  )
-                  + (if cfgf.keepWithinYearly != null then " --keep-within-yearly ${cfgf.keepWithinYearly}" else "")
+                if cfg.forget.enable then
+                  ''restic --retry-lock 2h --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" forget --group-by host,tags ''
+                  + (forgetCommandArgs cfg.forget)
                 else
                   "";
             in
