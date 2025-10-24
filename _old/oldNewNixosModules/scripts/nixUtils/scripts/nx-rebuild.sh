@@ -34,10 +34,10 @@ rebuild() {
 	echo -e "${INFO}Files changed:${RESET}\n${changes}"
 
 	# Run pre-rebuild actions
-	echo -e "${INFO}Running pre-rebuild actionsuser, ...${RESET}"
+	echo -e "${INFO}Running pre-rebuild actions...${RESET}"
 	source $NX_PRE_REBUILD
 
-	echo -e "${INFO}NixOS Rebuildinguser, ...${RESET}"
+	echo -e "${INFO}NixOS Rebuilding...${RESET}"
 	# Rebuild, and if errors occur make sure to exit
 	# tarball-ttl 0 forces the tarball cache to be stale and re-downloaded
 	# warn dirty disables the goddamn git dirty tree message
@@ -50,7 +50,7 @@ rebuild() {
 		return 1
 
 	# Run post-rebuild actions
-	echo -e "${INFO}Running post-rebuild actionsuser, ...${RESET}"
+	echo -e "${INFO}Running post-rebuild actions...${RESET}"
 	source $NX_POST_REBUILD
 
 	# Get current generation metadata
@@ -73,10 +73,10 @@ rebuild() {
 	echo -e "${INFO}New files changed:${RESET}\n${changes}"
 
 	# Commit all changes with the generation metadata
-	echo -e "${INFO}Committinguser, ...${RESET}"
+	echo -e "${INFO}Committing...${RESET}"
 	git commit -m "$current_gen" -m "$changes" 1>/dev/null
 
-	echo -e "${INFO}Pushinguser, ...${RESET}"
+	echo -e "${INFO}Pushing...${RESET}"
 	# Git push is stoopid and writes everything to stderr
 	git push &>/dev/null
 }
