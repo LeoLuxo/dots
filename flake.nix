@@ -46,6 +46,7 @@
               inherit inputs lib2;
               inherit profiles;
               inherit hosts;
+              inherit autologin;
               # inherit customPkgs;
               host = hosts.${hostname};
 
