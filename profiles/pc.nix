@@ -1,29 +1,20 @@
+{ pkgs, ... }:
 {
-  config,
-  pkgs,
-  lib,
-  ...
-}:
-
-let
-  inherit (lib) modules types;
-in
-
-{
+  # Install my fonts
   config.fonts.packages = with pkgs; [
+    # Nice legible font, used for obsidian
     atkinson-hyperlegible-next
 
-    # Install certain nerd fonts
+    # Nerd fonts (includes ligatures and symbols)
     nerd-fonts.fantasque-sans-mono
     nerd-fonts.mononoki
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.atkynson-mono
 
-    # Install the Iosevka font
+    # Iosevka is a hyper-customizable font
     # https://typeof.net/Iosevka/customizer
-    # Build not working for some reason :shrug:
-
+    # But the build is not working for some reason :(
     # (iosevka.override {
     #   set = "Custom ";
     #   privateBuildPlan = ''
@@ -47,5 +38,4 @@ in
     #   '';
     # })
   ];
-
 }

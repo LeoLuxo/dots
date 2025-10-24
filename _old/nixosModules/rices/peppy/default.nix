@@ -16,7 +16,7 @@ in
     inputs.catppuccin.nixosModules.catppuccin
 
     # wallpaper
-    fonts
+    # fonts
 
     ./gnome.nix
     ./cursor.nix
