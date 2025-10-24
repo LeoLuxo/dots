@@ -71,11 +71,5 @@ in
         uid = cfg.uid;
       };
     };
-
-    nix.settings = {
-      trusted-users = [
-        cfg.name
-      ];
-    };
   };
 }
