@@ -3,6 +3,7 @@
   config,
   pkgs,
   nixosModules,
+  user,
   ...
 }:
 
@@ -11,7 +12,6 @@ let
     {
       fetchurl,
       appimageTools,
-      ...
     }:
     let
       pname = "yuzu";

@@ -1,4 +1,4 @@
-{ ... }:
+{ user, ... }:
 {
   programs.steam = {
     # Install steam

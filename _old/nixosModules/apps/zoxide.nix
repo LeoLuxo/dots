@@ -3,6 +3,7 @@
   config,
   pkgs,
   lib2,
+  user,
   ...
 }:
 
@@ -29,11 +30,11 @@ in
       enableFishIntegration = true;
     };
 
-    # home-manager.users.${config.my.user.name}.home.shellAliases = mkIf cfg.enableAlias {
+    # home-manager.users.${user}.home.shellAliases = mkIf cfg.enableAlias {
     #   cd = "z";
     # };
 
-    home-manager.users.${config.my.user.name}.programs.fish.functions = mkIf cfg.enableAlias {
+    home-manager.users.${user}.programs.fish.functions = mkIf cfg.enableAlias {
       cd = ''
         if type -q z
             z $argv

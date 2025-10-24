@@ -2,6 +2,7 @@
   pkgs,
   config,
 
+  user,
   ...
 }:
 
@@ -17,7 +18,7 @@
     gnomeExtensions.openweather-refined
   ];
 
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkTuple mkUint32;

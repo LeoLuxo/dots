@@ -2,6 +2,7 @@
   pkgs,
   config,
 
+  user,
   ...
 }:
 
@@ -12,7 +13,7 @@
     gnomeExtensions.net-speed-simplified
   ];
 
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     {
 

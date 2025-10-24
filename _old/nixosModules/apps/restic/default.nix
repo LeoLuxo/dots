@@ -3,6 +3,7 @@
   pkgs,
   lib,
   lib2,
+  user,
   ...
 }:
 
@@ -121,7 +122,7 @@ in
         rustic
       ];
 
-      home-manager.users.${config.my.user.name} = {
+      home-manager.users.${user} = {
         home.shellAliases = lib.mkMerge (
           [
             {

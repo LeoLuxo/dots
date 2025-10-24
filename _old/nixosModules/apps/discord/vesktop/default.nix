@@ -2,6 +2,7 @@
   lib,
   pkgs,
   lib2,
+  user,
   ...
 }:
 

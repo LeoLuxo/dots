@@ -2,6 +2,7 @@
   pkgs,
   config,
 
+  user,
   ...
 }:
 
@@ -11,7 +12,7 @@
   environment.systemPackages = with pkgs; [
     gnomeExtensions.burn-my-windows
   ];
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     {
 

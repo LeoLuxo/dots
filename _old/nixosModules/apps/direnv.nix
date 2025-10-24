@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, user, ... }:
 {
   programs.direnv = {
     enable = true;
@@ -17,7 +17,7 @@
     '';
   };
 
-  home-manager.users.${config.my.user.name} = {
+  home-manager.users.${user} = {
 
     # Add aliases
     home.shellAliases = {

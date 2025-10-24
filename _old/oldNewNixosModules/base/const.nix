@@ -3,6 +3,7 @@
   config,
   pkgs,
   lib2,
+  user,
   ...
 }:
 
@@ -48,7 +49,7 @@ in
     paths = {
       "home" = mkPathEntry {
         description = "the default home folder; by default is set as the user's home if this nixos-config is configured as a single-user system (`/home/<user>` by default), `/root` otherwise";
-        default = notNullOr config.my.user.home "/root";
+        default = "/home/${user}";
       };
 
       "nixos" = mkPathEntry {
@@ -78,9 +79,9 @@ in
 
       default = {
         # TODO: Move this to presets
-        user = mkIf (config.my.user != null) {
-          private = "${config.my.user.home}/.ssh/id_ed25519";
-          public = "${config.my.user.home}/.ssh/id_ed25519.pub";
+        user = {
+          private = "/home/${user}/.ssh/id_ed25519";
+          public = "/home/${user}/.ssh/id_ed25519.pub";
         };
 
         host = {
