@@ -1,5 +1,6 @@
 {
   hostname,
+  hosts,
   lib,
   pkgs,
   profiles,
@@ -36,8 +37,35 @@
       ++ (lib.mapAttrsToList (username: _: username) users);
   };
 
+  # Enable boot loading
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
   # Set the hostname
   networking.hostName = hostname;
+
+  # Add all IPs defined in my hosts list to the networking hosts map
+  networking.hosts = lib.concatMapAttrs (
+    name: hostCfg:
+    lib.concatMapAttrs (_: ip: {
+      "${ip}" = [ name ];
+    }) (hostCfg.ip or { })
+  ) hosts;
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
 
   # Essential system packages
   environment.systemPackages = with pkgs; [
