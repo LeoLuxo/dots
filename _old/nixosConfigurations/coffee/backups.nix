@@ -169,9 +169,9 @@
             prune = true;
 
             keepWithinHourly = "3d";
-            keepWithinDaily = "10d";
-            keepWithinWeekly = "1m";
-            keepWithinMonthly = "1y";
+            keepWithinDaily = "15d";
+            keepWithinWeekly = "6m";
+            keepWithinMonthly = "2y";
             keepYearly = "unlimited";
           };
         };
