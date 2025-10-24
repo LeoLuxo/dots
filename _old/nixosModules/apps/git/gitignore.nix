@@ -1,10 +1,11 @@
 {
   config,
+  user,
   ...
 }:
 
 {
-  home-manager.users.${config.my.user.name} = {
+  home-manager.users.${user} = {
     programs.git.ignores = [
       #
       # LINUX

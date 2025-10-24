@@ -3,6 +3,7 @@
   config,
   lib,
 
+  user,
   ...
 }:
 
@@ -13,7 +14,7 @@
 
   environment.shells = [ pkgs.bash ];
 
-  home-manager.users.${config.my.user.name} = {
+  home-manager.users.${user} = {
     # Let home manager manage bash; needed to set sessionVariables
     programs.bash = {
       enable = true;

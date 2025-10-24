@@ -146,7 +146,7 @@ rec {
     in
     { config, ... }:
     {
-      home-manager.users.${config.my.user.name} = {
+      hm = {
         programs.bash.shellAliases.${name} = mappedCommands.bash;
         programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
         programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';

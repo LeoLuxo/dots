@@ -2,6 +2,7 @@
   pkgs,
   config,
 
+  user,
   ...
 }:
 
@@ -12,7 +13,7 @@
     gnomeExtensions.media-controls
   ];
 
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     let
       inherit (lib.hm.gvariant) mkUint32;

@@ -3,6 +3,7 @@
   options,
   config,
   inputs,
+  user,
   ...
 }:
 
@@ -10,8 +11,6 @@ let
   inherit (lib) types;
   inherit (lib.options) mkOption;
   inherit (lib.modules) mkIf;
-
-  userCfg = config.my.user;
 in
 {
   imports = [
@@ -24,7 +23,7 @@ in
     default = { };
   };
 
-  config = mkIf (userCfg.enable) {
+  config = {
     # Home-Manager config
     home-manager = {
       useGlobalPkgs = true;
@@ -34,7 +33,7 @@ in
       # Applies to home.file and also xdg.*File
       backupFileExtension = "bak";
 
-      users.${userCfg.name} = lib.mkAliasDefinitions options.my.hm;
+      users.${user} = lib.mkAliasDefinitions options.my.hm;
     };
 
     my.hm = {
@@ -42,8 +41,8 @@ in
       home.stateVersion = "24.05";
 
       # Home Manager needs a bit of information about you and the paths it should manage.
-      home.username = userCfg.name;
-      home.homeDirectory = userCfg.home;
+      home.username = user;
+      home.homeDirectory = "/home/${user}";
 
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;
@@ -53,14 +52,14 @@ in
         enable = true;
         createDirectories = true;
 
-        download = "${userCfg.home}/downloads";
+        download = "/home/${user}/downloads";
 
-        music = "${userCfg.home}/media";
-        pictures = "${userCfg.home}/media";
-        videos = "${userCfg.home}/media";
+        music = "/home/${user}/media";
+        pictures = "/home/${user}/media";
+        videos = "/home/${user}/media";
 
-        desktop = "${userCfg.home}/misc";
-        documents = "${userCfg.home}/misc";
+        desktop = "/home/${user}/misc";
+        documents = "/home/${user}/misc";
 
         templates = null;
         publicShare = null;

@@ -1,4 +1,9 @@
-{ inputs, lib, ... }:
+{
+  inputs,
+  lib,
+  user,
+  ...
+}:
 {
   imports = [
     ./configuration.nix

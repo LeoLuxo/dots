@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  user,
   ...
 }:
 
@@ -12,7 +13,7 @@
     commit
   ];
 
-  home-manager.users.${config.my.user.name} = {
+  home-manager.users.${user} = {
     # Add aliases
     home.shellAliases = {
       gs = "git status";

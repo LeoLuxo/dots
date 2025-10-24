@@ -3,6 +3,7 @@
   config,
 
   lib,
+  user,
   ...
 }:
 
@@ -15,7 +16,7 @@
     gnomeExtensions.ddterm
   ];
 
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     {
 

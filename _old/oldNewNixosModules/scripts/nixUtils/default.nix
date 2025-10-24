@@ -4,6 +4,7 @@
   config,
   inputs,
   lib2,
+  user,
   ...
 }:
 
@@ -230,7 +231,7 @@ in
         });
       };
 
-      home-manager.users.${config.my.user.name} = {
+      home-manager.users.${user} = {
         # Add aliases
         home.shellAliases = {
           nx-cd = "cd $NX_DOTS";

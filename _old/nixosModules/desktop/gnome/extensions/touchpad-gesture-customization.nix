@@ -2,6 +2,7 @@
   pkgs,
   config,
 
+  user,
   ...
 }:
 
@@ -12,7 +13,7 @@
     gnomeExtensions.touchpad-gesture-customization
   ];
 
-  home-manager.users.${config.my.user.name} =
+  home-manager.users.${user} =
     { lib, ... }:
     {
 

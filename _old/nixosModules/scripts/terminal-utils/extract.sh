@@ -16,7 +16,7 @@ if [ -f $1 ]; then
 	*.zip) unzip $1 ;;
 	*.Z) uncompress $1 ;;
 	*.7z) 7z x $1 ;;
-	*) echo "don't know how to extract '$1'..." ;;
+	*) echo "don't know how to extract '$1'user, ..." ;;
 	esac
 else
 	echo "'$1' is not a valid file!"

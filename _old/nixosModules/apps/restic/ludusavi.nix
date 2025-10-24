@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  user,
   ...
 }:
 
@@ -42,7 +43,7 @@ in
           | items {|game, info|
             let paths = $info.files | columns
 
-            rustic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" backup ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags
+            rustic --repo "${cfgRestic.repo}" --password-file "${cfgRestic.passwordFile}" backup user, ...$paths --tag gamesave --tag ($game | str kebab-case) --label $"Game save: ($game)" --group-by host,tags
             
             $game
           }
@@ -57,7 +58,7 @@ in
       };
     in
     {
-      home-manager.users.${config.my.user.name} = {
+      home-manager.users.${user} = {
         home.shellAliases = {
           restic-main-ludusavi = "${script}";
         };

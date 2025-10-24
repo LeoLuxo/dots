@@ -12,9 +12,8 @@
     nerd-fonts.jetbrains-mono
     nerd-fonts.atkynson-mono
 
-    # Iosevka is a hyper-customizable font
+    # Iosevka is a hyper-customizable font, but the build is not working right now for some reason :(
     # https://typeof.net/Iosevka/customizer
-    # But the build is not working for some reason :(
     # (iosevka.override {
     #   set = "Custom ";
     #   privateBuildPlan = ''

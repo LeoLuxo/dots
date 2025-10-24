@@ -3,6 +3,7 @@
   lib,
   lib2,
   nixosModules,
+  user,
   ...
 }:
 
@@ -57,7 +58,7 @@ in
       cfg = config.rice.peppy;
     in
     {
-      home-manager.users.${config.my.user.name} = {
+      home-manager.users.${user} = {
         # Enable catppuccin for gtk
         gtk = {
           enable = true;
