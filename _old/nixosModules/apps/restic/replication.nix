@@ -186,7 +186,13 @@ in
 
               localCopiesCommands = lib.mapAttrsToList (
                 name: localRepo:
-                ''
+                (
+                  if cfg.cleanupStaleLocks then
+                    ''restic --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" unlock''
+                  else
+                    ""
+                )
+                + ''
                   restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
                 ''
                 + (
@@ -208,7 +214,13 @@ in
                     if remoteRepo.remotePort != null then "-p ${builtins.toString remoteRepo.remotePort}" else "";
                   strictHostKeyChecking = if remoteRepo.strictHostKeyChecking then "yes" else "no";
                 in
-                ''
+                (
+                  if cfg.cleanupStaleLocks then
+                    ''restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" unlock''
+                  else
+                    ""
+                )
+                + ''
                   restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" copy --from-repo "${cfgRestic.repo}" --from-password-file "${cfgRestic.passwordFile}"
                 ''
                 + (
