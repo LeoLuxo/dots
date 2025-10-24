@@ -122,6 +122,9 @@ in
     # LC_TELEPHONE = "en_IE.UTF-8";
   };
 
+  # The keyboard mapping table for the virtual consoles
+  console.keyMap = "us";
+
   # Essential system packages
   environment.systemPackages = with pkgs; [
     nano
