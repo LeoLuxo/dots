@@ -45,11 +45,7 @@ in
     passwordFile = mkOption {
       description = "the hashed password file";
       type = types.nullOr types.path;
-      default =
-        if config.my.secretManagement.enable then
-          config.my.secrets."userpwds/${hostname}/${cfg.name}"
-        else
-          null;
+      default = config.age.secrets."userpwds/${hostname}/${cfg.name}".path;
     };
 
     extraGroups = mkOption {

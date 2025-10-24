@@ -26,7 +26,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # Fix eduroam certificate
-    my.secretManagement.secrets."wifi/eduroam-ca.pem" = {
+    age.secrets."wifi/eduroam-ca.pem" = {
       # Required by NetworkManager otherwise it won't work
       owner = "root";
       group = "root";
@@ -39,7 +39,7 @@ in
 
       ensureProfiles = {
         environmentFiles = [
-          config.my.secrets."wifi/networkmanager-env"
+          config.age.secrets."wifi/networkmanager-env".path
         ];
 
         profiles = lib.getAttrs cfg.enabledNetworks (import ./networks.nix config);

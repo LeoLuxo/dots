@@ -16,6 +16,7 @@
     ./syncthing.nix
     # ./backups.nix
 
+    profiles.base
     # profiles.pc
     # profiles.personal
     # profiles.music

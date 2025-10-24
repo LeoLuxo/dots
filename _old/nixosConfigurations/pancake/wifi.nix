@@ -2,7 +2,7 @@
 
 {
   # Fix eduroam certificate
-  my.secretManagement.secrets."wifi/eduroam-ca.pem" = {
+  config.age.secrets."wifi/eduroam-ca.pem" = {
     # Required by NetworkManager
     owner = "root";
     group = "root";
@@ -15,7 +15,7 @@
 
     ensureProfiles = {
       environmentFiles = [
-        config.my.secrets."wifi/networkmanager-env"
+        config.age.secrets."wifi/networkmanager-env".path
       ];
 
       profiles = {
@@ -103,7 +103,7 @@
         # Uni network
         eduroam = {
           "802-1x" = {
-            ca-cert = config.my.secrets."wifi/eduroam-ca.pem";
+            ca-cert = config.age.secrets."wifi/eduroam-ca.pem".path;
             eap = "peap;";
             identity = "$EDUROAM_IDENTITY";
             password = "$EDUROAM_PASSWORD";

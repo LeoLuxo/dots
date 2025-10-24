@@ -1,0 +1,6 @@
+{ profiles, ... }:
+{
+  imports = [
+    profiles.agenix
+  ];
+}
