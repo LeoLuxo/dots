@@ -127,17 +127,6 @@ in
     display.textScalingPercent = 150;
   };
 
-  # Enable and configure the X11 windowing system.
-  services.xserver = {
-    enable = true;
-
-    # Configure keymap in X11
-    xkb = {
-      layout = "us";
-      variant = "altgr-intl";
-    };
-  };
-
   # # 1TB SSD
   # fileSystems."/stuff" = {
   #   device = "/dev/disk/by-label/stuff";

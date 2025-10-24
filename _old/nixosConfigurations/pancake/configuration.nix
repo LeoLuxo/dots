@@ -114,21 +114,6 @@ in
   #   fsType = "btrfs";
   # };
 
-  # Enable and configure the X11 windowing system.
-  services.xserver = {
-    enable = true;
-
-    # Configure keymap in X11
-    xkb = {
-      layout = "us";
-      variant = "altgr-intl";
-    };
-
-    # Touchscreen support
-    # modules = [ pkgs.xf86_input_wacom ];
-    # wacom.enable = true;
-  };
-
   # Also for touchscreen support (or maybe touchpad? unsure)
   # services.libinput.enable = true;
 
