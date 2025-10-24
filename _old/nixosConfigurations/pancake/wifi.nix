@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, user, ... }:
 
 {
   # Fix eduroam certificate

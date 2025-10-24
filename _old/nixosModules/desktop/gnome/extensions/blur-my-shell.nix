@@ -3,6 +3,7 @@
   pkgs,
   lib,
   lib2,
+  user,
   ...
 }:
 
@@ -42,7 +43,7 @@ in
       environment.systemPackages = with pkgs; [
         gnomeExtensions.blur-my-shell
       ];
-      home-manager.users.${config.my.user.name} =
+      home-manager.users.${user} =
         { lib, ... }:
         {
 

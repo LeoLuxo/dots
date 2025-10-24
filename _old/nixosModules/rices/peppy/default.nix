@@ -3,6 +3,7 @@
   lib,
   config,
   inputs,
+  user,
   ...
 }:
 
@@ -71,7 +72,7 @@ in
       accent = config.rice.peppy.theme.accent;
     in
     {
-      home-manager.users.${config.my.user.name} = {
+      home-manager.users.${user} = {
         imports = [
           inputs.catppuccin.homeManagerModules.catppuccin
         ];
@@ -113,7 +114,7 @@ in
       # };
 
       # Install catppuccin extensions to vscode
-      # home-manager.users.${config.my.user.name} = {
+      # home-manager.users.${user} = {
       # home.activation."vscode-peppy" = ''
       #   ${pkgs.vscode}/bin/code \
       #     --install-extension ${./assets/Catppuccin.catppuccin-vsc-3.16.0.vsix} --force \

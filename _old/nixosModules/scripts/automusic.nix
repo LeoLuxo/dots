@@ -1,6 +1,7 @@
 {
   pkgs,
   nixosModules,
+  user,
   ...
 }:
 

@@ -4,6 +4,7 @@
   nixosModules,
   config,
   pkgs,
+  user,
   ...
 }:
 

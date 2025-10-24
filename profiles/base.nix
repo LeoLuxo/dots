@@ -1,5 +1,6 @@
 {
   hostname,
+  config,
   hosts,
   lib,
   pkgs,
@@ -7,6 +8,10 @@
   users,
   ...
 }:
+
+let
+  defaultShell = "fish";
+in
 {
   imports = [
     profiles.agenix
@@ -60,6 +65,36 @@
       "${ip}" = [ name ];
     }) (hostCfg.ip or { })
   ) hosts;
+
+  # Define and set up all the manually-defined users
+  users = {
+    mutableUsers = false;
+
+    users = lib.concatMapAttrs (username: userCfg: {
+      ${username} = {
+        home = "/home/${username}";
+        description = "the default user '${username}'";
+        isNormalUser = true;
+
+        hashedPasswordFile = config.age.secrets."userpwds/${hostname}/${username}".path;
+        extraGroups = [ "wheel" ];
+
+        uid = userCfg.uid;
+
+        # Set default shell (can't be done in home-manager afaik)
+        shell = pkgs.${defaultShell};
+      };
+    }) users;
+  };
+
+  # # Install default shell
+  # programs.${defaultShell}.enable = true;
+
+  # # Enable autologin if relevant
+  # services.displayManager.autoLogin = lib.mkIf (autologin != null) {
+  #   enable = true;
+  #   user = autologin;
+  # };
 
   /*
     --------------------------------------------------------------------------------

@@ -2,6 +2,7 @@
   config,
   hostname,
   nixosModules,
+  user,
   ...
 }:
 {
@@ -10,7 +11,7 @@
   age.secrets =
     let
       userPerms = {
-        owner = config.my.user.name;
+        owner = user;
         group = "users";
         mode = "400"; # read-only for owner
       };

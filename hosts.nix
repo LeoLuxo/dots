@@ -42,6 +42,7 @@
     os = "nixos";
     nixosConfig = import ./configs/pancake;
 
+    user = "lili";
     users = [
       {
         username = "lili";

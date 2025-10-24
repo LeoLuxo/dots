@@ -3,6 +3,7 @@
   config,
   pkgs,
   lib2,
+  user,
   ...
 }:
 
@@ -26,7 +27,6 @@ in
   config = lib.mkIf cfg.enable {
     my = {
       system = {
-        user.name = cfg.username;
         locale = {
           enable = true;
         };
@@ -36,7 +36,6 @@ in
         defaultAppsShortcuts = {
           enable = true;
         };
-        # fonts = {enable = true;};
       };
       scripts = {
         nx = {

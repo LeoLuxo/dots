@@ -3,6 +3,7 @@
   config,
   lib,
 
+  user,
   ...
 }:
 
@@ -14,7 +15,7 @@
   programs.fish.enable = true;
   environment.shells = [ pkgs.fish ];
 
-  home-manager.users.${config.my.user.name} = {
+  home-manager.users.${user} = {
     programs.fish = {
       enable = true;
 

@@ -3,6 +3,7 @@
   nixosModules,
   lib2,
   inputs,
+  user,
   ...
 }:
 

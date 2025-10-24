@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  user,
+  ...
+}:
 {
   boot.kernelPatches = [
     {
@@ -49,8 +54,8 @@
   # environment.systemPackages = [
   # ];
 
-  home-manager.users.${config.my.user.name} =
-    { config, ... }:
+  home-manager.users.${user} =
+    { config, user, ... }:
     {
       home.packages = [
         pkgs.opencomposite

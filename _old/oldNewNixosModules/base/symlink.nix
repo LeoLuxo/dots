@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  user,
   ...
 }:
 
@@ -12,7 +13,7 @@ let
   cfg = config.my.symlinks;
 
   symlinkAttrType = types.submodule (
-    { config, ... }:
+    { config, user, ... }:
     {
       options = {
         target = mkOption {
@@ -52,7 +53,7 @@ in
 
   config.my.hm = mkIf cfg.enable (
     # `config` below is home-manager's config
-    { config, ... }:
+    { config, user, ... }:
     let
       mapAttrsToSymlink = lib.mapAttrs (
         name: link:
