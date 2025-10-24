@@ -18,7 +18,7 @@
     inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
 
     profiles.base
-    # profiles.pc
+    profiles.pc
     # profiles.gaming
 
     # profiles.base

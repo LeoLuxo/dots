@@ -13,9 +13,6 @@ in
 
 {
   imports = with nixosModules; [
-    # Require fonts for vscode
-    fonts
-
     apps.direnv
 
     (mkSyncedPath {
