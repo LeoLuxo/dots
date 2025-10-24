@@ -7,7 +7,7 @@
 {
   imports = [ nixosModules.apps.restic ];
 
-  my.secretManagement.secrets =
+  age.secrets =
     let
       userPerms = {
         owner = config.my.user.name;
@@ -23,7 +23,7 @@
   # Setup my auto backups
   restic =
     let
-      repoPassword = config.my.secrets."restic/${hostname}-pwd";
+      repoPassword = config.age.secrets."restic/${hostname}-pwd".path;
     in
     {
       enable = true;
@@ -130,9 +130,9 @@
         #   enable = true;
         #   timer = "daily";
         #   randomDelay = "1h";
-        #   bwClientIDFile = config.my.secrets."bitwarden/client-id";
-        #   bwClientSecretFile = config.my.secrets."bitwarden/client-secret";
-        #   bwPasswordFile = config.my.secrets."bitwarden/password";
+        #   bwClientIDFile = config.age.secrets."bitwarden/client-id".path;
+        #   bwClientSecretFile = config.age.secrets."bitwarden/client-secret".path;
+        #   bwPasswordFile = config.age.secrets."bitwarden/password".path;
         # };
       };
 
@@ -149,7 +149,7 @@
         remoteRepos."hetzner-storage-box" = {
           path = "restic/coffee";
           passwordFile = repoPassword;
-          remoteAddressFile = config.my.secrets."restic/storage-box-addr";
+          remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
           # Don't specify key and let ssh find the right key/identity to connect with
           strictHostKeyChecking = false; # TODO: make true by configuring known_hosts correctly
         };

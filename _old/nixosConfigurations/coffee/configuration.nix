@@ -163,15 +163,6 @@ in
         username = "lili";
       };
 
-    secretManagement = {
-      enable = true;
-
-      editSecretsCommand = {
-        enable = true;
-        path = "/etc/nixos/secrets";
-      };
-    };
-
     symlinks = {
       enable = true;
 
