@@ -144,6 +144,17 @@
         localRepos."hdd" = {
           path = "/backup/restic/repo";
           passwordFile = repoPassword;
+
+          forget = {
+            enable = true;
+            prune = true;
+
+            keepWithinHourly = "3d";
+            keepWithinDaily = "10d";
+            keepWithinWeekly = "1m";
+            keepWithinMonthly = "1y";
+            keepYearly = "unlimited";
+          };
         };
 
         remoteRepos."hetzner-storage-box" = {
@@ -152,6 +163,17 @@
           remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
           # Don't specify key and let ssh find the right key/identity to connect with
           strictHostKeyChecking = false; # TODO: make true by configuring known_hosts correctly
+
+          forget = {
+            enable = true;
+            prune = true;
+
+            keepWithinHourly = "3d";
+            keepWithinDaily = "10d";
+            keepWithinWeekly = "1m";
+            keepWithinMonthly = "1y";
+            keepYearly = "unlimited";
+          };
         };
 
         forget = {
