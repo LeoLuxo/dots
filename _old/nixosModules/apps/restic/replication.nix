@@ -200,7 +200,7 @@ in
                 + (
                   if localRepo.forget.enable then
                     ''
-                      restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" forget --group-by host,tags "
+                      restic --retry-lock 2h --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" forget --group-by host,tags
                     ''
                     + (forgetCommandArgs localRepo.forget)
                   else
@@ -230,7 +230,7 @@ in
                 + (
                   if remoteRepo.forget.enable then
                     ''
-                      restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" forget --group-by host,tags "
+                      restic --retry-lock 2h --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" forget --group-by host,tags
                     ''
                     + (forgetCommandArgs remoteRepo.forget)
                   else
