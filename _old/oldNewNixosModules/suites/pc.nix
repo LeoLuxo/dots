@@ -27,13 +27,7 @@ in
     my = {
       system = {
         user.name = cfg.username;
-        boot = {
-          enable = true;
-        };
         locale = {
-          enable = true;
-        };
-        printing = {
           enable = true;
         };
       };
