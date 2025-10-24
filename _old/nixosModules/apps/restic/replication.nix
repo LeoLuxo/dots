@@ -188,7 +188,9 @@ in
                 name: localRepo:
                 (
                   if cfg.cleanupStaleLocks then
-                    ''restic --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" unlock''
+                    ''
+                      restic --repo "${localRepo.path}" --password-file "${localRepo.passwordFile}" unlock
+                    ''
                   else
                     ""
                 )
@@ -216,7 +218,9 @@ in
                 in
                 (
                   if cfg.cleanupStaleLocks then
-                    ''restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" unlock''
+                    ''
+                      restic --option sftp.args='${specifiedPort} ${specifiedPrivateKey} -o StrictHostKeyChecking=${strictHostKeyChecking}' --repo "sftp:$(cat ${remoteRepo.remoteAddressFile}):${remoteRepo.path}" --password-file "${remoteRepo.passwordFile}" unlock
+                    ''
                   else
                     ""
                 )
