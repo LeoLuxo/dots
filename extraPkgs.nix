@@ -22,10 +22,8 @@ in
   "24-11" = mkPkgsOverlay inputs.nixpkgs-24-11;
   "24-05" = mkPkgsOverlay inputs.nixpkgs-24-05;
 
-  "custom" =
-    final: prev:
-    lib.packagesFromDirectoryRecursive {
-      inherit (prev) callPackage;
-      directory = ./packages;
-    };
+  "custom" = lib.packagesFromDirectoryRecursive {
+    inherit (prev) callPackage;
+    directory = ./packages;
+  };
 }
