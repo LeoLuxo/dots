@@ -22,7 +22,7 @@
     # profiles.music
     profiles.gaming.base
     profiles.gaming.emulation
-    # profiles.gaming.minecraft
+    profiles.gaming.minecraft
 
     profiles.hardware.gpu.amd
 
