@@ -74,7 +74,7 @@ in
     users = lib.concatMapAttrs (username: userCfg: {
       ${username} = {
         home = "/home/${username}";
-        description = "the default user '${username}'";
+        description = "'${username}'";
         isNormalUser = true;
 
         hashedPasswordFile = config.age.secrets."userpwds/${hostname}/${username}".path;
