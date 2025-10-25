@@ -20,7 +20,7 @@
     profiles.pc
     # profiles.personal
     # profiles.music
-    # profiles.gaming.base
+    profiles.gaming.base
     # profiles.gaming.emulation
     # profiles.gaming.minecraft
 
@@ -70,9 +70,7 @@
     fsType = "ntfs";
   };
 
-  pinKernel = {
-    enable = true;
-  };
+  pinKernel.enable = true;
 
   # gnome = {
   #   power = {
