@@ -11,6 +11,7 @@ in
 {
   imports = [
     profiles.apps.git
+    profiles.apps.vesktop
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff
