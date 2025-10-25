@@ -39,12 +39,6 @@ in
   ];
 
   my = {
-    user.name = "lili";
-
-    symlinks = {
-      enable = true;
-    };
-
     scripts.nx = {
       enable = true;
     };
