@@ -144,9 +144,9 @@ rec {
         _: lastCommand: command { inherit lastCommand; }
       ) historyCommands;
     in
-    { config, ... }:
+    { config, user, ... }:
     {
-      hm = {
+      home-manager.users.${user} = {
         programs.bash.shellAliases.${name} = mappedCommands.bash;
         programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
         programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
