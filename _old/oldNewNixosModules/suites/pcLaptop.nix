@@ -33,21 +33,6 @@ in
         // {
           username = cfg.username;
         };
-
-      system.wifi =
-        {
-          enable = true;
-        }
-        // {
-          enabledNetworks = [
-            "Home"
-            "Isabella"
-            "Parents"
-            "AU Eduroam"
-            "Michi"
-            "Nadja"
-          ];
-        };
     };
   };
 }
