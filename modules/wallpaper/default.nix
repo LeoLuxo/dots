@@ -177,13 +177,13 @@ in
       };
 
       # Auto-update wallpaper repo
-      my.scripts.nx.rebuild.preRebuildActions = ''
+      nx.preRebuildActions = ''
         echo "Updating wallpaper flake"
         nix flake update wallpapers --allow-dirty
         git add flake.lock
       '';
 
-      my.scripts.nx.rebuild.postRebuildActions =
+      nx.postRebuildActions =
         if cfg.isTimed then
           ''
             # Reload the wallpaper to avoid having to logout
