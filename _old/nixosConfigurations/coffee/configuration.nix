@@ -41,11 +41,6 @@ in
     nixosModules.apps.nicotine-plus
     nixosModules.apps.sldl
 
-    # nixosModules.apps.sudachi
-    nixosModules.apps.steamRomManager
-    # nixosModules.apps.yuzu
-    nixosModules.apps.ryujinx
-
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
@@ -65,12 +60,6 @@ in
     guitarix # A virtual guitar amplifier for use with Linux.
 
     picard
-    # lutris
-    snes9x
-    snes9x-gtk
-    melonDS
-    cemu
-    # higan
 
     (pkgs.symlinkJoin {
       name = "prismlauncher";
