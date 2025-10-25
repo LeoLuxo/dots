@@ -1,14 +1,14 @@
 {
-  config,
   pkgs,
+  user,
   ...
 }:
 
 let
-  DCONF_DIFF = "${config.home.homeDirectory}/.nx/dconf_diff";
+  DCONF_DIFF = "/home/${user}/.nx/dconf_diff";
 in
 {
-  hm = {
+  home-manager.users.${user} = {
     home.sessionVariables = { inherit DCONF_DIFF; };
     home.packages = [
       (pkgs.writeScriptWithDeps {
