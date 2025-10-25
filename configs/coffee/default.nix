@@ -29,8 +29,8 @@
     # profiles.apps.nicotinePlus
     # profiles.apps.qmk
     # profiles.apps.syncthing
-    profiles.apps.ukmm
-    profiles.apps.wiiuDownloader
+    # profiles.apps.ukmm
+    # profiles.apps.wiiuDownloader
 
     # profiles.scripts.bootWindows
 
