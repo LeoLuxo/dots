@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   # Playstation controller compatibility
   boot.kernelModules = [
@@ -36,4 +36,9 @@
   };
 
   programs.gamescope.enable = true;
+
+  hm.home.packages = [
+    pkgs.r2modman # A mod manager for Risk of Rain 2 and other Unity games.
+    pkgs.joystickwake # Prevents screen sleep when playing games with a gamepad
+  ];
 }
