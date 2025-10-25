@@ -2,11 +2,12 @@
   lib2,
   pkgs,
   dotsTodo,
+  user,
   ...
 }:
 
 {
-  hm = {
+  home-manager.users.${user} = {
     imports = [
       (lib2.hm.mkKeybind {
         name = "Open dots-todo";

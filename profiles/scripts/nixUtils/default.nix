@@ -49,7 +49,7 @@ in
       # But disable nix-index hook into command-not-found because I don't like its delay
       programs.nix-index.enable = false;
 
-      hm = {
+      home-manager.users.${user} = {
         # Set environment variables
         home.sessionVariables = variables;
 
@@ -66,7 +66,6 @@ in
         # Add aliases
         home.shellAliases = {
           nxr = "nx-rebuild";
-
           nx-search = "nh search --limit 4";
         };
 
