@@ -1,6 +1,7 @@
 {
   pkgs,
-  user,
+  lib,
+  lib2,
   ...
 }:
 
@@ -16,8 +17,11 @@
     })
   ];
 
-  my.keybinds."Instant screenshot" = {
-    binding = "<Super>s";
-    command = "snip";
-  };
+  imports = [
+    (lib2.nixos.mkKeybind {
+      name = "Instant screenshot";
+      binding = "<Super>s";
+      command = "snip";
+    })
+  ];
 }

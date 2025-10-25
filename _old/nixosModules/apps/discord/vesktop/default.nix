@@ -7,10 +7,7 @@
 }:
 
 let
-  inherit (lib2)
-    # mkQuickPatch
-    mkSyncedPath
-    ;
+  inherit (lib2.nixos) mkKeybind mkSyncedPath;
 in
 
 # Relevant issues:
@@ -19,15 +16,27 @@ in
 
 {
   imports = [
-    # (mkSyncedPath {
-    #   xdgPath = "vesktop/settings/settings.json";
-    #   cfgPath = "vesktop/vencord.json";
-    # })
+    (mkSyncedPath {
+      target = "~/.config/vesktop/settings/settings.json";
+      syncName = "vesktop/vencord.json";
+    })
 
-    # (mkSyncedPath {
-    #   xdgPath = "vesktop/settings.json";
-    #   cfgPath = "vesktop/vesktop.json";
-    # })
+    (mkSyncedPath {
+      target = "~/.config/vesktop/settings.json";
+      syncName = "vesktop/vesktop.json";
+    })
+
+    (mkKeybind {
+      name = "Discord mute";
+      binding = "<Super>m";
+      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+    })
+
+    (mkKeybind {
+      name = "Discord deafen";
+      binding = "<Super><Shift>m";
+      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
+    })
 
   ];
 
@@ -44,15 +53,4 @@ in
     (import ./overlays/customIcons.nix)
   ];
 
-  my.keybinds = {
-    "Discord mute" = {
-      binding = "<Super>m";
-      command = "echo \"VCD_TOGGLE_SELF_MUTE\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    };
-
-    "Discord deafen" = {
-      binding = "<Super><Shift>m";
-      command = "echo \"VCD_TOGGLE_SELF_DEAF\" >> $XDG_RUNTIME_DIR/vesktop-ipc";
-    };
-  };
 }
