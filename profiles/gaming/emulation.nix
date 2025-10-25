@@ -44,10 +44,24 @@ in
     ];
   };
 
+  # Don't work as home.packages for some reason???
   environment.systemPackages = [
-    pkgs.custom.yuzu
-    pkgs.custom.ukmm
-    pkgs.custom.wiiuDownloader
+    # Emulators
+    pkgs.custom.yuzu # Switch
+    pkgs.ryubing # Switch (fork of ryujinx)
+    pkgs.snes9x # SNES
+    pkgs.snes9x-gtk # SNES
+    pkgs.melonDS # Nintendo DS
+
+    # Emulators (unused)
+    # pkgs.custom.sudachi # Switch (fork of yuzu)
+    # pkgs.higan # NES, SNES, GB, GBC, GBA, ...
+
+    # To manage emulators & games
+    # pkgs.lutris # Game library manager
+    pkgs.steam-rom-manager # Add emulated games to steam
+    pkgs.custom.ukmm # Breath of the Wild mod manager
+    pkgs.custom.wiiuDownloader # Wii U dumps/games downloader
   ];
 
 }
