@@ -109,10 +109,6 @@ in
       // {
         username = "lili";
       };
-
-    desktop.defaultAppsShortcuts = {
-      enable = true;
-    };
   };
 
 }

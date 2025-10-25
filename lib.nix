@@ -346,7 +346,7 @@ rec {
       libArgs:
 
       # The nixos module to be imported
-      { users, ... }@args:
+      { users, ... }:
       {
         home-manager.users = lib.concatMapAttrs (username: _: {
           ${username} = {

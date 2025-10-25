@@ -1,10 +1,55 @@
-{ pkgs, profiles, ... }:
+{
+  pkgs,
+  profiles,
+  lib2,
+  ...
+}:
+
+let
+  inherit (lib2.nixos) mkKeybind;
+in
 {
   imports = [
     profiles.apps.git
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff
+
+    (mkKeybind {
+      name = "Open terminal";
+      binding = "<Super>grave";
+      command = "$APP_TERMINAL";
+    })
+
+    (mkKeybind {
+      name = "Open backup terminal";
+      binding = "<Super>t";
+      command = "$APP_TERMINAL_BACKUP";
+    })
+
+    (mkKeybind {
+      name = "Open web browser";
+      binding = "<Super>F1";
+      command = "$APP_BROWSER";
+    })
+
+    (mkKeybind {
+      name = "Open notes";
+      binding = "<Super>F2";
+      command = "$APP_NOTES";
+    })
+
+    (mkKeybind {
+      name = "Open code editor";
+      binding = "<Super>F3";
+      command = "$APP_CODE_EDITOR";
+    })
+
+    (mkKeybind {
+      name = "Open communication";
+      binding = "<Super>F4";
+      command = "$APP_COMMUNICATION";
+    })
   ];
 
   /*
