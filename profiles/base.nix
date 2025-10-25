@@ -1,10 +1,12 @@
 {
   autologin,
   config,
+  host,
   hostname,
   hosts,
   inputs,
   lib,
+  lib2,
   pkgs,
   profiles,
   users,
@@ -149,7 +151,12 @@ in
 
     # On activation move existing files by appending the given file extension rather than exiting with an error.
     # Applies to home.file and also xdg.*File
-    backupFileExtension = "bak";
+    # backupFileExtension = "bak";
+
+    extraSpecialArgs = {
+      inherit inputs lib2;
+      inherit hostname hosts host;
+    };
 
     users = lib.concatMapAttrs (username: _: {
       ${username} = {
