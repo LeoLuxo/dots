@@ -4,6 +4,7 @@
   inputs,
   lib,
   users,
+  user,
   ...
 }:
 
@@ -84,7 +85,7 @@ in
     # kernel.realtime = true;
   };
 
-  hm = {
+  home-manager.users.${user} = {
     services = {
       playerctld.enable = true;
       # easyeffects = {
