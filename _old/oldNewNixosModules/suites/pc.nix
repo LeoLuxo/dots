@@ -35,19 +35,7 @@ in
       scripts = {
         nx = {
           enable = true;
-
-          # Auto-update wallpaper repo
-          # rebuild.preRebuildActions = ''
-          #   echo "Updating wallpaper flake"
-          #   nix flake update wallpapers --allow-dirty
-          #   git add flake.lock
-          # '';
         };
-
-        # terminalUtils = {enable = true;};
-
-        # snip = {enable = true;};
-        # clipboard = {enable = true;};
       };
     };
   };
