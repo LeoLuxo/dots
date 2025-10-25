@@ -132,17 +132,6 @@ in
         username = "lili";
       };
 
-    symlinks = {
-      enable = true;
-
-      xdgConfig."Ryujinx" = "/stuff/games/emu/switch/ryujinx";
-      xdgConfig."steam-rom-manager/userData" = "/stuff/games/emu/steamRomManager/userData";
-      xdgData."sudachi" = "/stuff/games/emu/switch/yuzu";
-      xdgData."yuzu" = "/stuff/games/emu/switch/yuzu";
-      xdgData."Cemu" = "/stuff/games/emu/wiiu/Cemu";
-      xdgData."ukmm" = "/stuff/games/emu/wiiu/ukmm";
-    };
-
     desktop.defaultAppsShortcuts = {
       enable = true;
     };
