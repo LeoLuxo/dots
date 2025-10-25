@@ -39,10 +39,9 @@ in
     # })
   ];
 
-  my.defaultApps.codeEditor = lib.mkDefault "code";
-
   environment.variables = {
-    EDITOR = "code";
+    VISUAL = "code";
+    APP_CODE_EDITOR = lib.mkDefault "code";
   };
 
   home-manager.users.${user} = {

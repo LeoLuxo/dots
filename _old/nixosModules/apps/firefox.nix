@@ -5,8 +5,6 @@
 }:
 
 {
-  my.defaultApps.browser = lib.mkDefault "firefox";
-
   programs = {
     # Setup firefox.
     firefox = {
@@ -28,6 +26,10 @@
           };
         };
     };
+  };
+
+  home-manager.users.${user}.home.sessionVariables = {
+    APP_BROWSER = lib.mkDefault "firefox";
   };
 
   # Fixes fullscreen freezes

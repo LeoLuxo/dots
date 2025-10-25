@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   lib2,
   user,
@@ -40,7 +39,9 @@ in
 
   ];
 
-  my.defaultApps.communication = lib.mkDefault "vesktop";
+  home-manager.users.${user}.home.shellAliases = {
+    "discord" = "vesktop";
+  };
 
   environment.systemPackages = [ pkgs.vesktop ];
 

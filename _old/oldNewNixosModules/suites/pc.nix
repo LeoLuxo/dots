@@ -25,13 +25,5 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    my = {
-
-      desktop = {
-        defaultAppsShortcuts = {
-          enable = true;
-        };
-      };
-    };
   };
 }

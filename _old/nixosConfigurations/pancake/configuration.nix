@@ -37,12 +37,6 @@ in
     nixosModules.apps.zoxide
   ];
 
-  my = {
-    desktop.defaultAppsShortcuts = {
-      enable = true;
-    };
-  };
-
   # hardware.microsoft-surface.kernelVersion = "longterm";
 
   # Extra packages that don't necessarily need an entire dedicated module
