@@ -127,18 +127,6 @@ in
     display.textScalingPercent = 150;
   };
 
-  # # 1TB SSD
-  # fileSystems."/stuff" = {
-  #   device = "/dev/disk/by-label/stuff";
-  #   fsType = "ext4";
-  # };
-
-  # # 4TB HDD
-  # fileSystems."/backup" = {
-  #   device = "/dev/disk/by-label/backup";
-  #   fsType = "ntfs";
-  # };
-
   my = {
     suites.pc.desktop =
       {
@@ -159,8 +147,6 @@ in
       xdgData."ukmm" = "/stuff/games/emu/wiiu/ukmm";
     };
 
-    # system.pinKernel = {enable = true;};
-
     desktop.defaultAppsShortcuts = {
       enable = true;
     };
@@ -168,10 +154,6 @@ in
     paths = {
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
       nixosRepo = "/etc/nixos/dots";
-    };
-
-    hardware.controller.playstation = {
-      enable = true;
     };
   };
 
