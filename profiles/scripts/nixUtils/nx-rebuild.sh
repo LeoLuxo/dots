@@ -16,7 +16,7 @@ RESET='\033[0m'
 sudo echo -e "${INFO}Running as superuser${RESET}"
 
 # cd to our config dir
-pushd $NX_DOTS 1>/dev/null
+pushd $DOTS 1>/dev/null
 
 # Pull if needed
 if [[ $1 == "--pull" ]]; then

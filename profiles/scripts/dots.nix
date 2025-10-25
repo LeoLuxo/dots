@@ -35,7 +35,7 @@
     # Add aliases
     home.shellAliases = {
       nx-edit = "edit-dots";
-      nx-cd = "cd $NX_DOTS";
+      nx-cd = "cd $DOTS";
       nxcd = "nx-cd";
     };
   };

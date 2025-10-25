@@ -1,0 +1,11 @@
+{
+    "arRPC": true,
+    "discordBranch": "stable",
+    "minimizeToTray": true,
+    "spellCheckLanguages": [],
+    "splashBackground": "rgb(48, 52, 70)",
+    "splashColor": "rgb(198, 208, 245)",
+    "enableSplashScreen": false,
+    "customTitleBar": true,
+    "hardwareVideoAcceleration": true
+}
