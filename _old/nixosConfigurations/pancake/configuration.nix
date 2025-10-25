@@ -32,7 +32,6 @@ in
     nixosModules.apps.firefox
     nixosModules.apps.discord
     nixosModules.apps.vscode
-    nixosModules.apps.git
     nixosModules.apps.bitwarden
     nixosModules.apps.upscaler
     nixosModules.apps.zoxide
@@ -45,11 +44,6 @@ in
 
     desktop.defaultAppsShortcuts = {
       enable = true;
-    };
-
-    paths = {
-      nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
-      nixosRepo = "/etc/nixos/dots";
     };
   };
 

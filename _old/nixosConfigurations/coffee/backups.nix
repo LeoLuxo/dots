@@ -46,7 +46,7 @@
           randomDelay = "2h";
 
           label = "Home";
-          path = "${config.my.paths.home}";
+          path = "/home/${user}";
           glob = [
             "!/home/*/downloads"
             "!/home/*/.steam"
