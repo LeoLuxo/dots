@@ -46,50 +46,50 @@ in
     };
 
     # Paths to be references in this config
-    paths = {
-      "home" = mkPathEntry {
-        description = "the default home folder; by default is set as the user's home if this nixos-config is configured as a single-user system (`/home/<user>` by default), `/root` otherwise";
-        default = "/home/${user}";
-      };
+    # paths = {
+    #   "home" = mkPathEntry {
+    #     description = "the default home folder; by default is set as the user's home if this nixos-config is configured as a single-user system (`/home/<user>` by default), `/root` otherwise";
+    #     default = "/home/${user}";
+    #   };
 
-      "nixos" = mkPathEntry {
-        description = "the nixos config folder";
-        default = "/etc/nixos";
-      };
+    #   "nixos" = mkPathEntry {
+    #     description = "the nixos config folder";
+    #     default = "/etc/nixos";
+    #   };
 
-      "nixosRepo" = mkPathEntry {
-        description = "the working copy of this repository";
-      };
-    };
+    #   "nixosRepo" = mkPathEntry {
+    #     description = "the working copy of this repository";
+    #   };
+    # };
 
-    # Key pairs
-    keys = mkAttrs {
-      description = "key pairs available on the machine and accessible to the other nixos modules";
+    # # Key pairs
+    # keys = mkAttrs {
+    #   description = "key pairs available on the machine and accessible to the other nixos modules";
 
-      options = {
-        public = mkOption {
-          description = "the path of this pair's public key";
-          type = types.path;
-        };
-        private = mkOption {
-          description = "the path of this pair's private key";
-          type = types.path;
-        };
-      };
+    #   options = {
+    #     public = mkOption {
+    #       description = "the path of this pair's public key";
+    #       type = types.path;
+    #     };
+    #     private = mkOption {
+    #       description = "the path of this pair's private key";
+    #       type = types.path;
+    #     };
+    #   };
 
-      default = {
-        # TODO: Move this to presets
-        user = {
-          private = "/home/${user}/.ssh/id_ed25519";
-          public = "/home/${user}/.ssh/id_ed25519.pub";
-        };
+    #   default = {
+    #     # TODO: Move this to presets
+    #     user = {
+    #       private = "/home/${user}/.ssh/id_ed25519";
+    #       public = "/home/${user}/.ssh/id_ed25519.pub";
+    #     };
 
-        host = {
-          private = "/etc/ssh/ssh_host_ed25519_key";
-          public = "/etc/ssh/ssh_host_ed25519_key.pub";
-        };
-      };
-    };
+    #     host = {
+    #       private = "/etc/ssh/ssh_host_ed25519_key";
+    #       public = "/etc/ssh/ssh_host_ed25519_key.pub";
+    #     };
+    #   };
+    # };
 
     # TODO: Add devices here with hostname/ip and syncthing id
   };

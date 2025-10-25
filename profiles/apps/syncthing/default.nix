@@ -46,7 +46,7 @@ in
 
     services.syncthing =
       let
-        syncthingFolder = "${config.my.paths.home}/.config/syncthing";
+        syncthingFolder = "/home/${user}/.config/syncthing";
       in
       {
         enable = true;

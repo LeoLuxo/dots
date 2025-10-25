@@ -1,10 +1,14 @@
 {
-  pkgs,
-  config,
+  lib,
+  users,
   user,
+  pkgs,
   ...
 }:
 
+let
+  keys = users.${user}.publicKeys;
+in
 {
   imports = [ ./gitignore.nix ];
 
@@ -14,14 +18,14 @@
   ];
 
   home-manager.users.${user} = {
-    # Add aliases
     home.shellAliases = {
       gs = "git status";
+      gst = "git status";
     };
 
     # Needed for signing with ssh key
     # ref: https://jeppesen.io/git-commit-sign-nix-home-manager-ssh/
-    home.file.".ssh/allowed_signers".text = "* ${builtins.readFile config.my.keys.user.public}";
+    home.file.".ssh/allowed_signers".text = lib.concatLines (lib.map (key: "* ${key}") keys);
 
     programs.git = {
       enable = true;
@@ -64,7 +68,8 @@
 
         # Sign all commits using ssh key
         commit.gpgsign = true;
-        user.signingkey = "${config.my.keys.user.public}";
+        # Take first key by default
+        user.signingkey = lib.head keys;
         gpg = {
           format = "ssh";
           ssh.allowedSignersFile = "~/.ssh/allowed_signers";
