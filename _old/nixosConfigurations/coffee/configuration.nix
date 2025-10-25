@@ -31,7 +31,6 @@ in
     nixosModules.apps.discord
     nixosModules.apps.vscode
     nixosModules.apps.git
-    nixosModules.apps.steam
     nixosModules.apps.qmk
     nixosModules.apps.bitwarden
     nixosModules.apps.llm

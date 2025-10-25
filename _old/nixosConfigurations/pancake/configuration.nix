@@ -33,7 +33,6 @@ in
     nixosModules.apps.discord
     nixosModules.apps.vscode
     nixosModules.apps.git
-    nixosModules.apps.steam
     nixosModules.apps.bitwarden
     nixosModules.apps.upscaler
     nixosModules.apps.zoxide
