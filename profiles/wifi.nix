@@ -1,9 +1,9 @@
-{ config, user, ... }:
+{ config, ... }:
 
 {
   # Fix eduroam certificate
-  config.age.secrets."wifi/eduroam-ca.pem" = {
-    # Required by NetworkManager
+  age.secrets."wifi/eduroam-ca.pem" = {
+    # Required by NetworkManager otherwise it won't work
     owner = "root";
     group = "root";
     mode = "755";
@@ -19,8 +19,7 @@
       ];
 
       profiles = {
-        # Home network
-        "Celeste Mountain" = {
+        "Home" = {
           connection = {
             id = "Celeste Mountain";
             interface-name = "wlp0s20f3";
@@ -46,8 +45,7 @@
           };
         };
 
-        # Isabella's home network
-        HUAWEI-AN1XC8_5G = {
+        "Isabella" = {
           connection = {
             id = "HUAWEI-AN1XC8_5G";
             interface-name = "wlp0s20f3";
@@ -73,8 +71,7 @@
           };
         };
 
-        # Parent's home network
-        "Domaine des fleurs de jardin" = {
+        "Parents" = {
           connection = {
             id = "Domaine des fleurs de jardin";
             interface-name = "wlp0s20f3";
@@ -100,8 +97,7 @@
           };
         };
 
-        # Uni network
-        eduroam = {
+        "AU Eduroam" = {
           "802-1x" = {
             ca-cert = config.age.secrets."wifi/eduroam-ca.pem".path;
             eap = "peap;";
@@ -129,6 +125,58 @@
           };
           wifi-security = {
             key-mgmt = "wpa-eap";
+          };
+        };
+
+        "Michi" = {
+          connection = {
+            id = "Wifi26E0";
+            interface-name = "wlp0s20f3";
+            type = "wifi";
+            uuid = "9c19ca26-30af-4d64-9889-459b4f1e8646";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "Wifi26E0";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$MICHI_PSK";
+          };
+        };
+
+        "Nadja" = {
+          connection = {
+            id = "engmosevej 9";
+            interface-name = "wlp0s20f3";
+            type = "wifi";
+            uuid = "5a3d3131-7ee9-40ee-ba00-c629ce5f0edf";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "engmosevej 9";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$NADJA_PSK";
           };
         };
       };

@@ -20,9 +20,7 @@
     profiles.base
     profiles.pc
     # profiles.gaming
-
-    # profiles.base
-    # profiles.wifi
+    profiles.wifi
 
     # profiles.apps.syncthing
   ];
