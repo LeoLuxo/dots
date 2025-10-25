@@ -20,6 +20,9 @@ in
   imports = [
     profiles.agenix
 
+    profiles.scripts.dots
+    profiles.scripts.nixUtils
+
     inputs.home-manager.nixosModules.home-manager
   ];
 

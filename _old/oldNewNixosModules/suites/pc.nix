@@ -32,11 +32,6 @@ in
           enable = true;
         };
       };
-      scripts = {
-        nx = {
-          enable = true;
-        };
-      };
     };
   };
 }

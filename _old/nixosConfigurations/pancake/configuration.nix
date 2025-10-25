@@ -38,10 +38,6 @@ in
   ];
 
   my = {
-    scripts.nx = {
-      enable = true;
-    };
-
     desktop.defaultAppsShortcuts = {
       enable = true;
     };

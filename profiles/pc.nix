@@ -1,6 +1,11 @@
 { pkgs, profiles, ... }:
 {
-  imports = [ profiles.apps.git ];
+  imports = [
+    profiles.apps.git
+
+    profiles.scripts.dotsTodo
+    profiles.scripts.dconfDiff
+  ];
 
   /*
     --------------------------------------------------------------------------------

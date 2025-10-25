@@ -26,7 +26,7 @@
     lfs.enable = true;
   };
 
-  my.scripts.nx.rebuild.postRebuildActions = ''
+  nx.postRebuildActions = ''
     if [[ ! -e ~/.local/share/monado/hand-tracking-models ]]; then
       echo Fixing hand tracking for monado VR
       mkdir -p ~/.local/share/monado
