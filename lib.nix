@@ -284,7 +284,7 @@ rec {
             mv ${realTarget} ${realTarget}.bak --force
           fi
 
-          run ln -s $VERBOSE_ARG ${syncTarget} ${realTarget}
+          run ln -sf $VERBOSE_ARG ${syncTarget} ${realTarget}
         '';
       };
 
