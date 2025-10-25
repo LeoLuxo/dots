@@ -61,7 +61,7 @@ in
     ) cfg;
 
     # Gnome-specific config, add the keybind to dconf
-    hm.dconf.settings = mkIf config.desktop.gnome.enable (
+    home-manager.users.${user}.dconf.settings = mkIf config.desktop.gnome.enable (
       lib.mkMerge (
         lib.mapAttrsToList (name: keybind: {
           "org/gnome/settings-daemon/plugins/media-keys" = {
