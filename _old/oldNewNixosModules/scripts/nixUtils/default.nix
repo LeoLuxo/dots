@@ -1,15 +1,16 @@
 {
-  pkgs,
-  lib,
   config,
+  dots,
+  dotsTodo,
   inputs,
+  lib,
   lib2,
+  pkgs,
   user,
   ...
 }:
 
 let
-
   inherit (lib) types;
   inherit (lib2)
     writeFile
@@ -21,7 +22,6 @@ let
   inherit (lib.modules) mkIf;
 
   cfg = config.my.scripts.nx;
-  cfgPaths = config.my.paths;
 in
 
 let
@@ -37,6 +37,13 @@ let
       default = null;
     }
     // args;
+
+  paths = rec {
+    nx = "/home/${user}/.nx";
+    dconfDiff = "${nx}/dconf_diff";
+    preRebuild = "${nx}/pre_rebuild.sh";
+    postRebuild = "${nx}/post_rebuild.sh";
+  };
 in
 {
   imports = [
@@ -57,71 +64,26 @@ in
         postRebuildActions = mkEmptyLines;
       };
     };
-
-    my.paths = {
-
-      nx = mkPathEntry {
-        description = "default path for all nix-utility-related stuff";
-        default = "${cfgPaths.home}/.nx";
-      };
-
-      dconfDiff = mkPathEntry {
-        description = "path where nx-dconf-diff should save its data";
-        default = "${cfgPaths.nx}/dconf_diff";
-      };
-
-      preRebuild = mkPathEntry {
-        description = "path where nx-rebuild should source its pre-rebuild script";
-        default = "${cfgPaths.nx}/pre_rebuild.sh";
-      };
-
-      postRebuild = mkPathEntry {
-        description = "path where nx-rebuild should source its post-rebuild script";
-        default = "${cfgPaths.nx}/post_rebuild.sh";
-      };
-
-      nixosTodo = mkPathEntry {
-        description = "path of the NixOS TODO-list";
-      };
-    };
   };
 
   config = mkIf cfg.enable (
     let
       variables = {
         # Set the location of the dots repo
-        NX_DOTS = notNullOr cfgPaths.nixosRepo "";
+        NX_DOTS = dots;
 
         # Set the location of the file used for dconf-diff
-        NX_DCONF_DIFF = notNullOr cfgPaths.dconfDiff "";
+        NX_DCONF_DIFF = paths.dconfDiff;
 
         # Set the location of the files used for nx-rebuild
-        NX_PRE_REBUILD = notNullOr cfgPaths.preRebuild "";
-        NX_POST_REBUILD = notNullOr cfgPaths.postRebuild "";
+        NX_PRE_REBUILD = paths.preRebuild;
+        NX_POST_REBUILD = paths.postRebuild;
 
         # Set the location of the todo doc
-        NX_TODO = notNullOr cfgPaths.nixosTodo "";
+        NX_TODO = dotsTodo;
       };
     in
     {
-      warnings = (
-        lib.optionals (cfgPaths.nixosRepo == null) [
-          "The nx option is enabled but paths.nixosRepo is not set, expect some breakage."
-        ]
-        ++ lib.optionals (cfgPaths.dconfDiff == null) [
-          "The nx option is enabled but paths.dconfDiff is not set, expect some breakage."
-        ]
-        ++ lib.optionals (cfgPaths.preRebuild == null) [
-          "The nx option is enabled but paths.preRebuild is not set, expect some breakage."
-        ]
-        ++ lib.optionals (cfgPaths.postRebuild == null) [
-          "The nx option is enabled but paths.postRebuild is not set, expect some breakage."
-        ]
-        ++ lib.optionals (cfgPaths.nixosTodo == null) [
-          "The nx option is enabled but paths.nixosTodo is not set, expect some breakage."
-        ]
-      );
-
       # Set environment variables
       environment.variables = variables;
 
@@ -132,11 +94,11 @@ in
       programs.nix-index.enable = false;
 
       # Add some post-build actions
-      my.scripts.nx.rebuild.postRebuildActions = mkIf (cfgPaths.dconfDiff != null) ''
+      my.scripts.nx.rebuild.postRebuildActions = mkIf (paths.dconfDiff != null) ''
         # Save current dconf settings (for nx-dconf-diff)
         echo "Dumping dconf"
-        mkdir --parents "$(dirname "${cfgPaths.dconfDiff}")" && touch "${cfgPaths.dconfDiff}"
-        dconf dump / >"${cfgPaths.dconfDiff}"
+        mkdir --parents "$(dirname "${paths.dconfDiff}")" && touch "${paths.dconfDiff}"
+        dconf dump / >"${paths.dconfDiff}"
       '';
 
       # Add nx scripts and other packages
@@ -153,64 +115,54 @@ in
           replaceVariables = variables;
         })
 
-        (mkIf (cfgPaths.nixosRepo != null) (
-          pkgs.writeScriptWithDeps {
-            name = "nx-rebuild";
-            file = ./scripts/nx-rebuild.sh;
-            deps = [
-              dconf
-              git
-              nixfmt-rfc-style
-              nh
-            ];
-            replaceVariables = variables;
-          }
-        ))
+        (pkgs.writeScriptWithDeps {
+          name = "nx-rebuild";
+          file = ./scripts/nx-rebuild.sh;
+          deps = [
+            dconf
+            git
+            nixfmt-rfc-style
+            nh
+          ];
+          replaceVariables = variables;
+        })
 
-        (mkIf (cfgPaths.nixosRepo != null) (
-          pkgs.writeScriptWithDeps {
-            name = "nx-code";
-            file = ./scripts/nx-code.sh;
-            replaceVariables = variables;
-          }
-        ))
+        (pkgs.writeScriptWithDeps {
+          name = "nx-code";
+          file = ./scripts/nx-code.sh;
+          replaceVariables = variables;
+        })
 
-        (mkIf (cfgPaths.nixosRepo != null) (
-          pkgs.writeScriptWithDeps {
-            name = "nx-template";
-            file = ./scripts/nx-template.sh;
-            replaceVariables = variables;
-          }
-        ))
+        (pkgs.writeScriptWithDeps {
+          name = "nx-template";
+          file = ./scripts/nx-template.sh;
+          replaceVariables = variables;
+        })
 
-        (mkIf (cfgPaths.nixosTodo != null) (
-          pkgs.writeScriptWithDeps {
-            name = "nx-todo";
-            file = ./scripts/nx-todo.sh;
-            replaceVariables = variables;
-          }
-        ))
+        (pkgs.writeScriptWithDeps {
+          name = "nx-todo";
+          file = ./scripts/nx-todo.sh;
+          replaceVariables = variables;
+        })
 
-        (mkIf (cfgPaths.dconfDiff != null) (
-          pkgs.writeScriptWithDeps {
-            name = "nx-dconf-diff";
-            file = ./scripts/nx-dconf-diff.sh;
-            deps = [
-              dconf
-              difftastic
-            ];
-            replaceVariables = variables;
-          }
-        ))
+        (pkgs.writeScriptWithDeps {
+          name = "nx-dconf-diff";
+          file = ./scripts/nx-dconf-diff.sh;
+          deps = [
+            dconf
+            difftastic
+          ];
+          replaceVariables = variables;
+        })
       ];
 
       my.keybinds = {
-        "Open nx-code" = mkIf (cfgPaths.nixosRepo != null) {
+        "Open nx-code" = {
           binding = "<Super>F9";
           command = "nx-code";
         };
 
-        "Open nx-todo" = mkIf (cfgPaths.nixosTodo != null) {
+        "Open nx-todo" = {
           binding = "<Super>F10";
           command = "nx-todo";
         };
@@ -218,17 +170,17 @@ in
 
       system.userActivationScripts = {
         # Set up pre- and post actions for nx-rebuild
-        writePreRebuild = mkIf (cfgPaths.preRebuild != null) (writeFile {
-          path = cfgPaths.preRebuild;
+        writePreRebuild = writeFile {
+          path = paths.preRebuild;
           text = cfg.rebuild.preRebuildActions;
           force = true;
-        });
+        };
 
-        writePostRebuild = mkIf (cfgPaths.postRebuild != null) (writeFile {
-          path = cfgPaths.postRebuild;
+        writePostRebuild = writeFile {
+          path = paths.postRebuild;
           text = cfg.rebuild.postRebuildActions;
           force = true;
-        });
+        };
       };
 
       home-manager.users.${user} = {
