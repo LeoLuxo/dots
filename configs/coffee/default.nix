@@ -23,7 +23,8 @@
     # profiles.gaming.base
     # profiles.gaming.emulation
     # profiles.gaming.minecraft
-    # profiles.gpu.amd
+
+    profiles.hardware.gpu.amd
 
     # profiles.apps.nicotinePlus
     # profiles.apps.qmk

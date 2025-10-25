@@ -170,9 +170,6 @@ in
       nixosRepo = "/etc/nixos/dots";
     };
 
-    hardware.gpu.amd = {
-      enable = true;
-    };
     hardware.controller.playstation = {
       enable = true;
     };
