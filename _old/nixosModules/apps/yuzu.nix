@@ -38,7 +38,6 @@ let
     };
 in
 {
-  imports = [ nixosModules.apps.joycons ];
 
   environment.systemPackages = [
     (pkgs.callPackage package { })
