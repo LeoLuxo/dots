@@ -1,48 +1,46 @@
 { lib2, pkgs, ... }:
 
 let
-  inherit (lib2.hm) mkHomeSymlink;
+  inherit (lib2.nixos) mkHomeSymlink;
 in
 {
-  hm = {
-    imports = [
-      (mkHomeSymlink {
-        xdgDir = "data";
-        target = "sudachi";
-        destination = "/stuff/games/emu/switch/yuzu";
-      })
+  imports = [
+    (mkHomeSymlink {
+      xdgDir = "data";
+      target = "sudachi";
+      destination = "/stuff/games/emu/switch/yuzu";
+    })
 
-      (mkHomeSymlink {
-        xdgDir = "data";
-        target = "yuzu";
-        destination = "/stuff/games/emu/switch/yuzu";
-      })
+    (mkHomeSymlink {
+      xdgDir = "data";
+      target = "yuzu";
+      destination = "/stuff/games/emu/switch/yuzu";
+    })
 
-      (mkHomeSymlink {
-        xdgDir = "config";
-        target = "Ryujinx";
-        destination = "/stuff/games/emu/switch/ryujinx";
-      })
+    (mkHomeSymlink {
+      xdgDir = "config";
+      target = "Ryujinx";
+      destination = "/stuff/games/emu/switch/ryujinx";
+    })
 
-      (mkHomeSymlink {
-        xdgDir = "data";
-        target = "Cemu";
-        destination = "/stuff/games/emu/wiiu/Cemu";
-      })
+    (mkHomeSymlink {
+      xdgDir = "data";
+      target = "Cemu";
+      destination = "/stuff/games/emu/wiiu/Cemu";
+    })
 
-      (mkHomeSymlink {
-        xdgDir = "config";
-        target = "steam-rom-manager/userData";
-        destination = "/stuff/games/emu/steamRomManager/userData";
-      })
+    (mkHomeSymlink {
+      xdgDir = "config";
+      target = "steam-rom-manager/userData";
+      destination = "/stuff/games/emu/steamRomManager/userData";
+    })
 
-      (mkHomeSymlink {
-        xdgDir = "data";
-        target = "ukmm";
-        destination = "/stuff/games/emu/wiiu/ukmm";
-      })
-    ];
-  };
+    (mkHomeSymlink {
+      xdgDir = "data";
+      target = "ukmm";
+      destination = "/stuff/games/emu/wiiu/ukmm";
+    })
+  ];
 
   # Don't work as home.packages for some reason???
   environment.systemPackages = [
