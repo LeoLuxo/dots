@@ -54,8 +54,6 @@ in
       enable = true;
     };
 
-    # system.pinKernel = {enable = true;};
-
     paths = {
       nixosTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
       nixosRepo = "/etc/nixos/dots";
@@ -107,18 +105,6 @@ in
       };
     };
   };
-
-  # SD Card
-  # fileSystems."/stuff" = {
-  #   device = "/dev/disk/by-label/stuff";
-  #   fsType = "btrfs";
-  # };
-
-  # Also for touchscreen support (or maybe touchpad? unsure)
-  # services.libinput.enable = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
