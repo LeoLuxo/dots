@@ -1,12 +1,13 @@
 {
-  hostname,
+  autologin,
   config,
+  hostname,
   hosts,
+  inputs,
   lib,
   pkgs,
   profiles,
   users,
-  autologin,
   ...
 }:
 
@@ -16,6 +17,8 @@ in
 {
   imports = [
     profiles.agenix
+
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   /*
@@ -132,4 +135,52 @@ in
     curl
     git
   ];
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  # Home-Manager config
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+
+    # On activation move existing files by appending the given file extension rather than exiting with an error.
+    # Applies to home.file and also xdg.*File
+    backupFileExtension = "bak";
+
+    users = lib.concatMapAttrs (username: _: {
+      ${username} = {
+        # Do not change
+        home.stateVersion = "24.05";
+
+        # Home Manager needs a bit of information about you and the paths it should manage.
+        home.username = username;
+        home.homeDirectory = "/home/${username}";
+
+        # Let Home Manager install and manage itself.
+        programs.home-manager.enable = true;
+
+        # Customize default directories
+        xdg.userDirs = {
+          enable = true;
+          createDirectories = true;
+
+          download = "/home/${username}/downloads";
+
+          music = "/home/${username}/media";
+          pictures = "/home/${username}/media";
+          videos = "/home/${username}/media";
+
+          desktop = "/home/${username}/misc";
+          documents = "/home/${username}/misc";
+
+          templates = null;
+          publicShare = null;
+        };
+      };
+    }) users;
+  };
 }
