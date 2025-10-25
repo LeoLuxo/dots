@@ -42,7 +42,12 @@ in
         destination = "/stuff/games/emu/wiiu/ukmm";
       })
     ];
+
+    home.packages = [
+      pkgs.custom.yuzu
+      pkgs.custom.ukmm
+      pkgs.custom.wiiuDownloader
+    ];
   };
 
-  environment.systemPackages = [ pkgs.custom.yuzu ];
 }
