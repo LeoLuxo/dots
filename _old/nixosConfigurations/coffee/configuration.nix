@@ -63,9 +63,6 @@ in
     celluloid # A simple video player
 
     guitarix # A virtual guitar amplifier for use with Linux.
-    r2modman # A mod manager for Risk of Rain 2 and other Unity games.
-
-    joystickwake # Prevents screen sleep when playing games with a gamepad
 
     picard
     # lutris
