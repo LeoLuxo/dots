@@ -1,4 +1,4 @@
-{ lib2, ... }:
+{ lib2, pkgs, ... }:
 
 let
   inherit (lib2.hm) mkHomeSymlink;
@@ -42,5 +42,7 @@ in
         destination = "/stuff/games/emu/wiiu/ukmm";
       })
     ];
+
+    home.packages = [ pkgs.custom.yuzu ];
   };
 }

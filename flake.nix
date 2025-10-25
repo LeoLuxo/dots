@@ -71,9 +71,6 @@
       in
 
       {
-        # nixosConfigurations = import ./_old/nixosConfigurations { inherit inputs lib lib2; };
-        # nixosModules = import ./_old/nixosModules { inherit inputs lib lib2; };
-
         # Create nixos configurations for all hosts that have a `nixosConfig`
         nixosConfigurations = lib.concatMapAttrs (
           name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig host; } else { }

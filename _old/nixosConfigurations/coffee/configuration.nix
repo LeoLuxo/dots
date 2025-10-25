@@ -43,7 +43,7 @@ in
 
     # nixosModules.apps.sudachi
     nixosModules.apps.steamRomManager
-    nixosModules.apps.yuzu
+    # nixosModules.apps.yuzu
     nixosModules.apps.ryujinx
 
   ];
