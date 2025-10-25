@@ -78,6 +78,11 @@
         nixosConfigurations = lib.concatMapAttrs (
           name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig host; } else { }
         ) hosts;
+
+        packages.${system} = lib.packagesFromDirectoryRecursive {
+          inherit (pkgs) callPackage;
+          directory = ./packages;
+        };
       }
     );
 
