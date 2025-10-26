@@ -27,8 +27,9 @@
           #!/usr/bin/env bash
 
           # Open the config repo in vscode/text editor
-          $EDITOR "${dots}"
+          ''${APP_CODE_EDITOR:-''${VISUAL:-''${EDITOR:-nano}}} "${dots}"
         '';
+        deps = [ pkgs.nano ];
       })
     ];
 
