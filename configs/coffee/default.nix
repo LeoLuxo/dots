@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   profiles,
+  user,
   ...
 }:
 {
@@ -66,6 +67,29 @@
   };
 
   pinKernel.enable = true;
+
+  home-manager.users.${user} =
+    { lib, user, ... }:
+    let
+      inherit (lib.hm.gvariant) mkUint32 mkTuple;
+    in
+    {
+      # Enable HDR on my main screen
+      dconf.settings = {
+        "org/gnome/mutter" = {
+          output-luminance = [
+            (mkTuple [
+              "DP-1"
+              "MSI"
+              "MAG 274UPF E2"
+              "0x00000001"
+              (mkUint32 1)
+              190.0
+            ])
+          ];
+        };
+      };
+    };
 
   # gnome = {
   #   power = {
