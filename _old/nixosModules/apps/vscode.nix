@@ -1,8 +1,6 @@
 {
-  config,
   lib,
   pkgs,
-  nixosModules,
   lib2,
   user,
   ...
@@ -13,9 +11,7 @@ let
 in
 
 {
-  imports = with nixosModules; [
-    apps.direnv
-
+  imports = [
     (mkSyncedPath {
       xdgPath = "Code/User/settings.json";
       cfgPath = "vscode/settings.json";
