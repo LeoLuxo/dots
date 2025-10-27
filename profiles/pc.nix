@@ -13,6 +13,7 @@ in
     profiles.apps.git
     profiles.apps.vesktop
     profiles.apps.distrobox
+    profiles.apps.firefox
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff
