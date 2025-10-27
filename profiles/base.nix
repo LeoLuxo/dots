@@ -20,6 +20,8 @@ in
   imports = [
     profiles.agenix
 
+    profiles.apps.direnv
+
     profiles.scripts.dots
     profiles.scripts.nixUtils
 
