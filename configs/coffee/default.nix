@@ -30,6 +30,7 @@
     # profiles.apps.nicotinePlus
     # profiles.apps.qmk
     # profiles.apps.syncthing
+    profiles.apps.beets
 
     # profiles.scripts.bootWindows
 
