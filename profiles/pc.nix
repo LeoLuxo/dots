@@ -1,7 +1,9 @@
 {
+  lib,
+  lib2,
   pkgs,
   profiles,
-  lib2,
+  user,
   ...
 }:
 
@@ -57,7 +59,12 @@ in
 
   environment.systemPackages = [
     pkgs.bitwarden-desktop
+    pkgs.obsidian
   ];
+
+  home-manager.users.${user}.home.sessionVariables = {
+    APP_NOTES = lib.mkDefault "obsidian";
+  };
 
   /*
     --------------------------------------------------------------------------------

@@ -27,7 +27,7 @@
 
     profiles.hardware.gpu.amd
 
-    # profiles.apps.nicotinePlus
+    profiles.apps.nicotinePlus
     # profiles.apps.qmk
     # profiles.apps.syncthing
     profiles.apps.beets

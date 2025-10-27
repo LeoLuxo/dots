@@ -25,15 +25,10 @@ in
     nixosModules.scripts.boot-windows
 
     nixosModules.apps.youtube-music
-    nixosModules.apps.obsidian
     nixosModules.apps.vscode
     nixosModules.apps.qmk
-    nixosModules.apps.llm
     nixosModules.apps.upscaler
     nixosModules.apps.zoxide
-
-    nixosModules.apps.nicotine-plus
-    nixosModules.apps.sldl
 
   ];
 
