@@ -33,7 +33,6 @@ in
     nixosModules.apps.upscaler
     nixosModules.apps.zoxide
 
-    nixosModules.apps.distrobox
     nixosModules.apps.nicotine-plus
     nixosModules.apps.sldl
 
