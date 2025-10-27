@@ -29,7 +29,6 @@ in
     nixosModules.apps.firefox
     nixosModules.apps.vscode
     nixosModules.apps.qmk
-    nixosModules.apps.bitwarden
     nixosModules.apps.llm
     nixosModules.apps.upscaler
     nixosModules.apps.zoxide
