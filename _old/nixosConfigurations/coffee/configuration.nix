@@ -23,7 +23,6 @@ in
     nixosModules.scripts.terminal-utils
     nixosModules.scripts.clipboard
     nixosModules.scripts.boot-windows
-    nixosModules.scripts.automusic
 
     nixosModules.apps.youtube-music
     nixosModules.apps.obsidian
