@@ -50,6 +50,7 @@ in
     pkgs.snes9x # SNES
     pkgs.snes9x-gtk # SNES
     pkgs.melonDS # Nintendo DS
+    pkgs.cemu # Wii U
 
     # Emulators (unused)
     # pkgs.custom.sudachi # Switch (fork of yuzu)
