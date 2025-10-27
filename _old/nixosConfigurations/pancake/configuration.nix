@@ -28,7 +28,6 @@ in
     # nixosModules.apps.deepl
     nixosModules.apps.youtube-music
     nixosModules.apps.gnome-dialect
-    nixosModules.apps.obsidian
     nixosModules.apps.vscode
     nixosModules.apps.bitwarden
     nixosModules.apps.upscaler
