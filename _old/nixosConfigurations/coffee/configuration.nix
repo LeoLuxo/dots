@@ -26,7 +26,6 @@ in
 
     nixosModules.apps.youtube-music
     nixosModules.apps.obsidian
-    nixosModules.apps.firefox
     nixosModules.apps.vscode
     nixosModules.apps.qmk
     nixosModules.apps.llm
