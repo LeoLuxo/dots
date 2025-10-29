@@ -153,7 +153,7 @@ in
           night-light-schedule-automatic = false;
           night-light-schedule-from = 21.0;
           night-light-schedule-to = 6.0;
-          night-light-temperature = mkUint32 2700;
+          night-light-temperature = mkUint32 3400;
         };
 
         # Appearance
