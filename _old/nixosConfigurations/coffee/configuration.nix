@@ -15,10 +15,6 @@ in
   imports = [
     nixosModules.rices.peppy
 
-    nixosModules.shell.bash
-    nixosModules.shell.fish
-    # nixosModules.shell.nushell
-
     nixosModules.scripts.snip
     nixosModules.scripts.terminal-utils
     nixosModules.scripts.boot-windows
