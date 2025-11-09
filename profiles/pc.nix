@@ -16,6 +16,7 @@ in
     profiles.apps.vesktop
     profiles.apps.distrobox
     profiles.apps.firefox
+    profiles.apps.upscaler
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff
@@ -67,7 +68,6 @@ in
     switcheroo # A tool for converting and manipulating images (for example, resizing or reformatting them)
     video-trimmer # A simple app designed to quickly trim and edit video clips
     warp # A fast, secure file transfer utility for moving files efficiently between systems
-    upscaler # AI image upscaler
     teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
     eyedropper # A simple color picker tool that allows you to select a color from anywhere on the screen
     celluloid # A simple video player
