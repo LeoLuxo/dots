@@ -21,15 +21,7 @@ in
 
     nixosModules.apps.youtube-music
     nixosModules.apps.vscode
-    nixosModules.apps.qmk
     nixosModules.apps.zoxide
-  ];
-
-  # Extra packages that don't necessarily need an entire dedicated module
-  environment.systemPackages = with pkgs; [
-
-    guitarix # A virtual guitar amplifier for use with Linux
-    picard
   ];
 
   # wallpaper.image = inputs.wallpapers.static."lofiJapan";

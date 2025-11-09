@@ -36,6 +36,12 @@
 
   ];
 
+  environment.systemPackages = with pkgs; [
+    guitarix # A virtual guitar amplifier for use with Linux.
+    qmk
+    picard
+  ];
+
   services.ollama = {
     enable = true;
     acceleration = "rocm";
@@ -48,10 +54,6 @@
     ];
   };
   # services.open-webui.enable = true;
-
-  environment.systemPackages = [
-    pkgs.guitarix # A virtual guitar amplifier for use with Linux.
-  ];
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
