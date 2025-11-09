@@ -19,7 +19,7 @@ in
     ./gnome.nix
     ./cursor.nix
 
-    terminal.ddterm
+    desktop.gnome.extensions.ddterm
     shell.prompt.starship
   ];
 
