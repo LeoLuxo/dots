@@ -242,7 +242,7 @@ rec {
           if [[ ! -e "${syncTarget}" ]]; then
             echo Copying '${syncName}' to sync
             mkdir --parents $(dirname ${syncTarget})
-            cp ${realTarget} ${syncTarget}
+            cp -r ${realTarget} ${syncTarget}
             mv ${realTarget} ${realTarget}.bak --force
           fi
 
