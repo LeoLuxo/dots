@@ -1,4 +1,6 @@
-{ pkgs, user, ... }:
+{ pkgs, ... }:
+
+# An AI image upscaler
 
 {
   nixpkgs.overlays = [
@@ -14,6 +16,6 @@
   ];
 
   environment.systemPackages = [
-    pkgs.upscaler # An application that enhances image resolution by upscaling photos using advanced processing (designed in the GNOME spirit).
+    pkgs.upscaler
   ];
 }

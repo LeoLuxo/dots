@@ -22,9 +22,7 @@ in
     nixosModules.apps.youtube-music
     nixosModules.apps.vscode
     nixosModules.apps.qmk
-    nixosModules.apps.upscaler
     nixosModules.apps.zoxide
-
   ];
 
   # Extra packages that don't necessarily need an entire dedicated module
