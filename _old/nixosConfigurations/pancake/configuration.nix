@@ -57,9 +57,6 @@ in
     cursor.size = 32;
   };
 
-  # Set default shell
-  shell.default = "fish";
-
   desktop.gnome = {
     enable = true;
 
