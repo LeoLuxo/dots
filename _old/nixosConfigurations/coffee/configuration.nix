@@ -91,14 +91,4 @@ in
     display.textScalingPercent = 150;
   };
 
-  my = {
-    suites.pc.desktop =
-      {
-        enable = true;
-      }
-      // {
-        username = "lili";
-      };
-  };
-
 }
