@@ -127,33 +127,6 @@ rec {
   */
 
   # TODO: remove
-  # Create a shell alias that is shell-agnostic but can look up past commands
-  mkShellHistoryAlias =
-    {
-      name,
-      command,
-    }:
-    let
-      historyCommands = {
-        fish = ''$history[1]'';
-        bash = ''$(fc -ln -1)'';
-        zsh = ''''${history[@][1]}'';
-      };
-
-      mappedCommands = builtins.mapAttrs (
-        _: lastCommand: command { inherit lastCommand; }
-      ) historyCommands;
-    in
-    { config, user, ... }:
-    {
-      home-manager.users.${user} = {
-        programs.bash.shellAliases.${name} = mappedCommands.bash;
-        programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
-        programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
-      };
-    };
-
-  # TODO: remove
   mkSyncedPath = { ... }: { };
 
   /*
@@ -219,22 +192,11 @@ rec {
         name,
         command,
       }:
-      let
-        historyCommands = {
-          fish = ''$history[1]'';
-          bash = ''$(fc -ln -1)'';
-          zsh = ''''${history[@][1]}'';
-        };
-
-        mappedCommands = builtins.mapAttrs (
-          _: lastCommand: command { inherit lastCommand; }
-        ) historyCommands;
-      in
       { config, ... }:
       {
-        programs.bash.shellAliases.${name} = mappedCommands.bash;
-        programs.fish.shellAliases.${name} = ''eval ${mappedCommands.fish}'';
-        programs.zsh.shellAliases.${name} = ''eval ${mappedCommands.zsh}'';
+        programs.bash.shellAliases.${name} = command { lastCommand = ''$(fc -ln -1)''; };
+        programs.fish.shellAliases.${name} = ''eval ${command { lastCommand = ''$history[1]''; }}'';
+        programs.zsh.shellAliases.${name} = ''eval ${command { lastCommand = ''''${history[@][1]}''; }}'';
       };
 
     mkHomeSymlink =
