@@ -23,7 +23,6 @@ in
 
     nixosModules.scripts.snip
     nixosModules.scripts.terminal-utils
-    nixosModules.scripts.clipboard
 
     # nixosModules.apps.deepl
     nixosModules.apps.youtube-music
