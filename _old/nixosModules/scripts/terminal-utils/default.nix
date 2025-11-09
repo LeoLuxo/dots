@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (lib2) mkShellHistoryAlias;
+  inherit (lib2.nixos) mkShellHistoryAlias;
 in
 
 {
