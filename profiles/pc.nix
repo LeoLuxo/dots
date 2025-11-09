@@ -60,10 +60,16 @@ in
   environment.systemPackages = [
     pkgs.bitwarden-desktop
     pkgs.obsidian
+    pkgs.wl-clipboard
   ];
 
-  home-manager.users.${user}.home.sessionVariables = {
-    APP_NOTES = lib.mkDefault "obsidian";
+  home-manager.users.${user}.home = {
+    sessionVariables.APP_NOTES = lib.mkDefault "obsidian";
+
+    shellAliases = {
+      "copy" = "wl-copy";
+      "paste" = "wl-paste";
+    };
   };
 
   /*
