@@ -1,7 +1,4 @@
 {
-  inputs,
-  lib,
-  user,
   ...
 }:
 {
@@ -11,9 +8,6 @@
     ./configuration.nix
     # ./hardwareConfiguration.nix
     # ./vr.nix
-
-    # TODO: Remove
-    (import "${inputs.self}/_old/oldNewNixosModules" { inherit lib; }).default
 
   ];
 }
