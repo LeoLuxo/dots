@@ -1,16 +1,12 @@
 {
   pkgs,
-  config,
   lib,
-
   user,
   ...
 }:
 
 {
-  imports = [ ./module.nix ];
-
-  shell.default = lib.mkDefault "fish";
+  users.users.${user}.shell = lib.mkDefault pkgs.fish;
 
   programs.fish.enable = true;
   environment.shells = [ pkgs.fish ];

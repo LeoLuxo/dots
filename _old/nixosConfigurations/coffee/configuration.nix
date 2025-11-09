@@ -52,9 +52,6 @@ in
 
   # wallpaper.image = inputs.wallpapers.static."lofiJapan";
 
-  # Set default shell
-  shell.default = "fish";
-
   rice.peppy = {
     enable = true;
 

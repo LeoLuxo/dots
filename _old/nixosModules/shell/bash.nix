@@ -1,16 +1,12 @@
 {
   pkgs,
-  config,
   lib,
-
   user,
   ...
 }:
 
 {
-  imports = [ ./module.nix ];
-
-  shell.default = lib.mkDefault "bash";
+  users.users.${user}.shell = lib.mkDefault pkgs.bash;
 
   environment.shells = [ pkgs.bash ];
 

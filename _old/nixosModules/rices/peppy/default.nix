@@ -20,7 +20,6 @@ in
     ./cursor.nix
 
     desktop.gnome.extensions.ddterm
-    shell.prompt.starship
   ];
 
   options.rice.peppy = {
