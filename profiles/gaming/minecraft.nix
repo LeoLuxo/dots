@@ -5,6 +5,11 @@
       target = "~/.local/share/PrismLauncher/prismlauncher.cfg";
       syncName = "prismlauncher/settings.cfg";
     })
+
+    (lib2.nixos.mkSyncedPath {
+      target = "~/.local/share/PrismLauncher/icons";
+      syncName = "prismlauncher/icons";
+    })
   ];
 
   environment.systemPackages = [
