@@ -57,10 +57,20 @@ in
     })
   ];
 
-  environment.systemPackages = [
-    pkgs.bitwarden-desktop
-    pkgs.obsidian
-    pkgs.wl-clipboard
+  environment.systemPackages = with pkgs; [
+    bitwarden-desktop
+    obsidian
+    wl-clipboard
+    textpieces # A developer’s scratchpad that lets you quickly experiment with and transform text
+    hieroglyphic # An application that helps you locate and select LaTeX symbols by drawing or sketching them
+    impression # A utility for creating bootable USB drives from disk images
+    switcheroo # A tool for converting and manipulating images (for example, resizing or reformatting them)
+    video-trimmer # A simple app designed to quickly trim and edit video clips
+    warp # A fast, secure file transfer utility for moving files efficiently between systems
+    upscaler # AI image upscaler
+    teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
+    eyedropper # A simple color picker tool that allows you to select a color from anywhere on the screen
+    celluloid # A simple video player
   ];
 
   home-manager.users.${user}.home = {
