@@ -25,7 +25,6 @@ in
     nixosModules.apps.gnome-dialect
     nixosModules.apps.vscode
     nixosModules.apps.bitwarden
-    nixosModules.apps.upscaler
     nixosModules.apps.zoxide
   ];
 
