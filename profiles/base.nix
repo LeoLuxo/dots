@@ -196,6 +196,12 @@ in
           templates = null;
           publicShare = null;
         };
+
+        # Starship shell prompt
+        programs.starship = {
+          enable = true;
+          # enableTransience = true;
+        };
       };
     }) users;
   };

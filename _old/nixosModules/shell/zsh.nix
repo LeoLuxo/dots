@@ -1,16 +1,12 @@
 {
   pkgs,
-  config,
   lib,
-
   user,
   ...
 }:
 
 {
-  imports = [ ./module.nix ];
-
-  shell.default = lib.mkDefault "zsh";
+  users.users.${user}.shell = lib.mkDefault pkgs.zsh;
 
   programs.zsh.enable = true;
   environment.shells = [ pkgs.zsh ];
