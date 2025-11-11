@@ -15,7 +15,6 @@ in
   imports = [
     nixosModules.rices.peppy
 
-    nixosModules.scripts.snip
     nixosModules.scripts.terminal-utils
 
     nixosModules.apps.youtube-music

@@ -17,7 +17,6 @@ in
 
     nixosModules.rices.peppy
 
-    nixosModules.scripts.snip
     nixosModules.scripts.terminal-utils
 
     # nixosModules.apps.deepl
