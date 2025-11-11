@@ -15,11 +15,7 @@ in
     # Include hardware stuff and kernel patches for surface pro 7
     # inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
 
-    nixosModules.rices.peppy
-
-    # nixosModules.apps.deepl
-    nixosModules.apps.gnome-dialect
-    nixosModules.apps.bitwarden
+    nixosModules.desktop.gnome.gnome
   ];
 
   # hardware.microsoft-surface.kernelVersion = "longterm";
@@ -31,13 +27,10 @@ in
 
   # wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
-  rice.peppy = {
-    enable = true;
-    cursor.size = 32;
-  };
-
   desktop.gnome = {
     enable = true;
+
+    cursor.size = 32;
 
     power = {
       buttonAction = "suspend";
