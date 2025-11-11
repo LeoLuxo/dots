@@ -32,8 +32,7 @@
     # profiles.apps.syncthing
     profiles.apps.beets
 
-    # profiles.scripts.bootWindows
-
+    profiles.scripts.bootWindows
   ];
 
   environment.systemPackages = with pkgs; [

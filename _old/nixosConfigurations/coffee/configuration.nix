@@ -17,7 +17,6 @@ in
 
     nixosModules.scripts.snip
     nixosModules.scripts.terminal-utils
-    nixosModules.scripts.boot-windows
 
     nixosModules.apps.youtube-music
     nixosModules.apps.vscode
