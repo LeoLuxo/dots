@@ -15,7 +15,7 @@
     ./audio.nix
     ./hardware.nix
     ./syncthing.nix
-    # ./backups.nix
+    ./backups.nix
 
     profiles.base
     profiles.pc
