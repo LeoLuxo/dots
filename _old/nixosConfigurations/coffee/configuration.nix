@@ -13,25 +13,10 @@ in
 {
 
   imports = [
-    nixosModules.rices.peppy
+    nixosModules.desktop.gnome.gnome
   ];
 
   # wallpaper.image = inputs.wallpapers.static."lofiJapan";
-
-  rice.peppy = {
-    enable = true;
-
-    cursor.size = 16;
-
-    blur = {
-      enable = true;
-      # Enable blur for all applications
-      # app-blur.enable = true;
-
-      # Set hacks to best looking
-      hacks-level = "no artifact";
-    };
-  };
 
   programs.gamescope.enable = true;
 
@@ -51,6 +36,17 @@ in
     };
 
     display.textScalingPercent = 150;
+
+    cursor.size = 16;
+
+    blur = {
+      enable = true;
+      # Enable blur for all applications
+      # app-blur.enable = true;
+
+      # Set hacks to best looking
+      hacks-level = "no artifact";
+    };
   };
 
 }

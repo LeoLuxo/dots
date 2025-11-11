@@ -5,12 +5,13 @@
   config,
   pkgs,
   user,
+  inputs,
   ...
 }:
 
 let
   inherit (lib) options types modules;
-  inherit (lib2) mkSubmodule;
+  inherit (lib2) mkSubmodule toPascalCase;
 in
 
 {
@@ -64,6 +65,101 @@ in
         default = 100;
       };
     };
+
+    blur = {
+      enable = lib.mkOption {
+        type = types.bool;
+        default = true;
+      };
+
+      app-blur = mkSubmodule {
+        enable = lib.mkOption {
+          type = types.bool;
+          default = false;
+        };
+      };
+
+      hacks-level = options.mkOption {
+        type = types.enum [
+          "high performance"
+          "default"
+          "no artifact"
+        ];
+        default = "default";
+      };
+    };
+
+    theme = {
+      flavor = options.mkOption {
+        type = types.enum [
+          "latte"
+          "frappe"
+          "macchiato"
+          "mocha"
+        ];
+        default = "frappe";
+      };
+
+      accent = options.mkOption {
+        type = types.enum [
+          "blue"
+          "flamingo"
+          "green"
+          "lavender"
+          "maroon"
+          "mauve"
+          "peach"
+          "pink"
+          "red"
+          "rosewater"
+          "sapphire"
+          "sky"
+          "teal"
+          "yellow"
+        ];
+        default = "blue";
+      };
+    };
+
+    cursor = {
+      size = options.mkOption {
+        type = types.ints.unsigned;
+        default = 32;
+      };
+
+      flavor = options.mkOption {
+        type = types.enum [
+          "latte"
+          "frappe"
+          "macchiato"
+          "mocha"
+        ];
+        default = config.desktop.gnome.theme.flavor;
+      };
+
+      accent = options.mkOption {
+        type = types.enum [
+          "dark"
+          "light"
+
+          "blue"
+          "flamingo"
+          "green"
+          "lavender"
+          "maroon"
+          "mauve"
+          "peach"
+          "pink"
+          "red"
+          "rosewater"
+          "sapphire"
+          "sky"
+          "teal"
+          "yellow"
+        ];
+        default = "dark";
+      };
+    };
   };
 
   imports = with nixosModules; [
@@ -76,6 +172,8 @@ in
     # All the dconf settings
     ./settings.nix
 
+    inputs.catppuccin.nixosModules.catppuccin
+
     # Base extensions that should be included by default
     desktop.gnome.extensions.just-perfection
     desktop.gnome.extensions.removable-drive-menu
@@ -83,6 +181,7 @@ in
     desktop.gnome.extensions.bluetooth-quick-connect
 
     # My extensions
+    desktop.gnome.extensions.ddterm
     desktop.gnome.extensions.blur-my-shell
     desktop.gnome.extensions.clipboard-indicator
     desktop.gnome.extensions.gsconnect
@@ -150,5 +249,59 @@ in
             pkgs.gst_all_1.gst-plugins-ugly
             pkgs.gst_all_1.gst-plugins-base
           ];
+
+      home-manager.users.${user} =
+        let
+          name = "catppuccin-${config.desktop.gnome.cursor.flavor}-${config.desktop.gnome.cursor.accent}-cursors";
+          package =
+            pkgs.catppuccin-cursors."${config.desktop.gnome.cursor.flavor}${toPascalCase config.desktop.gnome.cursor.accent}";
+        in
+        {
+          imports = [
+            inputs.catppuccin.homeManagerModules.catppuccin
+          ];
+
+          # Enable catppuccin for gtk
+          gtk = {
+            enable = true;
+            catppuccin = {
+              enable = true;
+              flavor = config.desktop.gnome.theme.flavor;
+              accent = config.desktop.gnome.theme.accent;
+              size = "standard";
+              tweaks = [ "normal" ];
+            };
+          };
+
+          home.pointerCursor = {
+            inherit name package;
+
+            size = config.desktop.gnome.cursor.size;
+            gtk.enable = true;
+            x11.enable = true;
+          };
+
+          gtk.cursorTheme = {
+            inherit name package;
+          };
+        };
+
+      gnome.blur-my-shell = config.desktop.gnome.blur;
+
+      environment.variables = {
+        XCURSOR_SIZE = config.desktop.gnome.cursor.size;
+      };
+
+      # Disable catppuccin for the bootloader
+      boot.plymouth.catppuccin.enable = false;
+
+      catppuccin = {
+        # Enable the theme for all compatible apps
+        enable = true;
+
+        # Choose flavor
+        flavor = config.desktop.gnome.theme.flavor;
+        accent = config.desktop.gnome.theme.accent;
+      };
     };
 }
