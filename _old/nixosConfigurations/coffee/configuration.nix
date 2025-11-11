@@ -14,8 +14,6 @@ in
 
   imports = [
     nixosModules.rices.peppy
-
-    nixosModules.apps.zoxide
   ];
 
   # wallpaper.image = inputs.wallpapers.static."lofiJapan";

@@ -230,16 +230,17 @@ rec {
       in
       {
         home.activation."sync-${syncName}" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          if [[ ! -e "${syncTarget}" ]] && [[ -e "${realTarget}" ]]; then
-            echo Copying '${syncName}' to sync
-            mkdir --parents $(dirname ${syncTarget})
-            cp -r ${realTarget} ${syncTarget}
-            mv ${realTarget} ${realTarget}.bak --force
-          fi
+          if [[ -e "${realTarget}" ]]; then
+            if [[ ! -e "${syncTarget}" ]]; then
+              echo Copying '${syncName}' to sync
+              mkdir --parents $(dirname ${syncTarget})
+              cp -r ${realTarget} ${syncTarget}
+            fi
 
-          if [[ ! -h "${realTarget}" ]]; then
-            echo Backing up old '${syncName}' to '${realTarget}.bak'
-            mv ${realTarget} ${realTarget}.bak --force
+            if [[ ! -h "${realTarget}" ]]; then
+              echo Backing up old '${syncName}' to '${realTarget}.bak'
+              mv ${realTarget} ${realTarget}.bak --force
+            fi
           fi
 
           run ln -sf $VERBOSE_ARG ${syncTarget} ${realTarget}

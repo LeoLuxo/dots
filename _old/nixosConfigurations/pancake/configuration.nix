@@ -20,7 +20,6 @@ in
     # nixosModules.apps.deepl
     nixosModules.apps.gnome-dialect
     nixosModules.apps.bitwarden
-    nixosModules.apps.zoxide
   ];
 
   # hardware.microsoft-surface.kernelVersion = "longterm";

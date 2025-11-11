@@ -1,0 +1,130 @@
+{
+	// Place your snippets for nix here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Empty module": {
+		"prefix": "module",
+		"body": [
+			"{ ... }:",
+			"{",
+			"  $0",
+			"}"
+		]
+	},
+	"Home-manager config": {
+		"prefix": "home-manager",
+		"body": [
+			"home-manager.users.\\${user} = {",
+			"$0",
+			"};"
+		]
+	},
+	"Home-manager packages": {
+		"prefix": "home.packages",
+		"body": [
+			"home.packages = with pkgs; [",
+			"$0",
+			"];"
+		]
+	},
+	// "NixOS module prelude": {
+	// 	"prefix": "module prelude let in",
+	// 	"body": [
+	// 		"\n  inherit (lib) types;\n  inherit (lib.my) enabled notNullOr mkAttrs mkAttrs';\n  inherit (lib.options) mkEnableOption mkOption;\n  inherit (lib.modules) mkIf;\n\n"
+	// 	]
+	// },
+	// "NixOS module": {
+	// 	"prefix": "module",
+	// 	"body": [
+	// 		"{\n  lib,\n  config,\n  inputs,\n  ...\n}:\n\nlet\n  inherit (lib) types;\n  inherit (lib.my) enabled notNullOr mkAttrs mkAttrs';\n  inherit (lib.options) mkEnableOption mkOption;\n  inherit (lib.modules) mkIf;\n\n  cfg = config.my.$1;\nin\n\n{\n  options.my.$1 = {\n    enable = mkEnableOption \"$2\";\n  };\n\n  config = mkIf cfg.enable {\n    $0\n  };\n}"
+	// 	]
+	// },
+	"Make option": {
+		"prefix": "mkOption",
+		"body": [
+			"mkOption { description = \"$3\"; type = types.$1; default = $2; };"
+		]
+	},
+	"Make option with type nullOr": {
+		"prefix": "mkOption nullOr",
+		"body": [
+			"mkOption { description = \"$2\"; type = types.nullOr types.$1; default = null; };"
+		]
+	},
+	"Make option with type enum": {
+		"prefix": "mkOption enum",
+		"body": [
+			"mkOption { description = \"$3\"; type = types.enum [$1]; default = $2; };"
+		]
+	},
+	"Make enable option": {
+		"prefix": "mkOption mkEnableOption",
+		"body": [
+			"mkEnableOption \"$1\";"
+		]
+	},
+	"Make enable option with default": {
+		"prefix": "mkOption mkEnableOption default",
+		"body": [
+			"mkEnableOption \"$1\" // {default = $2;};"
+		]
+	},
+	"Make attribute set option": {
+		"prefix": "mkOption mkAttrs",
+		"body": [
+			"mkAttrs { description = \"$1\"; default = {$3}; options = {$2}; };"
+		]
+	},
+}{
+	// Place your snippets for nix here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"Home-manager config": {
+		"prefix": "home-manager",
+		"body": [
+			"home-manager.users.\\${user} = {",
+			"$0",
+			"};"
+		]
+	},
+	"Home-manager packages": {
+		"prefix": "home.packages",
+		"body": [
+			"home.packages = with pkgs; [",
+			"$0",
+			"];"
+		]
+	},
+	"NixOS module": {
+		"prefix": "module",
+		"body": [
+			"{\n  lib,\n  config,\n  inputs,\n  pkgs,\n  ...\n}:\n\nlet\n  lib2 = inputs.self.lib;\n  inherit (lib2) enabled;\n  inherit (lib) types;\n\n  cfg = config.ext.$1;\nin\n{\n  options.ext.$1 = with lib2.options; {\n    enable = lib.mkEnableOption \"$2\";\n  };\n\n  config = lib.mkIf cfg.enable {\n    $0\n  };\n}"
+		]
+	},
+	"NullOr option": {
+		"prefix": "nullOr",
+		"body": [
+			"options.mkOption { type = types.nullOr types.$1; default = null; };"
+		]
+	},
+}
