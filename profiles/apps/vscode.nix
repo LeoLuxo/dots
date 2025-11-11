@@ -7,30 +7,30 @@
 }:
 
 let
-  inherit (lib2) mkSyncedPath;
+  inherit (lib2.nixos) mkSyncedPath;
 in
 
 {
   imports = [
     (mkSyncedPath {
-      xdgPath = "Code/User/settings.json";
-      cfgPath = "vscode/settings.json";
+      target = "~/.config/Code/User/settings.json";
+      syncName = "vscode/settings.json";
     })
 
     (mkSyncedPath {
-      xdgPath = "Code/User/keybindings.json";
-      cfgPath = "vscode/keybindings.json";
+      target = "~/.config/Code/User/keybindings.json";
+      syncName = "vscode/keybindings.json";
     })
 
     (mkSyncedPath {
-      xdgPath = "Code/User/snippets";
-      cfgPath = "vscode/snippets";
+      target = "~/.config/Code/User/snippets";
+      syncName = "vscode/snippets";
     })
 
     # Profiles are a bit fucky
     # (mkSyncedPath {
-    #   xdgPath = "Code/User/profiles";
-    #   cfgPath = "vscode/profiles";
+    #   target = "~/.config/Code/User/profiles";
+    #   syncName = "vscode/profiles";
     #   excludes = [ "globalStorage" ];
     # })
   ];
