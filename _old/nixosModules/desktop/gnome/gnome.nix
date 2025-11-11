@@ -81,6 +81,16 @@ in
     desktop.gnome.extensions.removable-drive-menu
     desktop.gnome.extensions.appindicator
     desktop.gnome.extensions.bluetooth-quick-connect
+
+    # My extensions
+    desktop.gnome.extensions.blur-my-shell
+    desktop.gnome.extensions.clipboard-indicator
+    desktop.gnome.extensions.gsconnect
+    desktop.gnome.extensions.rounded-corners
+    desktop.gnome.extensions.system-monitor
+    desktop.gnome.extensions.media-controls
+    desktop.gnome.extensions.burn-my-windows
+    desktop.gnome.extensions.touchpad-gesture-customization
   ];
 
   config =
