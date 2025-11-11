@@ -154,6 +154,12 @@ in
     --------------------------------------------------------------------------------
   */
 
+  # enable zoxide, the smarter `cd` command
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
   # Home-Manager config
   home-manager = {
     useGlobalPkgs = true;
@@ -235,7 +241,19 @@ in
             # Rebind tab to accept suggestion
             bind \t accept-autosuggestion
           '';
+
+
+          functions = {
+            cd = ''
+              if type -q z
+                z $argv
+              else
+                builtin cd $argv
+              end
+            '';
+          };
         };
+
       };
     }) users;
   };
