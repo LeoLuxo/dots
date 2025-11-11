@@ -1,24 +1,24 @@
 {
   nixosModules,
   lib,
+  lib2,
   config,
   inputs,
   user,
+  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkDefault options types;
-
+  inherit (lib) options types;
+  inherit (lib2) mkSubmodule toPascalCase;
 in
 
 {
   imports = with nixosModules; [
     inputs.catppuccin.nixosModules.catppuccin
 
-    ./gnome.nix
-    ./cursor.nix
-
+    desktop.gnome.gnome
     desktop.gnome.extensions.ddterm
   ];
 
@@ -26,6 +26,29 @@ in
     enable = lib.mkOption {
       type = types.bool;
       default = false;
+    };
+
+    blur = {
+      enable = lib.mkOption {
+        type = types.bool;
+        default = true;
+      };
+
+      app-blur = mkSubmodule {
+        enable = lib.mkOption {
+          type = types.bool;
+          default = false;
+        };
+      };
+
+      hacks-level = options.mkOption {
+        type = types.enum [
+          "high performance"
+          "default"
+          "no artifact"
+        ];
+        default = "default";
+      };
     };
 
     theme = {
@@ -59,18 +82,91 @@ in
         default = "blue";
       };
     };
+
+    cursor = {
+      size = options.mkOption {
+        type = types.ints.unsigned;
+        default = 32;
+      };
+
+      flavor = options.mkOption {
+        type = types.enum [
+          "latte"
+          "frappe"
+          "macchiato"
+          "mocha"
+        ];
+        default = config.rice.peppy.theme.flavor;
+      };
+
+      accent = options.mkOption {
+        type = types.enum [
+          "dark"
+          "light"
+
+          "blue"
+          "flamingo"
+          "green"
+          "lavender"
+          "maroon"
+          "mauve"
+          "peach"
+          "pink"
+          "red"
+          "rosewater"
+          "sapphire"
+          "sky"
+          "teal"
+          "yellow"
+        ];
+        default = "dark";
+      };
+    };
   };
 
   config =
     let
       flavor = config.rice.peppy.theme.flavor;
       accent = config.rice.peppy.theme.accent;
+      name = "catppuccin-${config.rice.peppy.cursor.flavor}-${config.rice.peppy.cursor.accent}-cursors";
+      package =
+        pkgs.catppuccin-cursors."${config.rice.peppy.cursor.flavor}${toPascalCase config.rice.peppy.cursor.accent}";
     in
     {
       home-manager.users.${user} = {
         imports = [
           inputs.catppuccin.homeManagerModules.catppuccin
         ];
+
+        # Enable catppuccin for gtk
+        gtk = {
+          enable = true;
+          catppuccin = {
+            enable = true;
+            flavor = config.rice.peppy.theme.flavor;
+            accent = config.rice.peppy.theme.accent;
+            size = "standard";
+            tweaks = [ "normal" ];
+          };
+        };
+
+        home.pointerCursor = {
+          inherit name package;
+
+          size = config.rice.peppy.cursor.size;
+          gtk.enable = true;
+          x11.enable = true;
+        };
+
+        gtk.cursorTheme = {
+          inherit name package;
+        };
+      };
+
+      gnome.blur-my-shell = config.rice.peppy.blur;
+
+      environment.variables = {
+        XCURSOR_SIZE = config.rice.peppy.cursor.size;
       };
 
       # Disable catppuccin for the bootloader
