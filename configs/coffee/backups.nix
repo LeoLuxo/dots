@@ -1,12 +1,12 @@
 {
   config,
   hostname,
-  nixosModules,
+  profiles,
   user,
   ...
 }:
 {
-  imports = [ nixosModules.apps.restic ];
+  imports = [ profiles.apps.restic ];
 
   age.secrets =
     let
