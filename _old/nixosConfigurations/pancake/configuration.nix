@@ -17,8 +17,6 @@ in
 
     nixosModules.rices.peppy
 
-    nixosModules.scripts.terminal-utils
-
     # nixosModules.apps.deepl
     nixosModules.apps.youtube-music
     nixosModules.apps.gnome-dialect
