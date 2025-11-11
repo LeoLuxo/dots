@@ -15,8 +15,6 @@ in
   imports = [
     nixosModules.rices.peppy
 
-    nixosModules.scripts.terminal-utils
-
     nixosModules.apps.youtube-music
     nixosModules.apps.vscode
     nixosModules.apps.zoxide

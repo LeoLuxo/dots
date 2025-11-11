@@ -24,6 +24,7 @@ in
 
     profiles.scripts.dots
     profiles.scripts.nixUtils
+    profiles.scripts.terminalUtils
 
     inputs.home-manager.nixosModules.home-manager
   ];
