@@ -1,4 +1,4 @@
-{ pkgs, user, ... }:
+{ pkgs, ... }:
 
 let
   mutterTripleBuffering = pkgs.fetchFromGitLab {
