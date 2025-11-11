@@ -20,6 +20,7 @@ in
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff
+    profiles.scripts.snip
 
     (mkKeybind {
       name = "Open terminal";
