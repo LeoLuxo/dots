@@ -1,8 +1,4 @@
-{
-  pkgs,
-  user,
-  ...
-}:
+{ pkgs, ... }:
 
 let
   package = pkgs.writeScriptWithDeps {
