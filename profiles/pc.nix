@@ -17,6 +17,7 @@ in
     profiles.apps.distrobox
     profiles.apps.firefox
     profiles.apps.upscaler
+    profiles.apps.vscode
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff
