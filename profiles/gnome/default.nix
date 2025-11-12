@@ -171,24 +171,24 @@ in
     # Default gnome apps
     ./defaultApps.nix
 
-    inputs.catppuccin.nixosModules.catppuccin
+    inputs.catppuccin.nixosModules.catppuccin # TODO FIXME
 
     # Base extensions that should be included by default
-    ./extensions/just-perfection.nix
-    ./extensions/removable-drive-menu.nix
+    ./extensions/justPerfection.nix
+    ./extensions/removableDriveMenu.nix
     ./extensions/appindicator.nix
-    ./extensions/bluetooth-quick-connect.nix
+    ./extensions/bluetoothQuickConnect.nix
 
     # My extensions
     ./extensions/ddterm.nix
-    ./extensions/blur-my-shell.nix
-    ./extensions/clipboard-indicator.nix
+    ./extensions/blurMyShell.nix
+    ./extensions/clipboardIndicator.nix
     ./extensions/gsconnect.nix
-    ./extensions/rounded-corners.nix
-    ./extensions/system-monitor.nix
-    ./extensions/media-controls.nix
-    ./extensions/burn-my-windows.nix
-    ./extensions/touchpad-gesture-customization.nix
+    ./extensions/roundedCorners.nix
+    ./extensions/systemMonitor.nix
+    ./extensions/mediaControls.nix
+    ./extensions/burnMyWindows.nix
+    ./extensions/touchpadGestureCustomization.nix
   ];
 
   config = {
