@@ -9,13 +9,11 @@
   system.stateVersion = "24.05";
 
   imports = [
-    # TODO: remove
-    (import "${inputs.self}/_old/nixosConfigurations/coffee")
-
     ./audio.nix
     ./hardware.nix
     ./syncthing.nix
     ./backups.nix
+    # ./vr.nix
 
     profiles.base
     profiles.pc
