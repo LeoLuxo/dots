@@ -49,9 +49,6 @@
               inherit autologin;
 
               host = hosts.${hostname};
-
-              # TODO: remove
-              nixosModules = import ./_old/nixosModules { inherit inputs lib lib2; };
             } // extras;
 
             modules =
