@@ -12,6 +12,8 @@ let
 in
 {
   imports = [
+    profiles.gnome
+
     profiles.apps.git
     profiles.apps.vesktop
     profiles.apps.distrobox

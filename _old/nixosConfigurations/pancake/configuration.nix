@@ -14,8 +14,6 @@ in
   imports = [
     # Include hardware stuff and kernel patches for surface pro 7
     # inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
-
-    nixosModules.desktop.gnome.gnome
   ];
 
   # hardware.microsoft-surface.kernelVersion = "longterm";
@@ -26,27 +24,6 @@ in
   ];
 
   # wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
-
-  desktop.gnome = {
-    enable = true;
-
-    cursor.size = 32;
-
-    power = {
-      buttonAction = "suspend";
-      confirmShutdown = true;
-
-      screenIdle = {
-        enable = true;
-        delay = 600;
-      };
-
-      suspendIdle = {
-        enable = true;
-        delay = 900;
-      };
-    };
-  };
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
