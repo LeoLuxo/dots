@@ -1,7 +1,6 @@
 {
   lib,
   lib2,
-  nixosModules, # TODO: delete and check all instances of nixosModules
   config,
   pkgs,
   user,
@@ -10,7 +9,7 @@
 }:
 
 let
-  inherit (lib) options types modules;
+  inherit (lib) options types;
   inherit (lib2) mkSubmodule toPascalCase;
 
   cfg = config.gnome;
