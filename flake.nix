@@ -120,6 +120,8 @@
       inputs.darwin.follows = "";
     };
 
+    nix-monitored.url = "github:ners/nix-monitored";
+
     # ----- hardware ------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
