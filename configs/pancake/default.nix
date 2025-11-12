@@ -45,27 +45,27 @@
   # Also for touchscreen support (or maybe touchpad? unsure)
   services.libinput.enable = true;
 
-  # gnome = {
-  #   power = {
-  #     buttonAction = "suspend";
-  #     confirmShutdown = true;
+  gnome = {
+    power = {
+      buttonAction = "suspend";
+      confirmShutdown = true;
 
-  #     screenIdle = {
-  #       enable = true;
-  #       delay = 600;
-  #     };
+      screenIdle = {
+        enable = true;
+        delay = 600;
+      };
 
-  #     suspendIdlePluggedIn = {
-  #       enable = true;
-  #       delay = 900;
-  #     };
+      suspendIdlePluggedIn = {
+        enable = true;
+        delay = 900;
+      };
 
-  #     suspendIdleOnBattery = {
-  #       enable = true;
-  #       delay = 600;
-  #     };
+      suspendIdleOnBattery = {
+        enable = true;
+        delay = 600;
+      };
 
-  #     cursorSize = 32;
-  #   };
-  # };
+      cursorSize = 32;
+    };
+  };
 }

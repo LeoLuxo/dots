@@ -93,30 +93,30 @@
       };
     };
 
-  # gnome = {
-  #   power = {
-  #     buttonAction = "power off";
-  #     confirmShutdown = false;
+  gnome = {
+    power = {
+      buttonAction = "power off";
+      confirmShutdown = false;
 
-  #     screenIdle = {
-  #       enable = true;
-  #       delay = 600;
-  #     };
+      screenIdle = {
+        enable = true;
+        delay = 600;
+      };
 
-  #     suspendIdlePluggedIn.enable = false;
-  #   };
+      suspendIdlePluggedIn.enable = false;
+    };
 
-  #   textScalingPercent = 150;
+    textScalingPercent = 150;
 
-  #   cursorSize = 16;
+    cursorSize = 16;
 
-  #   blur = {
-  #     enable = true;
-  #     # Enable blur for all applications
-  #     # appBlur.enable = true;
+    blur = {
+      enable = true;
+      # Enable blur for all applications
+      # appBlur.enable = true;
 
-  #     # Set hacks to best looking
-  #     hacksLevel = "no artifact";
-  #   };
-  # };
+      # Set hacks to best looking
+      hacksLevel = "no artifact";
+    };
+  };
 }
