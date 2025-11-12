@@ -27,6 +27,7 @@ in
     profiles.scripts.terminalUtils
 
     inputs.home-manager.nixosModules.home-manager
+    inputs.nix-monitored.nixosModules.default
   ];
 
   /*
@@ -154,6 +155,9 @@ in
     --------------------------------------------------------------------------------
   */
 
+  # Set nix-monitored as the default nix package, which automatically integrates nix-output-monitor into all commands
+  nix.monitored.enable = true;
+
   # enable zoxide, the smarter `cd` command
   programs.zoxide = {
     enable = true;
@@ -241,7 +245,6 @@ in
             # Rebind tab to accept suggestion
             bind \t accept-autosuggestion
           '';
-
 
           functions = {
             cd = ''

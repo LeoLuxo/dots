@@ -11,6 +11,8 @@ let
 in
 
 {
+# TODO: `c` command opens nano instead of vscode
+
   imports = [
     (mkSyncedPath {
       target = "~/.config/Code/User/settings.json";
