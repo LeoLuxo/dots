@@ -239,7 +239,8 @@ rec {
 
             if [[ ! -h "${realTarget}" ]]; then
               echo Backing up old '${syncName}' to '${realTarget}.bak'
-              mv ${realTarget} ${realTarget}.bak --force
+              rm -rf ${realTarget}.bak
+              mv -f ${realTarget} ${realTarget}.bak
             fi
           fi
 
