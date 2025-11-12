@@ -31,7 +31,7 @@
         "com/github/amezin/ddterm" = {
           ddterm-toggle-hotkey = [ ]; # Use the terminal shortcut instead
           background-color = "rgb(46,52,54)";
-          background-opacity = 0.9;
+          background-opacity = 0.97;
           backspace-binding = "auto";
           bold-is-bright = false;
           panel-icon-type = "none";
