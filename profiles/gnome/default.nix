@@ -277,16 +277,16 @@ in
         ];
 
         # Enable catppuccin for gtk
-        gtk = {
-          enable = true;
-          catppuccin = {
-            enable = true;
-            flavor = cfg.theme.flavor;
-            accent = cfg.theme.accent;
-            size = "standard";
-            tweaks = [ "normal" ];
-          };
-        };
+        # gtk = {
+        #   enable = true;
+        #   catppuccin = {
+        #     enable = true;
+        #     flavor = cfg.theme.flavor;
+        #     accent = cfg.theme.accent;
+        #     size = "standard";
+        #     tweaks = [ "normal" ];
+        #   };
+        # };
 
         home.pointerCursor = {
           inherit name package;
