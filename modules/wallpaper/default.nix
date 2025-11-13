@@ -27,11 +27,13 @@ in
     # Patch to fix the bug where settimed doesn't work for the dark theme of gnome
     # https://github.com/xyproto/wallutils/issues/44
     # TODO: Remove when the issue gets fixed
-    (mkQuickPatch {
-      package = "wallutils";
-      patches = [ ./fix-dark-mode.patch ];
-    })
+    # (mkQuickPatch {
+    #   package = "wallutils";
+    #   patches = [ ./fix-dark-mode.patch ];
+    # })
   ];
+  
+  
 
   options.wallpaper = {
     enable = options.mkOption {

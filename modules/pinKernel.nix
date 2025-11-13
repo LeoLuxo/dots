@@ -10,6 +10,7 @@ let
   inherit (lib.options) mkOption;
 
   cfg = config.pinKernel;
+  pinnedPkgs = pkgs."25-05";
 in
 {
   options.pinKernel = {
@@ -38,10 +39,10 @@ in
       package = "linux_${major}_${minor}";
     in
     {
-      boot.kernelPackages = pkgs.linuxPackagesFor (
-        pkgs.${package}.override {
+      boot.kernelPackages = pinnedPkgs.linuxPackagesFor (
+        pinnedPkgs.${package}.override {
           argsOverride = {
-            src = pkgs.fetchurl {
+            src = pinnedPkgs.fetchurl {
               url = "mirror://kernel/linux/kernel/v${major}.x/linux-${cfg.version}.tar.xz";
               sha256 = cfg.hash;
             };
