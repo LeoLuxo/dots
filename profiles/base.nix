@@ -79,6 +79,8 @@ in
     }) (hostCfg.ip or { })
   ) hosts;
 
+  services.openssh.enable = true;
+
   # Define and set up all the manually-defined users
   users = {
     mutableUsers = false;
