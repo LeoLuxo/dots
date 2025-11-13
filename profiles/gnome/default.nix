@@ -389,7 +389,7 @@ in
             help = [ ]; # Disable help, defaults to Super+F1
             touchpad-off-static = [ ]; # Defaults to XF86TouchpadOff = F23
             touchpad-on-static = [ ]; # Defaults to XF86TouchpadOn = F22
-            screensaver = [ ]; # Defaults to Super+L
+            screensaver = [ "<Super>l" ]; # Defaults to Super+L
           };
 
           "org/gnome/mutter/keybindings" = {
