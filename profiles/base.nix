@@ -68,7 +68,7 @@ in
 
   # Set the default editor
   environment.variables = {
-    EDITOR = "nano";
+    EDITOR = lib.mkDefault "nano";
   };
 
   # Set nix-monitored as the default nix package, which automatically integrates nix-output-monitor into all commands
