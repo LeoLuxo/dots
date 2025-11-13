@@ -62,8 +62,9 @@
         delay = 600;
       };
 
-      cursorSize = 32;
     };
+
+    cursorSize = 32;
   };
 
   # Enable sound with pipewire.
