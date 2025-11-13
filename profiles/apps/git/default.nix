@@ -39,17 +39,8 @@ in
         # Disable safe directory checks
         safe.directory = "*";
 
-        # Some options transferred from my old windows config, no idea if they're relevant here :shrug:
-        core = {
-          # Don't hide the .git directory on windows
-          hideDotFiles = false;
-
-          # Disable the CRLF warning (but still auto convert)
-          safecrlf = false;
-
-          # Set the commit editor to gnome commit
-          editor = "re.sonny.Commit";
-        };
+        # Set the commit editor to gnome commit
+        # core.editor = "re.sonny.Commit";
 
         # Automatically setup remote when pushing on a repo that was cloned (iirc?)
         push.autoSetupRemote = true;
