@@ -68,6 +68,23 @@ in
       file = ./qq.sh;
       deps = [ ];
     })
+
+    (pkgs.writeScriptWithDeps {
+      name = "c";
+      text = ''
+        #!/usr/bin/env bash
+
+        if [[ $# -eq 0 ]]; then
+          path = .
+        else
+          path = "$*"
+        fi
+
+        # Open the config repo in vscode/text editor
+        ''${APP_CODE_EDITOR:-''${VISUAL:-''${EDITOR:-nano}}} $path
+      '';
+      deps = [ pkgs.nano ];
+    })
   ];
 
   home-manager.users.${user} = {
@@ -76,8 +93,6 @@ in
       pls = "please";
 
       l = "ls -Fhsla";
-
-      c = "$EDITOR .";
 
       "." = "q .";
 
