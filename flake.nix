@@ -92,9 +92,8 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    nixpkgs-25-05.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-24-11.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-24-05.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-25-05.url = "github:nixos/nixpkgs/fd487183437963a59ba763c0cc4f27e3447dd6dd";
+    nixpkgs-24-11.url = "github:nixos/nixpkgs/50ab793786d9de88ee30ec4e4c24fb4236fc2674";
 
     # ----- personal stuff ------------------------------------------------------------------------
     # My wallpapers
