@@ -52,8 +52,8 @@ in
   };
 
   environment.systemPackages = [
-    # (pkgs."25-05".callPackage ./vesktop-1.5.8-patch326.nix { })
-    (pkgs."25-05".callPackage ./vesktop-1.5.5-patch609.nix { })
+    # (pkgs.pinned.callPackage ./vesktop-1.5.8-patch326.nix { })
+    (pkgs.pinned.callPackage ./vesktop-1.5.5-patch609.nix { })
   ];
 
   nixpkgs.overlays = [

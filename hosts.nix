@@ -4,6 +4,7 @@
     hostname = "coffee";
     os = "nixos";
     nixosConfig = import ./configs/coffee;
+    nixpkgs = "nixpkgs-stable";
 
     user = "lili";
     users = {
@@ -42,6 +43,7 @@
     hostname = "pancake";
     os = "nixos";
     nixosConfig = import ./configs/pancake;
+    nixpkgs = "nixpkgs-pinned";
 
     user = "lili";
     users = {

@@ -10,7 +10,7 @@ let
   inherit (lib.options) mkOption;
 
   cfg = config.pinKernel;
-  pinnedPkgs = pkgs."25-05";
+  pinnedPkgs = pkgs.pinned;
 in
 {
   options.pinKernel = {

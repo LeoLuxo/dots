@@ -33,6 +33,7 @@
         mkNixosConfig =
           {
             nixosConfig,
+            nixpkgs ? "nixpkgs",
             hostname,
             users ? { },
             autologin ? null,
@@ -41,7 +42,7 @@
           # If a `user` is specified, that user must be defined in `users`
           assert !extras ? "user" || users ? ${extras.user};
 
-          inputs.nixpkgs.lib.nixosSystem {
+          inputs.${nixpkgs}.lib.nixosSystem {
             specialArgs = {
               inherit inputs lib2;
               inherit profiles;
@@ -88,12 +89,14 @@
 
   inputs = {
     # ----- nixpkgs -------------------------------------------------------------------------------
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    "nixpkgs".follows = "nixpkgs-stable";
+    "nixpkgs-stable".follows = "nixpkgs-25-05";
+    "nixpkgs-unstable".url = "github:nixos/nixpkgs/nixos-unstable";
+    "nixpkgs-pinned".url = "github:nixos/nixpkgs/fd487183437963a59ba763c0cc4f27e3447dd6dd";
 
-    nixpkgs-25-05.url = "github:nixos/nixpkgs/fd487183437963a59ba763c0cc4f27e3447dd6dd";
-    nixpkgs-24-11.url = "github:nixos/nixpkgs/50ab793786d9de88ee30ec4e4c24fb4236fc2674";
+    "nixpkgs-25-05".url = "github:nixos/nixpkgs/nixos-25.05";
+    "nixpkgs-24-11".url = "github:nixos/nixpkgs/nixos-24.11";
+    "nixpkgs-24-05".url = "github:nixos/nixpkgs/nixos-24.05";
 
     # ----- personal stuff ------------------------------------------------------------------------
     # My wallpapers
@@ -103,10 +106,8 @@
 
     # ----- metaconfig & nix ---------------------------------------------------------------------
     # Manages dotfiles in nix
-    home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-25-05";
 
     # Provides a set of tools to more easily manage flakes and per-system attrs
     flake-utils.url = "github:numtide/flake-utils";
@@ -133,10 +134,9 @@
     catppuccin.url = "github:catppuccin/nix";
 
     # Pre-built database for nix-index, which is an index of which files are provided by which packages
-    nix-index-database = {
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
   };
 
 }
