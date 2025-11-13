@@ -28,6 +28,7 @@
 
     dots = "/etc/nixos/dots";
     dotsTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
+    # TODO: dots-todo ain't working, FIXME
   };
 
   /*
@@ -43,15 +44,14 @@
     nixosConfig = import ./configs/pancake;
 
     user = "lili";
-    users = [
-      {
-        username = "lili";
+    users = {
+      "lili" = {
         uid = 1000;
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEuGccJyHZWCVDChXj3UUxTFLfU8fCM+vUYViYF+o6JF lili@pancake"
         ];
-      }
-    ];
+      };
+    };
 
     ip.local = "192.168.0.173";
 
@@ -63,6 +63,9 @@
     };
 
     syncthing.id = "DS5FS25-BYJYFF2-TKBNJ4S-6RHZTEK-F4QS4EM-BNOPAPU-ULRHUA7-ORVTNA7";
+
+    dots = "/etc/nixos/dots";
+    dotsTodo = "/stuff/obsidian/Notes/NixOS Todo.md";
   };
 
   /*

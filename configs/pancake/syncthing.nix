@@ -1,11 +1,11 @@
 {
-  homeProfiles,
+  profiles,
   ...
 }:
 
 {
   imports = [
-    homeProfiles.apps.syncthing
+    profiles.apps.syncthing
   ];
 
   services.syncthing.settings =
