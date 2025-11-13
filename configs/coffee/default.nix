@@ -52,7 +52,10 @@
   };
   # services.open-webui.enable = true;
 
-  wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
+  wallpaper.image = pkgs.fetchurl {
+    url = "https://w.wallhaven.cc/full/e7/wallhaven-e76pew.png";
+    hash = "sha256-x2E24KA8Eilv2pFw2CgskIz1lL2sP9Wqwtb6K2/HtWE=";
+  };
 
   # 1TB SSD
   fileSystems."/stuff" = {
