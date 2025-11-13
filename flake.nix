@@ -106,20 +106,20 @@
 
     # ----- metaconfig & nix ---------------------------------------------------------------------
     # Manages dotfiles in nix
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-25-05";
+    # home-manager.url = "github:nix-community/home-manager/release-25.05";
+    # home-manager.inputs.nixpkgs.follows = "nixpkgs-25-05";
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     # Provides a set of tools to more easily manage flakes and per-system attrs
     flake-utils.url = "github:numtide/flake-utils";
 
     # Encryption library, used for secrets in nix
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # optionally choose not to download darwin deps (saves some resources on Linux)
-      inputs.darwin.follows = "";
-    };
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.home-manager.follows = "home-manager";
 
+    # A wrapper for the nix commands that pipes everything through nix-output-monitor
     nix-monitored.url = "github:ners/nix-monitored";
 
     # ----- hardware ------------------------------------------------------------------------------
