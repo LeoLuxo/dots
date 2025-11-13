@@ -11,8 +11,6 @@ let
 in
 
 {
-# TODO: `c` command opens nano instead of vscode
-
   imports = [
     (mkSyncedPath {
       target = "~/.config/Code/User/settings.json";
@@ -38,7 +36,7 @@ in
   ];
 
   environment.variables = {
-    VISUAL = "code";
+    VISUAL = lib.mkDefault "code";
     APP_CODE_EDITOR = lib.mkDefault "code";
   };
 
