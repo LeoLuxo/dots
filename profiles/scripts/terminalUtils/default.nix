@@ -75,12 +75,12 @@ in
         #!/usr/bin/env bash
 
         if [[ $# -eq 0 ]]; then
-          path = .
+          path=.
         else
-          path = "$*"
+          path="$*"
         fi
 
-        # Open the config repo in vscode/text editor
+        # Open the path in vscode/text editor
         ''${APP_CODE_EDITOR:-''${VISUAL:-''${EDITOR:-nano}}} $path
       '';
       deps = [ pkgs.nano ];
