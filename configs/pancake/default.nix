@@ -25,6 +25,12 @@
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
+  # Fixes blurry electron apps
+  environment.variables = {
+    NIXOS_OZONE_WL = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+  };
+
   # Pin the kernel with nixos-hardware
   hardware.microsoft-surface.kernelVersion = "longterm";
 
