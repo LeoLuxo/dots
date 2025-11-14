@@ -15,6 +15,8 @@
     ./backups.nix
     # ./vr.nix
 
+    inputs.stylix.nixosModules.stylix
+
     profiles.base
     profiles.pc
     profiles.gaming.base
@@ -35,17 +37,23 @@
     picard
   ];
 
-  services.ollama = {
+  stylix = {
     enable = true;
-    acceleration = "rocm";
-
-    # Optional: preload models, see https://ollama.com/library
-    loadModels = [
-      # "qwen2.5-coder:32b"
-      # "deepseek-coder:33b"
-      # "deepseek-r1:32b"
-    ];
+    base16Scheme = "${pkgs.unstable.base16-schemes}/share/themes/brushtrees-dark.yaml";
+    polarity = "dark";
   };
+
+  # services.ollama = {
+  #   enable = true;
+  #   acceleration = "rocm";
+
+  #   # Optional: preload models, see https://ollama.com/library
+  #   loadModels = [
+  #     # "qwen2.5-coder:32b"
+  #     # "deepseek-coder:33b"
+  #     # "deepseek-r1:32b"
+  #   ];
+  # };
   # services.open-webui.enable = true;
 
   wallpaper.image = pkgs.fetchurl {
