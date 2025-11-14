@@ -3,7 +3,7 @@
   inputs,
   pkgs,
   ...
-}:
+}@args:
 {
   system.stateVersion = "24.05";
 
@@ -12,7 +12,10 @@
     ./syncthing.nix
 
     # Include hardware stuff and kernel patches for surface pro 7
-    inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel
+    # IMPORTANT: Am manually giving the arguments so that I can override the pkgs instance it uses to the pinned one, to avoid recompiling the kernel at every nixpkgs update
+    (import inputs.nixos-hardware.nixosModules.microsoft-surface-pro-intel (
+      args // { pkgs = pkgs.pinned; }
+    ))
 
     profiles.base
     profiles.pc
