@@ -400,7 +400,7 @@ in
 
           # Appearance
           "org/gnome/desktop/interface" = {
-            # color-scheme = "prefer-dark";
+            color-scheme = "prefer-dark";
             gtk-enable-primary-paste = false;
           };
 
