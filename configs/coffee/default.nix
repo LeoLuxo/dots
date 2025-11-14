@@ -37,14 +37,16 @@
     picard
   ];
 
-  stylix = {
-    enable = true;
-    base16Scheme = "${pkgs.unstable.base16-schemes}/share/themes/brushtrees-dark.yaml";
-    polarity = "dark";
-    autoEnable = false;
+  # Won't start past login screen
+  # Maybe try again after 25.11 releases
+  # stylix = {
+  #   enable = true;
+  #   base16Scheme = "${pkgs.unstable.base16-schemes}/share/themes/brushtrees-dark.yaml";
+  #   polarity = "dark";
+  #   autoEnable = false;
 
-    targets.gnome.enable = true;
-  };
+  #   targets.gnome.enable = true;
+  # };
 
   # services.ollama = {
   #   enable = true;
