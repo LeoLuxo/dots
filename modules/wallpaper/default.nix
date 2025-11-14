@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (lib2) sanitizePath mkQuickPatch;
+  inherit (lib2) sanitizePath;
   inherit (lib)
     options
     filesystem
@@ -21,20 +21,9 @@ let
   heicConverter = file: pkgs.callPackage ./heic-converter.nix { inherit file; };
   cfg = config.wallpaper;
   sanitizedImage = sanitizePath cfg.image;
+  wallutils = pkgs.unstable.wallutils;
 in
 {
-  imports = [
-    # Patch to fix the bug where settimed doesn't work for the dark theme of gnome
-    # https://github.com/xyproto/wallutils/issues/44
-    # TODO: Remove when the issue gets fixed
-    # (mkQuickPatch {
-    #   package = "wallutils";
-    #   patches = [ ./fix-dark-mode.patch ];
-    # })
-  ];
-  
-  
-
   options.wallpaper = {
     enable = options.mkOption {
 
@@ -116,7 +105,7 @@ in
         serviceConfig = {
           Type = "oneshot";
           ExecStart = ''
-            ${pkgs.wallutils}/bin/setwallpaper --mode ${cfg.mode} ${finalImage}
+            ${wallutils}/bin/setwallpaper --mode ${cfg.mode} ${finalImage}
           '';
         };
         restartIfChanged = true;
@@ -142,7 +131,7 @@ in
           ExecStart = (
             pkgs.writeShellScript "wallutils-timed" ''
               pushd "${builtins.dirOf finalImage}"
-              ${pkgs.wallutils}/bin/settimed --mode ${cfg.mode} "${finalImage}"
+              ${wallutils}/bin/settimed --mode ${cfg.mode} "${finalImage}"
             ''
           );
         };
