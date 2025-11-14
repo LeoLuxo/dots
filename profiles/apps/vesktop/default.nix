@@ -51,12 +51,12 @@ in
     };
   };
 
-  environment.systemPackages = [
-    # (pkgs.pinned.callPackage ./vesktop-1.5.8-patch326.nix { })
-    (pkgs.pinned.callPackage ./vesktop-1.5.5-patch609.nix { })
-  ];
-
   nixpkgs.overlays = [
+    (final: prev: {
+      # vesktop = (prev.pinned.callPackage ./vesktop-1.5.8-patch326.nix { });
+      vesktop = (prev.pinned.callPackage ./vesktop-1.5.5-patch609.nix { });
+    })
+
     (import ./overlays/customIcons.nix)
   ];
 
