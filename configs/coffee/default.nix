@@ -17,8 +17,6 @@
 
     profiles.base
     profiles.pc
-    # profiles.personal
-    # profiles.music
     profiles.gaming.base
     profiles.gaming.emulation
     profiles.gaming.minecraft
@@ -26,8 +24,6 @@
     profiles.hardware.gpu.amd
 
     profiles.apps.nicotinePlus
-    # profiles.apps.qmk
-    # profiles.apps.syncthing
     profiles.apps.beets
 
     profiles.scripts.bootWindows
