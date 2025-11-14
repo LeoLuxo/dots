@@ -50,20 +50,20 @@
               inherit autologin;
 
               host = hosts.${hostname};
-            } // extras;
+            }
+            // extras;
 
-            modules =
-              [
-                # Include the main nixos module for this config
-                nixosConfig
+            modules = [
+              # Include the main nixos module for this config
+              nixosConfig
 
-                # Add our overlays
-                {
-                  nixpkgs.overlays = lib.attrValues overlays;
-                }
-              ]
-              # Auto-include all custom nixos modules
-              ++ (lib.attrValues modules);
+              # Add our overlays
+              {
+                nixpkgs.overlays = lib.attrValues overlays;
+              }
+            ]
+            # Auto-include all custom nixos modules
+            ++ (lib.attrValues modules);
 
           };
       in
@@ -108,6 +108,7 @@
     # Manages dotfiles in nix
     # home-manager.url = "github:nix-community/home-manager/release-25.05";
     # home-manager.inputs.nixpkgs.follows = "nixpkgs-25-05";
+    # TODO: Fix when 25.11 is out
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
