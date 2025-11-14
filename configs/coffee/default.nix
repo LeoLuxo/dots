@@ -38,7 +38,7 @@
   ];
 
   # Won't start past login screen
-  # Maybe try again after 25.11 releases
+  # TODO: Maybe try again after 25.11 releases
   # stylix = {
   #   enable = true;
   #   base16Scheme = "${pkgs.unstable.base16-schemes}/share/themes/brushtrees-dark.yaml";
