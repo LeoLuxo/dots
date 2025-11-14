@@ -99,12 +99,11 @@ in
     ];
 
     # A list of names of users that have additional rights when connecting to the Nix daemon, such as the ability to specify additional binary caches, or to import unsigned NARs.
-    trusted-users =
-      [
-        "root"
-      ]
-      # Add all manually-defined users
-      ++ (lib.mapAttrsToList (username: _: username) users);
+    # Add all manually-defined users to it
+    trusted-users = [ "root" ] ++ (lib.mapAttrsToList (username: _: username) users);
+
+    # Use all available cores for building (0 is already the default)
+    cores = 0;
   };
 
   /*
