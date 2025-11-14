@@ -170,8 +170,6 @@ in
     # Default gnome apps
     ./defaultApps.nix
 
-    inputs.catppuccin.nixosModules.catppuccin # TODO FIXME
-
     # Base extensions that should be included by default
     ./extensions/justPerfection.nix
     ./extensions/removableDriveMenu.nix
@@ -251,55 +249,12 @@ in
       XCURSOR_SIZE = cfg.cursor.size;
     };
 
-    # Disable catppuccin for the bootloader
-    boot.plymouth.catppuccin.enable = false;
-
-    catppuccin = {
-      # Enable the theme for all compatible apps
-      enable = true;
-
-      # Choose flavor
-      flavor = cfg.theme.flavor;
-      accent = cfg.theme.accent;
-    };
-
     home-manager.users.${user} =
       { lib, user, ... }:
       let
         inherit (lib.hm.gvariant) mkUint32;
-
-        name = "catppuccin-${cfg.cursor.flavor}-${cfg.cursor.accent}-cursors";
-        package = pkgs.catppuccin-cursors."${cfg.cursor.flavor}${toPascalCase cfg.cursor.accent}";
       in
       {
-        imports = [
-          inputs.catppuccin.homeManagerModules.catppuccin
-        ];
-
-        # Enable catppuccin for gtk
-        # gtk = {
-        #   enable = true;
-        #   catppuccin = {
-        #     enable = true;
-        #     flavor = cfg.theme.flavor;
-        #     accent = cfg.theme.accent;
-        #     size = "standard";
-        #     tweaks = [ "normal" ];
-        #   };
-        # };
-
-        home.pointerCursor = {
-          inherit name package;
-
-          size = cfg.cursor.size;
-          gtk.enable = true;
-          x11.enable = true;
-        };
-
-        gtk.cursorTheme = {
-          inherit name package;
-        };
-
         # Add aliases
         home.shellAliases = {
           "find-shortcut" = "gsettings list-recursively | grep -i";
@@ -445,7 +400,7 @@ in
 
           # Appearance
           "org/gnome/desktop/interface" = {
-            color-scheme = "prefer-dark";
+            # color-scheme = "prefer-dark";
             gtk-enable-primary-paste = false;
           };
 
