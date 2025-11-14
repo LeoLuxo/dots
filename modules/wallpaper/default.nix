@@ -26,7 +26,6 @@ in
 {
   options.wallpaper = {
     enable = options.mkOption {
-
       type = types.bool;
       default = cfg.image != null;
     };

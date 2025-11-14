@@ -120,8 +120,9 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.home-manager.follows = "home-manager";
 
-    # A wrapper for the nix commands that pipes everything through nix-output-monitor
-    nix-monitored.url = "github:ners/nix-monitored";
+    # Automatically sets a theme for basically everything
+    stylix.url = "github:nix-community/stylix/release-25.05";
+    stylix.inputs.nixpkgs.follows = "nixpkgs-25-05";
 
     # ----- hardware ------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops
@@ -131,13 +132,12 @@
     musnix.url = "github:musnix/musnix";
 
     # ----- other ---------------------------------------------------------------------------------
-    # Catppuccin themes
-    catppuccin.url = "github:catppuccin/nix";
-
     # Pre-built database for nix-index, which is an index of which files are provided by which packages
     nix-index-database.url = "github:nix-community/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    # A wrapper for the nix commands that pipes everything through nix-output-monitor
+    nix-monitored.url = "github:ners/nix-monitored";
   };
 
 }
