@@ -41,6 +41,7 @@
     enable = true;
     base16Scheme = "${pkgs.unstable.base16-schemes}/share/themes/brushtrees-dark.yaml";
     polarity = "dark";
+    autoEnable = false;
   };
 
   # services.ollama = {
