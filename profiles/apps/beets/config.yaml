@@ -4,7 +4,7 @@
 directory: /stuff/media/music
 library: /stuff/media/music/beets.db
 
-plugins: fetchart lyrics lastgenre embedart inline autobpm info badfiles ftintitle deezer spotify
+plugins: fetchart lyrics lastgenre embedart inline autobpm info badfiles ftintitle thumbnails deezer spotify
 
 # Which sources to prefer (default penalty is 0.5, smaller=preferred)
 deezer:
@@ -111,6 +111,9 @@ autobpm:
 
 badfiles:
   check_on_import: no
-  
+
 ftintitle:
+  auto: yes
+
+thumbnails:
   auto: yes
