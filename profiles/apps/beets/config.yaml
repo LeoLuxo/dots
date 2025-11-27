@@ -111,3 +111,6 @@ autobpm:
 
 badfiles:
   check_on_import: no
+  
+ftintitle:
+  auto: yes
