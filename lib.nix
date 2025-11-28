@@ -244,6 +244,7 @@ rec {
             fi
           fi
 
+          mkdir --parents $(dirname ${realTarget})
           run ln -sf $VERBOSE_ARG ${syncTarget} ${realTarget}
         '';
       };
