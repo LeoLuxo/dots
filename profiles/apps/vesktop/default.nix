@@ -54,7 +54,7 @@ in
   nixpkgs.overlays = [
     (final: prev: {
       # vesktop = (final.pinned.callPackage ./vesktop-1.5.8-patch326.nix { });
-      vesktop = (final.pinned.callPackage ./vesktop-1.5.5-patch609.nix { });
+      vesktop = (final.pinned.callPackage ./vesktop-1.5.5-patch609.nix { withSystemVencord = true; });
     })
 
     (import ./overlays/customIcons.nix)
