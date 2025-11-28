@@ -91,7 +91,7 @@ lastgenre:
   
 lyrics:
   auto: yes
-  force: yes
+  force: no
   print: no
   sources: [lrclib, genius]
   synced: yes
