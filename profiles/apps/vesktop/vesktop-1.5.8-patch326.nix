@@ -15,6 +15,10 @@
   autoPatchelfHook,
   pnpm_10,
   nodejs,
+  libxkbcommon,
+  libxcb,
+  libX11,
+  libXtst,
   nix-update-script,
   withTTS ? true,
   withMiddleClickScroll ? false,
@@ -44,41 +48,43 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Xmcx0hWS5F4nEi83Hc6BvRu7Okw3LTwa7zGU3rJ+Udk=";
   };
 
-  nativeBuildInputs =
-    [
-      nodejs
-      pnpm_10.configHook
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [
-      # vesktop uses venmic, which is a shipped as a prebuilt node module
-      # and needs to be patched
-      autoPatchelfHook
-      copyDesktopItems
-      # we use a script wrapper here for environment variable expansion at runtime
-      # https://github.com/NixOS/nixpkgs/issues/172583
-      makeWrapper
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      # on macos we don't need to expand variables, so we can use the faster binary wrapper
-      makeBinaryWrapper
-    ];
+  nativeBuildInputs = [
+    nodejs
+    pnpm_10.configHook
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isLinux [
+    # vesktop uses venmic, which is a shipped as a prebuilt node module
+    # and needs to be patched
+    autoPatchelfHook
+    copyDesktopItems
+    # we use a script wrapper here for environment variable expansion at runtime
+    # https://github.com/NixOS/nixpkgs/issues/172583
+    makeWrapper
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    # on macos we don't need to expand variables, so we can use the faster binary wrapper
+    makeBinaryWrapper
+  ];
 
   buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
     libpulseaudio
     pipewire
     (lib.getLib stdenv.cc.cc)
+    libxkbcommon
+    libxcb
+    libX11
+    libXtst
   ];
 
-  patches =
-    [
-      ./patches/disableUpdateChecking.patch
-      ./patches/fixReadOnlySettings.patch
-    ]
-    ++ lib.optional withSystemVencord (
-      replaceVars ./patches/useSystemVencord.patch {
-        inherit vencord;
-      }
-    );
+  patches = [
+    ./patches/disableUpdateChecking.patch
+    # ./patches/fixReadOnlySettings.patch
+  ]
+  ++ lib.optional withSystemVencord (
+    replaceVars ./patches/useSystemVencord.patch {
+      inherit vencord;
+    }
+  );
 
   env = {
     ELECTRON_SKIP_BINARY_DOWNLOAD = 1;
@@ -115,26 +121,25 @@ stdenv.mkDerivation (finalAttrs: {
     popd
   '';
 
-  installPhase =
-    ''
-      runHook preInstall
-    ''
-    + lib.optionalString stdenv.hostPlatform.isLinux ''
-      mkdir -p $out/opt/Vesktop
-      cp -r dist/*unpacked/resources $out/opt/Vesktop/
+  installPhase = ''
+    runHook preInstall
+  ''
+  + lib.optionalString stdenv.hostPlatform.isLinux ''
+    mkdir -p $out/opt/Vesktop
+    cp -r dist/*unpacked/resources $out/opt/Vesktop/
 
-      for file in build/icon_*x32.png; do
-        file_suffix=''${file//build\/icon_}
-        install -Dm0644 $file $out/share/icons/hicolor/''${file_suffix//x32.png}/apps/vesktop.png
-      done
-    ''
-    + lib.optionalString stdenv.hostPlatform.isDarwin ''
-      mkdir -p $out/{Applications,bin}
-      mv dist/mac*/Vesktop.app $out/Applications/Vesktop.app
-    ''
-    + ''
-      runHook postInstall
-    '';
+    for file in build/icon_*x32.png; do
+      file_suffix=''${file//build\/icon_}
+      install -Dm0644 $file $out/share/icons/hicolor/''${file_suffix//x32.png}/apps/vesktop.png
+    done
+  ''
+  + lib.optionalString stdenv.hostPlatform.isDarwin ''
+    mkdir -p $out/{Applications,bin}
+    mv dist/mac*/Vesktop.app $out/Applications/Vesktop.app
+  ''
+  + ''
+    runHook postInstall
+  '';
 
   postFixup =
     lib.optionalString stdenv.hostPlatform.isLinux ''
