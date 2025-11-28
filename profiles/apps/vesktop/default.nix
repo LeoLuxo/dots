@@ -57,7 +57,7 @@ in
       vesktop = (
         final.pinned.callPackage ./vesktop-1.5.5-patch609.nix {
           withSystemVencord = true;
-          vencord = pkgs.unstable.callPackage ./vencord.nix { };
+          vencord = pkgs.pinned.callPackage ./vencord.nix { };
         }
       );
     })
