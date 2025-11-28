@@ -114,3 +114,4 @@ badfiles:
 
 ftintitle:
   auto: yes
+  format: (feat. {0})
