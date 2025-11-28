@@ -70,7 +70,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   patches = [
-    # ./patches/disableUpdateChecking.patch
+    ./patches/disableUpdateChecking.patch
     # ./patches/fixReadOnlySettings.patch
   ]
   ++ lib.optional withSystemVencord (
