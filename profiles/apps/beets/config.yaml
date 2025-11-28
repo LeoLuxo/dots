@@ -36,8 +36,7 @@ match:
     missing_tracks: 0.2
     # Make unmatched tracks way more important
     unmatched_tracks: 1.0
-
-item_fields:
+    
 item_fields:
   is_single: 1 if disctotal <= 1 and tracktotal <= 1 else 0
   main_album_artist: |
@@ -50,8 +49,8 @@ item_fields:
 # Directory and naming scheme.
 # The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
-  default: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/$track. $title}
-  singleton: artists/$main_artist/%if{$is_single,$artist - $title,$album ($year)/$track. $title}
+  default: artists/$album_artist_no_feat/%if{$is_single,$artist - $title,$album ($year)/$track. $title}
+  singleton: artists/$album_artist_no_feat/%if{$is_single,$artist - $title,$album ($year)/$track. $title}
   albumtype:soundtrack: soundtracks/$album ($year)/$track. $title
   comp: compilations/$album ($year)/$track. $artist - $title
   
