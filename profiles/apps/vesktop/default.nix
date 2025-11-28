@@ -55,6 +55,7 @@ in
     (final: prev: {
       # vesktop = (final.pinned.callPackage ./vesktop-1.5.8-patch326.nix { });
       vesktop = (final.pinned.callPackage ./vesktop-1.5.5-patch609.nix { withSystemVencord = true; });
+      vencord = (final.pinned.callPackage ./vencord.nix { }); # vencord matching the date for vesktop 1.5.5
     })
 
     (import ./overlays/customIcons.nix)
