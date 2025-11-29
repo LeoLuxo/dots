@@ -102,8 +102,10 @@ fetchart:
   
 embedart:
   auto: yes
-  remove_art_file: yes
   ifempty: no
+  maxwidth: 2000
+  quality: 90
+  remove_art_file: yes
 
 autobpm:
   auto: yes
@@ -111,7 +113,7 @@ autobpm:
 badfiles:
   check_on_import: yes
   commands:
-      flac: flac --test --silent
+    flac: flac --test --silent
 
 ftintitle:
   auto: yes
