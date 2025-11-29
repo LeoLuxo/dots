@@ -109,7 +109,9 @@ autobpm:
   auto: yes
 
 badfiles:
-  check_on_import: no
+  check_on_import: yes
+  commands:
+      flac: flac --test --silent
 
 ftintitle:
   auto: yes
