@@ -19,7 +19,10 @@ in
     (pkgs.writeScriptWithDeps {
       name = "beet";
 
-      deps = [ package ];
+      deps = [
+        package
+        pkgs.flac
+      ];
 
       text = ''
         #!/usr/bin/env bash
