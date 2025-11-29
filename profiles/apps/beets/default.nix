@@ -21,7 +21,9 @@ in
 
       deps = [
         package
+
         pkgs.flac
+        pkgs.imagemagick
       ];
 
       text = ''
