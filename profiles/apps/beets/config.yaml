@@ -4,13 +4,23 @@
 directory: /stuff/media/music
 library: /stuff/media/music/beets.db
 
-plugins: fetchart lyrics lastgenre embedart inline autobpm info badfiles ftintitle deezer spotify
+plugins:
+  - fetchart
+  - lyrics
+  - lastgenre
+  - embedart
+  - inline
+  - autobpm
+  - info
+  - badfiles
+  - deezer
+  - spotify
 
 # Which sources to prefer (default penalty is 0.5, smaller=preferred)
 deezer:
-  data_source_mismatch_penalty: 0.6
-spotify:
   data_source_mismatch_penalty: 0.7
+spotify:
+  data_source_mismatch_penalty: 0.8
 
 # Indicating whether the autotagger should use multiple threads.
 threaded: yes
@@ -88,6 +98,8 @@ lastgenre:
   keep_existing: no
   whitelist: yes
   count: 5
+  source: track
+  canonical: yes
   
 lyrics:
   auto: yes
@@ -114,7 +126,3 @@ badfiles:
   check_on_import: yes
   commands:
     flac: flac --test --silent
-
-ftintitle:
-  auto: yes
-  format: (feat. {0})
