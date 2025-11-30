@@ -5,14 +5,15 @@ directory: /stuff/media/music
 library: /stuff/media/music/beets.db
 
 plugins:
+  - inline
   - fetchart
   - lyrics
   - lastgenre
   - embedart
-  - inline
   - autobpm
   - info
   - badfiles
+  - mbsync
   - deezer
   - spotify
 
@@ -51,6 +52,8 @@ item_fields:
   is_single: 1 if disctotal <= 1 and tracktotal <= 1 else 0
   main_album_artist: |
     import re
+    print(artits)
+    print(albumartists)
     return re.split('\s+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
   main_artist: |
     import re
