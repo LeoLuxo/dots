@@ -1,8 +1,11 @@
 {
   pkgs,
-  user,
+  lib2,
   ...
 }:
+let
+  inherit (lib2.nixos) mkSyncedPath;
+in
 
 let
   package = pkgs.beets.override {
@@ -15,6 +18,13 @@ let
   };
 in
 {
+  imports = [
+    (mkSyncedPath {
+      target = "~/.config/beets/config.yaml";
+      syncName = "beets/config.yaml";
+    })
+  ];
+
   environment.systemPackages = [
     (pkgs.writeScriptWithDeps {
       name = "beet";
@@ -27,8 +37,7 @@ in
       ];
 
       text = ''
-        #!/usr/bin/env bash
-        beet --config "${./config.yaml}" "$@"
+        beet "$@"
       '';
     })
   ];
