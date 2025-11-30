@@ -18,10 +18,12 @@ plugins:
   - spotify
 
 # Which sources to prefer (default penalty is 0.5, smaller=preferred)
+musicbrainz:
+  data_source_mismatch_penalty: 0.2
 deezer:
-  data_source_mismatch_penalty: 0.7
-spotify:
   data_source_mismatch_penalty: 0.8
+spotify:
+  data_source_mismatch_penalty: 0.9
 
 # Indicating whether the autotagger should use multiple threads.
 threaded: yes
@@ -40,6 +42,7 @@ import:
   bell: yes
   languages: en
   incremental: no
+  group_albums: yes
   
 match:
   distance_weights:
@@ -48,22 +51,20 @@ match:
     # Make unmatched tracks way more important
     unmatched_tracks: 1.0
     
+    
+# return re.split('\s+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
 item_fields:
   is_single: 1 if disctotal <= 1 and tracktotal <= 1 else 0
-  main_album_artist: |
-    import re
-    print(artists)
-    print(albumartists)
-    return re.split('\s+(feat(.?|uring)|ft\.?)', albumartist, 1, flags=re.IGNORECASE)[0]
-  main_artist: |
-    import re
-    return re.split('\s+(feat(.?|uring)|ft\.?)', artist, 1, flags=re.IGNORECASE)[0]
+  main_album_artist: albumartists[0] if len(albumartists) >= 1 else albumartist
+  main_artist: artists[0] if len(artists) >= 1 else artist
+  has_featuring_artists: 1 if len(artists) > 1 else 0
+  featuring_artists: "\"\".join(artists[1:]) if len(artists[1:]) <= 1 else \", \".join(artists[1:-1]) + \" & \" + artists[-1]"
 
 # Directory and naming scheme.
 # The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
-  default: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/$track. $title}
-  singleton: artists/$main_artist/%if{$is_single,$artist - $title,$album ($year)/$track. $title}
+  default: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
+  singleton: artists/$main_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
   albumtype:soundtrack: soundtracks/$album ($year)/$track. $title
   comp: compilations/$album ($year)/$track. $artist - $title
   
@@ -97,7 +98,7 @@ path_sep_replace: ''
 
 lastgenre:
   auto: yes
-  force: yes
+  force: no
   keep_existing: no
   whitelist: yes
   count: 5
