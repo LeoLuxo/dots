@@ -38,10 +38,10 @@
             "pancake"
             "celestia"
           ];
-          ignorePatterns = ''
-            **/workspace*.json
-            .obsidian/vault-stats.json
-          '';
+          ignorePatterns = [
+            "**/workspace*.json"
+            ".obsidian/vault-stats.json"
+          ];
           inherit versioning;
         };
 
@@ -73,11 +73,11 @@
             "strobery"
             "pancake"
           ];
-          ignorePatterns = ''
-            bachelor*/
-            **/target/
-            **/.direnv/
-          '';
+          ignorePatterns = [
+            "bachelor*/"
+            "**/target/"
+            "**/.direnv/"
+          ];
           inherit versioning;
         };
 

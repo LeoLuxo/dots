@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   hostname,
   pkgs,
   lib2,
@@ -9,30 +8,7 @@
   ...
 }:
 
-let
-  inherit (lib) types options strings;
-in
-
 {
-  options = {
-    # Overriding the attsOf of the folders options is enough to let us add an extra option, the module system will take care of merging all the options
-    services.syncthing.settings.folders = options.mkOption {
-      type = types.attrsOf (
-        types.submodule (
-          { name, ... }:
-          {
-            options = {
-              ignorePatterns = lib.mkOption {
-                type = types.lines;
-                default = "";
-              };
-            };
-          }
-        )
-      );
-    };
-  };
-
   config = {
     # Open the firewall ports for syncthing
     # Not needed if using option openDefaultPorts=true
@@ -85,21 +61,6 @@ in
           };
         };
       };
-
-    # Setup ignore patterns
-    # systemd.user.services.syncthing-init.Service.ExecStartPost = strings.concatMapAttrsStringSep "\n" (
-    systemd.user.services.syncthing-init.postStart = strings.concatMapAttrsStringSep "\n" (
-      name: value:
-      if (strings.stringLength value.ignorePatterns) > 0 then
-        ''
-          if [ -d ${value.path} ]; then
-            cat >${value.path}/.stignore <<-EOF
-            ${value.ignorePatterns}EOF
-          fi
-        ''
-      else
-        ""
-    ) config.services.syncthing.settings.folders;
 
     environment.systemPackages = [
       (pkgs.mkDesktopItem {

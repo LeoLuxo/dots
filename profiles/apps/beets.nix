@@ -9,12 +9,12 @@ in
 
 let
   package = pkgs.beets.override {
-    pluginOverrides = {
-      # fetchartist = {
-      #   enable = true;
-      #   propagatedBuildInputs = [ (pkgs.callPackage ./beets-fetchartist.nix { }) ];
-      # };
-    };
+    # pluginOverrides = {
+    #   fetchartist = {
+    #     enable = true;
+    #     propagatedBuildInputs = [ (pkgs.callPackage ./beets-fetchartist.nix { }) ];
+    #   };
+    # };
   };
 in
 {
