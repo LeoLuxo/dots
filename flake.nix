@@ -90,10 +90,11 @@
   inputs = {
     # ----- nixpkgs -------------------------------------------------------------------------------
     "nixpkgs".follows = "nixpkgs-stable";
-    "nixpkgs-stable".follows = "nixpkgs-25-05";
+    "nixpkgs-stable".follows = "nixpkgs-25-11";
     "nixpkgs-unstable".url = "github:nixos/nixpkgs/nixos-unstable";
     "nixpkgs-pinned".url = "github:nixos/nixpkgs/fd487183437963a59ba763c0cc4f27e3447dd6dd";
 
+    "nixpkgs-25-11".url = "github:nixos/nixpkgs/nixos-25.11";
     "nixpkgs-25-05".url = "github:nixos/nixpkgs/nixos-25.05";
     "nixpkgs-24-11".url = "github:nixos/nixpkgs/nixos-24.11";
     "nixpkgs-24-05".url = "github:nixos/nixpkgs/nixos-24.05";
@@ -106,11 +107,7 @@
 
     # ----- metaconfig & nix ---------------------------------------------------------------------
     # Manages dotfiles in nix
-    # home-manager.url = "github:nix-community/home-manager/release-25.05";
-    # home-manager.inputs.nixpkgs.follows = "nixpkgs-25-05";
-    # TODO: Fix when 25.11 is out
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
 
     # Provides a set of tools to more easily manage flakes and per-system attrs
     flake-utils.url = "github:numtide/flake-utils";
