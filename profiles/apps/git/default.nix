@@ -30,10 +30,10 @@ in
     programs.git = {
       enable = true;
 
-      userEmail = "contact@me.leoluxo.eu";
-      userName = "LeoLuxo";
+      settings = {
+        user.email = "contact@me.leoluxo.eu";
+        user.name = "LeoLuxo";
 
-      extraConfig = {
         init.defaultBranch = "main";
 
         # Disable safe directory checks
