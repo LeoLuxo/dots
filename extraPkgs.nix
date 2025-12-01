@@ -6,7 +6,7 @@ let
     nixpkgs:
     import nixpkgs {
       inherit prev;
-      system = prev.system;
+      hostPlatform = prev.hostPlatform;
       config.allowUnfree = true;
     };
 in
