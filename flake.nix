@@ -5,13 +5,13 @@
   outputs =
     { nixpkgs, flake-utils, ... }@inputs:
     flake-utils.lib.eachDefaultSystemPassThrough (
-      system:
+      hostPlatform:
 
       let
         hosts = import ./hosts.nix;
 
         # The default pkgs and lib just so I can pass them around where needed
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = import nixpkgs { inherit hostPlatform; };
         lib = pkgs.lib;
 
         # My custom libs
@@ -74,7 +74,7 @@
           name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig host; } else { }
         ) hosts;
 
-        packages.${system} = lib.packagesFromDirectoryRecursive {
+        packages.${hostPlatform} = lib.packagesFromDirectoryRecursive {
           inherit (pkgs) callPackage;
           directory = ./packages;
         };

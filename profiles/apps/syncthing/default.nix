@@ -53,7 +53,6 @@
 
           options = {
             # Anonymous data usage
-            # I would accept it but for some reason values 1 or 2 don't work
             urAccepted = 1;
 
             # Relay servers
