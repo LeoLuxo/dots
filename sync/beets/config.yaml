@@ -60,10 +60,11 @@ item_fields:
   featuring_artists: "\"\".join(artists[1:]) if len(artists[1:]) <= 1 else \", \".join(artists[1:-1]) + \" & \" + artists[-1]"
 
 # Directory and naming scheme.
-# The aunique{} function ensures that identically-named albums are placed in different directories.
 paths:
   default: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
   singleton: artists/$main_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
+  albumtype:single: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
+  albumtypes:single: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
   albumtype:live: live/$albumartist - $album ($year)/$track. $title
   albumtypes:live: live/$albumartist - $album ($year)/$track. $title
   albumtype:soundtrack: soundtracks/$album ($year)/$track. $title
