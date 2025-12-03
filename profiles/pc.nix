@@ -22,7 +22,7 @@ in
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff
-    profiles.scripts.snip
+    # profiles.scripts.snip # gnome-screenshot does not work for gnome 49
 
     (mkKeybind {
       name = "Open terminal";
