@@ -337,6 +337,7 @@ in
             toggle-message-tray = [ ]; # Defaults to Super+V
             toggle-application-view = [ ]; # Defaults to Super+A
             show-screen-recording-ui = [ "<Super>r" ];
+            show-screenshot-ui = [ "<Super>s" ];
           };
 
           "org/gnome/settings-daemon/plugins/media-keys" = {
