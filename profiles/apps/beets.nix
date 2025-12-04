@@ -56,6 +56,8 @@ in
 
         pkgs.python313Packages.pyacoustid
         pkgs.chromaprint
+
+        pkgs.opusTools
         pkgs.ffmpeg
         pkgs.flac
         pkgs.imagemagick
