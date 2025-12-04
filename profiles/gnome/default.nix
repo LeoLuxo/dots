@@ -196,7 +196,7 @@ in
       # Video/audio
       pkgs.ffmpeg-headless
       pkgs.ffmpegthumbnailer
-      pkgs.totem
+      # pkgs.totem
 
       # HEIC images
       pkgs.libheif
