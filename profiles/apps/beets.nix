@@ -32,6 +32,9 @@ in
       deps = [
         package
 
+        pkgs.python313Packages.pyacoustid
+        pkgs.chromaprint
+        pkgs.ffmpeg
         pkgs.flac
         pkgs.imagemagick
       ];
