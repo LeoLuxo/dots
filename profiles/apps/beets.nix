@@ -44,6 +44,7 @@ in
 
   system.activationScripts.beetsCopyKeys = ''
     cp --force "${config.age.secrets."beets/keys-yaml".path}" "/home/${user}/.config/beets/keys.yaml"
+    chown ${user}:users "/home/${user}/.config/beets/keys.yaml"
   '';
 
   environment.systemPackages = [
