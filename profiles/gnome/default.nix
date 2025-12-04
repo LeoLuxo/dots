@@ -192,17 +192,17 @@ in
     programs.dconf.enable = true;
 
     # Configure thumbnailers
+    environment.pathsToLink = [ "share/thumbnailers" ];
     environment.systemPackages = [
       # Video/audio
       pkgs.ffmpeg-headless
       pkgs.ffmpegthumbnailer
-      # pkgs.totem
+      pkgs.totem
 
       # HEIC images
       pkgs.libheif
       pkgs.libheif.out
     ];
-    environment.pathsToLink = [ "share/thumbnailers" ];
 
     # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
     # (even with autologin disabled I need this otherwise nixos-rebuild crashes gnome??)
