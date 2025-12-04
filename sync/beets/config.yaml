@@ -16,6 +16,7 @@ plugins:
   - info
   - badfiles
   - mbsync
+  - convert
   
   # Data sources
   - chroma # Acoustic fingerprinting
@@ -115,6 +116,17 @@ replace:
   '^-': ''
 path_sep_replace: ''
 
+convert:
+  dest: /stuff/media/musicLossy
+  auto_keep: yes
+  format: opus
+  formats:
+    opus: opusenc --bitrate 96 --vbr --ignorelength $source $dest
+  # We do these manually using the above command 
+  # write_metadata: yes
+  # album_art_maxwidth: 1000
+  # embed: yes
+
 chroma:
   auto: yes
 
@@ -142,9 +154,9 @@ fetchart:
 embedart:
   auto: yes
   ifempty: no
+  remove_art_file: yes
   maxwidth: 2000
   quality: 90
-  remove_art_file: yes
 
 autobpm:
   auto: yes
