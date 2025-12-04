@@ -48,6 +48,9 @@ in
   '';
 
   environment.systemPackages = [
+    pkgs.ffmpeg
+    pkgs.ffmpegthumbnailer
+
     (pkgs.writeScriptWithDeps {
       name = "beet";
 
