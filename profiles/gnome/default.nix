@@ -191,8 +191,13 @@ in
   config = {
     programs.dconf.enable = true;
 
-    # HEIC support
+    # Configure thumbnailers
     environment.systemPackages = [
+      # Video/audio
+      pkgs.ffmpeg-headless
+      pkgs.ffmpegthumbnailer
+
+      # HEIC images
       pkgs.libheif
       pkgs.libheif.out
     ];
