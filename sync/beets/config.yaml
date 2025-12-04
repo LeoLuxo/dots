@@ -121,11 +121,12 @@ convert:
   auto_keep: yes
   format: opus
   formats:
-    opus: opusenc --bitrate 96 --vbr --ignorelength $source $dest
+    opus: opusenc --bitrate 96 --vbr --comp 10 $source $dest
+  never_convert_lossy_files: yes # Since opusenc can only access lossless/ogg
   # We do these manually using the above command 
   # write_metadata: yes
-  # album_art_maxwidth: 1000
   # embed: yes
+  # album_art_maxwidth: 1000
 
 chroma:
   auto: yes
