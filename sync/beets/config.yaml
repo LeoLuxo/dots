@@ -1,5 +1,6 @@
 
-include: keys.yaml
+include:
+  - keys.yaml
 
 # The music library directory  
 directory: /stuff/media/music
