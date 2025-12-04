@@ -8,7 +8,7 @@ let
 in
 
 let
-  package = pkgs.beets.override {
+  beets = pkgs.unstable.beets.override {
     # pluginOverrides = {
     #   fetchartist = {
     #     enable = true;
@@ -30,7 +30,7 @@ in
       name = "beet";
 
       deps = [
-        package
+        beets
 
         pkgs.python313Packages.pyacoustid
         pkgs.chromaprint
