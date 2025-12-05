@@ -246,22 +246,22 @@ in
             bind ctrl-h backward-kill-path-component
 
             # Bind CTRL-W
-            bind \cw backward-kill-bigword
+            bind ctrl-w backward-kill-bigword
 
             # Bind CTRL-Delete
-            bind \e\[3\;5~ kill-bigword
+            bind ctrl-delete kill-bigword
 
             # Bind CTRL-\|
-            bind \x1c beginning-of-line
+            bind ctrl-\\ beginning-of-line
 
             # Rebind right to accept only a single char instead of the entire autosuggestion
-            bind \e\[C forward-single-char
+            bind right forward-single-char
 
             # Bind CTRL-Space to open autocomplete search
-            bind -k nul complete-and-search
+            bind ctrl-space complete-and-search
 
             # Rebind tab to accept suggestion
-            bind \t accept-autosuggestion
+            bind tab accept-autosuggestion
           '';
 
           functions = {
