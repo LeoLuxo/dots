@@ -1138,7 +1138,6 @@
 	},
 	"terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
 	"terminal.integrated.smoothScrolling": true,
-	"tinymist.formatterMode": "typstyle",
 	"tinymist.rootPath": "/src",
 	"todo-tree.highlights.enabled": false,
 	"todo-tree.tree.hideTreeWhenEmpty": false,
@@ -1261,5 +1260,6 @@
 	"git-graph.repository.showRemoteHeads": false,
 	"git-graph.dialog.createBranch.checkOut": true,
 	"continue.disableQuickFix": true,
-	"window.title": "${rootName}${separator}${appName}"
+	"window.title": "${rootName}${separator}${appName}",
+	"tinymist.serverPath": "tinymist"
 }
