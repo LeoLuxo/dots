@@ -80,10 +80,10 @@ in
     };
   }) users;
 
-  # musnix = {
-  #   enable = true;
-  #   # kernel.realtime = true;
-  # };
+  musnix = {
+    enable = true;
+    # kernel.realtime = true;
+  };
 
   home-manager.users.${user} = {
     services = {
