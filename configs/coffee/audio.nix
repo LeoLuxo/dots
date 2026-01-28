@@ -107,51 +107,74 @@ in
     pulse.enable = true;
     jack.enable = true;
 
-    # extraConfig = {
-    #   # Low latency config for pipewire
-    #   pipewire."92-low-latency" = {
-    #     "context.properties" = {
-    #       "default.clock.rate" = 48000;
-    #       "default.clock.quantum" = 64;
-    #       "default.clock.min-quantum" = 64;
-    #       "default.clock.max-quantum" = 256;
-    #     };
-    #   };
+    extraConfig = {
+      #   # Low latency config for pipewire
+      #   pipewire."92-low-latency" = {
+      #     "context.properties" = {
+      #       "default.clock.rate" = 48000;
+      #       "default.clock.quantum" = 64;
+      #       "default.clock.min-quantum" = 64;
+      #       "default.clock.max-quantum" = 256;
+      #     };
+      #   };
 
-    #   # Low latency config for pulseaudio applications
-    #   pipewire-pulse."92-low-latency" = {
-    #     "context.properties" = [
-    #       {
-    #         name = "libpipewire-module-protocol-pulse";
-    #         args = { };
-    #       }
-    #     ];
-    #     "pulse.properties" = {
-    #       "pulse.min.req" = "64/48000";
-    #       "pulse.default.req" = "256/48000";
-    #       "pulse.max.req" = "256/48000";
-    #       "pulse.min.quantum" = "64/48000";
-    #       "pulse.max.quantum" = "256/48000";
-    #     };
-    #     "stream.properties" = {
-    #       "node.latency" = "256/48000";
-    #       "resample.quality" = 1;
-    #     };
-    #   };
-    # };
+      #   # Low latency config for pulseaudio applications
+      #   pipewire-pulse."92-low-latency" = {
+      #     "context.properties" = [
+      #       {
+      #         name = "libpipewire-module-protocol-pulse";
+      #         args = { };
+      #       }
+      #     ];
+      #     "pulse.properties" = {
+      #       "pulse.min.req" = "64/48000";
+      #       "pulse.default.req" = "256/48000";
+      #       "pulse.max.req" = "256/48000";
+      #       "pulse.min.quantum" = "64/48000";
+      #       "pulse.max.quantum" = "256/48000";
+      #     };
+      #     "stream.properties" = {
+      #       "node.latency" = "256/48000";
+      #       "resample.quality" = 1;
+      #     };
+      #   };
 
-    # wireplumber = {
-    #   enable = true;
-    #   extraConfig = {
-    #     "52-mic-pro-audio"."monitor.alsa.rules" = [
-    #       {
-    #         matches = [ { "device.name" = "alsa_input.usb-Anua_Mic_CM_900_Anua_Mic_CM_900-00"; } ];
-    #         actions.update-props."device.profile" = "pro-audio";
-    #       }
-    #     ];
-    #   };
-    #   extraScripts = { };
-    # };
+      pipewire-pulse."51-STOP-FUCKING-WITH-MY-SHIT" = {
+        "pulse.rules" = [
+          {
+            "match" = [ { "application.process.binary" = "vesktop"; } ];
+            "actions" = {
+              "quirks" = [ "block-source-volume" ];
+            };
+          }
+          {
+            "match" = [ { "application.process.binary" = "Discord"; } ];
+            "actions" = {
+              "quirks" = [ "block-source-volume" ];
+            };
+          }
+          {
+            "matches" = [ { "application.name" = "~Chromium.*"; } ];
+            "actions" = {
+              "quirks" = [ "block-source-volume" ];
+            };
+          }
+        ];
+      };
+    };
+
+    wireplumber = {
+      enable = true;
+      extraConfig = {
+        # "52-mic-pro-audio"."monitor.alsa.rules" = [
+        #   {
+        #     matches = [ { "device.name" = "alsa_input.usb-Anua_Mic_CM_900_Anua_Mic_CM_900-00"; } ];
+        #     actions.update-props."device.profile" = "pro-audio";
+        #   }
+        # ];
+      };
+      extraScripts = { };
+    };
   };
 
 }
