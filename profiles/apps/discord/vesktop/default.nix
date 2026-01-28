@@ -44,11 +44,6 @@ in
     home.shellAliases = {
       "discord" = "vesktop";
     };
-
-    # Set discord as the default communication app
-    home.sessionVariables = {
-      APP_COMMUNICATION = lib.mkDefault "vesktop";
-    };
   };
 
   nixpkgs.overlays = [
