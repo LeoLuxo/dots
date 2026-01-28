@@ -14,7 +14,7 @@ in
   imports = [
     profiles.gnome
 
-    profiles.apps.vesktop
+    profiles.apps.discord
     profiles.apps.distrobox
     profiles.apps.firefox
     profiles.apps.upscaler
@@ -85,6 +85,8 @@ in
       "paste" = "wl-paste";
     };
   };
+
+  # services.flatpak.enable = true;
 
   /*
     --------------------------------------------------------------------------------
