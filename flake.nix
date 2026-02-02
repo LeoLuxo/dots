@@ -123,7 +123,8 @@
 
     # ----- hardware ------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops
-    nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    # nixos-hardware.url = "github:nixos/nixos-hardware/master";
+    nixos-hardware.url = "github:8bitbuddhist/nixos-hardware/surface-kernel-6.18";
 
     # Real-time audio in NixOS
     musnix.url = "github:musnix/musnix";
