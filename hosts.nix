@@ -43,7 +43,7 @@
     hostname = "pancake";
     os = "nixos";
     nixosConfig = import ./configs/pancake;
-    nixpkgs = "nixpkgs-stable";
+    nixpkgs = "nixpkgs-25-11";
 
     user = "lili";
     users = {
