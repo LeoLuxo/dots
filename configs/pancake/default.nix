@@ -33,6 +33,7 @@
 
   # Pin the kernel with nixos-hardware
   hardware.microsoft-surface.kernelVersion = "longterm";
+  # hardware.microsoft-surface.kernelVersion = "stable";
 
   # SD Card
   fileSystems."/stuff" = {
