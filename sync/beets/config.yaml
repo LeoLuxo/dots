@@ -79,15 +79,51 @@ item_fields:
 
 # Directory and naming scheme.
 paths:
-  default: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
-  singleton: artists/$main_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
-  albumtype:single: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
-  albumtypes:single: artists/$main_album_artist/%if{$is_single,$artist - $title,$album ($year)/%if{$has_featuring_artists,$track. $title (feat. $featuring_artists),$track. $title}}
-  albumtype:live: live/$albumartist - $album ($year)/$track. $title
-  albumtypes:live: live/$albumartist - $album ($year)/$track. $title
-  albumtype:soundtrack: soundtracks/$album ($year)/$track. $title
-  albumtypes:soundtrack: soundtracks/$album ($year)/$track. $title
-  comp: compilations/$album ($year)/$track. $artist - $title
+  default:
+    artists/$main_album_artist/%if{
+      $is_single,
+      $artist - $title,
+      $album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/%if{
+        $has_featuring_artists,
+        $track. $title (feat. $featuring_artists),
+        $track. $title
+      }
+    }
+  singleton:
+    artists/$main_artist/%if{
+      $is_single,
+      $artist - $title%sunique{artist title,trackdisambig,()},
+      $album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/%if{
+        $has_featuring_artists,
+        $track. $title (feat. $featuring_artists)%sunique{artist title,trackdisambig,()},
+        $track. $title%sunique{artist title,trackdisambig,()}
+      }
+    }
+  albumtype:single:
+    artists/$main_album_artist/%if{
+      $is_single,
+      $artist - $title,
+      $album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/%if{
+        $has_featuring_artists,
+        $track. $title (feat. $featuring_artists),
+        $track. $title
+      }
+    }
+  albumtypes:single:
+    artists/$main_album_artist/%if{
+      $is_single,
+      $artist - $title,
+      $album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/%if{
+        $has_featuring_artists,
+        $track. $title (feat. $featuring_artists),
+        $track. $title
+      }
+    }
+  albumtype:live: live/$albumartist - $album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/$track. $title
+  albumtypes:live: live/$albumartist - $album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/$track. $title
+  albumtype:soundtrack: soundtracks/$album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/$track. $title
+  albumtypes:soundtrack: soundtracks/$album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/$track. $title
+  comp: compilations/$album ($year)%aunique{albumartist album year,albumtype albumdisambig,()}/$track. $artist - $title
   
 # When beets imports all the files in a directory, it tries to remove the directory if it’s empty.
 # A directory is considered empty if it only contains files whose names match the glob patterns in clutter,
