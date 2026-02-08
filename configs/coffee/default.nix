@@ -35,6 +35,7 @@
     guitarix # A virtual guitar amplifier for use with Linux.
     qmk
     picard
+    audacity
   ];
 
   # Won't start past login screen
