@@ -53,7 +53,7 @@ rebuild() {
 	source $NX_POST_REBUILD
 
 	# Get current generation metadata
-	current_gen="${HOSTNAME} $(nixos-rebuild list-generations | grep current | sed s/\*//g)"
+	current_gen="${HOSTNAME} $(nixos-rebuild list-generations --json | jq -r '.[] | select(.current == true) | "\(.generation) \(.nixosVersion) \(.kernelVersion)"')"
 	echo -e "${INFO}Current generation: ${RESET}\n${current_gen}"
 
 	# RE-add any auto-generated files

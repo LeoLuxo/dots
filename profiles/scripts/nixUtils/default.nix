@@ -18,7 +18,7 @@ in
 
     (lib2.nixos.mkShellHistoryAlias {
       name = ",,";
-      command = { lastCommand }: '', ${lastCommand}'';
+      command = { lastCommand }: ", ${lastCommand}";
     })
   ];
 
@@ -91,6 +91,7 @@ in
               git
               nixfmt-rfc-style
               nh
+              jq
             ];
             replaceVariables = variables;
           })
