@@ -22,10 +22,10 @@
     secrets =
       let
         # Fetch secrets from private repo
-        # Secrets are SUPPOSED to be fully independent from the dots in my opinion, thus this (intentionally) makes my dots impure
-        # (note to self: the url MUST use git+ssh otherwise it won't properly authenticate and have access to the repo)
+        # Secrets are (intentionally) currently independant, which makes my dots impure
         # TODO: make them dependant
-        flake = builtins.getFlake "git+ssh://git@github.com/LeoLuxo/nix-secrets";
+        # (note to self: the url MUST use git+ssh otherwise it won't properly authenticate and have access to the repo)
+        flake = builtins.getFlake "git+ssh://git@github.com/chlookie/dots-secrets";
       in
       flake.ageSecrets;
   };
