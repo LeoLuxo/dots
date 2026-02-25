@@ -32,7 +32,7 @@ in
 
       settings = {
         user.email = "contact@leoluxo.eu";
-        user.name = "Chloé G.";
+        user.name = "Chloé G";
 
         init.defaultBranch = "main";
 
