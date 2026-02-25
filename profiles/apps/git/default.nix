@@ -51,14 +51,15 @@ in
         pull.rebase = false;
 
         url = {
-          # Force new username
-          "https://github.com/chlookie".insteadOf = "https://github.com/test";
           # "https://github.com/chlookie".insteadOf = "https://github.com/leoluxo";
 
           # Enforce SSH
           "ssh://git@github.com/".insteadOf = "https://github.com/";
           "ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
           "ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";
+
+          # Force new username
+          "ssh://git@github.com/chlookie".insteadOf = "ssh://git@github.com/test";
         };
 
         # Sign all commits using ssh key
