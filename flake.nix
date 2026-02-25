@@ -103,7 +103,7 @@
     # My wallpapers
     # Is an external flake to make sure this repo stays small if the wallpapers aren't used
     # (The url MUST use git+ssh otherwise it won't properly authenticate and have access to the private repo)
-    wallpapers.url = "git+ssh://git@github.com/LeoLuxo/dots-wallpapers";
+    wallpapers.url = "git+ssh://git@github.com/chlookie/dots-wallpapers";
 
     # ----- metaconfig & nix ---------------------------------------------------------------------
     # Manages dotfiles in nix

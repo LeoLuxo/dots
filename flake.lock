@@ -699,11 +699,11 @@
         "rev": "e627bb878497dc7f5f91600d1b8fa8a315cf56ee",
         "revCount": 24,
         "type": "git",
-        "url": "ssh://git@github.com/LeoLuxo/dots-wallpapers"
+        "url": "ssh://git@github.com/chlookie/dots-wallpapers"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/LeoLuxo/dots-wallpapers"
+        "url": "ssh://git@github.com/chlookie/dots-wallpapers"
       }
     }
   },
