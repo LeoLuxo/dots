@@ -50,8 +50,12 @@ in
 
         pull.rebase = false;
 
-        # Enforce SSH
         url = {
+          # Force new username
+          "https://github.com/chlookie".insteadOf = "https://github.com/test";
+          # "https://github.com/chlookie".insteadOf = "https://github.com/leoluxo";
+
+          # Enforce SSH
           "ssh://git@github.com/".insteadOf = "https://github.com/";
           "ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
           "ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";

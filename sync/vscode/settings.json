@@ -1261,5 +1261,7 @@
 	"git-graph.dialog.createBranch.checkOut": true,
 	"continue.disableQuickFix": true,
 	"window.title": "${rootName}${separator}${appName}",
-	"tinymist.serverPath": "tinymist"
+	"tinymist.serverPath": "tinymist",
+	"editor.aiStats.enabled": false,
+	"rust-analyzer.server.path": "rust-analyzer"
 }
