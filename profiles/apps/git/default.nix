@@ -31,8 +31,8 @@ in
       enable = true;
 
       settings = {
-        user.email = "contact@me.leoluxo.eu";
-        user.name = "LeoLuxo";
+        user.email = "contact@leoluxo.eu";
+        user.name = "Chloé G.";
 
         init.defaultBranch = "main";
 
@@ -51,15 +51,10 @@ in
         pull.rebase = false;
 
         url = {
-          # "https://github.com/chlookie".insteadOf = "https://github.com/leoluxo";
-
           # Enforce SSH
           "ssh://git@github.com/".insteadOf = "https://github.com/";
           "ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
           "ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";
-
-          # Force new username
-          "ssh://git@github.com/chlookie".insteadOf = "ssh://git@github.com/test";
         };
 
         # Sign all commits using ssh key
