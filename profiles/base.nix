@@ -272,6 +272,12 @@ in
                 builtin cd $argv
               end
             '';
+
+            fish_title = ''
+              function fish_title
+                pwd
+              end
+            '';
           };
         };
 
