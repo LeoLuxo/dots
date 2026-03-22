@@ -274,9 +274,7 @@ in
             '';
 
             fish_title = ''
-              function fish_title
-                pwd
-              end
+              string join / -- (string split / -- $PWD)[-4..-1]
             '';
           };
         };
