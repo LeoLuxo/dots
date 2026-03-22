@@ -38,9 +38,14 @@
 		"typst": true
 	},
 	"cSpell.userWords": [
+		"Chloé",
+		"ciphertext",
 		"Gamboa",
 		"groupname",
-		"lmao"
+		"izing",
+		"lmao",
+		"pagebreak",
+		"SYSSEC"
 	],
 	"catppuccin.accentColor": "lavender",
 	"catppuccin.bracketMode": "dimmed",
@@ -1242,7 +1247,8 @@
 		"git-graph.referenceLabels.alignment",
 		"git-graph.repository.showRemoteHeads",
 		"git-graph.dialog.createBranch.checkOut",
-		"window.title"
+		"window.title",
+		"rust-analyzer.assist.preferSelf"
 	],
 	"workbench.startupEditor": "newUntitledFile",
 	"github.copilot.chat.editor.temporalContext.enabled": true,
@@ -1263,5 +1269,6 @@
 	"window.title": "${rootName}${separator}${appName}",
 	"tinymist.serverPath": "tinymist",
 	"editor.aiStats.enabled": false,
-	"rust-analyzer.server.path": "rust-analyzer"
+	"rust-analyzer.server.path": "rust-analyzer",
+	"rust-analyzer.assist.preferSelf": true
 }
