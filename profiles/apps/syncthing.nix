@@ -61,17 +61,18 @@
         };
       };
 
-    environment.systemPackages = [
-      (pkgs.mkDesktopItem {
-        name = "syncthing";
-        exec = "firefox \"http://127.0.0.1:8384/\"";
-        icon = "${./syncthing.png}";
-        categories = [
-          "Network"
-          "FileTransfer"
-          "P2P"
-        ];
-      })
-    ];
+    # Not needed anymore, as it's part of the default module now :)
+    # environment.systemPackages = [
+    #   (pkgs.mkDesktopItem {
+    #     name = "syncthing";
+    #     exec = "firefox \"http://127.0.0.1:8384/\"";
+    #     icon = "${./syncthing.png}";
+    #     categories = [
+    #       "Network"
+    #       "FileTransfer"
+    #       "P2P"
+    #     ];
+    #   })
+    # ];
   };
 }
