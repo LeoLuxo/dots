@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   lib2,
   pkgs,
@@ -12,6 +13,8 @@ let
 in
 {
   imports = [
+    inputs.nix-flatpak.nixosModules.nix-flatpak
+
     profiles.gnome
 
     profiles.apps.discord
@@ -77,6 +80,14 @@ in
     amberol
   ];
 
+  services.flatpak = {
+    enable = true;
+
+    packages = [
+      "eu.betterbird.Betterbird"
+    ];
+  };
+
   home-manager.users.${user}.home = {
     sessionVariables.APP_NOTES = lib.mkDefault "obsidian";
 
@@ -89,8 +100,6 @@ in
   # Virtual Machine
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
-
-  services.flatpak.enable = true;
 
   /*
     --------------------------------------------------------------------------------

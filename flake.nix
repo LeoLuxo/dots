@@ -121,6 +121,9 @@
     stylix.url = "github:nix-community/stylix/release-25.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs-25-05";
 
+    # Manage flatpaks decalaratively
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+
     # ----- hardware ------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops
     # nixos-hardware.url = "github:nixos/nixos-hardware/master";
