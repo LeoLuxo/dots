@@ -90,7 +90,7 @@ in
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
-  # services.flatpak.enable = true;
+  services.flatpak.enable = true;
 
   /*
     --------------------------------------------------------------------------------
