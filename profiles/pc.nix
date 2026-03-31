@@ -67,6 +67,7 @@ in
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
     obsidian
+    thunderbird
     wl-clipboard
     textpieces # A developer’s scratchpad that lets you quickly experiment with and transform text
     hieroglyphic # An application that helps you locate and select LaTeX symbols by drawing or sketching them
