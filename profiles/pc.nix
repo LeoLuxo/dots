@@ -5,11 +5,12 @@
   pkgs,
   profiles,
   user,
+  hostname,
   ...
 }:
 
 let
-  inherit (lib2.nixos) mkKeybind;
+  inherit (lib2.nixos) mkKeybind mkSyncedPath;
 in
 {
   imports = [
@@ -63,21 +64,27 @@ in
       binding = "<Super>F4";
       command = "$APP_COMMUNICATION";
     })
+
+    # Sync monitor settings per-host
+    (mkSyncedPath {
+      target = "~/.config/monitors.xml";
+      syncName = "monitors/${hostname}-monitors.xml";
+    })
   ];
 
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
     obsidian
     wl-clipboard
-    textpieces # A developer’s scratchpad that lets you quickly experiment with and transform text
-    hieroglyphic # An application that helps you locate and select LaTeX symbols by drawing or sketching them
-    impression # A utility for creating bootable USB drives from disk images
-    switcheroo # A tool for converting and manipulating images (for example, resizing or reformatting them)
-    video-trimmer # A simple app designed to quickly trim and edit video clips
-    warp # A fast, secure file transfer utility for moving files efficiently between systems
-    teams-for-linux # Microsoft Teams client recreated, the original electron teams package was abandoned
-    eyedropper # A simple color picker tool that allows you to select a color from anywhere on the screen
-    celluloid # A simple video player
+    textpieces # ->        A developer’s scratchpad that lets you quickly experiment with and transform text
+    hieroglyphic # ->      An application that helps you locate and select LaTeX symbols by drawing or sketching them
+    impression # ->        A utility for creating bootable USB drives from disk images
+    switcheroo # ->        A tool for converting and manipulating images (for example, resizing or reformatting them)
+    video-trimmer # ->     A simple app designed to quickly trim and edit video clips
+    warp # ->              A fast, secure file transfer utility for moving files efficiently between systems
+    teams-for-linux # ->   Microsoft Teams client recreated, the original electron teams package was abandoned
+    eyedropper # ->        A simple color picker tool that allows you to select a color from anywhere on the screen
+    celluloid # ->         A simple video player
     amberol
   ];
 
@@ -100,7 +107,7 @@ in
 
   # Virtual Machine
   virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  users.extraGroups.vboxusers.members = [ user ];
 
   /*
     --------------------------------------------------------------------------------
