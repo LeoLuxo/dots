@@ -45,7 +45,9 @@
           } 
           trap cleanup EXIT
 
-          read -s -p "Enter vault password: " VAULT_PASSWORD
+          echo "Enter vault password: "
+          read -s password
+          export VAULT_PASSWORD=$password
 
           export BW_CLIENTID=$(cat ${config.age.secrets."bitwarden/client-id".path})
           export BW_CLIENTSECRET=$(cat ${config.age.secrets."bitwarden/client-secret".path})
