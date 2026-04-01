@@ -61,15 +61,12 @@
           bw --nointeraction export --output "$OUT/passwords.csv" --format csv
           bw --nointeraction export --output "$OUT/passwords.json" --format json
 
-          bw --nointeraction lock
-          bw --nointeraction logout
           unset BW_SESSION
 
           7z a "$OUT/passwords.7z" "$OUT/*" -p"$VAULT_PASSWORD"
           unset VAULT_PASSWORD
 
           ls -al "$OUT"
-
 
           cleanup
         '';
