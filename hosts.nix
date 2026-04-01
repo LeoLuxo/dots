@@ -2,7 +2,6 @@
   # Personal desktop computer
   "coffee" = {
     hostname = "coffee";
-    os = "nixos";
     nixosConfig = import ./configs/coffee;
     nixpkgs = "nixpkgs-stable";
 
@@ -41,7 +40,6 @@
   # Surface Pro 7 laptop
   "pancake" = {
     hostname = "pancake";
-    os = "nixos";
     nixosConfig = import ./configs/pancake;
     nixpkgs = "nixpkgs-25-11";
 
@@ -79,7 +77,6 @@
   # Raspberry Pi Zero
   "strobery" = {
     hostname = "strobery";
-    os = "raspbian";
 
     ip.local = "192.168.0.37";
 
@@ -101,7 +98,6 @@
 
   # OLD Phone
   "celestia" = {
-    os = "android";
 
     ip.local = "192.168.0.142";
 
@@ -110,7 +106,6 @@
 
   # Phone
   "luna" = {
-    os = "android";
     ip.local = "192.168.0.154";
   };
 

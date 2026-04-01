@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  user,
   ...
 }:
 
@@ -54,10 +53,10 @@ in
             if lib.isString cfg.readData then
               ''--read-data-subset "${cfg.readData}"''
             else if cfg.readData == true then
-              ''--read-data''
+              "--read-data"
             else
               "";
-          cleanupCache = if cfg.cleanupCache then ''--cleanup-cache'' else "";
+          cleanupCache = if cfg.cleanupCache then "--cleanup-cache" else "";
 
           cleanupStaleLocks =
             if cfg.cleanupStaleLocks then
