@@ -12,8 +12,6 @@
     id = "thund-rbird";
     path = "/home/${user}/.thunderbird";
     ignorePatterns = [
-      # Ignore everything by default
-      "*"
       # Whitelist: Account & identity settings
       "!prefs.js"
       "!handlers.json"
@@ -22,11 +20,14 @@
       "!folderTree.json"
       "!xulstore.json"
       "!pkcs11.txt"
+
       # Whitelist: Address books
       "!abook*.sqlite"
+
       # Whitelist: OpenPGP / encryption
       "!encrypted-openpgp-passphrase.txt"
       "!openpgp.sqlite"
+
       # Whitelist: Extensions & add-ons
       "!extensions.json"
       "!addons.json"
@@ -36,16 +37,22 @@
       "!extension-store/"
       "!extension-store-userscripts/"
       "!browser-extension-data/"
+
       # Whitelist: Calendar
       "!calendar-data/"
+
       # Whitelist: Search config
       "!search.json.mozlz4"
+
       # Whitelist: Security (passwords, certs)
       "!cert9.db"
       "!key4.db"
       "!logins.json"
       "!logins-backup.json"
       "!logins.db"
+
+      # Ignore everything else by default
+      "*"
     ];
   };
 
