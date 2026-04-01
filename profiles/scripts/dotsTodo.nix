@@ -26,11 +26,13 @@
         text = ''
           #!/usr/bin/env bash
 
-          # Open the todo in vscode/text editor
-          if [[ $EDITOR = "code" ]]; then
-            echo code "${dotsTodo}" --reuse-window
+          # Open the todo in vscode / or a backup text editor
+          editor=''${APP_CODE_EDITOR:-''${VISUAL:-${pkgs.gnome-text-editor}}}
+
+          if [[ $editor = "code" ]]; then
+            code "${dotsTodo}" --reuse-window
           else
-            $EDITOR "${dotsTodo}"
+            $editor "${dotsTodo}"
           fi
         '';
       })
