@@ -24,12 +24,12 @@
   # Setup my auto backups
   restic =
     let
-      repoPassword = config.age.secrets."restic/${hostname}-pwd".path;
+      passwordFile = config.age.secrets."restic/${hostname}-pwd".path;
     in
     {
       enable = true;
       repo = "/stuff/restic/repo";
-      passwordFile = repoPassword;
+      inherit passwordFile;
       notifyOnFail = true;
 
       periodicChecks = {
@@ -144,7 +144,7 @@
 
         localRepos."hdd" = {
           path = "/backup/restic/repo";
-          passwordFile = repoPassword;
+          inherit passwordFile;
 
           forget = {
             enable = true;
@@ -160,7 +160,7 @@
 
         remoteRepos."hetzner-storage-box" = {
           path = "restic/coffee";
-          passwordFile = repoPassword;
+          inherit passwordFile;
           remoteAddressFile = config.age.secrets."restic/storage-box-addr".path;
           # Don't specify key and let ssh find the right key/identity to connect with
           strictHostKeyChecking = false; # TODO: make true by configuring known_hosts correctly
