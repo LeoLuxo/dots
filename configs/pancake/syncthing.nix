@@ -80,16 +80,6 @@
           ];
           inherit versioning;
         };
-
-        "Vault" = {
-          id = "p2ror-eujtw";
-          path = "/stuff/vault";
-          devices = [
-            "strobery"
-            "coffee"
-          ];
-          inherit versioning;
-        };
       };
     };
 
