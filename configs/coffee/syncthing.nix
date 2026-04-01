@@ -75,10 +75,19 @@
           ];
           ignorePatterns = [
             "bachelor*/"
-            "**/target/"
-            "**/.direnv/"
+            "result"
+            "target"
+            ".direnv"
           ];
           inherit versioning;
+        };
+
+        # The thunderbird module already sets up everything else for us
+        "Thunderbird" = {
+          devices = [
+            "strobery"
+            "pancake"
+          ];
         };
 
         # "Incoming DCIM" = {

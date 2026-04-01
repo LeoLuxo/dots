@@ -1,7 +1,6 @@
 {
   config,
   hostname,
-  pkgs,
   lib2,
   hosts,
   user,
