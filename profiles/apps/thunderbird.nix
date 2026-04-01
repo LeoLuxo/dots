@@ -23,8 +23,7 @@
       "!xulstore.json"
       "!pkcs11.txt"
       # Whitelist: Address books
-      "!abook.sqlite"
-      "!abook-1.sqlite"
+      "!abook*.sqlite"
       # Whitelist: OpenPGP / encryption
       "!encrypted-openpgp-passphrase.txt"
       "!openpgp.sqlite"
@@ -41,9 +40,6 @@
       "!calendar-data/"
       # Whitelist: Search config
       "!search.json.mozlz4"
-      # Whitelist: Saved mail (local folders)
-      "!Mail/"
-      "!ImapMail/"
       # Whitelist: Security (passwords, certs)
       "!cert9.db"
       "!key4.db"
