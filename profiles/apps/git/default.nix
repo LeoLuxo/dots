@@ -31,7 +31,7 @@ in
       enable = true;
 
       settings = {
-        user.email = "contact@leoluxo.eu";
+        user.email = "contact@chlookie.net";
         user.name = "Chloé G";
 
         init.defaultBranch = "main";
