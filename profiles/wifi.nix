@@ -71,31 +71,31 @@
           };
         };
 
-        # "Parents" = {
-        #   connection = {
-        #     id = "Domaine des fleurs de jardin";
-        #     interface-name = "wlp0s20f3";
-        #     type = "wifi";
-        #     uuid = "c8aca36e-0c12-473a-99d3-1e5bcc3c41c0";
-        #   };
-        #   ipv4 = {
-        #     method = "auto";
-        #   };
-        #   ipv6 = {
-        #     addr-gen-mode = "default";
-        #     method = "auto";
-        #   };
-        #   proxy = { };
-        #   wifi = {
-        #     mode = "infrastructure";
-        #     ssid = "Domaine des fleurs de jardin";
-        #   };
-        #   wifi-security = {
-        #     auth-alg = "open";
-        #     key-mgmt = "wpa-psk";
-        #     psk = "$DOMAINE_DES_FLEURS_DE_JARDIN_PSK";
-        #   };
-        # };
+        "Parents" = {
+          connection = {
+            id = "Domaine des fleurs de jardin";
+            interface-name = "wlp0s20f3";
+            type = "wifi";
+            uuid = "15f9f454-b8c8-4441-8ab8-a42acbfd6c6c";
+          };
+          ipv4 = {
+            method = "auto";
+          };
+          ipv6 = {
+            addr-gen-mode = "default";
+            method = "auto";
+          };
+          proxy = { };
+          wifi = {
+            mode = "infrastructure";
+            ssid = "Domaine des fleurs de jardin";
+          };
+          wifi-security = {
+            auth-alg = "open";
+            key-mgmt = "wpa-psk";
+            psk = "$DOMAINE_DES_FLEURS_DE_JARDIN_PSK";
+          };
+        };
 
         "AU Eduroam" = {
           "802-1x" = {
