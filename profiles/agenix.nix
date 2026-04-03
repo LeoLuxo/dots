@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 {
 
   # Handle agenix secrets
@@ -18,16 +23,19 @@
       "/etc/ssh/agenix_ed25519"
     ];
 
-    # Add secrets from the flake to agenix config
-    secrets =
-      let
-        # Fetch secrets from private repo
-        # Secrets are (intentionally) currently independant, which makes my dots impure
-        # TODO: make them dependant
-        # (note to self: the url MUST use git+ssh otherwise it won't properly authenticate and have access to the repo)
-        flake = builtins.getFlake "git+ssh://git@github.com/chlookie/dots-secrets";
-      in
-      flake.ageSecrets;
+    # Add secrets from my secrets to the agenix config
+    secrets = inputs.secrets.ageSecrets;
+    # let
+    #   secretsFile = import /secrets.nix;
+
+    #   ageSecrets = lib.attrsets.mapAttrs' (
+    #     ageFile: _:
+    #     lib.attrsets.nameValuePair (lib.strings.removeSuffix ".age" ageFile) {
+    #       file = ./. + "/${ageFile}";
+    #     }
+    #   ) secretsFile;
+    # in
+    # ageSecrets;
   };
 
 }

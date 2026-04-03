@@ -470,6 +470,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1736344531,
+        "narHash": "sha256-8YVQ9ZbSfuUk2bUf2KRj60NRraLPKPS0Q4QFTbc+c2c=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "bffc22eb12172e6db3c5dde9e3e5628f8e3e7912",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -518,9 +534,24 @@
           "nixpkgs-25-11"
         ],
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "secrets": "secrets",
         "stylix": "stylix",
         "wallpapers": "wallpapers"
       }
+    },
+    "secrets": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_4"
+      },
+      "locked": {
+        "path": "./secrets",
+        "type": "path"
+      },
+      "original": {
+        "path": "./secrets",
+        "type": "path"
+      },
+      "parent": []
     },
     "stylix": {
       "inputs": {
@@ -707,7 +738,7 @@
     },
     "wallpapers": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1750663027,

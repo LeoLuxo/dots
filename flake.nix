@@ -88,6 +88,8 @@
   */
 
   inputs = {
+    self.submodules = true;
+
     # ----- nixpkgs -------------------------------------------------------------------------------
     "nixpkgs".follows = "nixpkgs-stable";
     "nixpkgs-stable".follows = "nixpkgs-25-11";
@@ -104,6 +106,8 @@
     # Is an external flake to make sure this repo stays small if the wallpapers aren't used
     # (The url MUST use git+ssh otherwise it won't properly authenticate and have access to the private repo)
     wallpapers.url = "git+ssh://git@github.com/chlookie/dots-wallpapers";
+
+    secrets.url = "./secrets";
 
     # ----- metaconfig & nix ---------------------------------------------------------------------
     # Manages dotfiles in nix
