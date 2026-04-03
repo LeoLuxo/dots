@@ -8,7 +8,9 @@
     user = "lili";
     users = {
       "lili" = {
+        description = "Chloé";
         uid = 1000;
+
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmKoOObf4uFjChrVj7UNEiHU5uxhNNY+rxSLoZvDy+t lili@coffee"
         ];
@@ -45,7 +47,9 @@
     user = "lili";
     users = {
       "lili" = {
+        description = "Chloé";
         uid = 1000;
+
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEuGccJyHZWCVDChXj3UUxTFLfU8fCM+vUYViYF+o6JF lili@pancake"
         ];

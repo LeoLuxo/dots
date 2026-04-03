@@ -127,18 +127,16 @@ in
 
     users = lib.concatMapAttrs (username: userCfg: {
       ${username} = {
-        home = "/home/${username}";
-        description = "Chloé";
+        # This automatically sets group to users, `createHome` to true, `home` to /`home/«username»`, `useDefaultShell` to true, and `isSystemUser` to false. Exactly one of `isNormalUser` and `isSystemUser` must be true.
         isNormalUser = true;
 
         hashedPasswordFile = config.age.secrets."userpwds/${hostname}/${username}".path;
         extraGroups = [ "wheel" ];
 
-        uid = userCfg.uid;
-
         # Set default shell (can't be done in home-manager)
         shell = pkgs.${defaultShell};
-      };
+      }
+      // (builtins.removeAttrs userCfg [ "publicKeys" ]);
     }) users;
   };
 
