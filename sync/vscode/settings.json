@@ -1270,5 +1270,6 @@
 	"tinymist.serverPath": "tinymist",
 	"editor.aiStats.enabled": false,
 	"rust-analyzer.server.path": "rust-analyzer",
-	"rust-analyzer.assist.preferSelf": true
+	"rust-analyzer.assist.preferSelf": true,
+	"scm.repositories.selectionMode": "single"
 }

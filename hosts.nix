@@ -5,6 +5,7 @@
     nixosConfig = import ./configs/coffee;
     nixpkgs = "nixpkgs-stable";
 
+    # TODO: change username
     user = "lili";
     users = {
       "lili" = {
