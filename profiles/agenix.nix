@@ -23,19 +23,8 @@
       "/etc/ssh/agenix_ed25519"
     ];
 
-    # Add secrets from my secrets to the agenix config
+    # Add secrets from the secrets flake to the agenix config
     secrets = inputs.secrets.ageSecrets;
-    # let
-    #   secretsFile = import /secrets.nix;
-
-    #   ageSecrets = lib.attrsets.mapAttrs' (
-    #     ageFile: _:
-    #     lib.attrsets.nameValuePair (lib.strings.removeSuffix ".age" ageFile) {
-    #       file = ./. + "/${ageFile}";
-    #     }
-    #   ) secretsFile;
-    # in
-    # ageSecrets;
   };
 
 }
