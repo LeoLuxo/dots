@@ -74,6 +74,10 @@
 
           label = "University Courses";
           path = "/stuff/uniCourses";
+          glob = [
+            "!**/target"
+            "!**/.direnv"
+          ];
           tags = [ "uni-courses" ];
         };
 
