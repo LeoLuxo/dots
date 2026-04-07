@@ -12,6 +12,9 @@
     id = "thund-rbird";
     path = "/home/${user}/.thunderbird";
     ignorePatterns = [
+      # Whitelist: Profile settings
+      "!profiles.ini"
+
       # Whitelist: Account & identity settings
       "!prefs.js"
       "!handlers.json"
