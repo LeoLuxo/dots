@@ -418,8 +418,13 @@ in
             remove-old-trash-files = true;
           };
 
+          # Calendar and locale settings
           "org/gnome/desktop/calendar" = {
             show-weekdate = true;
+          };
+
+          "system/locale" = {
+            region = "en_DK.UTF-8";
           };
         };
       };
