@@ -83,10 +83,10 @@ in
   #     # };
   #   })
   # ];
-  # nix.monitored = {
-  #   enable = true;
-  #   notify = false;
-  # };
+  nix.monitored = {
+    enable = true;
+    notify = false;
+  };
 
   # enable zoxide, the smarter `cd` command
   programs.zoxide = {
