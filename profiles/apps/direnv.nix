@@ -13,6 +13,9 @@
       # Set a higher timeout to prevent the warning "direnv is taking too long"
       export DIRENV_WARN_TIMEOUT=100h
 
+      # silent=true doesn't suppress nix-direnv so manually suppress everything
+      export DIRENV_LOG_FORMAT=""
+
       echo -e "\033[1;96mDirenv loaded"
     '';
   };
