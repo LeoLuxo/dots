@@ -5,7 +5,7 @@
 
     nix-direnv.enable = true;
 
-    silent = true;
+    silent = false;
     direnvrcExtra = ''
       # Suppress the "git tree is dirty" warnings
       export NIX_CONFIG="warn-dirty = false"
