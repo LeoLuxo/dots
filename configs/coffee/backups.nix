@@ -125,6 +125,15 @@
           path = "/stuff/games/emu";
           tags = [ "emu" ];
         };
+
+        "band" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Band";
+          path = "/stuff/band";
+          tags = [ "band" ];
+        };
       };
 
       backupPresets = {

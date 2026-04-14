@@ -72,23 +72,12 @@ in
   };
 
   # Set nix-monitored as the default nix package, which automatically integrates nix-output-monitor into all commands
-  # nix.package = pkgs.nix-monitored;
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     nixos-rebuild = super.nixos-rebuild.override {
-  #       nix = super.nix-monitored;
-  #     };
-  #     # nix-direnv = super.nix-direnv.override {
-  #     #   nix = super.nix-monitored;
-  #     # };
-  #   })
-  # ];
   nix.monitored = {
     enable = true;
     notify = false;
   };
 
-  # enable zoxide, the smarter `cd` command
+  # Enable zoxide, the smarter `cd` command
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
