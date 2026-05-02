@@ -134,6 +134,15 @@
           path = "/stuff/band";
           tags = [ "band" ];
         };
+
+        "voice" = {
+          timer = "hourly";
+          randomDelay = "15m";
+
+          label = "Voice";
+          path = "/stuff/voice";
+          tags = [ "voice" ];
+        };
       };
 
       backupPresets = {

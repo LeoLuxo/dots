@@ -45,7 +45,9 @@
 		"izing",
 		"lmao",
 		"pagebreak",
-		"SYSSEC"
+		"repr",
+		"SYSSEC",
+		"targetable"
 	],
 	"catppuccin.accentColor": "lavender",
 	"catppuccin.bracketMode": "dimmed",

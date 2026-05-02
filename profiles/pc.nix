@@ -85,7 +85,8 @@ in
     teams-for-linux # ->   Microsoft Teams client recreated, the original electron teams package was abandoned
     eyedropper # ->        A simple color picker tool that allows you to select a color from anywhere on the screen
     celluloid # ->         A simple video player
-    amberol
+    amberol # ->           Music player
+    soundconverter
   ];
 
   services.flatpak = {
