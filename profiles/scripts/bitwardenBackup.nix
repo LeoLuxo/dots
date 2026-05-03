@@ -66,7 +66,7 @@
           7z a "$OUT/passwords.7z" "$OUT/*" -p"$VAULT_PASSWORD"
           unset VAULT_PASSWORD
 
-          rustic --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-identical-parent
+          rustic --repo ${config.restic.repo} backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-if-unchanged
 
           cleanup
         '';
