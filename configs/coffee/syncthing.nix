@@ -153,15 +153,20 @@
           MEDIA_EXTS="jpg|jpeg|png|gif|bmp|tiff|webp|heic|heif|raw|cr2|nef|arw|mp4|mkv|avi|mov|wmv|flv|webm|m4v|mpg|mpeg|3gp|mts|m2ts"
 
           find "$SRC" -type f | grep -iE "\.($MEDIA_EXTS)$" | while read -r file; do
+              echo
+              echo "Processing file: $file"
+
               year=$(date -r "$file" +%Y)
               month=$(date -r "$file" +%m)
               target="$DST/$year/$month"
               
-              mkdir -p "$target"
-              rsync --archive "$file" "$target/"
+              echo "Destination: $target"
+              mkdir --parents "$target"
+              rsync --archive --human-readable --progress --remove-source-files "$file" "$target/"
           done
 
           # Remove empty directories from sources
+          echo "Removing empty directories"
           find "$SRC" -type d -empty -delete
         ''
       );
