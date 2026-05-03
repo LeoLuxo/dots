@@ -80,9 +80,14 @@
     fsType = "ntfs";
   };
 
-  # 1TB SSD (WINDOWS)
+  # 1TB SSD (For windows and restic)
+  fileSystems."/restic" = {
+    device = "/dev/disk/by-label/restic";
+    fsType = "ext4";
+  };
+
   # fileSystems."/windows" = {
-  #   device = "/dev/nvme0n1p2";
+  #   device = "/dev/disk/by-label/windows";
   #   fsType = "ntfs";
   # };
 
