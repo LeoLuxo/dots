@@ -152,6 +152,9 @@
 
           MEDIA_EXTS="jpg|jpeg|png|gif|bmp|tiff|webp|heic|heif|raw|cr2|nef|arw|mp4|mkv|avi|mov|wmv|flv|webm|m4v|mpg|mpeg|3gp|mts|m2ts"
 
+          # Remove junk folders before processing
+          find "$SRC" -type d \( -name ".thumbnails" -o -name ".Thumbnails" -o -name "Thumbs" -o -name "@eaDir" -o -name ".DS_Store" \) -exec rm -rf {} +
+
           find "$SRC" -type f | grep -iE "\.($MEDIA_EXTS)$" | while read -r file; do
               echo
               echo "Processing file: $file"
