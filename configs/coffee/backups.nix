@@ -28,6 +28,13 @@
   restic =
     let
       passwordFile = config.age.secrets."restic/${hostname}-pwd".path;
+
+      devGlob = [
+        "!**/target"
+        "!**/.direnv"
+        "!**/bin"
+        "!**/obj"
+      ];
     in
     {
       enable = true;
@@ -50,14 +57,12 @@
 
           label = "Home";
           path = "/home/${user}";
-          glob = [
+          glob = devGlob ++ [
             "!/home/*/downloads"
             "!/home/*/.steam"
             "!/home/*/.cache"
             "!/home/*/.local/share/Trash"
             "!/home/*/.local/share/Steam"
-            "!**/target"
-            "!**/.direnv"
           ];
           tags = [ "home" ];
         };
@@ -77,10 +82,7 @@
           label = "University Courses";
           tags = [ "uni-courses" ];
 
-          glob = [
-            "!**/target"
-            "!**/.direnv"
-          ];
+          glob = devGlob;
 
           timer = "hourly";
           randomDelay = "15m";
@@ -102,10 +104,7 @@
           label = "Share";
           tags = [ "share" ];
 
-          glob = [
-            "!**/target"
-            "!**/.direnv"
-          ];
+          glob = devGlob;
 
           timer = "hourly";
           randomDelay = "15m";
@@ -146,7 +145,6 @@
 
           timer = "hourly";
           randomDelay = "15m";
-
         };
 
         "band" = {
@@ -157,7 +155,6 @@
 
           timer = "hourly";
           randomDelay = "15m";
-
         };
 
         "voice" = {
@@ -168,7 +165,18 @@
 
           timer = "hourly";
           randomDelay = "15m";
+        };
 
+        "projects" = {
+          path = "/stuff/projects";
+
+          label = "Projects";
+          tags = [ "projects" ];
+
+          glob = devGlob;
+
+          timer = "hourly";
+          randomDelay = "15m";
         };
       };
 
