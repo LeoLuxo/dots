@@ -80,6 +80,12 @@
     fsType = "ntfs";
   };
 
+  # 1TB SSD (WINDOWS)
+  fileSystems."/windows" = {
+    device = "/dev/nvme0n1p2";
+    fsType = "ntfs";
+  };
+
   pinKernel.enable = true;
 
   home-manager.users.${user} =
