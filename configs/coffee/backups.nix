@@ -31,7 +31,7 @@
     in
     {
       enable = true;
-      repo = "/windows/restic/repo";
+      repo = "/stuff/restic/repo";
       inherit passwordFile;
       notifyOnFail = true;
 

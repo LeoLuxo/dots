@@ -81,10 +81,10 @@
   };
 
   # 1TB SSD (WINDOWS)
-  fileSystems."/windows" = {
-    device = "/dev/nvme0n1p2";
-    fsType = "ntfs";
-  };
+  # fileSystems."/windows" = {
+  #   device = "/dev/nvme0n1p2";
+  #   fsType = "ntfs";
+  # };
 
   pinKernel.enable = true;
 
