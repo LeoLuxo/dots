@@ -36,7 +36,6 @@
           devices = [
             "strobery"
             "pancake"
-            "celestia"
           ];
           ignorePatterns = [
             "**/workspace*.json"
@@ -51,7 +50,7 @@
           devices = [
             "strobery"
             "pancake"
-            "celestia"
+            "luna"
           ];
           inherit versioning;
         };
@@ -90,32 +89,32 @@
           ];
         };
 
-        # "Incoming DCIM" = {
-        #   id = "88xc3-tg0v3";
-        #   path = "/stuff/incoming/dcim";
-        #   devices = [
-        #     "celestia"
-        #   ];
-        #   type = "receiveonly";
-        # };
+        "Incoming DCIM" = {
+          id = "88xc3-tg0v3";
+          path = "/stuff/incoming/dcim";
+          devices = [
+            "luna"
+          ];
+          type = "receiveonly";
+        };
 
-        # "Incoming Pictures" = {
-        #   id = "0nx82-l39nu";
-        #   path = "/stuff/incoming/pictures";
-        #   devices = [
-        #     "celestia"
-        #   ];
-        #   type = "receiveonly";
-        # };
+        "Incoming Pictures" = {
+          id = "0nx82-l39nu";
+          path = "/stuff/incoming/pictures";
+          devices = [
+            "luna"
+          ];
+          type = "receiveonly";
+        };
 
-        # "Incoming Videos" = {
-        #   id = "gnaop-121mq";
-        #   path = "/stuff/incoming/videos";
-        #   devices = [
-        #     "celestia"
-        #   ];
-        #   type = "receiveonly";
-        # };
+        "Incoming Videos" = {
+          id = "gnaop-121mq";
+          path = "/stuff/incoming/videos";
+          devices = [
+            "luna"
+          ];
+          type = "receiveonly";
+        };
 
         # "Incoming Signal Backups" = {
         #   id = "vs5o5-tw8yg";

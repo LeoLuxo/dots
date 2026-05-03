@@ -100,17 +100,11 @@
     --------------------------------------------------------------------------------
   */
 
-  # OLD Phone
-  "celestia" = {
-
-    ip.local = "192.168.0.142";
-
-    syncthing.id = "2DPZ3IR-YH4YGS3-SGEZMRY-PMJNDZ4-3PBAE4D-V3IT5CA-4R4KVB5-MFH2WAL";
-  };
-
   # Phone
   "luna" = {
     ip.local = "192.168.0.154";
+
+    syncthing.id = "YNXUKWI-S3D57O7-4P347QV-7NYE4ZK-4F7UTMU-PN7DXAX-PVLNHS6-AZQWJAV";
   };
 
   /*
