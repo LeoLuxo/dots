@@ -36,7 +36,6 @@
           devices = [
             "strobery"
             "coffee"
-            "celestia"
           ];
           ignorePatterns = [
             "**/workspace*.json"
@@ -51,7 +50,7 @@
           devices = [
             "strobery"
             "coffee"
-            "celestia"
+            "luna"
           ];
           inherit versioning;
         };
