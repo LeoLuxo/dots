@@ -139,30 +139,45 @@
     };
 
   # Move incoming phone media to their respective folders regurlarly using a systemd script
-  # systemd.user = {
-  #   services."incoming-media-sort" = {
-  #     path = [
-  #       pkgs.rsync
-  #     ];
+  systemd.user = {
+    services."incoming-media-sort" = {
+      path = [
+        pkgs.rsync
+      ];
 
-  #     serviceConfig.ExecStart = (
-  #       pkgs.writeShellScript "incoming-media-sort" ''
-  #         rsync --help
-  #       ''
-  #     );
-  #   };
+      serviceConfig.ExecStart = (
+        pkgs.writeShellScript "incoming-media-sort" ''
+          SRC="/stuff/incoming/media"
+          DST="/stuff/media/photos/unsorted"
 
-  #   # Schedule it daily
-  #   timers."incoming-media-sort" = {
-  #     wantedBy = [ "timers.target" ];
-  #     timerConfig = {
-  #       OnCalendar = "daily";
-  #       RandomizedDelaySec = "1h";
-  #       Persistent = true;
-  #       Unit = "incoming-media-sort.service";
-  #     };
-  #   };
-  # };
+          MEDIA_EXTS="jpg|jpeg|png|gif|bmp|tiff|webp|heic|heif|raw|cr2|nef|arw|mp4|mkv|avi|mov|wmv|flv|webm|m4v|mpg|mpeg|3gp|mts|m2ts"
+
+          find "$SRC" -type f | grep -iE "\.($MEDIA_EXTS)$" | while read -r file; do
+              year=$(date -r "$file" +%Y)
+              month=$(date -r "$file" +%m)
+              target="$DST/$year/$month"
+              
+              mkdir -p "$target"
+              rsync --archive "$file" "$target/"
+          done
+
+          # Remove empty directories from sources
+          find "$SRC" -type d -empty -delete
+        ''
+      );
+    };
+
+    # Schedule it daily
+    timers."incoming-media-sort" = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        RandomizedDelaySec = "1h";
+        Persistent = true;
+        Unit = "incoming-media-sort.service";
+      };
+    };
+  };
 
   # systemd.user.services."wallutils-timed" = modules.mkIf cfg.isTimed {
   #   unitConfig = {
