@@ -29,7 +29,7 @@ let
   '';
   unlinkGX = device: ''
     ${linkGXLeft device} --disconnect || true
-    ${linkGXRight device} --disconnect || true\
+    ${linkGXRight device} --disconnect || true
   '';
 in
 {

@@ -31,7 +31,7 @@
     in
     {
       enable = true;
-      repo = "/stuff/restic/repo";
+      repo = "/restic/repo";
       inherit passwordFile;
       notifyOnFail = true;
 
@@ -43,134 +43,134 @@
         cleanupCache = true;
       };
 
-      # backups = {
-      #   "home" = {
-      #     timer = "daily";
-      #     randomDelay = "2h";
+      backups = {
+        "home" = {
+          timer = "daily";
+          randomDelay = "2h";
 
-      #     label = "Home";
-      #     path = "/home/${user}";
-      #     glob = [
-      #       "!/home/*/downloads"
-      #       "!/home/*/.steam"
-      #       "!/home/*/.cache"
-      #       "!/home/*/.local/share/Trash"
-      #       "!/home/*/.local/share/Steam"
-      #       "!**/target"
-      #       "!**/.direnv"
-      #     ];
-      #     tags = [ "home" ];
-      #   };
+          label = "Home";
+          path = "/home/${user}";
+          glob = [
+            "!/home/*/downloads"
+            "!/home/*/.steam"
+            "!/home/*/.cache"
+            "!/home/*/.local/share/Trash"
+            "!/home/*/.local/share/Steam"
+            "!**/target"
+            "!**/.direnv"
+          ];
+          tags = [ "home" ];
+        };
 
-      #   "obsidian" = {
-      #     path = "/stuff/obsidian";
+        "obsidian" = {
+          path = "/stuff/obsidian";
 
-      #     label = "Obsidian";
-      #     tags = [ "obsidian" ];
+          label = "Obsidian";
+          tags = [ "obsidian" ];
 
-      #     timer = "*:0/15"; # every 15 minutes
-      #   };
+          timer = "*:0/15"; # every 15 minutes
+        };
 
-      #   "uni-courses" = {
-      #     path = "/stuff/uniCourses";
+        "uni-courses" = {
+          path = "/stuff/uniCourses";
 
-      #     label = "University Courses";
-      #     tags = [ "uni-courses" ];
+          label = "University Courses";
+          tags = [ "uni-courses" ];
 
-      #     glob = [
-      #       "!**/target"
-      #       "!**/.direnv"
-      #     ];
+          glob = [
+            "!**/target"
+            "!**/.direnv"
+          ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
-      #   };
+          timer = "hourly";
+          randomDelay = "15m";
+        };
 
-      #   "important-docs" = {
-      #     path = "/stuff/importantDocs";
+        "important-docs" = {
+          path = "/stuff/importantDocs";
 
-      #     label = "Important Documents";
-      #     tags = [ "important-docs" ];
+          label = "Important Documents";
+          tags = [ "important-docs" ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
-      #   };
+          timer = "hourly";
+          randomDelay = "15m";
+        };
 
-      #   "share" = {
-      #     path = "/stuff/share";
+        "share" = {
+          path = "/stuff/share";
 
-      #     label = "Share";
-      #     tags = [ "share" ];
+          label = "Share";
+          tags = [ "share" ];
 
-      #     glob = [
-      #       "!**/target"
-      #       "!**/.direnv"
-      #     ];
+          glob = [
+            "!**/target"
+            "!**/.direnv"
+          ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
-      #   };
+          timer = "hourly";
+          randomDelay = "15m";
+        };
 
-      #   "minecraft-instances" = {
-      #     path = "/stuff/games/minecraft/instances";
+        "minecraft-instances" = {
+          path = "/stuff/games/minecraft/instances";
 
-      #     label = "Minecraft Instances";
-      #     tags = [ "minecraft-instances" ];
+          label = "Minecraft Instances";
+          tags = [ "minecraft-instances" ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
-      #   };
+          timer = "hourly";
+          randomDelay = "15m";
+        };
 
-      #   "media" = {
-      #     path = "/stuff/media";
+        "media" = {
+          path = "/stuff/media";
 
-      #     label = "Media";
-      #     tags = [
-      #       "media"
-      #       "music"
-      #     ];
+          label = "Media";
+          tags = [
+            "media"
+            "music"
+          ];
 
-      #     iglob = [
-      #       "!*lossy*"
-      #     ];
+          iglob = [
+            "!*lossy*"
+          ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
-      #   };
+          timer = "hourly";
+          randomDelay = "15m";
+        };
 
-      #   "emu" = {
-      #     path = "/stuff/games/emu";
+        "emu" = {
+          path = "/stuff/games/emu";
 
-      #     label = "Emu";
-      #     tags = [ "emu" ];
+          label = "Emu";
+          tags = [ "emu" ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
+          timer = "hourly";
+          randomDelay = "15m";
 
-      #   };
+        };
 
-      #   "band" = {
-      #     path = "/stuff/band";
+        "band" = {
+          path = "/stuff/band";
 
-      #     label = "Band";
-      #     tags = [ "band" ];
+          label = "Band";
+          tags = [ "band" ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
+          timer = "hourly";
+          randomDelay = "15m";
 
-      #   };
+        };
 
-      #   "voice" = {
-      #     path = "/stuff/voice";
+        "voice" = {
+          path = "/stuff/voice";
 
-      #     label = "Voice";
-      #     tags = [ "voice" ];
+          label = "Voice";
+          tags = [ "voice" ];
 
-      #     timer = "hourly";
-      #     randomDelay = "15m";
+          timer = "hourly";
+          randomDelay = "15m";
 
-      #   };
-      # };
+        };
+      };
 
       backupPresets = {
         ludusavi = {
