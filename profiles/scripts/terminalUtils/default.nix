@@ -13,18 +13,13 @@ in
   imports = [
     (mkShellHistoryAlias {
       name = "please";
-      command = { lastCommand }: ''sudo ${lastCommand}'';
+      command = { lastCommand }: "sudo ${lastCommand}";
     })
   ];
 
   environment.systemPackages = with pkgs; [
     # To query the filetype of files
     file
-
-    (pkgs.writeScriptWithDeps {
-      name = "size";
-      file = ./size.sh;
-    })
 
     (pkgs.writeScriptWithDeps {
       name = "cheat";
@@ -93,6 +88,8 @@ in
       pls = "please";
 
       l = "ls -Fhsla";
+
+      size = "du --human-readable --summarize";
 
       "." = "q .";
 
