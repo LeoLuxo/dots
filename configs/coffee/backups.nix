@@ -56,92 +56,119 @@
             "!/home/*/.cache"
             "!/home/*/.local/share/Trash"
             "!/home/*/.local/share/Steam/steamapps"
+            "!**/target"
+            "!**/.direnv"
           ];
           tags = [ "home" ];
         };
 
         "obsidian" = {
-          timer = "*:0/15"; # every 15 minutes
+          path = "/stuff/obsidian";
 
           label = "Obsidian";
-          path = "/stuff/obsidian";
           tags = [ "obsidian" ];
+
+          timer = "*:0/15"; # every 15 minutes
         };
 
         "uni-courses" = {
-          timer = "hourly";
-          randomDelay = "15m";
+          path = "/stuff/uniCourses";
 
           label = "University Courses";
-          path = "/stuff/uniCourses";
+          tags = [ "uni-courses" ];
+
           glob = [
             "!**/target"
             "!**/.direnv"
           ];
-          tags = [ "uni-courses" ];
+
+          timer = "hourly";
+          randomDelay = "15m";
         };
 
         "important-docs" = {
-          timer = "hourly";
-          randomDelay = "15m";
+          path = "/stuff/importantDocs";
 
           label = "Important Documents";
-          path = "/stuff/importantDocs";
           tags = [ "important-docs" ];
+
+          timer = "hourly";
+          randomDelay = "15m";
         };
 
         "share" = {
-          timer = "hourly";
-          randomDelay = "15m";
+          path = "/stuff/share";
 
           label = "Share";
-          path = "/stuff/share";
           tags = [ "share" ];
+
+          glob = [
+            "!**/target"
+            "!**/.direnv"
+          ];
+
+          timer = "hourly";
+          randomDelay = "15m";
         };
 
         "minecraft-instances" = {
-          timer = "hourly";
-          randomDelay = "15m";
+          path = "/stuff/games/minecraft/instances";
 
           label = "Minecraft Instances";
-          path = "/stuff/games/minecraft/instances";
           tags = [ "minecraft-instances" ];
-        };
 
-        "music" = {
           timer = "hourly";
           randomDelay = "15m";
+        };
 
-          label = "Music";
-          path = "/stuff/media/music";
-          tags = [ "music" ];
+        "media" = {
+          path = "/stuff/media";
+
+          label = "Media";
+          tags = [
+            "media"
+            "music"
+          ];
+
+          iglob = [
+            "!*lossy*"
+          ];
+
+          timer = "hourly";
+          randomDelay = "15m";
         };
 
         "emu" = {
+          path = "/stuff/games/emu";
+
+          label = "Emu";
+          tags = [ "emu" ];
+
           timer = "hourly";
           randomDelay = "15m";
 
-          label = "Emu";
-          path = "/stuff/games/emu";
-          tags = [ "emu" ];
         };
 
         "band" = {
+          path = "/stuff/band";
+
+          label = "Band";
+          tags = [ "band" ];
+
           timer = "hourly";
           randomDelay = "15m";
 
-          label = "Band";
-          path = "/stuff/band";
-          tags = [ "band" ];
         };
 
         "voice" = {
+          path = "/stuff/voice";
+
+          label = "Voice";
+          tags = [ "voice" ];
+
           timer = "hourly";
           randomDelay = "15m";
 
-          label = "Voice";
-          path = "/stuff/voice";
-          tags = [ "voice" ];
         };
       };
 
