@@ -14,7 +14,10 @@ BLACKLIST=(
 	".trashed"
 )
 
-#                     only media extensions         ignore .st* (.stfolder, .stversions) etc
+# find files
+# |                   only media extensions
+# |                   |                             ignore .st* (.stfolder, .stversions) etc
+# |                   |                             |                      for all files
 find "$SRC" -type f | grep -iE "\.($MEDIA_EXTS)$" | grep -vw '\.st[^/]*' | while read -r file; do
 	echo
 	echo "Processing file: $file"
