@@ -7,6 +7,7 @@
 {
   imports = [
     profiles.apps.syncthing
+    profiles.scripts.mediaSort
   ];
 
   services.syncthing.settings =
@@ -141,43 +142,7 @@
   # Move incoming phone media to their respective folders regurlarly using a systemd script
   systemd.user = {
     services."incoming-media-sort" = {
-      path = [
-        pkgs.rsync
-      ];
-
-      serviceConfig.ExecStart = (
-        pkgs.writeShellScript "incoming-media-sort" ''
-          SRC=
-          SRCS=(
-            "/stuff/incoming/media/dcim"
-            "/stuff/incoming/media/pictures"
-            "/stuff/incoming/media/videos"
-          )
-          DST="/stuff/media/photos/unsorted"
-
-          MEDIA_EXTS="jpg|jpeg|png|gif|bmp|tiff|webp|heic|heif|raw|cr2|nef|arw|mp4|mkv|avi|mov|wmv|flv|webm|m4v|mpg|mpeg|3gp|mts|m2ts"
-
-          # Remove junk folders before processing
-          find "''${SRCS[@]}" -type d \( -name ".thumbnails" -o -name ".Thumbnails" -o -name "Thumbs" -o -name "@eaDir" -o -name ".DS_Store" \) -exec rm -rf {} +
-
-          find "''${SRCS[@]}" -type f | grep -iE "\.($MEDIA_EXTS)$" | while read -r file; do
-              echo
-              echo "Processing file: $file"
-
-              year=$(date -r "$file" +%Y)
-              month=$(date -r "$file" +%m)
-              target="$DST/$year/$month"
-              
-              echo "Destination: $target"
-              mkdir --parents "$target"
-              rsync --archive --human-readable --progress --remove-source-files "$file" "$target/"
-          done
-
-          # Remove empty directories from sources (except if it's a syncthing folder)
-          echo "Removing empty directories"
-          find "''${SRCS[@]}" -type d -empty -not -name ".stfolder" -delete
-        ''
-      );
+      serviceConfig.ExecStart = "media-sort /stuff/incoming/media /stuff/media/photos/unsorted";
     };
 
     # Schedule it daily
