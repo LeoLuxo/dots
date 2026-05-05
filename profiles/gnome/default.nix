@@ -226,12 +226,6 @@ in
       wayland = true;
     };
 
-    # Kinda random fix for the weird stuff with my second monitor? Is supposed to leave some time for mutter to recognize all screens before initializing gnome
-    # TODO: still not working
-    systemd.services.display-manager.preStart = ''
-      sleep 4
-    '';
-
     # Enable the gnome keyring
     services.gnome.gnome-keyring.enable = true;
 

@@ -1,25 +1,22 @@
 {
   inputs = {
     # Import the latest unstable version of nixpkgs
-    nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
     # Import flake-utils for utility functions
     flake-utils.url = "github:numtide/flake-utils";
 
-    # Used to format all kinds of files
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    # Used to generate/get a specific rust toolchain to use with naersk
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Used to build the project by parsing the cargo dependencies
     naersk = {
       url = "github:nix-community/naersk";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Used to generate/get a specific rust toolchain to use with naersk
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
   };
 
   outputs =
@@ -27,69 +24,57 @@
       self,
       nixpkgs,
       flake-utils,
-      treefmt-nix,
+      rust-overlay,
       naersk,
-      fenix,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
         # Import nixpkgs for the current system
-        pkgs = nixpkgs.legacyPackages.${system};
-
-        # Define the Rust toolchain using fenix, by reading rust-toolchain.toml
-        rustToolchain =
-          with fenix.packages.${system};
-          fromToolchainFile {
-            dir = ./.;
-            sha256 = "sha256-s1RPtyvDGJaX/BisLT+ifVfuhDT1nZkZ1NcK8sbwELM=";
-          };
-
-        # Define the package using naersk with the specified Rust toolchain
-        package =
-          (naersk.lib.${system}.override {
-            cargo = rustToolchain;
-            rustc = rustToolchain;
-          }).buildPackage
-            { src = ./.; };
-
-        # Define the development shell with necessary tools
-        devShell = pkgs.mkShell {
-          inputsFrom = [ package ];
-          buildInputs = with pkgs; [
-            rustToolchain
-            pre-commit
-            rust-analyzer
-          ];
-
-          # Needed for rust-analyser to work
-          RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ (import rust-overlay) ];
         };
 
-        # Setup treefmt with the formatters we need
-        treefmtEval = treefmt-nix.lib.evalModule pkgs (
-          { ... }:
-          {
-            projectRootFile = "flake.nix";
-            programs = {
-              nixfmt.enable = true; # For nix files
-              rustfmt.enable = true; # For rust files
-            };
-          }
-        );
+        # Define the Rust toolchain by reading rust-toolchain.toml
+        toolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+
+        # Intialize naersk with the created toolchain
+        naersk' = pkgs.callPackage naersk {
+          cargo = toolchain;
+          rustc = toolchain;
+        };
+
+        libraries = [ ];
       in
       {
         # For `nix build` and `nix run`
-        packages.default = package;
+        # Build the package using naersk
+        packages.default = naersk'.buildPackage {
+          src = ./.;
+        };
 
         # For `nix develop`
-        devShells.default = devShell;
+        # Define the development shell with necessary tools
+        devShells.default = pkgs.mkShell {
+          nativeBuildInputs = [ toolchain ];
+          buildInputs =
+            with pkgs;
+            libraries
+            ++ [
+              rustfmt
+              pre-commit
+              rust-analyzer
+              rustPackages.clippy
+              cargo-limit
+            ];
 
-        # For `nix fmt`
-        formatter = treefmtEval.config.build.wrapper;
+          # Needed for rust-analyser to work
+          RUST_SRC_PATH = "${pkgs.rustPlatform.rustLibSrc}";
 
-        # For `nix flake check`
-        checks.formatting = treefmtEval.config.build.check self;
+          # Make libraries available to cargo
+          LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libraries;
+        };
       }
     );
 }
