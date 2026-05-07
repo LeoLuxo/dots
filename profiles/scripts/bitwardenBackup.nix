@@ -28,6 +28,7 @@
         # --cleanexit makes it so the login and unlock commands don't error out if bitwarden is already logged-in or unlocked
         text = ''
           #!/usr/bin/env bash
+          # bash
 
           set -e
 

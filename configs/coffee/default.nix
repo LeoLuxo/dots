@@ -15,6 +15,8 @@
     ./syncthing.nix
     ./backups.nix
     # ./vr.nix
+    
+    ./utilities/mediaSort.nix
 
     inputs.stylix.nixosModules.stylix
 

@@ -1,13 +1,11 @@
 {
   profiles,
-  pkgs,
   ...
 }:
 
 {
   imports = [
     profiles.apps.syncthing
-    profiles.scripts.mediaSort
   ];
 
   services.syncthing.settings =
@@ -138,22 +136,4 @@
         # };
       };
     };
-
-  # Move incoming phone media to their respective folders regurlarly using a systemd script
-  systemd.user = {
-    services."incoming-media-sort" = {
-      serviceConfig.ExecStart = "media-sort /stuff/incoming/media /stuff/media/photos/unsorted";
-    };
-
-    # Schedule it daily
-    timers."incoming-media-sort" = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "daily";
-        RandomizedDelaySec = "1h";
-        Persistent = true;
-        Unit = "incoming-media-sort.service";
-      };
-    };
-  };
 }

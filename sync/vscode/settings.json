@@ -7,7 +7,7 @@
 		"**/*.csproj"
 	],
 	"[nix]": {
-		"editor.defaultFormatter": "brettm12345.nixfmt-vscode"
+		"editor.defaultFormatter": "jnoortheen.nix-ide"
 	},
 	"[python]": {},
 	"[rust]": {
