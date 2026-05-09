@@ -240,8 +240,10 @@ in
               {
                 ${hostname} = {
                   host = hostname;
-                }
-                // (builtins.removeAttrs sshCfg [ "hostKeys" ]);
+                  hostname = sshCfg.hostname or null;
+                  port = sshCfg.port or null;
+                  user = sshCfg.user or null;
+                };
               }
             )
           ) hosts;
