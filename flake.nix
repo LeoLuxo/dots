@@ -8,14 +8,14 @@
       hostPlatform:
 
       let
-        hosts = import ./hosts.nix;
-
         # The default pkgs and lib just so I can pass them around where needed
         pkgs = import nixpkgs { inherit hostPlatform; };
         lib = pkgs.lib;
 
         # My custom libs
         lib2 = import ./lib.nix { inherit lib; };
+
+        hosts = import ./hosts.nix { inherit lib lib2; };
 
         args = {
           inherit inputs lib lib2;

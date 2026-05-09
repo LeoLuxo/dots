@@ -1,6 +1,7 @@
-{
+{ lib, ... }:
+rec {
   # Personal desktop computer
-  "coffee" = {
+  "coffee" = rec {
     hostname = "coffee";
     nixosConfig = import ./configs/coffee;
     nixpkgs = "nixpkgs-stable";
@@ -8,20 +9,22 @@
     # TODO: change username
     user = "lili";
     users = {
-      "lili" = {
+      ${user} = {
         description = "Chloé";
         uid = 1000;
 
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFmKoOObf4uFjChrVj7UNEiHU5uxhNNY+rxSLoZvDy+t lili@coffee"
         ];
+
+        openssh.authorizedKeys.keys = lib.flatten [ pancake.users.${pancake.user}.publicKeys ];
       };
     };
 
     ip.local = "192.168.0.88";
 
     ssh = {
-      user = "lili";
+      user = "${user}"; # Default user from above
       hostKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINxk9qOGQi2ENzTE5+mC1pcJs29MC5pqQmYAUh/CjvXT host@coffee"
       ];
@@ -40,27 +43,29 @@
   */
 
   # Surface Pro 7 laptop
-  "pancake" = {
+  "pancake" = rec {
     hostname = "pancake";
     nixosConfig = import ./configs/pancake;
     nixpkgs = "nixpkgs-25-11";
 
     user = "lili";
     users = {
-      "lili" = {
+      ${user} = {
         description = "Chloé";
         uid = 1000;
 
         publicKeys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEuGccJyHZWCVDChXj3UUxTFLfU8fCM+vUYViYF+o6JF lili@pancake"
         ];
+
+        openssh.authorizedKeys.keys = lib.flatten [ coffee.users.${coffee.user}.publicKeys ];
       };
     };
 
     ip.local = "192.168.0.173";
 
     ssh = {
-      user = "lili";
+      user = "${user}"; # Default user from above
       hostKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVxCq24Uq5HwnAxFiQHDCNoSusUtoTI/ndMzbXTVDWe host@pancake"
       ];
