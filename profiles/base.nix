@@ -235,19 +235,17 @@ in
             hostname: hostCfg:
             if (hostCfg ? "ssh") then
               let
-                sshCfg = lib.traceVal hostCfg.ssh;
+                sshCfg = hostCfg.ssh;
               in
               {
                 ${hostname} = {
                   host = hostname;
-                  hostname = sshCfg.hostname or null;
-                  port = sshCfg.port or null;
-                  user = sshCfg.user or null;
-                };
+                }
+                // (builtins.removeAttrs sshCfg [ "hostKeys" ]);
               }
             else
               { }
-          ) (lib.traceVal hosts);
+          ) hosts;
         };
 
         # Starship shell prompt
