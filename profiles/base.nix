@@ -228,15 +228,24 @@ in
         };
 
         # Create SSH aliases from the `ssh` block in the host definitions
-        programs.ssh.matchBlocks = lib.concatMapAttrs (
-          hostname: hostCfg:
-          lib.mkIf (hostCfg ? "ssh") {
-            ${hostname} = {
-              host = hostname;
-            }
-            // (builtins.removeAttrs hostCfg [ "hostKeys" ]);
-          }
-        ) hosts;
+        programs.ssh = {
+          enable = true;
+          enableDefaultConfig = false;
+          matchBlocks = lib.concatMapAttrs (
+            hostname: hostCfg:
+            lib.mkIf (hostCfg ? "ssh") (
+              let
+                sshCfg = hostCfg.ssh;
+              in
+              {
+                ${hostname} = {
+                  host = hostname;
+                }
+                // (builtins.removeAttrs sshCfg [ "hostKeys" ]);
+              }
+            )
+          ) hosts;
+        };
 
         # Starship shell prompt
         programs.starship = {
