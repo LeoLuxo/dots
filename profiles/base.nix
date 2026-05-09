@@ -233,7 +233,7 @@ in
           enableDefaultConfig = false;
           matchBlocks = lib.concatMapAttrs (
             hostname: hostCfg:
-            lib.mkIf (hostCfg ? "ssh") (
+            if (hostCfg ? "ssh") then
               let
                 sshCfg = lib.traceVal hostCfg.ssh;
               in
@@ -245,7 +245,8 @@ in
                   user = sshCfg.user or null;
                 };
               }
-            )
+            else
+              { }
           ) (lib.traceVal hosts);
         };
 

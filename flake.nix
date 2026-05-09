@@ -31,10 +31,10 @@
         };
 
         mkNixosConfig =
+          name:
           {
             nixosConfig,
             nixpkgs ? "nixpkgs",
-            hostname,
             users ? { },
             autologin ? null,
             ...
@@ -49,7 +49,7 @@
               inherit hosts;
               inherit autologin;
 
-              host = hosts.${hostname};
+              host = hosts.${name};
             }
             // extras;
 
@@ -71,7 +71,7 @@
       {
         # Create nixos configurations for all hosts that have a `nixosConfig`
         nixosConfigurations = lib.concatMapAttrs (
-          name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig host; } else { }
+          name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig name host; } else { }
         ) hosts;
 
         packages.${hostPlatform} = lib.packagesFromDirectoryRecursive {
