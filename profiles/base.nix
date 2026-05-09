@@ -117,13 +117,6 @@ in
 
   # ---------- Host machine important settings ----------
 
-  # Enable boot loading
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Define and set up all the manually-defined users
   users = {
     mutableUsers = false;
@@ -139,6 +132,7 @@ in
         # Set default shell (can't be done in home-manager)
         shell = pkgs.${defaultShell};
       }
+      # Add all other attributes except special ones
       // (builtins.removeAttrs userCfg [ "publicKeys" ]);
     }) users;
   };
