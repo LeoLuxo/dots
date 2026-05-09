@@ -176,6 +176,34 @@ in
     settings.KbdInteractiveAuthentication = false;
   };
 
+  # Configure known hosts based on their host keys
+  programs.ssh.knownHosts = lib.traceValSeq (
+    lib.concatMapAttrs (
+      hostname: hostCfg:
+      if (hostCfg ? "ssh" && hostCfg.ssh ? "hostKeys") then
+        let
+          host = hostCfg.ssh.hostname or hostCfg.hostname or hostname;
+          hostKeys = hostCfg.ssh.hostKeys;
+        in
+        lib.mergeAttrsList (
+          lib.imap (
+            i: key:
+            let
+              name = "${host}-${builtins.toString i}";
+            in
+            {
+              ${name} = {
+                hostNames = [ host ];
+                publicKey = key;
+              };
+            }
+          ) hostKeys
+        )
+      else
+        { }
+    ) hosts
+  );
+
   /*
     --------------------------------------------------------------------------------
     ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -231,6 +259,7 @@ in
         programs.ssh = {
           enable = true;
           enableDefaultConfig = false;
+
           matchBlocks = lib.concatMapAttrs (
             hostname: hostCfg:
             if (hostCfg ? "ssh") then
