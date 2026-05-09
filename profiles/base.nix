@@ -176,7 +176,7 @@ in
     settings.KbdInteractiveAuthentication = false;
   };
 
-  # Configure known hosts based on their host keys
+  # Configure known_hosts based on all the ssh host keys
   programs.ssh.knownHosts = lib.concatMapAttrs (
     hostname: hostCfg:
     if (hostCfg ? "ssh" && hostCfg.ssh ? "hostKeys") then
@@ -189,6 +189,7 @@ in
         lib.imap (
           i: key:
           let
+            # The module for this is really stupid and doesn't let use define multiple keys for a single host so we have to use a "unique" name for the attribute set for each key
             name = "${host}-${builtins.toString i}";
           in
           {
