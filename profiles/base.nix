@@ -160,7 +160,7 @@ in
   # Set the hostname
   networking.hostName = hostname;
 
-  # Add all IPs defined in my hosts list to the networking hosts map
+  # Add all IPs defined in my hosts list to the networking hosts map `/etc/hosts` (hostname -> IP)
   networking.hosts = lib.concatMapAttrs (
     name: hostCfg:
     lib.concatMapAttrs (_: ip: {
@@ -168,7 +168,13 @@ in
     }) (hostCfg.ip or { })
   ) hosts;
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+
+    # require public key authentication for better security
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+  };
 
   /*
     --------------------------------------------------------------------------------
@@ -220,6 +226,17 @@ in
           templates = null;
           publicShare = null;
         };
+
+        # Create SSH aliases from the `ssh` block in the host definitions
+        programs.ssh.matchBlocks = lib.concatMapAttrs (
+          hostname: hostCfg:
+          lib.mkIf (hostCfg ? "ssh") {
+            ${hostname} = {
+              host = hostname;
+            }
+            // (builtins.removeAttrs hostCfg [ "hostKeys" ]);
+          }
+        ) hosts;
 
         # Starship shell prompt
         programs.starship = {
