@@ -177,32 +177,31 @@ in
   };
 
   # Configure known hosts based on their host keys
-  programs.ssh.knownHosts = lib.traceValSeq (
-    lib.concatMapAttrs (
-      hostname: hostCfg:
-      if (hostCfg ? "ssh" && hostCfg.ssh ? "hostKeys") then
-        let
-          host = hostCfg.ssh.hostname or hostCfg.hostname or hostname;
-          hostKeys = hostCfg.ssh.hostKeys;
-        in
-        lib.mergeAttrsList (
-          lib.imap (
-            i: key:
-            let
-              name = "${host}-${builtins.toString i}";
-            in
-            {
-              ${name} = {
-                hostNames = [ host ];
-                publicKey = key;
-              };
-            }
-          ) hostKeys
-        )
-      else
-        { }
-    ) hosts
-  );
+  programs.ssh.knownHosts = lib.concatMapAttrs (
+    hostname: hostCfg:
+    if (hostCfg ? "ssh" && hostCfg.ssh ? "hostKeys") then
+      let
+        hostRaw = hostCfg.ssh.hostname or hostCfg.hostname or hostname;
+        host = if hostCfg.ssh ? port then "[${hostRaw}]:${builtins.toString hostCfg.ssh.port}" else hostRaw;
+        hostKeys = hostCfg.ssh.hostKeys;
+      in
+      lib.mergeAttrsList (
+        lib.imap (
+          i: key:
+          let
+            name = "${host}-${builtins.toString i}";
+          in
+          {
+            ${name} = {
+              hostNames = [ host ];
+              publicKey = key;
+            };
+          }
+        ) hostKeys
+      )
+    else
+      { }
+  ) hosts;
 
   /*
     --------------------------------------------------------------------------------
