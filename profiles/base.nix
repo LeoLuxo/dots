@@ -235,7 +235,7 @@ in
             hostname: hostCfg:
             lib.mkIf (hostCfg ? "ssh") (
               let
-                sshCfg = hostCfg.ssh;
+                sshCfg = lib.traceVal hostCfg.ssh;
               in
               {
                 ${hostname} = {
