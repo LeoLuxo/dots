@@ -246,7 +246,7 @@ in
                 };
               }
             )
-          ) hosts;
+          ) (lib.traceVal hosts);
         };
 
         # Starship shell prompt
