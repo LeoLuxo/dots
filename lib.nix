@@ -242,6 +242,7 @@ rec {
           fi
 
           mkdir --parents $(dirname ${realTarget})
+          run rm -rf $VERBOSE_ARG ${realTarget}
           run ln -sf $VERBOSE_ARG ${syncTarget} ${realTarget}
         '';
       };
