@@ -226,111 +226,128 @@ in
     };
 
     users = lib.concatMapAttrs (username: _: {
-      ${username} = {
-        # Do not change
-        home.stateVersion = "24.05";
+      ${username} =
+        { lib, ... }:
+        {
+          # Do not change
+          home.stateVersion = "24.05";
 
-        # Home Manager needs a bit of information about you and the paths it should manage.
-        home.username = username;
-        home.homeDirectory = "/home/${username}";
+          # Home Manager needs a bit of information about you and the paths it should manage.
+          home.username = username;
+          home.homeDirectory = "/home/${username}";
 
-        # Let Home Manager install and manage itself.
-        programs.home-manager.enable = true;
+          # Let Home Manager install and manage itself.
+          programs.home-manager.enable = true;
 
-        # Customize default directories
-        xdg.userDirs = {
-          enable = true;
-          createDirectories = true;
+          # Customize default directories
+          xdg.userDirs = {
+            enable = true;
+            createDirectories = true;
 
-          download = "/home/${username}/downloads";
+            download = "/home/${username}/downloads";
 
-          music = "/home/${username}/media";
-          pictures = "/home/${username}/media";
-          videos = "/home/${username}/media";
+            music = "/home/${username}/media";
+            pictures = "/home/${username}/media";
+            videos = "/home/${username}/media";
 
-          desktop = "/home/${username}/misc";
-          documents = "/home/${username}/misc";
+            desktop = "/home/${username}/misc";
+            documents = "/home/${username}/misc";
 
-          templates = null;
-          publicShare = null;
-        };
+            templates = null;
+            publicShare = null;
+          };
 
-        # Create SSH aliases from the `ssh` block in the host definitions
-        programs.ssh = {
-          enable = true;
-          enableDefaultConfig = false;
+          # Create SSH aliases from the `ssh` block in the host definitions
+          programs.ssh = {
+            enable = true;
+            enableDefaultConfig = false;
 
-          matchBlocks = lib.concatMapAttrs (
-            hostname: hostCfg:
-            if (hostCfg ? "ssh") then
-              let
-                sshCfg = hostCfg.ssh;
-              in
-              {
-                ${hostname} = {
-                  host = hostname;
+            matchBlocks = lib.concatMapAttrs (
+              hostname: hostCfg:
+              if (hostCfg ? "ssh") then
+                let
+                  sshCfg = hostCfg.ssh;
+                in
+                {
+                  ${hostname} = {
+                    host = hostname;
+                  }
+                  // (builtins.removeAttrs sshCfg [ "hostKeys" ]);
                 }
-                // (builtins.removeAttrs sshCfg [ "hostKeys" ]);
-              }
-            else
-              { }
-          ) hosts;
-        };
-
-        # Starship shell prompt
-        programs.starship = {
-          enable = true;
-          # enableTransience = true;
-        };
-
-        # Fish shell
-        programs.fish = {
-          enable = true;
-
-          # Use fish_key_reader to get keycodes
-          # https://fishshell.com/docs/current/cmds/bind.html
-          shellInit = ''
-            # Bind backspace correctly just to make sure
-            bind backspace backward-delete-char
-
-            # Rebind CTRL-backspace
-            bind ctrl-h backward-kill-path-component
-
-            # Bind CTRL-W
-            bind ctrl-w backward-kill-bigword
-
-            # Bind CTRL-Delete
-            bind ctrl-delete kill-bigword
-
-            # Bind CTRL-\|
-            bind ctrl-\\ beginning-of-line
-
-            # Rebind right to accept only a single char instead of the entire autosuggestion
-            bind right forward-single-char
-
-            # Bind CTRL-Space to open autocomplete search
-            bind ctrl-space complete-and-search
-
-            # Rebind tab to accept suggestion
-            bind tab accept-autosuggestion
-          '';
-
-          functions = {
-            cd = ''
-              if type -q z
-                z $argv
               else
-                builtin cd $argv
-              end
-            '';
+                { }
+            ) hosts;
+          };
 
-            fish_title = ''
-              string join / -- (string split / -- $PWD)[-4..-1]
+          # Workaround for the whole `Bad owner or permissions on ~/.ssh/config` error in vscode.
+          # https://github.com/nix-community/home-manager/issues/322
+
+          home.file.".ssh/config".force = true; # home-manager wrongly thinks it doesn't manage (and thus shouldn't clobber) this file due to the activation script
+          home.activation = {
+            fixSshPermissions = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+              run install -d -m 0700 "$HOME/.ssh"
+              if [ -L "$HOME/.ssh/config" ]; then
+                src="$(readlink -f "$HOME/.ssh/config")"
+                run rm -f "$HOME/.ssh/config"
+                run install -m 0600 "$src" "$HOME/.ssh/config"
+              fi
             '';
           };
-        };
 
-      };
+          # Starship shell prompt
+          programs.starship = {
+            enable = true;
+            # enableTransience = true;
+          };
+
+          # Fish shell
+          programs.fish = {
+            enable = true;
+
+            # Use fish_key_reader to get keycodes
+            # https://fishshell.com/docs/current/cmds/bind.html
+            shellInit = ''
+              # Bind backspace correctly just to make sure
+              bind backspace backward-delete-char
+
+              # Rebind CTRL-backspace
+              bind ctrl-h backward-kill-path-component
+
+              # Bind CTRL-W
+              bind ctrl-w backward-kill-bigword
+
+              # Bind CTRL-Delete
+              bind ctrl-delete kill-bigword
+
+              # Bind CTRL-\|
+              bind ctrl-\\ beginning-of-line
+
+              # Rebind right to accept only a single char instead of the entire autosuggestion
+              bind right forward-single-char
+
+              # Bind CTRL-Space to open autocomplete search
+              bind ctrl-space complete-and-search
+
+              # Rebind tab to accept suggestion
+              bind tab accept-autosuggestion
+            '';
+
+            functions = {
+              cd = ''
+                if type -q z
+                  z $argv
+                else
+                  builtin cd $argv
+                end
+              '';
+
+              fish_title = ''
+                string join / -- (string split / -- $PWD)[-4..-1]
+              '';
+            };
+          };
+
+        };
     }) users;
   };
 }
