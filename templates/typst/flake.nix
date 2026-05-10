@@ -24,7 +24,7 @@
       typst2nix,
       press,
     }:
-    flake-utils.lib.eachDefaultSystem (
+    flake-utils.lib.eachDefaultSystemPassThrough (
       system:
       let
         # Import nixpkgs for the current system and overlays
@@ -59,17 +59,17 @@
       in
       {
         # Build the typst document
-        packages.default = document;
+        packages.${system}.default = document;
 
-        # Copy the built document to a PDF file
-        apps.default = pkgs.copyTypstDocumentApp {
+        # Copy the built document to a PDF file in its own directory
+        apps.${system}.default = pkgs.copyTypstDocumentApp {
           inherit document;
-          file = "pdf/document.pdf";
+          path = "pdf/document.pdf";
         };
 
         # For `nix develop`
         # Define the development shell with necessary tools
-        devShells.default = pkgs.mkShell {
+        devShells.${system}.default = pkgs.mkShell {
           inputsFrom = [ document ];
 
           packages = with pkgs; [

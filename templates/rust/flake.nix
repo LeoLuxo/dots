@@ -27,7 +27,7 @@
       rust-overlay,
       naersk,
     }:
-    flake-utils.lib.eachDefaultSystem (
+    flake-utils.lib.eachDefaultSystemPassThrough (
       system:
       let
         # Import nixpkgs for the current system
@@ -50,13 +50,13 @@
       {
         # For `nix build` and `nix run`
         # Build the package using naersk
-        packages.default = naersk'.buildPackage {
+        packages.${system}.default = naersk'.buildPackage {
           src = ./.;
         };
 
         # For `nix develop`
         # Define the development shell with necessary tools
-        devShells.default = pkgs.mkShell {
+        devShells.${system}.default = pkgs.mkShell {
           nativeBuildInputs = [ toolchain ];
           buildInputs =
             with pkgs;
