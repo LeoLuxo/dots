@@ -185,9 +185,9 @@ rec {
       }:
       { config, ... }:
       {
-        programs.bash.shellAliases.${name} = command { lastCommand = ''$(fc -ln -1)''; };
-        programs.fish.shellAliases.${name} = ''eval ${command { lastCommand = ''$history[1]''; }}'';
-        programs.zsh.shellAliases.${name} = ''eval ${command { lastCommand = ''''${history[@][1]}''; }}'';
+        programs.bash.shellAliases.${name} = command { lastCommand = "$(fc -ln -1)"; };
+        programs.fish.shellAliases.${name} = "eval ${command { lastCommand = "$history[1]"; }}";
+        programs.zsh.shellAliases.${name} = "eval ${command { lastCommand = "\${history[@][1]}"; }}";
       };
 
     mkHomeSymlink =
@@ -230,18 +230,15 @@ rec {
       in
       {
         home.activation."sync-${syncName}" = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          if [[ -e "${realTarget}" ]]; then
+          if [[ -e "${realTarget}" ]] && [[ ! -h "${realTarget}" ]]; then
             if [[ ! -e "${syncTarget}" ]]; then
               echo Copying '${syncName}' to sync
               mkdir --parents $(dirname ${syncTarget})
-              cp -r ${realTarget} ${syncTarget}
+              cp -rT ${realTarget} ${syncTarget}
             fi
-
-            if [[ ! -h "${realTarget}" ]]; then
-              echo Backing up old '${syncName}' to '${realTarget}.bak'
-              rm -rf ${realTarget}.bak
-              mv -f ${realTarget} ${realTarget}.bak
-            fi
+            echo Backing up old '${syncName}' to '${realTarget}.bak'
+            rm -rf ${realTarget}.bak
+            mv -f ${realTarget} ${realTarget}.bak
           fi
 
           mkdir --parents $(dirname ${realTarget})
