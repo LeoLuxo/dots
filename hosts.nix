@@ -21,6 +21,8 @@ rec {
       };
     };
 
+    picture = ./configs/coffee/pic.png;
+
     ip.local = "192.168.0.88";
 
     ssh = {
@@ -61,6 +63,8 @@ rec {
         openssh.authorizedKeys.keys = lib.flatten [ coffee.users.${coffee.user}.publicKeys ];
       };
     };
+
+    picture = ./configs/pancake/pic.png;
 
     ip.local = "192.168.0.173";
 

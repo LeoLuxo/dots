@@ -40,7 +40,7 @@
 	- roundcube?
 	- [ ] clean up the mess thunderbird left behind
 	
-- auto-build CV pipeline
+- auto-build CV pipeline for fun
 
 - personal website
 	- transfer all the old tumblr stuff
@@ -49,6 +49,8 @@
 	- and add a command to pre-build all of the hosts
 	- make sure I can pre-build on my desktop and it will cache it all on the vps? :thinking:
 	- might not be necessary, can just remote build using --target-host: [https://nixos.wiki/wiki/Nixos-rebuild](https://nixos.wiki/wiki/Nixos-rebuild)
+	
+- run `calorieBot` on there
 
 
 

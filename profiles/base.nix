@@ -10,6 +10,7 @@
   pkgs,
   profiles,
   users,
+  picture ? null,
   ...
 }:
 
@@ -225,7 +226,7 @@ in
       inherit hostname hosts host;
     };
 
-    users = lib.concatMapAttrs (username: _: {
+    users = lib.concatMapAttrs (username: userCfg: {
       ${username} =
         { lib, ... }:
         {
@@ -255,6 +256,11 @@ in
 
             templates = null;
             publicShare = null;
+          };
+
+          # Set the display manager profile picture
+          home.file.".face" = lib.mkIf (userCfg ? face || picture != null) {
+            source = userCfg.face or picture;
           };
 
           # Create SSH aliases from the `ssh` block in the host definitions
