@@ -387,6 +387,7 @@ in
           # System sounds
           "org/gnome/desktop/sound" = {
             event-sounds = false;
+            allow-volume-above-100-percent = true;
           };
 
           # Night light
@@ -396,6 +397,11 @@ in
             night-light-schedule-from = 21.0;
             night-light-schedule-to = 6.0;
             night-light-temperature = mkUint32 3400;
+          };
+
+          "org/gnome/desktop/a11y/interface" = {
+            high-contrast = false;
+            show-status-shapes = true; # On-off shapes, indicate button status using shape additionally to color
           };
 
           # Appearance
