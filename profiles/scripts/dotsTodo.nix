@@ -1,11 +1,14 @@
 {
   lib2,
   pkgs,
-  dotsTodo,
+  dots,
   user,
   ...
 }:
 
+let
+  dotsTodo = "${dots}/TODO.md";
+in
 {
   home-manager.users.${user} = {
     imports = [

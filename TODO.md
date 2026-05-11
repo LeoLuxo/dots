@@ -58,7 +58,6 @@
 - this as alternativve for ddterm? [nix-dots/packages/standard/quake-mode.nix at 07ebd162d19581e487df9f9f1bee45ad73c2fa8d · percygt/nix-dots · GitHub](https://github.com/percygt/nix-dots/blob/07ebd162d19581e487df9f9f1bee45ad73c2fa8d/packages/standard/quake-mode.nix)
 - do this https://github.com/colemickens/nixcfg/blob/72cabd1433f809d16ff7537cecff8f1f70ebbb0a/mixins/ssh.nix#L40
 	- I have since forgotten why I added this item lmao
-
 - [dysk](https://github.com/Canop/dysk)
 - make sound when changing audio out
 - replace ddterm?

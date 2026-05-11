@@ -35,7 +35,6 @@ rec {
     syncthing.id = "WKZDG5X-W2DJB2N-3A7CS2H-VQDKBN2-RFDLM6P-KGZN4D6-KI2SD3E-3ZMNQAT";
 
     dots = "/etc/nixos/dots";
-    dotsTodo = "/stuff/obsidian/Notes/Nixos Todo.md";
   };
 
   /*
@@ -78,7 +77,6 @@ rec {
     syncthing.id = "DS5FS25-BYJYFF2-TKBNJ4S-6RHZTEK-F4QS4EM-BNOPAPU-ULRHUA7-ORVTNA7";
 
     dots = "/etc/nixos/dots";
-    dotsTodo = "/stuff/obsidian/Notes/Nixos Todo.md";
   };
 
   /*

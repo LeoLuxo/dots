@@ -4,13 +4,12 @@
   config,
   pkgs,
   user,
-  inputs,
   ...
 }:
 
 let
   inherit (lib) options types;
-  inherit (lib2) mkSubmodule toPascalCase;
+  inherit (lib2) mkSubmodule;
 
   cfg = config.gnome;
 in
