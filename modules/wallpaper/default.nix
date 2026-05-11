@@ -169,7 +169,7 @@ in
       # Auto-update wallpaper repo
       nx.preRebuildActions = ''
         echo "Updating wallpaper flake"
-        nix flake update wallpapers --allow-dirty
+        nix flake update wallpapers --option warn-dirty false
         git add flake.lock
       '';
 
