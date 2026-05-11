@@ -741,11 +741,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1750663027,
-        "narHash": "sha256-ZkzNVBs03aVU3FWSmmXK74DJX04naQVqUlMJ/K34zMI=",
+        "lastModified": 1778527678,
+        "narHash": "sha256-u7Ob/kaW9gt/rQlXkTGueRHab5Jjma5W9NM+XEWbTXE=",
         "ref": "refs/heads/main",
-        "rev": "e627bb878497dc7f5f91600d1b8fa8a315cf56ee",
-        "revCount": 24,
+        "rev": "b806d0212585eb59b286b24fa6d136c200d60b5c",
+        "revCount": 25,
         "type": "git",
         "url": "ssh://git@github.com/chlookie/dots-wallpapers"
       },
