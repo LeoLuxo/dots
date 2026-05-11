@@ -68,7 +68,7 @@
   # };
   # services.open-webui.enable = true;
 
-  wallpaper.image = inputs.wallpapers.dynamic."macintosh";
+  wallpaper.image = inputs.wallpapers.dynamic."bedroom";
 
   # 1TB SSD
   fileSystems."/stuff" = {
