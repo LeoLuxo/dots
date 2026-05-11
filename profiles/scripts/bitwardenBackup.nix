@@ -69,7 +69,7 @@
 
           rustic --repo ${config.restic.repo} --password-file "${config.restic.passwordFile}" backup "$OUT/passwords.7z" --tag passwords --tag bitwarden --label $"Passwords (Bitwarden)" --group-by host,tags --skip-if-unchanged
 
-          cleanup
+          # cleanup is called automatically
         '';
 
         deps = with pkgs; [

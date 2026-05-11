@@ -27,6 +27,8 @@
 
 - Rework README.md
 	- Take inspiration from https://github.com/totoroot/dotfiles
+	
+- Get familiar with `nix treefmt` and `pre-commit` and integrate it into my templates
 
 ### VPS with NixOS
 - set up navidrome
