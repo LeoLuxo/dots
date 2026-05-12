@@ -221,11 +221,14 @@ in
             (pkgs.writeText "bg.patch" ''
               --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
               +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-              @@ -15,4 +15,5 @@ $_gdm_dialog_width: 23em;
+              @@ -15,4 +15,8 @@ $_gdm_dialog_width: 23em;
                /* Login Dialog */
                .login-dialog {
                  background-color: $_gdm_bg;
               +  background-image: url('file:///etc/lockscreen.jpg');
+              +  background-size: cover;
+              +  background-repeat: no-repeat;
+              +  background-position: center;
                }
             '')
           ];
