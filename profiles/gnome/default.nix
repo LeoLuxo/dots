@@ -4,6 +4,7 @@
   config,
   pkgs,
   user,
+  picture ? null,
   ...
 }:
 
@@ -202,6 +203,12 @@ in
       pkgs.libheif
       pkgs.libheif.out
     ];
+
+    # Add picture for the login screen (for the lock screen ~/.face is sufficient)
+    system.activationScripts."profile-picture" = lib.mkIf (picture != null) ''
+      mkdir -p /var/lib/AccountsService/icons/${user}
+      cp -fT ${picture} /var/lib/AccountsService/icons/${user}/icon.png
+    '';
 
     # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
     # (even with autologin disabled I need this otherwise nixos-rebuild crashes gnome??)
