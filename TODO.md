@@ -31,26 +31,30 @@
 - Get familiar with `nix treefmt` and `pre-commit` and integrate it into my templates
 
 ### VPS with NixOS
-- set up navidrome
+- syncthing
 
-- set up CalDav+CarDav
-	- Baikal?
-
-- set up mail client
-	- roundcube?
-	- [ ] clean up the mess thunderbird left behind
+- run `calorieBot` on there
 	
 - auto-build CV pipeline for fun
 
 - personal website
 	- transfer all the old tumblr stuff
 
-- make a nix build cache on my "home server" or VPS
+- set up music server
+	- `navidrome`
+
+- set up CalDav+CarDav
+	- `Baikal`?
+
+- set up mail client
+	- `roundcube`?
+	- [ ] clean up the mess thunderbird left behind
+
+- make a nix build cache?
 	- and add a command to pre-build all of the hosts
 	- make sure I can pre-build on my desktop and it will cache it all on the vps? :thinking:
 	- might not be necessary, can just remote build using --target-host: [https://nixos.wiki/wiki/Nixos-rebuild](https://nixos.wiki/wiki/Nixos-rebuild)
-	
-- run `calorieBot` on there
+
 
 
 
