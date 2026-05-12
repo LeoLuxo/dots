@@ -25,28 +25,43 @@ in
         type = types.nullOr types.ints.unsigned;
         default = null;
       };
+
+      darken = options.mkOption {
+        type = types.nullOr types.ints.unsigned;
+        default = null;
+      };
     };
   };
 
-  config = lib.mkIf (cfg.lockscreen.wallpaper != null) {
-    # Copy over the wallpaper for the lockscreen and blur it if relevant
-    environment.etc."lockscreen".source =
-      if cfg.lockscreen.blur == null then
-        cfg.lockscreen.wallpaper
-      else
-        (pkgs.runCommand "blur-lockscreen" { } ''
-          ${lib.getExe pkgs.imagemagick} ${cfg.lockscreen.wallpaper} -blur 0x${builtins.toString cfg.lockscreen.blur} $out
-        '');
+  config = lib.mkIf (cfg.lockscreen.wallpaper != null) (
+    let
+      blurArgs =
+        if cfg.lockscreen.blur == null then "" else "-blur 0x${builtins.toString cfg.lockscreen.blur}";
 
-    # Add the patch to use our wallpaper on the lockscreen
-    nixpkgs.overlays = [
-      (self: super: {
-        gnome-shell = super.gnome-shell.overrideAttrs (old: {
-          patches = (old.patches or [ ]) ++ [
-            ./bg.patch
-          ];
-        });
-      })
-    ];
-  };
+      darkenArgs =
+        if cfg.lockscreen.darken == null then
+          ""
+        else
+          "-fill black -colorize ${builtins.toString cfg.lockscreen.darken}%";
+
+      processedWallpaper = pkgs.runCommand "process-lockscreen-wallpaper" { } ''
+        ${lib.getExe pkgs.imagemagick} ${cfg.lockscreen.wallpaper} ${blurArgs} ${darkenArgs} $out
+      '';
+    in
+    {
+      # Copy over the wallpaper for the lockscreen and blur it if relevant
+      environment.etc."lockscreen".source = processedWallpaper;
+
+      # Add the patch to use our wallpaper on the lockscreen
+      nixpkgs.overlays = [
+        (self: super: {
+          gnome-shell = super.gnome-shell.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [
+              ./bg.patch
+            ];
+          });
+        })
+      ];
+    }
+  );
 }

@@ -148,7 +148,8 @@
 
     lockscreen = {
       wallpaper = inputs.wallpapers.static.sky;
-      blur = 12;
+      blur = 8;
+      darken = 30;
     };
   };
 }
