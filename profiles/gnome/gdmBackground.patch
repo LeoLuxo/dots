@@ -1,8 +1,8 @@
 diff --git a/data/theme/gnome-shell-sass/widgets/_login-lock.scss b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-index 5929ccc57..3c5783dcb 100644
+index 5929ccc57..263de8954 100644
 --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
 +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-@@ -231,7 +231,10 @@ $_gdm_dialog_width: 25em;
+@@ -231,7 +231,15 @@ $_gdm_dialog_width: 25em;
  }
  
  #lockDialogGroup {
@@ -11,6 +11,11 @@ index 5929ccc57..3c5783dcb 100644
 +  background-repeat: repeat-x;
 +  background-size: auto;
 +  background-position: 0 0;
++}
++
++#lockDialogGroup::before {
++  content: "";
++  background-color: rgba($_gdm_bg, 0.6);
  }
  
  // Clock
