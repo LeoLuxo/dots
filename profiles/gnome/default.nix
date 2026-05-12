@@ -204,10 +204,16 @@ in
       pkgs.libheif.out
     ];
 
-    # Add picture for the login screen (for the lock screen ~/.face is sufficient)
+    # Add picture for the GDM login screen (for the gnome lock screen ~/.face is sufficient)
     system.activationScripts."profile-picture" = lib.mkIf (picture != null) ''
-      mkdir -p /var/lib/AccountsService/icons/${user}
-      cp -fT ${picture} /var/lib/AccountsService/icons/${user}/icon.png
+      mkdir -p /var/lib/AccountsService/icons
+      cp -f ${picture} /var/lib/AccountsService/icons/${user}
+      
+      mkdir -p /var/lib/AccountsService/users
+      cat > /var/lib/AccountsService/users/${user} <<EOF
+      [User]
+      Icon=/var/lib/AccountsService/icons/${user}
+      EOF
     '';
 
     # Enable the GNOME Desktop Environment
