@@ -133,6 +133,8 @@
 
     textScalingPercent = 150;
 
+    accentColor = "purple";
+
     cursorSize = 16;
 
     blur = {

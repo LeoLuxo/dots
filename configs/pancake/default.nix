@@ -69,8 +69,9 @@
         enable = true;
         delay = 600;
       };
-
     };
+
+    accentColor = "orange";
 
     cursorSize = 32;
   };

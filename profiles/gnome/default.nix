@@ -85,6 +85,22 @@ in
       default = 100;
     };
 
+    accentColor = options.mkOption {
+      description = "the system accent color";
+      type = types.enum [
+        "blue"
+        "teal"
+        "green"
+        "yellow"
+        "orange"
+        "red"
+        "pink"
+        "purple"
+        "slate"
+      ];
+      default = "blue";
+    };
+
     cursorSize = options.mkOption {
       description = "the size of the mouse cursor";
       type = types.ints.unsigned;
@@ -219,11 +235,11 @@ in
 
     environment.etc."gdm/greeter.dconf-defaults".text = ''
       [org/gnome/desktop/background]
-      picture-uri='file:///etc/gdm-wallpaper'
+      picture-uri='file:///etc/gdm-wallpaper.jpg'
       picture-options='zoom'
     '';
 
-    environment.etc."gdm-wallpaper".source = inputs.wallpapers.static.flowers;
+    environment.etc."gdm-wallpaper.jpg".source = inputs.wallpapers.static.iridescentGlass;
 
     # Enable the GNOME Desktop Environment
     services.desktopManager.gnome = {
@@ -372,6 +388,7 @@ in
           "org/gnome/desktop/interface" = {
             enable-hot-corners = false;
             text-scaling-factor = cfg.textScalingPercent / 100.0;
+            accent-color = cfg.accentColor;
           };
 
           "org/gnome/mutter" = {
