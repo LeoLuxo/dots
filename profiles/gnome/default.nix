@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   lib2,
   config,
@@ -208,13 +209,21 @@ in
     system.activationScripts."profile-picture" = lib.mkIf (picture != null) ''
       mkdir -p /var/lib/AccountsService/icons
       cp -f ${picture} /var/lib/AccountsService/icons/${user}
-      
+
       mkdir -p /var/lib/AccountsService/users
       cat > /var/lib/AccountsService/users/${user} <<EOF
       [User]
       Icon=/var/lib/AccountsService/icons/${user}
       EOF
     '';
+
+    environment.etc."gdm/greeter.dconf-defaults".text = ''
+      [org/gnome/desktop/background]
+      picture-uri='file:///etc/gdm-wallpaper'
+      picture-options='zoom'
+    '';
+
+    environment.etc."gdm-wallpaper".source = inputs.wallpapers.static.flowers;
 
     # Enable the GNOME Desktop Environment
     services.desktopManager.gnome = {
