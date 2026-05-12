@@ -145,5 +145,10 @@
       # Set hacks to best looking
       hacksLevel = "no artifact";
     };
+
+    lockscreen = {
+      wallpaper = inputs.wallpapers.static.sky;
+      blur = 12;
+    };
   };
 }

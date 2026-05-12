@@ -1,5 +1,4 @@
 {
-  inputs,
   lib,
   lib2,
   config,
@@ -184,6 +183,8 @@ in
     # Triple buffering fork thing, broken atm
     # ./tripleBuffering.nix
 
+    ./gdmLockscreen
+
     # Default gnome apps
     ./defaultApps.nix
 
@@ -206,26 +207,6 @@ in
   ];
 
   config = {
-    # environment.etc."gdm/greeter-dconf-defaults".text = ''
-    #   [org/gnome/desktop/background]
-    #   picture-uri='file:///etc/gdm-wallpaper.jpg'
-    #   picture-options='zoom'
-    # '';
-
-    environment.etc."lockscreen".source = pkgs.runCommand "blur-lockscreen" { } ''
-      ${lib.getExe pkgs.imagemagick} ${inputs.wallpapers.static.flowers} -blur 0x12 $out
-    '';
-
-    nixpkgs.overlays = [
-      (self: super: {
-        gnome-shell = super.gnome-shell.overrideAttrs (old: {
-          patches = (old.patches or [ ]) ++ [
-            ./gdmBackground.patch
-          ];
-        });
-      })
-    ];
-
     programs.dconf.enable = true;
 
     # Configure thumbnailers
