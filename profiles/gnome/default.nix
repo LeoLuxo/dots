@@ -368,6 +368,9 @@ in
         # HEIC images
         pkgs.libheif
         pkgs.libheif.out
+
+        pkgs.gnome-shell
+        pkgs.adwaita-icon-theme
       ];
 
       # Add picture for the GDM login screen (for the gnome lock screen ~/.face is sufficient)
