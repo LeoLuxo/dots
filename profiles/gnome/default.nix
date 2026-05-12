@@ -212,7 +212,7 @@ in
     #   picture-options='zoom'
     # '';
 
-    environment.etc."lockscreen.jpg".source = inputs.wallpapers.static.iridescentGlass;
+    environment.etc."lockscreen".source = inputs.wallpapers.static.flowers;
 
     nixpkgs.overlays = [
       (self: super: {

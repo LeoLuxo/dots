@@ -1,5 +1,5 @@
 diff --git a/data/theme/gnome-shell-sass/widgets/_login-lock.scss b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-index 5929ccc57..615b2caa5 100644
+index 5929ccc57..e07449ff0 100644
 --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
 +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
 @@ -234,6 +234,14 @@ $_gdm_dialog_width: 25em;
@@ -8,7 +8,7 @@ index 5929ccc57..615b2caa5 100644
  
 +.login-dialog {
 +  // We use linear-gradient to create a solid "sheet" of color over the image
-+  background-image: linear-gradient(transparentize($_gdm_bg, 0.5), transparentize($_gdm_bg, 0.7)), url('file:///etc/lockscreen.jpg');
++  background-image: url('file:///etc/lockscreen');
 +  background-size: cover;
 +  background-repeat: no-repeat;
 +  background-position: center center;
