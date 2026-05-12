@@ -74,5 +74,11 @@
     accentColor = "orange";
 
     cursorSize = 32;
+
+    lockscreen = {
+      wallpaper = inputs.wallpapers.static.iridescentGlass;
+      blur = 10;
+      darken = 35;
+    };
   };
 }
