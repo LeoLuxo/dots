@@ -8,7 +8,6 @@ rec {
 
     # TODO: change username
     user = "lili";
-    autologin = "lili";
     users = {
       ${user} = {
         description = "Chloé";

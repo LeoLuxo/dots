@@ -9,10 +9,8 @@
   pkgs,
   profiles,
   users,
-  picture ? null,
-  autologin ? null,
   ...
-}:
+}@args:
 
 let
   defaultShell = "fish";
@@ -142,9 +140,9 @@ in
   programs.${defaultShell}.enable = true;
 
   # Enable autologin if relevant
-  services.displayManager.autoLogin = lib.mkIf (autologin != null) {
+  services.displayManager.autoLogin = lib.mkIf (args ? autologin) {
     enable = true;
-    user = autologin;
+    user = args.autologin;
   };
 
   # The keyboard mapping table for the virtual consoles
@@ -259,8 +257,8 @@ in
           };
 
           # Set the display manager profile picture
-          home.file.".face" = lib.mkIf (userCfg ? face || picture != null) {
-            source = userCfg.face or picture;
+          home.file.".face" = lib.mkIf (userCfg ? face || args ? picture) {
+            source = userCfg.face or args.picture;
           };
 
           # Create SSH aliases from the `ssh` block in the host definitions
