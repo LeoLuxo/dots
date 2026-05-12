@@ -212,7 +212,9 @@ in
     #   picture-options='zoom'
     # '';
 
-    environment.etc."lockscreen".source = inputs.wallpapers.static.flowers;
+    environment.etc."lockscreen".source = pkgs.runCommand "blur-lockscreen" { } ''
+      ${lib.getExe pkgs.imagemagick} ${inputs.wallpapers.static.flowers} -blur 0x12 $out
+    '';
 
     nixpkgs.overlays = [
       (self: super: {
