@@ -1,20 +1,32 @@
 diff --git a/data/theme/gnome-shell-sass/widgets/_login-lock.scss b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-index 5929ccc57..bd4d781a7 100644
+index 5929ccc57..1da417b53 100644
 --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
 +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-@@ -231,7 +231,14 @@ $_gdm_dialog_width: 25em;
+@@ -230,10 +230,27 @@ $_gdm_dialog_width: 25em;
+   box-shadow: 0 2px 4px rgba(0,0,0,0.6);
  }
  
- #lockDialogGroup {
--  background-color: $_gdm_bg;
-+  background: url('file:///etc/lockscreen.jpg');
-+  background-size: cover;
-+  background-repeat: no-repeat;
-+  background-position: center;
-+}
++// #lockDialogGroup {
++//   background: url('file:///etc/lockscreen.jpg');
++//   background-size: cover;
++//   background-repeat: no-repeat;
++//   background-position: center;
++// }
 +
++// .login-dialog {
++//   background-color: transparentize($_gdm_bg, 0.4);
++// }
++
+ #lockDialogGroup {
+   background-color: $_gdm_bg;
+ }
+ 
 +.login-dialog {
 +  background-color: transparentize($_gdm_bg, 0.4);
- }
- 
++  background-image: url('file:///etc/lockscreen.jpg');
++}
++
++
  // Clock
+ .unlock-dialog-clock {
+   color: $_gdm_fg;
