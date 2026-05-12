@@ -1,31 +1,18 @@
 diff --git a/data/theme/gnome-shell-sass/widgets/_login-lock.scss b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-index 5929ccc57..1da417b53 100644
+index 5929ccc57..56e5c6ce9 100644
 --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
 +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-@@ -230,10 +230,27 @@ $_gdm_dialog_width: 25em;
-   box-shadow: 0 2px 4px rgba(0,0,0,0.6);
- }
- 
-+// #lockDialogGroup {
-+//   background: url('file:///etc/lockscreen.jpg');
-+//   background-size: cover;
-+//   background-repeat: no-repeat;
-+//   background-position: center;
-+// }
-+
-+// .login-dialog {
-+//   background-color: transparentize($_gdm_bg, 0.4);
-+// }
-+
- #lockDialogGroup {
+@@ -234,6 +234,14 @@ $_gdm_dialog_width: 25em;
    background-color: $_gdm_bg;
  }
  
 +.login-dialog {
-+  background-color: transparentize($_gdm_bg, 0.4);
-+  background-image: url('file:///etc/lockscreen.jpg');
++  // We use linear-gradient to create a solid "sheet" of color over the image
++  background-image: linear-gradient(rgba($_gdm_bg, 0.5), rgba($_gdm_bg, 0.7)), url('file:///etc/lockscreen.jpg');
++  background-size: cover;
++  background-repeat: no-repeat;
++  background-position: center center;
 +}
-+
 +
  // Clock
  .unlock-dialog-clock {
