@@ -206,13 +206,32 @@ in
   ];
 
   config = {
-    environment.etc."gdm/greeter-dconf-defaults".text = ''
-      [org/gnome/desktop/background]
-      picture-uri='file:///etc/gdm-wallpaper.jpg'
-      picture-options='zoom'
-    '';
+    # environment.etc."gdm/greeter-dconf-defaults".text = ''
+    #   [org/gnome/desktop/background]
+    #   picture-uri='file:///etc/gdm-wallpaper.jpg'
+    #   picture-options='zoom'
+    # '';
 
-    environment.etc."gdm-wallpaper.jpg".source = inputs.wallpapers.static.iridescentGlass;
+    environment.etc."lockscreen.jpg".source = inputs.wallpapers.static.iridescentGlass;
+
+    nixpkgs.overlays = [
+      (self: super: {
+        gnome-shell = super.gnome-shell.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [
+            (pkgs.writeText "bg.patch" ''
+              --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
+              +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
+              @@ -15,4 +15,5 @@ $_gdm_dialog_width: 23em;
+               /* Login Dialog */
+               .login-dialog {
+                 background-color: $_gdm_bg;
+              +  background-image: url('file:///etc/lockscreen.jpg');
+               }
+            '')
+          ];
+        });
+      })
+    ];
 
     programs.dconf.enable = true;
 
