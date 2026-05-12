@@ -36,7 +36,6 @@
             nixosConfig,
             nixpkgs ? "nixpkgs",
             users ? { },
-            autologin ? null,
             ...
           }@extras:
           # If a `user` is specified, that user must be defined in `users`
@@ -47,7 +46,6 @@
               inherit inputs lib2;
               inherit profiles;
               inherit hosts;
-              inherit autologin;
 
               host = hosts.${name};
             }

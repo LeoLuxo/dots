@@ -1,5 +1,4 @@
 {
-  autologin,
   config,
   host,
   hostname,
@@ -11,6 +10,7 @@
   profiles,
   users,
   picture ? null,
+  autologin ? null,
   ...
 }:
 
