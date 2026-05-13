@@ -68,7 +68,7 @@
   # };
   # services.open-webui.enable = true;
 
-  wallpaper.image = inputs.wallpapers.dynamic."bedroom";
+  wallpaper.image = inputs.wallpapers.dynamic."outsetIsland";
 
   # 1TB SSD
   fileSystems."/stuff" = {
