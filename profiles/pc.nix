@@ -23,7 +23,7 @@ in
     profiles.apps.firefox
     profiles.apps.upscaler
     profiles.apps.vscode
-    profiles.apps.thunderbird
+    # profiles.apps.thunderbird
 
     profiles.scripts.dotsTodo
     profiles.scripts.dconfDiff

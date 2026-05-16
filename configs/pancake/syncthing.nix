@@ -82,12 +82,12 @@
         };
 
         # The thunderbird module already sets up everything else for us
-        "Thunderbird" = {
-          devices = [
-            "strobery"
-            "coffee"
-          ];
-        };
+        # "Thunderbird" = {
+        #   devices = [
+        #     "strobery"
+        #     "coffee"
+        #   ];
+        # };
       };
     };
 

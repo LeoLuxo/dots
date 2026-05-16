@@ -82,12 +82,12 @@
         };
 
         # The thunderbird module already sets up everything else for us
-        "Thunderbird" = {
-          devices = [
-            "strobery"
-            "pancake"
-          ];
-        };
+        # "Thunderbird" = {
+        #   devices = [
+        #     "strobery"
+        #     "pancake"
+        #   ];
+        # };
 
         # Bring in stuff from phone for backup
         "Incoming DCIM" = {
