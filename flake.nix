@@ -107,7 +107,7 @@
 
     secrets.url = "./secrets";
 
-    # ----- metaconfig & nix ---------------------------------------------------------------------
+    # ----- metaconfig & nix ----------------------------------------------------------------------
     # Manages dotfiles in nix
     home-manager.url = "github:nix-community/home-manager/release-25.11";
 
@@ -123,8 +123,11 @@
     stylix.url = "github:nix-community/stylix/release-25.05";
     stylix.inputs.nixpkgs.follows = "nixpkgs-25-05";
 
+    # ----- apps ----------------------------------------------------------------------------------
     # Manage flatpaks declaratively
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+
+    winapps.url = "github:Insomniac66/winapps-nixos-fix";
 
     # ----- hardware ------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops

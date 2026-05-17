@@ -23,6 +23,11 @@
     profiles.gaming.base
   ];
 
+  environment.systemPackages = [
+    inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
+    inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
+  ];
+
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
 
   # Fixes blurry electron apps
