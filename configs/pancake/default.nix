@@ -26,7 +26,7 @@
   environment.systemPackages = [
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
-    pkgs.wine
+    pkgs.wineWow64Packages.stable
   ];
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
