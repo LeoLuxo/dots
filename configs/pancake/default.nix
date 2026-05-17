@@ -28,6 +28,7 @@
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
     pkgs.wineWow64Packages.stable
     pkgs.winetricks
+    pkgs.samba
   ];
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
