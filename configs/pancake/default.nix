@@ -27,6 +27,8 @@
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
     pkgs.wineWow64Packages.stable
+    pkgs.wineWow64Packages.stagingFull
+
     pkgs.winetricks
     pkgs.samba
   ];
