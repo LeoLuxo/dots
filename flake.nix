@@ -127,7 +127,7 @@
     # Manage flatpaks declaratively
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
-    winapps.url = "github:Insomniac66/winapps-nixos-fix";
+    winapps.url = "github:winapps-org/winapps";
 
     # ----- hardware ------------------------------------------------------------------------------
     # Contains certain nixos hardware settings, notably useful for surface laptops

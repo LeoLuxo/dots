@@ -841,16 +841,16 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1756049206,
-        "narHash": "sha256-H1CB1nXPlwDL4VNGjR2+ovBwPdXPHe3xRc20d3VkPNU=",
-        "owner": "Insomniac66",
-        "repo": "winapps-nixos-fix",
-        "rev": "09288b135eee8ab8ca08d6170441c4c9b3d457b7",
+        "lastModified": 1778934128,
+        "narHash": "sha256-aapulUUDmhdGyMQtT5cXKnem4DNWFvGHDwj1lODt7do=",
+        "owner": "winapps-org",
+        "repo": "winapps",
+        "rev": "be267c4ed62257fc9103bc0d4aa9893b98c72fcf",
         "type": "github"
       },
       "original": {
-        "owner": "Insomniac66",
-        "repo": "winapps-nixos-fix",
+        "owner": "winapps-org",
+        "repo": "winapps",
         "type": "github"
       }
     }
