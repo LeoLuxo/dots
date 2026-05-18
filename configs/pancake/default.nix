@@ -23,14 +23,22 @@
     profiles.gaming.base
   ];
 
+  # virtualisation.docker = {
+  #   enable = true;
+  # };
+
+  users.users.lili.extraGroups = [ "docker" ];
+
   environment.systemPackages = [
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps
     inputs.winapps.packages.${pkgs.stdenv.hostPlatform.system}.winapps-launcher
-    pkgs.wineWow64Packages.stable
-    # pkgs.wineWow64Packages.stagingFull
-    pkgs.bottles
-    pkgs.winetricks
-    pkgs.samba
+    pkgs.docker-compose
+    pkgs.podman-compose
+    # pkgs.wineWow64Packages.stable
+    # # pkgs.wineWow64Packages.stagingFull
+    # pkgs.bottles
+    # pkgs.winetricks
+    # pkgs.samba
   ];
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";
