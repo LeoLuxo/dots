@@ -34,9 +34,6 @@
     profiles.scripts.bootWindows
   ];
 
-  # TEMPORARY FOR MITMPROXY, TODO DELETE
-  networking.firewall.allowedTCPPorts = [ 8080 ];
-
   environment.systemPackages = with pkgs; [
     guitarix # A virtual guitar amplifier for use with Linux.
     qmk

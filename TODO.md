@@ -40,6 +40,8 @@
 - personal website
 	- transfer all the old tumblr stuff
 
+- SMOO server?
+
 - set up music server
 	- `navidrome`
 
