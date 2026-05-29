@@ -133,8 +133,8 @@
             "!*lossy*"
           ];
 
-          timer = "hourly";
-          randomDelay = "15m";
+          timer = "daily";
+          randomDelay = "1h";
         };
 
         "emu" = {
@@ -153,8 +153,8 @@
           label = "Band";
           tags = [ "band" ];
 
-          timer = "hourly";
-          randomDelay = "15m";
+          timer = "daily";
+          randomDelay = "1h";
         };
 
         "voice" = {
@@ -163,8 +163,8 @@
           label = "Voice";
           tags = [ "voice" ];
 
-          timer = "hourly";
-          randomDelay = "15m";
+          timer = "daily";
+          randomDelay = "1h";
         };
 
         "projects" = {
