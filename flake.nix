@@ -76,6 +76,8 @@
           inherit (pkgs) callPackage;
           directory = ./packages;
         };
+
+        templates = import ./templates;
       }
     );
 
