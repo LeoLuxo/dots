@@ -20,18 +20,18 @@
 
     inputs.stylix.nixosModules.stylix
 
-    profiles.base
-    profiles.pc
-    profiles.gaming.base
-    profiles.gaming.emulation
-    profiles.gaming.minecraft
+    profiles.os.base
+    profiles.os.pc
+    profiles.os.gaming.base
+    profiles.os.gaming.emulation
+    profiles.os.gaming.minecraft
 
-    profiles.hardware.gpu.amd
+    profiles.os.hardware.gpu.amd
 
-    profiles.apps.nicotinePlus
-    profiles.apps.beets
+    profiles.os.apps.nicotinePlus
+    profiles.os.apps.beets
 
-    profiles.scripts.bootWindows
+    profiles.os.scripts.bootWindows
   ];
 
   environment.systemPackages = with pkgs; [

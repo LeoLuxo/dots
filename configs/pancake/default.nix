@@ -17,10 +17,10 @@
       args // { pkgs = pkgs.pinned; }
     ))
 
-    profiles.base
-    profiles.pc
-    profiles.wifi
-    profiles.gaming.base
+    profiles.os.base
+    profiles.os.pc
+    profiles.os.wifi
+    profiles.os.gaming.base
   ];
 
   wallpaper.image = inputs.wallpapers.dynamic."treeAndShore";

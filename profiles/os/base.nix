@@ -17,14 +17,14 @@ let
 in
 {
   imports = [
-    profiles.agenix
+    profiles.os.agenix
 
-    profiles.apps.git
-    profiles.apps.direnv
+    profiles.os.apps.git
+    profiles.os.apps.direnv
 
-    profiles.scripts.dots
-    profiles.scripts.nixUtils
-    profiles.scripts.terminalUtils
+    profiles.os.scripts.dots
+    profiles.os.scripts.nixUtils
+    profiles.os.scripts.terminalUtils
 
     inputs.home-manager.nixosModules.home-manager
     inputs.nix-monitored.nixosModules.default

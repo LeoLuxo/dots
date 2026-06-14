@@ -17,18 +17,18 @@ in
   imports = [
     inputs.nix-flatpak.nixosModules.nix-flatpak
 
-    profiles.gnome
+    profiles.os.gnome
 
-    profiles.apps.discord
-    profiles.apps.distrobox
-    profiles.apps.firefox
-    profiles.apps.upscaler
-    profiles.apps.vscode
-    # profiles.apps.thunderbird
+    profiles.os.apps.discord
+    profiles.os.apps.distrobox
+    profiles.os.apps.firefox
+    profiles.os.apps.upscaler
+    profiles.os.apps.vscode
+    # profiles.os.apps.thunderbird
 
-    profiles.scripts.dotsTodo
-    profiles.scripts.dconfDiff
-    # profiles.scripts.snip # gnome-screenshot does not work for gnome 49
+    profiles.os.scripts.dotsTodo
+    profiles.os.scripts.dconfDiff
+    # profiles.os.scripts.snip # gnome-screenshot does not work for gnome 49
 
     (mkKeybind {
       name = "Open terminal";

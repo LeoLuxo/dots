@@ -5,7 +5,7 @@
 
 {
   imports = [
-    profiles.apps.syncthing
+    profiles.os.apps.syncthing
   ];
 
   services.syncthing.settings =

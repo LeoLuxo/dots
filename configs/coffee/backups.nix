@@ -7,8 +7,8 @@
 }:
 {
   imports = [
-    profiles.apps.restic
-    profiles.scripts.bitwardenBackup
+    profiles.os.apps.restic
+    profiles.os.scripts.bitwardenBackup
   ];
 
   age.secrets =
