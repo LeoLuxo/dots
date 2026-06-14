@@ -1,7 +1,7 @@
 { lib, ... }:
 rec {
   # Personal desktop computer
-  "coffee" = rec {
+  "coffee" = {
     hostname = "coffee";
     nixosConfig = import ./configs/coffee;
     nixpkgs = "nixpkgs-stable";
@@ -9,7 +9,7 @@ rec {
     # TODO: change username
     user = "lili";
     users = {
-      ${user} = {
+      "lili" = {
         description = "Chloé";
         uid = 1000;
 
@@ -18,15 +18,15 @@ rec {
         ];
 
         openssh.authorizedKeys.keys = lib.flatten [ pancake.users.${pancake.user}.publicKeys ];
+
+        picture = ./configs/coffee/pic.png;
       };
     };
-
-    picture = ./configs/coffee/pic.png;
 
     ip.local = "192.168.0.88";
 
     ssh = {
-      user = "${user}"; # Default user from above
+      user = "lili";
       hostKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINxk9qOGQi2ENzTE5+mC1pcJs29MC5pqQmYAUh/CjvXT host@coffee"
       ];
@@ -44,14 +44,14 @@ rec {
   */
 
   # Surface Pro 7 laptop
-  "pancake" = rec {
+  "pancake" = {
     hostname = "pancake";
     nixosConfig = import ./configs/pancake;
     nixpkgs = "nixpkgs-25-11";
 
     user = "lili";
     users = {
-      ${user} = {
+      "lili" = {
         description = "Chloé";
         uid = 1000;
 
@@ -60,15 +60,15 @@ rec {
         ];
 
         openssh.authorizedKeys.keys = lib.flatten [ coffee.users.${coffee.user}.publicKeys ];
+
+        picture = ./configs/pancake/pic.png;
       };
     };
-
-    picture = ./configs/pancake/pic.png;
 
     ip.local = "192.168.0.173";
 
     ssh = {
-      user = "${user}"; # Default user from above
+      user = "lili"; # Default user from above
       hostKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVxCq24Uq5HwnAxFiQHDCNoSusUtoTI/ndMzbXTVDWe host@pancake"
       ];
@@ -112,6 +112,26 @@ rec {
     ip.local = "192.168.0.154";
 
     syncthing.id = "YNXUKWI-S3D57O7-4P347QV-7NYE4ZK-4F7UTMU-PN7DXAX-PVLNHS6-AZQWJAV";
+  };
+
+  /*
+    --------------------------------------------------------------------------------
+    ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    --------------------------------------------------------------------------------
+  */
+
+  # VPS
+  "wasabi" = {
+    ssh = {
+      user = "admin";
+      hostname = "wasabi";
+
+      hostKeys = [
+        "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIvfBbik4ta4QPYgIhzuLSoY7HWbrJ58dbD05Z0edHVXhoE+khDu5HZ9zaUo1S1eMFsoYPdUjuG32MRUdwgib3M= host@wasabi"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKhUeeTSzlNPa4YPjEMGXX6FEUT7cIbBdu54GFRJ+2yj host@wasabi"
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCOkkFraY34F5FdXfspy6q2+Vyq5+7XWAF9oLAXusQV7MzS5SK4tEBTcv1mnROS4gjwwaLSm3aFkcSZG4gnGwqw6SIbebjbj9+RVGPDDXmv3UjFamkPv1qQdBNZfpwTXZK2yEf+bQNyS3cw7wtXoc/mouc2QuyY7XlT56fLOMaGm7ufAsvyp4NFJ+GdLEfA8Vfdt4Y8Ahxb18AWywd3fu6FyRP0kpFXBiLkA1ux0RsrDzikQsfjufc480JODvWMC88KkbWqyutJ9pd7pcPLwoSb7/0gGcN5Ysx37VH1JqYngqgtBcPSEiUKD2N0r4txju3sHwlA1HWWA1MEQxYkAv29eBVevyxK6K2dya2HHhLHG3PwuDZicnqY0j+49w4xIGypPooHHKeaeNpJGafbUq93InnD5SxOzvjPda1fyFleMcSndWH0U+8u7ek5QH0JkHPS5mKQXdTHy/5GoleYzKzzAlhIbjyZn7W8YuWf0RG3cyhV8YUKImOsicb4eaU9C+s= host@wasabi"
+      ];
+    };
   };
 
   /*

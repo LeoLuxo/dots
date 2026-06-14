@@ -45,32 +45,6 @@
           };
         };
 
-        "Isabella" = {
-          connection = {
-            id = "HUAWEI-AN1XC8_5G";
-            interface-name = "wlp0s20f3";
-            type = "wifi";
-            uuid = "7b1d293c-0466-414a-b57d-b8598d021ce4";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "default";
-            method = "auto";
-          };
-          proxy = { };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "HUAWEI-AN1XC8_5G";
-          };
-          wifi-security = {
-            auth-alg = "open";
-            key-mgmt = "wpa-psk";
-            psk = "$ISABELLA_PSK";
-          };
-        };
-
         "Parents" = {
           connection = {
             id = "Domaine des fleurs de jardin";
@@ -128,7 +102,7 @@
           };
         };
 
-        "Michi" = {
+        "MichiZuzu" = {
           connection = {
             id = "Wifi26E0";
             interface-name = "wlp0s20f3";
@@ -151,32 +125,6 @@
             auth-alg = "open";
             key-mgmt = "wpa-psk";
             psk = "$MICHI_PSK";
-          };
-        };
-
-        "Nadja" = {
-          connection = {
-            id = "engmosevej 9";
-            interface-name = "wlp0s20f3";
-            type = "wifi";
-            uuid = "5a3d3131-7ee9-40ee-ba00-c629ce5f0edf";
-          };
-          ipv4 = {
-            method = "auto";
-          };
-          ipv6 = {
-            addr-gen-mode = "default";
-            method = "auto";
-          };
-          proxy = { };
-          wifi = {
-            mode = "infrastructure";
-            ssid = "engmosevej 9";
-          };
-          wifi-security = {
-            auth-alg = "open";
-            key-mgmt = "wpa-psk";
-            psk = "$NADJA_PSK";
           };
         };
       };

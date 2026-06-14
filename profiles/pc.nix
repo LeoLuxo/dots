@@ -5,6 +5,7 @@
   pkgs,
   profiles,
   user,
+  users,
   hostname,
   ...
 }:
@@ -97,14 +98,22 @@ in
     ];
   };
 
-  home-manager.users.${user}.home = {
-    sessionVariables.APP_NOTES = lib.mkDefault "obsidian";
+  home-manager.users = lib.concatMapAttrs (username: userCfg: {
+    ${username} = {
+      home.sessionVariables.APP_NOTES = lib.mkDefault "obsidian";
 
-    shellAliases = {
-      "copy" = "wl-copy";
-      "paste" = "wl-paste";
+      home.shellAliases = {
+        "copy" = "wl-copy";
+        "paste" = "wl-paste";
+      };
+
+      # Set the display manager profile picture
+      home.file.".face" = lib.mkIf (userCfg ? picture) {
+        source = userCfg.picture;
+      };
+
     };
-  };
+  }) users;
 
   # Virtual Machine
   virtualisation.virtualbox.host.enable = true;

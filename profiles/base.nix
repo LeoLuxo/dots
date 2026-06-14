@@ -132,7 +132,10 @@ in
         shell = pkgs.${defaultShell};
       }
       # Add all other attributes except special ones
-      // (builtins.removeAttrs userCfg [ "publicKeys" ]);
+      // (builtins.removeAttrs userCfg [
+        "publicKeys"
+        "picture"
+      ]);
     }) users;
   };
 
@@ -254,11 +257,6 @@ in
 
             templates = null;
             publicShare = null;
-          };
-
-          # Set the display manager profile picture
-          home.file.".face" = lib.mkIf (userCfg ? face || args ? picture) {
-            source = userCfg.face or args.picture;
           };
 
           # Create SSH aliases from the `ssh` block in the host definitions

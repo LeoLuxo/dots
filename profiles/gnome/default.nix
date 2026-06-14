@@ -4,7 +4,7 @@
   config,
   pkgs,
   user,
-  picture ? null,
+  users,
   ...
 }:
 
@@ -223,16 +223,18 @@ in
     ];
 
     # Add picture for the GDM login screen (for the gnome lock screen ~/.face is sufficient)
-    system.activationScripts."profile-picture" = lib.mkIf (picture != null) ''
-      mkdir -p /var/lib/AccountsService/icons
-      cp -f ${picture} /var/lib/AccountsService/icons/${user}
+    system.activationScripts = lib.concatMapAttrs (username: userCfg: {
+      "profile-picture-${username}" = lib.mkIf (userCfg ? picture) ''
+        mkdir -p /var/lib/AccountsService/icons
+        cp -f ${userCfg.picture} /var/lib/AccountsService/icons/${username}
 
-      mkdir -p /var/lib/AccountsService/users
-      cat > /var/lib/AccountsService/users/${user} <<EOF
-      [User]
-      Icon=/var/lib/AccountsService/icons/${user}
-      EOF
-    '';
+        mkdir -p /var/lib/AccountsService/users
+        cat > /var/lib/AccountsService/users/${username} <<EOF
+        [User]
+        Icon=/var/lib/AccountsService/icons/${username}
+        EOF
+      '';
+    }) users;
 
     # Enable the GNOME Desktop Environment
     services.desktopManager.gnome = {
