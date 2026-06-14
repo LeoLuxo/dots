@@ -13,21 +13,21 @@
         lib = pkgs.lib;
 
         # My custom libs
-        lib2 = import ./lib.nix { inherit lib; };
+        lib2 = import ./nix/lib.nix { inherit lib; };
 
-        hosts = import ./hosts.nix { inherit lib lib2; };
+        hosts = import ./nix/hosts.nix { inherit lib lib2; };
 
         args = {
           inherit inputs lib lib2;
           inherit hosts;
         };
 
-        modules = import ./modules args;
-        profiles = import ./profiles args;
+        modules = import ./nix/modules args;
+        profiles = import ./nix/profiles args;
 
         overlays = {
-          "extraPkgs" = import ./extraPkgs.nix args;
-          "builders" = import ./builders.nix args;
+          "extraPkgs" = import ./nix/extraPkgs.nix args;
+          "builders" = import ./nix/builders.nix args;
         };
 
         mkNixosConfig =
@@ -62,7 +62,6 @@
             ]
             # Auto-include all custom nixos modules
             ++ (lib.attrValues modules);
-
           };
       in
 
@@ -72,9 +71,10 @@
           name: host: if host ? "nixosConfig" then { ${name} = mkNixosConfig name host; } else { }
         ) hosts;
 
+        # Expose the custom packages out of the flake
         packages.${hostPlatform} = lib.packagesFromDirectoryRecursive {
           inherit (pkgs) callPackage;
-          directory = ./packages;
+          directory = ./nix/packages;
         };
 
         templates = import ./templates;
@@ -98,8 +98,6 @@
 
     "nixpkgs-25-11".url = "github:nixos/nixpkgs/nixos-25.11";
     "nixpkgs-25-05".url = "github:nixos/nixpkgs/nixos-25.05";
-    "nixpkgs-24-11".url = "github:nixos/nixpkgs/nixos-24.11";
-    "nixpkgs-24-05".url = "github:nixos/nixpkgs/nixos-24.05";
 
     # ----- personal stuff ------------------------------------------------------------------------
     # My wallpapers
