@@ -4,6 +4,9 @@
 
 
 ## Important / files / backups / safety
+- reinstall raspberry pi
+	- install pi-hole 
+
 - fix goddamn linux kernel rebuilding on pancake
 
 - change username?

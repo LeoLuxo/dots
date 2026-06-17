@@ -48,13 +48,13 @@
         libraries = [ ];
       in
       {
-        # For `nix build` and `nix run`
+        # For `nix build` and `nix run`.
         # Build the package using naersk
         packages.${system}.default = naersk'.buildPackage {
           src = ./.;
         };
 
-        # For `nix develop`
+        # For `nix develop`.
         # Define the development shell with necessary tools
         devShells.${system}.default = pkgs.mkShell {
           nativeBuildInputs = [ toolchain ];
@@ -66,7 +66,9 @@
               pre-commit
               rust-analyzer
               rustPackages.clippy
-              cargo-limit
+
+              cargo-limit # Provides `cargo lcheck` (etc) with less noise than the regular commands
+              cargo-expand # Provides `cargo expand` to expand macros definitions
             ];
 
           # Needed for rust-analyser to work

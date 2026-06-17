@@ -39,6 +39,7 @@
     qmk
     picard
     audacity
+    gnome-obfuscate
   ];
 
   # Won't start past login screen
