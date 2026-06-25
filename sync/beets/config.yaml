@@ -16,6 +16,7 @@ plugins:
   - info
   - badfiles
   - mbsync
+  - missing
   # - convert
   
   # Data sources
@@ -71,7 +72,7 @@ match:
     
 
 item_fields:
-  is_single: 1 if disctotal <= 1 and tracktotal <= 1 else 0
+  is_single: 1 if (disctotal <= 1 and tracktotal <= 1) or (tracktotal - db_obj.missing <= 1) else 0
   main_album_artist: albumartists[0] if len(albumartists) >= 1 else albumartist
   main_artist: artists[0] if len(artists) >= 1 else artist
   has_featuring_artists: 1 if len(artists) > 1 else 0
