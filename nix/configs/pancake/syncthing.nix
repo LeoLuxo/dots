@@ -81,6 +81,19 @@
           inherit versioning;
         };
 
+        "Photos" = {
+          id = "dfhge-dfhtf";
+          path = "/stuff/media/photos";
+          devices = [
+            "strobery"
+            "coffee"
+          ];
+          ignorePatterns = [
+            "unsorted/"
+          ];
+          inherit versioning;
+        };
+
         # The thunderbird module already sets up everything else for us
         # "Thunderbird" = {
         #   devices = [
