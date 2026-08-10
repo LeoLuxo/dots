@@ -16,6 +16,7 @@ plugins:
   - info
   - badfiles
   - mbsync
+  - missing
   # - convert
   
   # Data sources
@@ -71,13 +72,27 @@ match:
     
 
 item_fields:
-  is_single: 1 if disctotal <= 1 and tracktotal <= 1 else 0
+  # is_single: 1 if disctotal <= 1 and tracktotal <= 1 else 0
+  is_single: |
+    # print(f"albumtotal: {db_obj.albumtotal if hasattr(db_obj, 'albumtotal') else 'nope'}")
+    # print(f"missing: {db_obj.missing if hasattr(db_obj, 'missing') else 'nope'}")
+    # print(f"disctotal: {disctotal}")
+    # print(f"tracktotal: {tracktotal}")
+    
+    # This mess here tries to detect tracks where I only have one downloaded (even if it's from an album) as singles
+    return (1
+      if (hasattr(db_obj, 'albumtotal') and db_obj.albumtotal <= 1)
+      or (hasattr(db_obj, 'albumtotal') and hasattr(db_obj, 'missing') and db_obj.albumtotal - db_obj.missing <= 1)
+      or disctotal <= 1 and tracktotal <= 1
+      else 0)
   main_album_artist: albumartists[0] if len(albumartists) >= 1 else albumartist
   main_artist: artists[0] if len(artists) >= 1 else artist
   has_featuring_artists: 1 if len(artists) > 1 else 0
   featuring_artists: "\"\".join(artists[1:]) if len(artists[1:]) <= 1 else \", \".join(artists[1:-1]) + \" & \" + artists[-1]"
 
 # Directory and naming scheme.
+# Tries to put "singles" and songs orphaned from their album in a format akin to `main_artist/artists - title`
+# and albums in `main_artist/album/number. title (feat artists)`
 paths:
   default:
     artists/$main_album_artist/%if{
@@ -178,7 +193,8 @@ lastgenre:
   
 lyrics:
   auto: yes
-  force: no
+  force: yes
+  keep_synced: yes
   print: no
   sources: [lrclib, genius]
   synced: yes
