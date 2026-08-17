@@ -3,6 +3,24 @@
     <layoutmode>logical</layoutmode>
     <logicalmonitor>
       <x>0</x>
+      <y>445</y>
+      <scale>1</scale>
+      <monitor>
+        <monitorspec>
+          <connector>HDMI-1</connector>
+          <vendor>ACI</vendor>
+          <product>ASUS PB278</product>
+          <serial>D8LMTF023083</serial>
+        </monitorspec>
+        <mode>
+          <width>2560</width>
+          <height>1440</height>
+          <rate>59.951</rate>
+        </mode>
+      </monitor>
+    </logicalmonitor>
+    <logicalmonitor>
+      <x>2560</x>
       <y>0</y>
       <scale>1</scale>
       <primary>yes</primary>
@@ -20,24 +38,6 @@
           <ratemode>variable</ratemode>
         </mode>
         <colormode>bt2100</colormode>
-      </monitor>
-    </logicalmonitor>
-    <logicalmonitor>
-      <x>3840</x>
-      <y>389</y>
-      <scale>1</scale>
-      <monitor>
-        <monitorspec>
-          <connector>HDMI-1</connector>
-          <vendor>ACI</vendor>
-          <product>ASUS PB278</product>
-          <serial>D8LMTF023083</serial>
-        </monitorspec>
-        <mode>
-          <width>2560</width>
-          <height>1440</height>
-          <rate>59.951</rate>
-        </mode>
       </monitor>
     </logicalmonitor>
   </configuration>
