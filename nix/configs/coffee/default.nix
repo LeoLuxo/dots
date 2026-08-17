@@ -22,6 +22,7 @@
 
     profiles.os.base
     profiles.os.pc
+    profiles.os.wifi
     profiles.os.gaming.base
     profiles.os.gaming.emulation
     profiles.os.gaming.minecraft
