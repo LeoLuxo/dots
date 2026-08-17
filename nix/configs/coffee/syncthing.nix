@@ -130,23 +130,14 @@
           type = "receiveonly";
         };
 
-        # "Incoming Signal Backups" = {
-        #   id = "vs5o5-tw8yg";
-        #   path = "/stuff/incoming/signal";
-        #   devices = [
-        #     "luna"
-        #   ];
-        #   type = "receiveonly";
-        # };
-
-        # "Incoming WhatsApp Backups" = {
-        #   id = "3lrkm-4t7wl";
-        #   path = "/stuff/incoming/whatsapp";
-        #   devices = [
-        #     "luna"
-        #   ];
-        #   type = "receiveonly";
-        # };
+        "Incoming Backups" = {
+          id = "3qlz2-7i4p0";
+          path = "/stuff/incoming/backups";
+          devices = [
+            "luna"
+          ];
+          type = "receiveonly";
+        };
       };
     };
 }
