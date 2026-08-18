@@ -23,7 +23,7 @@ rec {
       };
     };
 
-    ip.local = "192.168.0.88";
+    ip.local = "192.168.0.87";
 
     ssh = {
       user = "lili";

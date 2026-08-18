@@ -241,22 +241,27 @@ in
           # Let Home Manager install and manage itself.
           programs.home-manager.enable = true;
 
-          # Customize default directories
-          xdg.userDirs = {
-            enable = true;
-            createDirectories = true;
+          xdg = {
+            # Let Home-manager create XDG autostart entries
+            autostart.enable = true;
 
-            download = "/home/${username}/downloads";
+            # Customize default directories
+            userDirs = {
+              enable = true;
+              createDirectories = true;
 
-            music = "/home/${username}/media";
-            pictures = "/home/${username}/media";
-            videos = "/home/${username}/media";
+              download = "/home/${username}/downloads";
 
-            desktop = "/home/${username}/misc";
-            documents = "/home/${username}/misc";
+              music = "/home/${username}/media";
+              pictures = "/home/${username}/media";
+              videos = "/home/${username}/media";
 
-            templates = null;
-            publicShare = null;
+              desktop = "/home/${username}/misc";
+              documents = "/home/${username}/misc";
+
+              templates = null;
+              publicShare = null;
+            };
           };
 
           # Create SSH aliases from the `ssh` block in the host definitions
