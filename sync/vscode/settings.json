@@ -11,7 +11,8 @@
 	},
 	"[python]": {},
 	"[rust]": {
-		"editor.defaultFormatter": "rust-lang.rust-analyzer"
+		"editor.defaultFormatter": "rust-lang.rust-analyzer",
+		"editor.wrappingIndent": "indent"
 	},
 	"[shellscript]": {
 		"editor.defaultFormatter": "foxundermoon.shell-format"
@@ -110,8 +111,8 @@
 		]
 	},
 	"editor.trimAutoWhitespace": false,
-	"editor.wordWrap": "on",
-	"editor.wordWrapColumn": 180,
+	"editor.wordWrap": "bounded",
+	"editor.wordWrapColumn": 140,
 	"errorLens.alignMessage": {
 		"minimumMargin": 5,
 		"start": 90
@@ -141,20 +142,19 @@
 	"files.autoSave": "afterDelay",
 	"files.autoSaveDelay": 500,
 	"files.exclude": {
-		"**/*.glob": true,
-		"**/*.meta": true,
-		"**/*.vio": true,
-		"**/*.vo": true,
-		"**/*.vok": true,
-		"**/*.vos": true,
+		"**/__pycache__": true,
 		"**/.*.aux": true,
 		"**/.classpath": true,
 		"**/.factorypath": true,
 		"**/.project": true,
 		"**/.settings": true,
 		"**/.venv": false,
-		"**/.vscode": true,
-		"**/__pycache__": true
+		"**/*.glob": true,
+		"**/*.meta": true,
+		"**/*.vio": true,
+		"**/*.vo": true,
+		"**/*.vok": true,
+		"**/*.vos": true
 	},
 	"files.hotExit": "onExitAndWindowClose",
 	"generic-input-methods.input-methods": [
@@ -1198,7 +1198,7 @@
 		"tab.activeBorder": "#8caaee",
 		"textLink.foreground": "#8caaee"
 	},
-	"workbench.colorTheme": "Catppuccin Frappé",
+	"workbench.colorTheme": "Catppuccin Latte",
 	"workbench.editorAssociations": {
 		"*.ipynb": "jupyter-notebook"
 	},
@@ -1249,7 +1249,13 @@
 		"git-graph.repository.showRemoteHeads",
 		"git-graph.dialog.createBranch.checkOut",
 		"window.title",
-		"rust-analyzer.assist.preferSelf"
+		"rust-analyzer.assist.preferSelf",
+		"workbench.preferredLightColorTheme",
+		"workbench.preferredDarkColorTheme",
+		"workbench.colorTheme",
+		"material-icon-theme.folders.color",
+		"workbench.colorCustomizations",
+		"window.autoDetectColorScheme"
 	],
 	"workbench.startupEditor": "newUntitledFile",
 	"github.copilot.chat.editor.temporalContext.enabled": true,
@@ -1270,9 +1276,23 @@
 	"window.title": "${rootName}${separator}${appName}",
 	"tinymist.serverPath": "tinymist",
 	"editor.aiStats.enabled": false,
-	"rust-analyzer.server.path": "rust-analyzer",
 	"rust-analyzer.assist.preferSelf": true,
 	"scm.repositories.selectionMode": "single",
 	"nix.enableLanguageServer": true,
-	"nix.serverPath": "nil"
+	"nix.serverPath": "nil",
+	"lean4.alwaysAskBeforeInstallingLeanVersions": true,
+	"chat.titleBar.openInAgentsWindow.enabled": false,
+	"chat.titleBar.signIn.enabled": false,
+	"workbench.browser.showInTitleBar": false,
+	"window.commandCenter": false,
+	"workbench.layoutControl.enabled": false,
+	"markdown-preview-enhanced.enablePreviewZenMode": true,
+	"claudeCode.preferredLocation": "panel",
+	"claudeCode.useTerminal": true,
+	"terminal.integrated.initialHint": false,
+	"git.blame.statusBarItem.enabled": true,
+	"makefile.configureOnOpen": false,
+	"window.autoDetectColorScheme": true,
+	"workbench.preferredDarkColorTheme": "Catppuccin Frappé",
+	"workbench.preferredLightColorTheme": "Catppuccin Latte",
 }

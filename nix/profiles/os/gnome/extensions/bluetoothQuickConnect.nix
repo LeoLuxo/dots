@@ -6,7 +6,7 @@
   ...
 }:
 
-// TODO: Remove in favor of https://extensions.gnome.org/extension/6670/bluetooth-battery-meter/
+# TODO: Remove in favor of https://extensions.gnome.org/extension/6670/bluetooth-battery-meter/
 {
   programs.dconf.enable = true;
 
